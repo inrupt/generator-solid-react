@@ -6,11 +6,13 @@ import {
   Redirect
 } from "react-router-dom";
 
+import { Home } from "./containers";
+
 const Routes = () => (
   <Router>
     <Fragment>
       <Switch>
-        <Route exact path="/home" component={LoginContainer} />
+        <Route exact path="/home" component={Home} />
         <Redirect from="/" to="/home" />
       </Switch>
     </Fragment>
