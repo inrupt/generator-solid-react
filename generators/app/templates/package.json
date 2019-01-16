@@ -112,5 +112,9 @@
   },
   "name": "solid-app",
   "version": "0.1.0",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1"
+  }
 }
