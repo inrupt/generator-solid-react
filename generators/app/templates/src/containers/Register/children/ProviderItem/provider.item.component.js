@@ -1,0 +1,34 @@
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+type Props = {
+  data: any,
+  onSelect: Function,
+  radioName: String,
+  id: String,
+  checked: Boolean
+};
+
+const ProviderItem = ({ data, onSelect, radioName, id, checked }: Props) => {
+  return (
+    <li className="provider-item">
+      <input
+        type="radio"
+        name={radioName}
+        id={id}
+        onChange={onSelect}
+        value={data.registerLink}
+        checked={checked}
+      />
+      <label htmlFor={id} className="provider-item">
+        <div className="img-group">
+          <img src={data.image} alt={data.label} />
+          <span>{data.label}</span>
+        </div>
+        <FontAwesomeIcon icon="check" className="checked" />
+      </label>
+    </li>
+  );
+};
+
+export default ProviderItem;
