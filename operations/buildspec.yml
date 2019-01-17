@@ -17,7 +17,7 @@ phases:
       - npm install
       - npm run build
       - cd ../../../
-      - cp generators/app/templates/build ./
+      - cp -rvf generators/app/templates/build ./
   post_build:
     commands:
       - echo "No explicit post build commands yet..."
