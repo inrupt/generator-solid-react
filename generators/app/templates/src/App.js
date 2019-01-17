@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from "react";
+import { ToastProvider } from "react-toast-notifications";
+import { ToasterNotification } from "./components";
 
 import Routes from "./routes";
 import "@inrupt/inrupt-atomic-style-guide";
@@ -6,9 +8,14 @@ import "@inrupt/inrupt-atomic-style-guide";
 class App extends Component {
   render() {
     return (
-      <Fragment>
-        <Routes />
-      </Fragment>
+      <ToastProvider
+        components={{ Toast: ToasterNotification }}
+        placement="top-center"
+      >
+        <Fragment>
+          <Routes />
+        </Fragment>
+      </ToastProvider>
     );
   }
 }
