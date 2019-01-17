@@ -6,7 +6,7 @@ phases:
       - echo "Release 1.0.1"
       - pwd
       - ls -alrt
-      - . ./codebuild-extras.sh 2>/dev/null
+      - . ./operations/codebuild-extras.sh 2>/dev/null
       - echo "Build branch ${CODEBUILD_GIT_BRANCH}"
       - echo "Safe branch  ${CODEBUILD_GIT_CLEAN_BRANCH}"
       - echo "__________ Building $application __________"
