@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import './App.scss';
 import Routes from "./routes";
 import './index.css';
 import '@inrupt/inrupt-atomic-style-guide';
