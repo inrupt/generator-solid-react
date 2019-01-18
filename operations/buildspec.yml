@@ -22,7 +22,7 @@ phases:
       - echo "No explicit post build commands yet..."
 artifacts:
   files:
-    - **/*
+    - '**/*'
   base-directory: generators/app/templates
   name: inrupt-generator-solid-react-${CODEBUILD_GIT_CLEAN_BRANCH}-$(date +%Y-%m-%d_%H-%M-%S).zip
 
