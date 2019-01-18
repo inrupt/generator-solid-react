@@ -3,7 +3,9 @@ import { ToastProvider } from "react-toast-notifications";
 import { ToasterNotification } from "./components";
 
 import Routes from "./routes";
-import "@inrupt/inrupt-atomic-style-guide";
+import './index.css';
+import '@inrupt/inrupt-atomic-style-guide';
+import 'normalize.css';
 
 class App extends Component {
   render() {
