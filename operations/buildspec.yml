@@ -17,12 +17,12 @@ phases:
       - npm install
       - npm run build
       - cd ../../../
-      - cp -rvf generators/app/templates/build ./
   post_build:
     commands:
       - echo "No explicit post build commands yet..."
 artifacts:
   files:
-    - build/**/*
+    - **/*
+  base-directory: generators/app/templates
   name: inrupt-generator-solid-react-${CODEBUILD_GIT_CLEAN_BRANCH}-$(date +%Y-%m-%d_%H-%M-%S).zip
 
