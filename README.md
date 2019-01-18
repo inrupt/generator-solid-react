@@ -47,3 +47,19 @@ Second call add method to show toaster notification
  ```
 
  The idea is to catch all the errors from external services and show to user what happened.
+
+  ##### React Errors Boundaries
+
+  We are using Errors Boundaries from React library, we have a top level component to catch all possible errors on ours components. The component is called ErrorBoundaries and is located into components folder.
+
+  Also we are using a custom markup component for this global errors the new is GlobalErrors and it's in the same components folder.
+
+  In case that you want to have more specific errors in one component you can call ErrorBoundaries and create your custom markup.
+
+  ```javascript
+  <ErrorBoundary
+    component={(error, info) => <GlobalError error={error} info={info} />}
+  >
+    <App />
+  </ErrorBoundary>
+  ```
