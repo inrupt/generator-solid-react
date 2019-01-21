@@ -6,7 +6,7 @@ import {
   Redirect
 } from "react-router-dom";
 
-import { Home, Register } from "./containers";
+import { Home, Register, PageNotFound } from "./containers";
 
 const Routes = () => (
   <Router>
@@ -14,7 +14,9 @@ const Routes = () => (
       <Switch>
         <Route exact path="/register" component={Register} />
         <Route exact path="/home" component={Home} />
-        <Redirect from="/" to="/home" />
+        <Route exact path="/404" component={PageNotFound} />
+        <Route exact path="/" component={Home} />
+        <Redirect to="/404" />
       </Switch>
     </Fragment>
   </Router>

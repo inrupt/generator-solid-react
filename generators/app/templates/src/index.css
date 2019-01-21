@@ -1,0 +1,106 @@
+html,
+body,
+#root {
+  height: 100% !important;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+  color: #666;
+  font-size: 62.5%;
+}
+
+p,
+a,
+div {
+  font-size: 16px;
+}
+
+a {
+  color: #666;
+  text-decoration: none;
+}
+
+a svg-inline--fa {
+  margin-right: 5px;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+ul li {
+  padding: 0;
+  margin: 0;
+}
+
+input[type='text'] {
+  box-sizing: border-box;
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 4px;
+  width: 100%;
+  padding: 7px 10px;
+}
+
+.link,
+.link-button {
+  color: #449df5;
+  font-family: Raleway;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.75px;
+  line-height: 14px;
+  text-align: center;
+  text-decoration: none;
+  padding: 0;
+}
+
+.link:active,
+.link-button:active,
+.link:hover,
+.link-button:hover {
+   text-decoration: none;
+}
+
+* {
+  font-family: 'Raleway', sans-serif;
+}
+
+.form-group {
+  text-align: left;
+  margin: 12px 0;
+}
+
+.form-group:first-child {
+   margin-top: 0;
+}
+
+.form-group > label {
+  color: #5361fd;
+  font-family: Raleway;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.75px;
+  line-height: 14px;
+  text-transform: uppercase;
+  display: block;
+}
+
+.form-group > input {
+  height: 38px;
+  width: 100%;
+  margin: 10px 0;
+  border-radius: 4px;
+  border: solid 1px #ccc;
+  box-sizing: border-box;
+}
+
+form-group .select-role {
+  margin: 10px 0;
+}
+
