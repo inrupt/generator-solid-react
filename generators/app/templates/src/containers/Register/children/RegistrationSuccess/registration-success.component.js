@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { GradientBackground, CenterContainer } from "@util-components";
 import { NavBar } from "@components";
+import { RegistrationPage } from "./registration-success.style";
 
 type Props = {
   history: Object
@@ -39,7 +40,7 @@ class RegistrationSuccess extends Component<Props, State> {
   render() {
     const { timeLeft } = this.state;
     return (
-      <GradientBackground className="registration-success--page">
+      <RegistrationPage className="registration-success--page">
         <NavBar />
         <CenterContainer>
           <h1>Success! Welcome to the decentralized web.</h1>
@@ -49,7 +50,7 @@ class RegistrationSuccess extends Component<Props, State> {
           </span>
           <span>We will redirect you to your POD in {timeLeft} seconds...</span>
         </CenterContainer>
-      </GradientBackground>
+      </RegistrationPage>
     );
   }
 }
