@@ -1,14 +1,8 @@
 import styled from "styled-components";
 
-export const Gradient = styled.div`
-  background-image: linear-gradient(
-    135deg,
-    rgba(102, 43, 253, 1) 0%,
-    rgba(102, 43, 253, 1) 20%,
-    rgba(25, 190, 228, 1) 96%
-  );
-  background-repeat: no-repeat;
-  box-sizing: border-box;
+export const Gradient = styled.div.attrs({
+  className: "swatch--primary-gradient"
+})`
   height: 100%;
   width: 100%;
   position: relative;

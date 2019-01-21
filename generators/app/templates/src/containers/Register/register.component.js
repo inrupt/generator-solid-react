@@ -85,7 +85,7 @@ class RegisterComponent extends Component<Props, State> {
       step,
       register: { provider }
     } = this.state;
-    const { providers, t } = this.props;
+    const { providers } = this.props;
     const {
       register: { user }
     } = this.state;
