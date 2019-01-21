@@ -2,6 +2,7 @@
   "dependencies": {
     "@babel/core": "7.1.6",
     "@fortawesome/fontawesome-svg-core": "^1.2.12",
+    "@fortawesome/free-solid-svg-icons": "^5.6.3",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@inrupt/inrupt-atomic-style-guide": "^0.1.1",
     "@solid/query-ldflex": "^1.2.1",
@@ -129,7 +130,8 @@
           "alias": {
             "@components": "./src/components",
             "@containers": "./src/containers",
-            "@util-components": "./src/components/Utils"
+            "@util-components": "./src/components/Utils",
+            "@services": "./src/services"
           }
         }
       ]

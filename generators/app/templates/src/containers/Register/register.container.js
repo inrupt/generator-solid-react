@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import RegisterComponent from "./register.component";
 
+import { Provider } from "@services";
+
 type Props = {};
 
 type State = {
@@ -15,8 +17,8 @@ class RegisterContainer extends Component<Props, State> {
   }
 
   async componentDidMount() {
-    //const providers = await Auth.getIdentityProviders();
-    this.setState({ providers: [] });
+    const providers = await Provider.getIdentityProviders();
+    this.setState({ providers });
   }
   render() {
     const { providers } = this.state;

@@ -1,5 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Item, ProviderItemStyle } from "./provider.style";
 
 type Props = {
   data: any,
@@ -11,7 +12,7 @@ type Props = {
 
 const ProviderItem = ({ data, onSelect, radioName, id, checked }: Props) => {
   return (
-    <li className="provider-item">
+    <Item>
       <input
         type="radio"
         name={radioName}
@@ -20,14 +21,14 @@ const ProviderItem = ({ data, onSelect, radioName, id, checked }: Props) => {
         value={data.registerLink}
         checked={checked}
       />
-      <label htmlFor={id} className="provider-item">
+      <ProviderItemStyle htmlFor={id} className="provider-item">
         <div className="img-group">
           <img src={data.image} alt={data.label} />
           <span>{data.label}</span>
         </div>
         <FontAwesomeIcon icon="check" className="checked" />
-      </label>
-    </li>
+      </ProviderItemStyle>
+    </Item>
   );
 };
 

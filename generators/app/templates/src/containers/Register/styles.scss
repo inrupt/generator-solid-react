@@ -1,0 +1,142 @@
+.register--page {
+	.register--container {
+		.register--panel {
+			justify-content: space-between;
+
+			.panel-header {
+				position: relative;
+
+				h2 {
+					position: relative;
+					padding: 0;
+					color: #5361fd;
+					font-family: Raleway;
+					font-size: 20px;
+					font-weight: bold;
+					letter-spacing: 0.75px;
+					line-height: 24px;
+					text-align: center;
+					margin: 0;
+					animation: fadeIn 0.5s ease-in;
+				}
+
+				.progress-bar {
+					position: absolute;
+					height: 1px;
+					width: 100%;
+					background: #d1d8df;
+					top: 30px;
+				}
+
+				.step-1,
+				.step-2 {
+					position: absolute;
+					height: 1px;
+					background: #5361fd;
+					top: 30px;
+				}
+
+				.step-1 {
+					width: calc(100% / 2);
+					animation: step-1 0.5s linear;
+				}
+
+				.step-2 {
+					width: 100%;
+					animation: step-2 0.5s linear;
+				}
+			}
+
+			.panel-body {
+				height: 100% !important;
+				animation: fadeIn 0.2s ease-in;
+
+				a {
+					display: inline-block;
+					color: #449df5;
+					font-family: Raleway;
+					font-size: 12px;
+					font-weight: 600;
+					letter-spacing: 0.75px;
+					line-height: 14px;
+					text-align: center;
+				}
+
+				.a-with-spacing {
+					margin: 24px 0;
+				}
+
+				.provider-list {
+					ul {
+						padding: 0;
+						margin: 0;
+					}
+				}
+			}
+
+			.actions {
+				height: 32px;
+				box-sizing: border-box;
+				display: flex;
+				flex-direction: row-reverse;
+				justify-content: space-between;
+
+				button {
+					height: 32px;
+					width: 150px;
+					border-radius: 4px;
+					font-family: Raleway;
+					font-size: 10px;
+					font-weight: bold;
+					letter-spacing: 0.89px;
+					line-height: 11px;
+					text-align: center;
+					text-transform: uppercase;
+					border: solid 2px #449df5;
+					box-sizing: border-box;
+				}
+
+				.btn-solid {
+					background-color: #449df5;
+					color: #ffffff;
+				}
+
+				.btn-outlined {
+					background-color: #ffffff;
+					color: #449df5;
+					filter: opacity(40%);
+				}
+			}
+		}
+	}
+}
+
+@keyframes step-1 {
+	0% {
+		width: 0;
+	}
+
+	100% {
+		width: calc(100% / 2);
+	}
+}
+
+@keyframes step-2 {
+	0% {
+		width: calc(100% / 2);
+	}
+
+	100% {
+		width: 100%;
+	}
+}
+
+@keyframes fadeIn {
+	0% {
+		filter: opacity(0%);
+	}
+
+	100% {
+		filter: opacity(100%);
+	}
+}
