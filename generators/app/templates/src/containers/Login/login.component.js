@@ -4,11 +4,13 @@ import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import { ProviderLogin } from "solid-react-components";
 import {
-  GradientBackground,
-  CenterContainer,
-  Panel,
-  Loader
-} from "@util-components";
+  LoginWrapper,
+  LoginPanel,
+  PanelBody,
+  RegisterButton,
+  LoginTitle
+} from "./login.style.js";
+import { CenterContainer, Loader } from "@util-components";
 
 type Props = { t: Function, i18n: any };
 
@@ -34,31 +36,29 @@ export default class LoginComponent extends Component<Props, State> {
     return this.state.session ? (
       <Redirect to="/profile" />
     ) : (
-      <GradientBackground className="solid--login--page">
+      <LoginWrapper>
         <CenterContainer>
           <h1>Hi! Welcome to Solid.</h1>
-          <Panel className="login-panel">
-            <div className="panel-body">
-              <div className="login-form">
-                <Link to="/register" className="link">
-                  Register for a solid identity
-                </Link>
-                <a
-                  href="https://solid.inrupt.com/get-a-solid-pod"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  className="link"
-                >
-                  What is a Solid Identity??
-                </a>
-                <span className="login-title"> Log in</span>
-                <ProviderLogin />
-              </div>
-            </div>
-          </Panel>
+          <LoginPanel>
+            <PanelBody>
+              <RegisterButton to="/register">
+                Register for a solid identity
+              </RegisterButton>
+              <a
+                href="https://solid.inrupt.com/get-a-solid-pod"
+                rel="noopener noreferrer"
+                target="_blank"
+                className="link"
+              >
+                What is a Solid Identity??
+              </a>
+              <LoginTitle> Log in</LoginTitle>
+              <ProviderLogin />
+            </PanelBody>
+          </LoginPanel>
         </CenterContainer>
         <Loader show={loading} />
-      </GradientBackground>
+      </LoginWrapper>
     );
   }
 }
