@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { CenterContainer } from "@util-components";
-import { NavBar } from "@components";
+// import { NavBar } from "@components";
 import { RegistrationPage } from "./registration-success.style";
 
 type Props = {
@@ -41,7 +41,6 @@ class RegistrationSuccess extends Component<Props, State> {
     const { timeLeft } = this.state;
     return (
       <RegistrationPage className="registration-success--page">
-        <NavBar />
         <CenterContainer>
           <h1>Success! Welcome to the decentralized web.</h1>
           <img src="/img/rocket.svg" alt="rocket" className="rocket" />
