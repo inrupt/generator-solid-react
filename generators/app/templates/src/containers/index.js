@@ -1,3 +1,4 @@
 import Home from "./Home";
 import PageNotFound from "./PageNotFound";
-export { Home, PageNotFound };
+import WelcomeComponent from "./Welcome";
+export { Home, PageNotFound, WelcomeComponent };
