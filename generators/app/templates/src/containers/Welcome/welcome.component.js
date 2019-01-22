@@ -26,4 +26,3 @@ const WelcomePageContent = props => {
 };
 
 export default WelcomePageContent;
-
