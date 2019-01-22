@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
+import { ProviderLogin } from "solid-react-components";
 import {
   GradientBackground,
   CenterContainer,
@@ -39,7 +40,7 @@ export default class LoginComponent extends Component<Props, State> {
           <Panel className="login-panel">
             <div className="panel-body">
               <div className="login-form">
-                <Link to="/register" className="register-button">
+                <Link to="/register" className="link">
                   Register for a solid identity
                 </Link>
                 <a
@@ -51,6 +52,7 @@ export default class LoginComponent extends Component<Props, State> {
                   What is a Solid Identity??
                 </a>
                 <span className="login-title"> Log in</span>
+                <ProviderLogin />
               </div>
             </div>
           </Panel>
