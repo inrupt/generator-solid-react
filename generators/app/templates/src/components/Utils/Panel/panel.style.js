@@ -21,7 +21,6 @@ export const PanelWrapper = styled.div`
   }
 
   @media screen and (max-width: 992px) {
-    // max-width: 420px;
     width: auto;
   }
 `;
