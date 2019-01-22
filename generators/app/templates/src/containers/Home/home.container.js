@@ -1,5 +1,5 @@
 import React from "react";
-import { ProviderLogin } from "solid-react-components";
+import { ProviderLogin } from "@inrupt/solid-react-components";
 
 const HomeContainer = props => {
   return (

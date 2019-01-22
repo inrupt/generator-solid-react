@@ -9,12 +9,12 @@ const WelcomePageContent = props => {
   return (<WelcomeWrapper>
     <WelcomeCard className="card">
       <WelcomeLogo>
-        <img src="/img/logo.svg" />
+        <img src="/img/logo.svg" alt="Inrupt"/>
       </WelcomeLogo>
       <WelcomeProfile>
         <h3>Welcome to the Inrupt React SDK</h3>
         <div>
-          <img></img>
+          <img alt="User"></img>
           <h2>DARION HART</h2>
         </div>
         <p>
