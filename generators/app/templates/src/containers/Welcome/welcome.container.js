@@ -1,5 +1,10 @@
 import React, { Component } from "react";
+import { withWebId } from "@solid/react";
 import WelcomePageContent from "./welcome.component";
+import data from "@solid/query-ldflex";
+
+// hasPhoto context
+const hasPhotoContext = "http://www.w3.org/2006/vcard/ns#hasPhoto";
 
 /**
  * Container component for the Welcome Page, containing example of how to fetch data from a POD
@@ -8,19 +13,35 @@ class WelcomeComponent extends Component<Props> {
   constructor(props) {
     super(props);
 
-    this.getProfileData();
+    this.state = {
+      name: '',
+      image: ''
+    };
+  }
+  componentDidMount() {
+    if (this.props.webId) {
+      this.getProfileData();
+    }
   }
 
-  getProfileData() {
-    return;
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.webId && this.props.webId !== prevProps.webId) {
+      this.getProfileData();
+    }
   }
+
+  getProfileData = async () => {
+    const user = data[this.props.webId];
+    const name = await user.name;
+
+    this.setState({ name: name.value, image: user[hasPhotoContext] });
+  };
 
   render() {
     return (
-      <WelcomePageContent>
-      </WelcomePageContent>
-    )
+      <WelcomePageContent name={this.state.name} image={this.state.image} />
+    );
   }
 }
 
-export default WelcomeComponent;
+export default withWebId(WelcomeComponent);

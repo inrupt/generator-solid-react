@@ -1,4 +1,5 @@
 import React from "react";
+import { Image, LogoutButton } from '@solid/react';
 import { WelcomeWrapper, WelcomeCard, WelcomeLogo, WelcomeProfile } from './welcome.style';
 
 /**
@@ -14,11 +15,11 @@ const WelcomePageContent = props => {
       <WelcomeProfile>
         <h3>Welcome to the Inrupt React SDK</h3>
         <div>
-          <img alt="User"></img>
-          <h2>DARION HART</h2>
+          { props.image && <Image alt="User" src={props.image} defaultSrc="/img/empty-profile.svg" /> }
+          <h2>{props.name}</h2>
         </div>
         <p>
-          Not you? Sign in to another account
+          Not you? Sign in to another account <LogoutButton />
         </p>
       </WelcomeProfile>
     </WelcomeCard>
