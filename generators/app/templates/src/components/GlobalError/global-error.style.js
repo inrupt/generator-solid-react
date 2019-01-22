@@ -29,7 +29,7 @@ export const ErrorDetail = styled.p`
   line-height: 1.8rem;
 
   &.subheadline {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     &:after {
       display: block;
       content: "";
