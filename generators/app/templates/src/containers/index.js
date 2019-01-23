@@ -1,6 +1,7 @@
-import Home from "./Home";
+import Login from "./Login";
 import Register from "./Register";
+import Home from "./Home";
 import PageNotFound from "./PageNotFound";
 import WelcomeComponent from "./Welcome";
 
-export { Home, Register, PageNotFound, WelcomeComponent };
+export { Login, Home, Register, PageNotFound, WelcomeComponent };
