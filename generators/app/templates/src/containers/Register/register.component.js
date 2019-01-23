@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
+import { NavBar } from "@components";
+
 import { GradientBackground, CenterContainer } from "@util-components";
 import {
   RegisterWrapper,
@@ -83,6 +85,7 @@ class RegisterComponent extends Component<Props, State> {
 
     return (
       <GradientBackground>
+        <NavBar />
         <CenterContainer>
           <RegisterWrapper>
             <h1>Hi! Welcome to Solid.</h1>
