@@ -46,7 +46,6 @@ class WelcomeComponent extends Component<Props> {
     */
     const name = await user.name;
 
-    // We send the value name and the image context to presenter component
     this.setState({ name: name.value, image: user[hasPhotoContext] });
   };
 
