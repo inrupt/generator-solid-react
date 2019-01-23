@@ -14,7 +14,6 @@ const Routes = () => (
     <Fragment>
       <Switch>
         <Route exact path="/login" component={Login} />
-
         <Route exact path="/register" component={Register} />
         <Route exact path="/welcome" component={WelcomeComponent} />
         <Route exact path="/404" component={PageNotFound} />
