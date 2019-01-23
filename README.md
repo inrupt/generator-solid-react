@@ -1,20 +1,20 @@
 # generator-solid-react
-Solid generator for React applications.
+Application Generator for [Solid](https://solid.inrupt.com) React applications. Part of the [React SDK for Solid](https://github.com/inrupt-inc/solid-react-sdk).
 
 ## External Dependencies
 
-* [React Toast Notifications](https://jossmac.github.io/react-toast-notifications/)
-* [Styled Components](https://www.styled-components.com)
 * [Solid React Components](https://github.com/Inrupt-inc/solid-react-components)
 * [LDFlex](https://github.com/solid/query-ldflex)
+* [React Toast Notifications](https://jossmac.github.io/react-toast-notifications/)
+* [Styled Components](https://www.styled-components.com)
 
 ## Installation and Usage
 
-To install the application:
+To install the generator:
 
 ```
 npm install -g @inrupt/generator-solid-react
-```
+``` 
 
 Once it is installed, you can create a new application with just a few steps.
 
@@ -26,27 +26,26 @@ Once it is installed, you can create a new application with just a few steps.
 
 ## What is a Generator?
 
-A [Yeoman generator](https://yeoman.io/) is a scaffolding tool at its core. You can use Yeoman to install applications based on templates. This repo is an example of a template - it is an application with all of the folders and initial files created and set up for you. There's already a build, a code structure, and dependencies installed for you!
+A [Yeoman generator](https://yeoman.io/) is a scaffolding tool at its core. You can use Yeoman to install applications based on templates. This repo is an example of a template - an application with a build, code structure, and dependencies added and organized for you!
 
-The idea behind a generator is accelerating application development, and we've taken the next step. In our template, we not only provide the basic files and folder structure, but also a fully functional application to become the base of your new project.
+Using a generator accelerates application development. You don't have to worry about best practices for foundational elements, because we've incorporated them. Our template generates a fully functional application foundation that becomes the base of your new project.
 
-We have included integrations with existing libraries, as well as pages, routes, and components that are both useful in most applications (like login pages) but also serve as example code showing how Solid data management works.
+We have included integrations with essential libraries, as well as pages, routes, and components that are both useful in most Solid applications (like login pages) but also serve as example code to demonstrate how to interface with Solid and [Linked Data](https://solid.inrupt.com/docs/intro-to-linked-data).
 
-The generated application is also integrated with our [Solid Style Guide](https://github.com/Inrupt-inc/inrupt-atomic-styleguide). You can read more about it on the github page, or check out a live version of the style guide at [design.inrupt.com](https://design.inrupt.com/atomic-core/). 
+The generated application also incorporates our [Atomic Style Guide](https://design.inrupt.com/atomic-core), featuring a nice integration with [Styled Components](https://www.styled-components.com).
 
-## Creating a Solid React Application 
+## Creating a Solid React Application
 
-The first step to get started is to follow the [Installation and Usage](#installation-and-usage) steps.
-
-Once you've run the generator and created your starter application, you'll have a site with some basic functionality and style guide integration.
+Once you've [run the generator](#installation-and-usage) and created your starter application, you'll have a site with some basic functionality and style guide integration.
 
 If you would like to add your own look and feel, there are two options. First, you can override the styles from the style guide on demand. A list of the classes and example code can be found on the github page. Second, you could remove the style guide entirely, by removing the dependency from npm / package.json. Note if you do this, the application will lose almost all of its styling, and will need work to look "right" again.
 
-Next, you can start building your application! Feel free to remove any pages or code you no longer need. You can use pages (such as the Welcome Page) provided by the generator to use as a template for how to build your next pages.
+Next, you can start building your application! Feel free to remove any pages or code you no longer need. You can use pages (such as the Welcome Page) provided by the generator as a template for how to build your next pages.
 
-There are also examples of how to use libraries like [LDFlex](https://github.com/solid/query-ldflex) for reading and writing data to a POD, and examples of using existing components. 
+There are also examples of how to use libraries like [LDFlex](https://github.com/solid/query-ldflex) for reading and writing data to a POD, and examples of using existing components.
 
 ## What's in the starter application?
+
 This list will update as new releases are made. Currently, the generated application contains the following high-level items:
 
 * Login Page
@@ -57,24 +56,25 @@ This list will update as new releases are made. Currently, the generated applica
 
 ## Error Handling
 
-We have several different kinds of error handling we provide in the generated application. We define them as:
-1. ***Services Errors***: This error usually comes from external resource like a server, a library, or another dependency. In our case, this also includes errors from the Solid Server. We are using try/catch blocks to display a message to the user.
+We provide different types of error handling in the generated application, which ultimately fall into the following two groups:
 
-2. ***UI Errors***: This usually comes from data errors when a component waits for formatted data. For example, if the data format is wrong, or there are missing properties that are required, this kind of error could trigger. We're using [React ErrorBoundaries](https://reactjs.org/docs/error-boundaries.html) to show custom messages to the user, instead of the default, which is to show the component tree.
- 
+1. ***Service Errors***: These errors usually come from an external resource, like a server, library, or other dependency. In our case, this also includes errors from the Solid Server. We use try/catch blocks to display a message to the user.
 
- #### Service Errors
+2. ***UI Errors***: Data errors when a component waits for formatted data typically lead to these. If the data format is wrong, or there are missing properties that are required, this kind of error could trigger. We're using [React Error Boundaries](https://reactjs.org/docs/error-boundaries.html) to show custom messages to the user, rather than the default, which is to show the component tree.
 
- We are a custom wrapper component around the React Toast Notifications library to handling these kinds of errors.
+
+ ### Service Errors
+
+ We provide a custom wrapper component around the React Toast Notifications library to handle Service Errors.
 
 ***Usage***
 
-First you will need to import ToastConsumer to have available Toaster methods:
+First, you will need to import ToastConsumer to have Toaster methods available:
 
 ```javascript
 import { ToastConsumer } from 'react-toast-notifications';
 ```
-Second call add method to show toaster notification
+Second, call the add method to show a toaster notification
 
 ```javascript
 <ToastConsumer>
@@ -94,20 +94,19 @@ Second call add method to show toaster notification
   withToastManager(YourComponent);
  ```
 
- The idea is to catch all the errors from external services and show the user as much detail as we can about the source of the error.
+ The idea is to catch all of the errors from external services and show the user as much detail as we can about the source of the error.
 
-#### React Errors Boundaries
+### UI Errors
 
-We are using [React Error Boundaries](https://reactjs.org/docs/error-boundaries.html), and we have a top level component designed to catch all possible errors in our components. This component is called ErrorBoundaries and is located in the ```components``` folder.
+We are using [React Error Boundaries](https://reactjs.org/docs/error-boundaries.html), and we have a top level component called ```ErrorBoundaries``` located in the ```components``` folder to catch all possible errors in our components.
 
-Also included in the same folder is a custom markup component for these global errors. It's called GlobalErrors, and it contains the actual HTML markup and default text for this component.
+Also included in the same folder is a custom markup component for these global errors, appropriately called ```GlobalErrors```. It contains the actual HTML markup and default text for this component.
 
-In case that you want to have more specific errors in a specific component, you can call ErrorBoundaries and create your own custom markup:
+In the event you want more specific errors in a given component, you can call ErrorBoundaries and create your own custom markup:
 
 ```javascript
 <ErrorBoundary
-  component={(error, info) => <GlobalError error={error} info={info} />}
->
+  component={(error, info) => <GlobalError error={error} info={info} />} >
   <App />
 </ErrorBoundary>
   ```
