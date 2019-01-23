@@ -1,7 +1,6 @@
 import Login from "./Login";
-import Register from "./Register";
-import Home from "./Home";
+import Register, { RegistrationSuccess } from "./Register";
 import PageNotFound from "./PageNotFound";
 import WelcomeComponent from "./Welcome";
 
-export { Login, Register, Home, PageNotFound, WelcomeComponent };
+export { Login, Register, RegistrationSuccess, PageNotFound, WelcomeComponent };

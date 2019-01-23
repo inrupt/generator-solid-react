@@ -14,7 +14,7 @@ const navigation = [
 ];
 
 const AuthNavBar = props => {
-  return <NavBar navigation={navigation} toolbar={[{ component: NavBarProfile, label: 'Profile', id: 'profile' }]} />;
+  return <NavBar navigation={navigation} toolbar={[{ component: ()=> <NavBarProfile img={props.img}/>, label: 'Profile', id: 'profile' }]} />;
 };
 
 export default AuthNavBar;

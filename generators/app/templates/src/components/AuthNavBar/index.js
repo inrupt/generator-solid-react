@@ -1,2 +1,2 @@
-import AuthNavBar from "./auth-nav-bar.component";
+import AuthNavBar from "./auth-nav-bar.container";
 export default AuthNavBar;

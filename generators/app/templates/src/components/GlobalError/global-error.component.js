@@ -24,8 +24,10 @@ export const GlobalError = ({ error, info }: Props) => {
       </ImageWrapper>
       <DetailWrapper>
         <ErrorTitle>Error:</ErrorTitle>
-        <ErrorInfo>Somthing Went Wrong</ErrorInfo>
-        <ErrorDetail className="subheadline">You may refresh the page or try again at later time.</ErrorDetail>
+        <ErrorInfo>Something Went Wrong</ErrorInfo>
+        <ErrorDetail className="subheadline">
+          You may refresh the page, or try again at a later time.
+        </ErrorDetail>
         <ErrorDetail>{info.componentStack}</ErrorDetail>
       </DetailWrapper>
     </GlobalErrorWrapper>

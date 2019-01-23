@@ -1,24 +1,20 @@
 /* eslint-disable constructor-super */
 import React, { Component } from "react";
-import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import { ProviderLogin } from "@inrupt/solid-react-components";
 import {
   LoginWrapper,
   LoginPanel,
   PanelBody,
-  RegisterButton,
   LoginTitle
 } from "./login.style.js";
 import { CenterContainer, Loader } from "@util-components";
 
-type Props = { t: Function, i18n: any };
+type Props = { history: Object };
 
 type State = {
   idp: String,
-  loading: Boolean,
-  withWebId: Boolean,
-  history: Object
+  loading: Boolean
 };
 export default class LoginComponent extends Component<Props, State> {
   constructor(props) {
@@ -26,24 +22,24 @@ export default class LoginComponent extends Component<Props, State> {
     this.state = {
       idp: "",
       loading: false,
-      withWebId: false,
-      session: null
+      withWebId: false
     };
   }
 
   render() {
-    const { loading, withWebId, idp } = this.state;
-    return this.state.session ? (
-      <Redirect to="/profile" />
-    ) : (
+    const { loading } = this.state;
+    return (
       <LoginWrapper>
         <CenterContainer>
           <h1>Hi! Welcome to Solid.</h1>
           <LoginPanel>
             <PanelBody>
-              <RegisterButton to="/register">
+              <Link
+                className="ids-link-filled ids-link-filled--primary"
+                to="/register"
+              >
                 Register for a solid identity
-              </RegisterButton>
+              </Link>
               <a
                 href="https://solid.inrupt.com/get-a-solid-pod"
                 rel="noopener noreferrer"
@@ -53,7 +49,9 @@ export default class LoginComponent extends Component<Props, State> {
                 What is a Solid Identity??
               </a>
               <LoginTitle> Log in</LoginTitle>
-              <ProviderLogin />
+              <ProviderLogin
+                callbackUri={`${window.location.origin}/welcome`}
+              />
             </PanelBody>
           </LoginPanel>
         </CenterContainer>
