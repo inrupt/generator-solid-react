@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withWebId, withAuthorization } from "@inrupt/solid-react-components";
+import { Loader } from '@util-components';
 import WelcomePageContent from "./welcome.component";
 import data from "@solid/query-ldflex";
 
@@ -44,6 +45,4 @@ class WelcomeComponent extends Component<Props> {
   }
 }
 
-const Loader = () => <div className="loader">Loader</div>;
-
-export default withAuthorization(WelcomeComponent, Loader);
+export default withAuthorization(WelcomeComponent, <Loader show={true} />);

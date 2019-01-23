@@ -7,12 +7,14 @@ import {
   Redirect
 } from "react-router-dom";
 
-import { Home, Register, PageNotFound, WelcomeComponent } from "./containers";
+import { Login, Register, Home, PageNotFound, WelcomeComponent } from "./containers";
 
 const Routes = () => (
   <Router>
     <Fragment>
       <Switch>
+        <Route exact path="/login" component={Login} />
+
         <Route exact path="/register" component={Register} />
         <Route exact path="/home" component={Home} />
         <Route exact path="/welcome" component={WelcomeComponent} />
