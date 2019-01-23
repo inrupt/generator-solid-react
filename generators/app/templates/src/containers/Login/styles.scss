@@ -1,0 +1,99 @@
+.solid--login--page {
+	h1 {
+		color: #ffffff;
+	}
+
+	.login-panel {
+		text-align: center;
+		justify-content: center;
+
+		.login-form {
+			position: relative;
+			margin-bottom: 20px;
+
+			.login-title {
+				color: #656e75;
+				font-family: Raleway;
+				font-size: 16px;
+				font-weight: 500;
+				letter-spacing: 1.2px;
+				line-height: 19px;
+				text-align: center;
+				position: relative;
+				margin: 30px 0;
+				display: inline-block;
+				width: 100%;
+
+				&::before,
+				&::after {
+					width: 37%;
+					content: '';
+					background: #656e75;
+					height: 1px;
+					position: absolute;
+					box-sizing: border-box;
+					top: 50%;
+				}
+
+				&::before {
+					right: 0;
+				}
+
+				&::after {
+					left: 0;
+				}
+			}
+
+			.login-toggle {
+				margin: 16px 0 7px 0;
+			}
+
+			.register-button {
+				height: 40px;
+				width: 100%;
+				border-radius: 4px;
+				background-color: #5361fd;
+				color: #ffffff;
+				text-transform: uppercase;
+				font-size: 12px;
+				font-weight: bold;
+				letter-spacing: 1.07px;
+				line-height: 16px;
+				display: block;
+				margin: 0 0 16px 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				cursor: pointer;
+
+				&:hover {
+					filter: opacity(95%);
+					text-decoration: none;
+				}
+			}
+		}
+
+		.login--button {
+			box-sizing: border-box;
+			color: #449df5;
+			height: 32px;
+			width: 180px;
+			border: 1px solid #449df5;
+			border-radius: 4px;
+			font-family: Raleway;
+			font-size: 12px;
+			font-weight: bold;
+			letter-spacing: 1.07px;
+			line-height: 14px;
+			text-align: center;
+			box-sizing: border-box;
+
+			&:disabled {
+				border-color: #449df5;
+				color: #449df5;
+				opacity: 0.6;
+				cursor: not-allowed;
+			}
+		}
+	}
+}
