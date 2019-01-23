@@ -1,22 +1,37 @@
 import React, { Fragment } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
+import { PrivateLayout, PublicLayout, NotLoggedInLayout } from "@layouts";
+import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 
-import { Login, Register, Home, PageNotFound, WelcomeComponent } from "./containers";
+import {
+  Login,
+  Register,
+  PageNotFound,
+  WelcomeComponent,
+  RegistrationSuccess
+} from "./containers";
+
+const privateRoutes = [
+  {
+    id: "welcome",
+    path: "/welcome",
+    component: WelcomeComponent
+  }
+];
 
 const Routes = () => (
   <Router>
     <Fragment>
       <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/welcome" component={WelcomeComponent} />
-        <Route exact path="/404" component={PageNotFound} />
-        <Route exact path="/" component={Home} />
+        <NotLoggedInLayout component={Login} path="/login" exact />
+        <NotLoggedInLayout component={Register} path="/register" exact />
+        <NotLoggedInLayout
+          path="/register/success"
+          component={RegistrationSuccess}
+          exact
+        />
+        <PublicLayout path="/404" component={PageNotFound} exact />
+        <Redirect from="/" to="/welcome" exact />
+        <PrivateLayout path="/" routes={privateRoutes} />
         <Redirect to="/404" />
       </Switch>
     </Fragment>
