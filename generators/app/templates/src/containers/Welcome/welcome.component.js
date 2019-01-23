@@ -22,7 +22,7 @@ const WelcomePageContent = props => {
         </WelcomeLogo>
         <WelcomeProfile>
           <h3>
-            Welcome <span>{props.name}</span>
+            Welcome, <span>{props.name}</span>
           </h3>
           <div>
             {props.image && (
