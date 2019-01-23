@@ -16,7 +16,6 @@ const PrivateLayout = ({ routes, ...rest }) => {
               {routes.map(route => (
                 <Route key={route.id} {...route} exact />
               ))}
-              <Redirect from="/" to="/demo" exact />
               <Redirect to="/404" />
             </Switch>
           </Fragment>
