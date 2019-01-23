@@ -133,7 +133,8 @@
             "@components": "./src/components",
             "@containers": "./src/containers",
             "@util-components": "./src/components/Utils",
-            "@services": "./src/services"
+            "@services": "./src/services",
+            "@layouts": "./src/layouts"
           }
         }
       ]

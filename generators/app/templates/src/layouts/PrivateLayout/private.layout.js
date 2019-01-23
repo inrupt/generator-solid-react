@@ -1,17 +1,17 @@
-import React from "react";
-import { NotificationContainer } from "react-notifications";
+import React, { Fragment } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import { withAuthorization } from "@inrupt/solid-react-components";
 
 import { AuthNavBar } from "@components";
 
 const PrivateLayout = ({ routes, ...rest }) => {
   return (
-    <PrivateRoute
+    <Route
       {...rest}
       render={matchProps => (
-        <div className="dashboard--page">
+        <Fragment>
           <AuthNavBar {...matchProps} />
-          <div className="dashboard--main">
+          <Fragment>
             <Switch>
               {routes.map(route => (
                 <Route key={route.id} {...route} exact />
@@ -19,12 +19,11 @@ const PrivateLayout = ({ routes, ...rest }) => {
               <Redirect from="/" to="/demo" exact />
               <Redirect to="/404" />
             </Switch>
-          </div>
-          <NotificationContainer />
-        </div>
+          </Fragment>
+        </Fragment>
       )}
     />
   );
 };
 
-export default PrivateLayout;
+export default withAuthorization(PrivateLayout);

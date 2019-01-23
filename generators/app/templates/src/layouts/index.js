@@ -1,5 +1,5 @@
-import MixedLayout from "./MixedLayout";
+import NotLoggedInLayout from "./NotLoggedInLayout";
 import PrivateLayout from "./PrivateLayout";
 import PublicLayout from "./PublicLayout";
 
-export { MixedLayout, PrivateLayout, PublicLayout };
+export { NotLoggedInLayout, PrivateLayout, PublicLayout };

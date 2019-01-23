@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import { NavBar } from "@components";
 
 import { GradientBackground, CenterContainer } from "@util-components";
 import {
@@ -85,7 +84,6 @@ class RegisterComponent extends Component<Props, State> {
 
     return (
       <GradientBackground>
-        <NavBar />
         <CenterContainer>
           <RegisterWrapper>
             <h1>Hi! Welcome to Solid.</h1>
@@ -97,7 +95,7 @@ class RegisterComponent extends Component<Props, State> {
                 </PanelHeader>
                 <PanelBody className="panel-body">
                   <Fragment>
-                    <a href="#/">
+                    <a href="https://solid.inrupt.com/how-it-works">
                       What is a provider, and how should I choose one?
                     </a>
                     <Link to="/login" className="a-with-spacing">
