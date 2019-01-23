@@ -5,6 +5,8 @@ Solid generator for React applications.
 
 * [React Toast Notifications](https://jossmac.github.io/react-toast-notifications/)
 * [Styled Components](https://www.styled-components.com)
+* [Solid React Components](https://github.com/Inrupt-inc/solid-react-components)
+* [LDFlex](https://github.com/solid/query-ldflex)
 
 ## Installation and Usage
 
