@@ -26,7 +26,7 @@ export const GlobalError = ({ error, info }: Props) => {
         <ErrorTitle>Error:</ErrorTitle>
         <ErrorInfo>Something Went Wrong</ErrorInfo>
         <ErrorDetail className="subheadline">
-          You may refresh the page or try again at later time.
+          You may refresh the page, or try again at a later time.
         </ErrorDetail>
         <ErrorDetail>{info.componentStack}</ErrorDetail>
       </DetailWrapper>
