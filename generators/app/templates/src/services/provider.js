@@ -14,7 +14,7 @@ export default class Provider {
     return [
       {
         label: "Inrupt",
-        image: "/img/inrupt_logo.png",
+        image: "/img/inrupt.svg",
         value: "https://inrupt.net/auth",
         registerLink: "https://inrupt.net/register",
         description: "Lorem ipsum dolor sit amet non ipsom dolor"
