@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { withWebId, withAuthorization } from "@inrupt/solid-react-components";
-import { Loader } from '@util-components';
+import { withWebId } from "@inrupt/solid-react-components";
 import WelcomePageContent from "./welcome.component";
 import data from "@solid/query-ldflex";
 
@@ -56,4 +55,4 @@ class WelcomeComponent extends Component<Props> {
   }
 }
 
-export default withAuthorization(WelcomeComponent, <Loader show={true} />);
+export default withWebId(WelcomeComponent);

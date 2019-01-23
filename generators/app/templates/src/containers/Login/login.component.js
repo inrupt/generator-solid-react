@@ -1,7 +1,6 @@
 /* eslint-disable constructor-super */
 import React, { Component } from "react";
 import { Redirect } from "react-router";
-import { Link } from "react-router-dom";
 import { ProviderLogin } from "@inrupt/solid-react-components";
 import {
   LoginWrapper,
@@ -32,7 +31,7 @@ export default class LoginComponent extends Component<Props, State> {
   }
 
   render() {
-    const { loading, withWebId, idp } = this.state;
+    const { loading } = this.state;
     return this.state.session ? (
       <Redirect to="/profile" />
     ) : (

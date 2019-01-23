@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { PrivateRoute } from '@inrupt/solid-react-components';
 import {
   BrowserRouter as Router,
   Route,
