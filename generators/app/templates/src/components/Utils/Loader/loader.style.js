@@ -1,5 +1,17 @@
 import styled, { keyframes } from "styled-components";
 
+const cubeGridScaleDelay = keyframes`
+	0%,
+	70%,
+	100% {
+		transform: scale3D(1, 1, 1);
+	}
+
+	35% {
+		transform: scale3D(0, 0, 1);
+	}
+`;
+
 export const LoaderWrapper = styled.div`
   position: fixed;
   z-index: 9999;
@@ -60,16 +72,4 @@ export const LoaderWrapper = styled.div`
       animation-delay: 0.2s;
     }
   }
-`;
-
-const cubeGridScaleDelay = keyframes`
-	0%,
-	70%,
-	100% {
-		transform: scale3D(1, 1, 1);
-	}
-
-	35% {
-		transform: scale3D(0, 0, 1);
-	}
 `;

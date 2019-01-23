@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
-import { ProviderLogin } from "solid-react-components";
+import { ProviderLogin } from "@inrupt/solid-react-components";
 import {
   LoginWrapper,
   LoginPanel,
