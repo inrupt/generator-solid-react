@@ -31,17 +31,17 @@ class WelcomeComponent extends Component<Props> {
     }
   }
   /**
-   * We are using ldflex for solid to featch user profile
-   * in this case we need to create a new subject(hasPhoto)
-   * because it's not on the context.json for more information please
-   * go to: https://github.com/solid/query-ldflex
+  * We are using LDFlex for Solid to fetch a user's profile.
+  * In this case we need to create a new Subject(hasPhoto)
+  * because it's not listed in the context.json file inside of the ldflex repository
+  * For more information please go to: https://github.com/solid/query-ldflex
   */
   getProfileData = async () => {
-    // fetching user card from pod(request call)
+    // fetching user card from pod. This makes a request and returns the data
     const user = data[this.props.webId];
     /*
-    * In the backgorund ldflex is using json-LD, for this reason we need to
-    * made a async call, this will go and call json-LD expanded an expose the value(name).
+    * In the backgorund LDFlex is using JSON-LD. Because of this, we need to
+    * make an async call. This will return a JSON-LD expanded object and expose the requested value(name).
     * for more information please go to: https://github.com/digitalbazaar/jsonld.js
     */
     const name = await user.name;
