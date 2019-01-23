@@ -15,7 +15,7 @@ const Routes = () => (
       <Switch>
         <Route exact path="/register" component={Register} />
         <Route exact path="/home" component={Home} />
-        <PrivateRoute exact path="/welcome" component={WelcomeComponent} />
+        <Route exact path="/welcome" component={WelcomeComponent} />
         <Route exact path="/404" component={PageNotFound} />
         <Route exact path="/" component={Home} />
         <Redirect to="/404" />
