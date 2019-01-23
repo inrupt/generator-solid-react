@@ -4,6 +4,7 @@ import { WelcomeWrapper, WelcomeCard, WelcomeLogo, WelcomeProfile } from './welc
 
 /**
  * Welcome Page UI component, containing the styled components for the Welcome Page
+ * Image component will get theimage context and resolve the value to render.
  * @param props
  */
 const WelcomePageContent = props => {
