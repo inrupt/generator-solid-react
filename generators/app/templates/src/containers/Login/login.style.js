@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { GradientBackground, Panel } from "@util-components";
-import { Link } from "react-router-dom";
 
 export const LoginWrapper = styled(GradientBackground)`
   h1 {
@@ -45,30 +44,5 @@ export const LoginTitle = styled.span`
 
   &::after {
     left: 0;
-  }
-`;
-
-export const RegisterButton = styled(Link)`
-  height: 40px;
-  width: 100%;
-  border-radius: 4px;
-  background-color: #7c4dff;
-  color: #ffffff;
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 1.07px;
-  line-height: 16px;
-  display: block;
-  margin: 0 0 16px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-
-  &:hover {
-    filter: opacity(95%);
-    text-decoration: none;
-    cursor: pointer;
   }
 `;

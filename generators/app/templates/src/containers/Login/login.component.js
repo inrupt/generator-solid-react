@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
-import { ProviderLogin } from "solid-react-components";
+import { ProviderLogin } from "@inrupt/solid-react-components";
 import {
   LoginWrapper,
   LoginPanel,
@@ -41,9 +41,12 @@ export default class LoginComponent extends Component<Props, State> {
           <h1>Hi! Welcome to Solid.</h1>
           <LoginPanel>
             <PanelBody>
-              <RegisterButton to="/register">
+              <Link
+                className="ids-link-filled ids-link-filled--primary"
+                to="/register"
+              >
                 Register for a solid identity
-              </RegisterButton>
+              </Link>
               <a
                 href="https://solid.inrupt.com/get-a-solid-pod"
                 rel="noopener noreferrer"
