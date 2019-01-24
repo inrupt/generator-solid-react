@@ -21,12 +21,13 @@ class AuthNavBarContainer extends Component {
        * make an async call. This will return a JSON-LD expanded object and expose the requested value(name).
        * for more information please go to: https://github.com/digitalbazaar/jsonld.js
        */
-      const name = await user.name;
-
-      const image = await user[hasPhotoContext];
+      const userName = await user.name;
+      const userImage = await user[hasPhotoContext];
+      const name = userName ? userName.value : "";
+      const image = userImage ? userImage.value : null;
       this.setState({
-        name: name ? name.value : "",
-        image: image ? image.value : null
+        name,
+        image
       });
     } catch (error) {
       console.error(error);
