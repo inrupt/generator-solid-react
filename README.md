@@ -1,4 +1,4 @@
-# generator-solid-react
+# Solid React Application Generator
 Based on Facebook's <a href="https://github.com/facebookincubator/create-react-app" target="_blank">Create React App</a>.
 
 Application Generator for [Solid](https://solid.inrupt.com) React applications. Part of the [React SDK for Solid](https://github.com/inrupt-inc/solid-react-sdk).
@@ -6,9 +6,11 @@ Application Generator for [Solid](https://solid.inrupt.com) React applications. 
 ## External Dependencies
 
 * [Solid React Components](https://github.com/Inrupt-inc/solid-react-components)
+* [Solid Atomic Style Guide](https://design.inrupt.com)
 * [LDFlex](https://github.com/solid/query-ldflex)
 * [React Toast Notifications](https://jossmac.github.io/react-toast-notifications/)
 * [Styled Components](https://www.styled-components.com)
+* [Yeoman](https://yeoman.io)
 
 ## Installation and Usage
 
