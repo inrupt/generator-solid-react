@@ -24,8 +24,8 @@ class RegistrationSuccess extends Component<Props, State> {
     this.setState({ timeLeft: this.state.timeLeft - 1 });
   };
 
-  redirect = () => {
-    clearInterval(this.interval);
+  redirect = async () => {
+    await clearInterval(this.interval);
     this.props.history.push("/login");
   };
 
@@ -33,8 +33,8 @@ class RegistrationSuccess extends Component<Props, State> {
     this.interval = setInterval(this.countDown, 1000);
   }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
+  async componentWillUnmount() {
+    await clearInterval(this.interval);
   }
 
   render() {
