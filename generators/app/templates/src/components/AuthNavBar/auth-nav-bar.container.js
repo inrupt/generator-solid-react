@@ -13,18 +13,24 @@ class AuthNavBarContainer extends Component {
   }
 
   getProfileData = async () => {
-    // fetching user card from pod. This makes a request and returns the data
-    const user = data[this.props.webId];
-    /*
-     * In the backgorund LDFlex is using JSON-LD. Because of this, we need to
-     * make an async call. This will return a JSON-LD expanded object and expose the requested value(name).
-     * for more information please go to: https://github.com/digitalbazaar/jsonld.js
-     */
-    const name = await user.name;
+    try {
+      // fetching user card from pod. This makes a request and returns the data
+      const user = data[this.props.webId];
+      /*
+       * In the backgorund LDFlex is using JSON-LD. Because of this, we need to
+       * make an async call. This will return a JSON-LD expanded object and expose the requested value(name).
+       * for more information please go to: https://github.com/digitalbazaar/jsonld.js
+       */
+      const name = await user.name;
 
-    const image = await user[hasPhotoContext];
-
-    this.setState({ name: name.value, image: image.value });
+      const image = await user[hasPhotoContext];
+      this.setState({
+        name: name ? name.value : "",
+        image: image ? image.value : null
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   componentDidMount() {
