@@ -46,7 +46,6 @@
     "jest": "^23.5.0",
     "lint-staged": "^8.1.0",
     "prettier": "^1.15.2",
-    "voca": "^1.4.0",
     "yeoman-assert": "^3.1.0",
     "yeoman-test": "^1.7.0"
   },
@@ -56,6 +55,7 @@
   "dependencies": {
     "chalk": "^2.1.0",
     "figlet": "^1.2.1",
+    "voca": "^1.4.0",
     "yeoman-generator": "^2.0.1",
     "yosay": "^2.0.1"
   },
