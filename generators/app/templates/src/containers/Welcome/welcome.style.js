@@ -85,7 +85,7 @@ export const WelcomeProfile = styled.div`
 `;
 
 export const WelcomeDetail = styled.div`
-  padding: 20px;
+  padding: 1rem 3.5rem;
 
   p,
   li {
