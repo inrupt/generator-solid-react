@@ -48,13 +48,14 @@ There are also examples of how to use libraries like [LDFlex](https://github.com
 
 ## What's in the starter application?
 
-This list will update as new releases are made. Currently, the generated application contains the following high-level items:
+The SDK is continually evolving. Take a look at the [Release Timeline](https://github.com/Inrupt-inc/solid-react-sdk/tree/master#release-timeline) for what’s currently currently planned. This release includes:
 
-* Login Page
-* Styled Navbar, with Authenticated and Unauthenticated versions
-* Welcome Page
-  * Example of reading profile data with LDFlex
-  * Documentation
+* [User Registration](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-registration) for a Solid Pod.
+* [User Authentication](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-authentication) against user selected Providers.
+* Use of an [Atomic Style Guide](https://design.inrupt.com/) that you can use to style your applications.
+* Infrastructure and applied best practices for [Error Handling](https://github.com/Inrupt-inc/solid-react-sdk#error-handling), [Testing](https://github.com/Inrupt-inc/solid-react-sdk#test-infrastructure), and [Accessibility](https://github.com/Inrupt-inc/solid-react-sdk#accessibility).
+ 
+Currently in the plan for release over the next components to handle [User Profiles](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-profile) and [Preferences](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-preferences), [i18n](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#internationalization), [Notifications](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#notifications), [Access Control](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#access-control), [Linking Things](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#linking-things), and [Data Discovery](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#data-discovery).
 
 ## Error Handling
 
