@@ -29,7 +29,7 @@ const WelcomePageContent = props => {
               <Image
                 alt="User"
                 src={props.image}
-                defaultSrc="/img/empty-profile.svg"
+                defaultSrc="/img/icon/empty-profile.svg"
               />
             )}
           </div>
