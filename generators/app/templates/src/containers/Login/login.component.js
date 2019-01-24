@@ -28,6 +28,7 @@ export default class LoginComponent extends Component<Props, State> {
 
   render() {
     const { loading } = this.state;
+
     return (
       <LoginWrapper>
         <CenterContainer>

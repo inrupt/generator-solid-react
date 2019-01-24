@@ -1,23 +1,45 @@
 import styled from 'styled-components';
+import { media } from '../../utils';
 
 export const WelcomeWrapper = styled.section`
-  height: 100%;
   width: 100%;
   background-image: url('/img/concentric-hex-pattern_2x.png');
   background-repeat: repeat;
-  padding-top: 50px;
+  padding: 50px 0;
+
+  h3 {
+    color: #666666;
+    span {
+      color: #7C4DFF;
+    }
+    a {
+      font-size: 1.9rem;
+    }
+  }
 `;
 
 export const WelcomeCard = styled.div`
   background-color: #fff;
-  margin: 0 auto;
+  margin: 30px auto;
 
   //Overriding the style guide card flexbox settings
   max-width: 80% !important;
   flex-direction: row !important;
-  padding: 40px 0 !important; //temporary fix to a style guide bug
+  padding: 50px 0 !important; //temporary fix to a style guide bug
 
   align-items: center;
+
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    margin-left: 8px;
+  }
+
 `;
 
 export const WelcomeLogo = styled.div`
@@ -32,11 +54,45 @@ export const WelcomeLogo = styled.div`
 `;
 
 export const WelcomeProfile = styled.div`
-  width: 50%;
   height: 100%;
   text-align: center;
+  position: relative;
 
   img {
     max-width: 120px;
+    border-radius: 60px;
+  }
+
+  h1,
+  img {
+    margin: 0 10px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  ${media.tablet`
+    width: 50%;
+    &:after {
+      display: block;
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 1px;
+      background-color:#D0D0D0;
+      top:0;
+    }
+  `}
+`;
+
+export const WelcomeDetail = styled.div`
+  padding: 1rem 3.5rem;
+
+  p,
+  li {
+    color: #666666;
+  }
+  ul {
+    list-style: disc;
+    margin: 0 18px;
   }
 `;
