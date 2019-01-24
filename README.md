@@ -115,3 +115,9 @@ In the event you want more specific errors in a given component, you can call Er
   <App />
 </ErrorBoundary>
   ```
+
+## Deployment
+
+Once your application is ready, you can deploy it to a server of your choice.
+
+It is ***highly recommended*** that you ensure your server is utilizing TLS. If not, you may encounter security-related errors in the browser, particular in Google Chrome.
