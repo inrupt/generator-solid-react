@@ -10,7 +10,7 @@ export const WelcomeWrapper = styled.section`
   h3 {
     color: #666666;
     span {
-      color: #7C4DFF;
+      font-weight: bold;
     }
     a {
       font-size: 1.9rem;
