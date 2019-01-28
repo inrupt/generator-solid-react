@@ -134,7 +134,8 @@
             "@containers": "./src/containers",
             "@util-components": "./src/components/Utils",
             "@services": "./src/services",
-            "@layouts": "./src/layouts"
+            "@layouts": "./src/layouts",
+            "@testSetup": "./src/utils/enzymeSetup"
           }
         }
       ]
