@@ -1,14 +1,22 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { mount } from "enzyme";
 import CenterContainer from "./center-container.component";
+import { CenterContainerWrapper } from "./center-container.style";
 
 import "@testSetup";
 
-const setup = () => shallow(<CenterContainer />);
-
-describe("CenterContainer", () => {
+describe.only("CenterContainer", () => {
+  let wrapper;
+  beforeAll(() => {
+    wrapper = mount(<CenterContainer />);
+  });
   it("renders without crashing", () => {
-    const wrapper = setup();
     expect(wrapper).toBeTruthy();
+  });
+  it("renders styled components", () => {
+    expect(wrapper.find(CenterContainerWrapper)).toBeTruthy();
+  });
+  it("renders properly", () => {
+    expect(wrapper.find("div.wrapper")).toBeTruthy();
   });
 });

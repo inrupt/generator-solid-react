@@ -1,14 +1,31 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { mount } from "enzyme";
 import RegistrationSuccess from "./registration-success.component";
+import { RegistrationPage } from "./registration-success.style";
 
 import "@testSetup";
 
-const setup = () => shallow(<RegistrationSuccess />);
-
 describe("RegistrationSuccess", () => {
-  it("renders without crashing", () => {
-    const wrapper = setup();
+  let wrapper;
+  beforeEach(() => {
+    wrapper = mount(<RegistrationSuccess />);
+  });
+  test("renders without crashing", () => {
     expect(wrapper).toBeTruthy();
+  });
+  test("renders with styled components", () => {
+    expect(wrapper.find(RegistrationPage)).toBeTruthy();
+  });
+
+  test("renders title properly", () => {
+    expect(
+      wrapper.containsMatchingElement(
+        <h1>Success! Welcome to the decentralized web.</h1>
+      )
+    ).toBeTruthy();
+  });
+
+  test("rendering item properly", () => {
+    expect(wrapper.find("img").hasClass("rocket")).toBeTruthy();
   });
 });
