@@ -42,7 +42,9 @@ class WelcomeComponent extends Component<Props> {
      * from the returned user object.
      */
     const user = data[this.props.webId];
-    const name = await user.name;
+    const nameLd = await user.name;
+
+    const name = nameLd ? nameLd.value : "";
 
     /**
      * This is where we set the state with the name and image values. The user[hasPhotoContext] line of code is an example of
@@ -54,7 +56,7 @@ class WelcomeComponent extends Component<Props> {
      *
      * For more information please go to: https://github.com/solid/query-ldflex
      */
-    this.setState({ name: name.value, image: user[hasPhotoContext] });
+    this.setState({ name, image: user[hasPhotoContext] });
   };
 
   render() {
