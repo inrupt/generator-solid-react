@@ -1,12 +1,12 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import { GlobalError } from "./global-error.component";
-import { ErrorTitle, ErrorInfo } from './global-error.style';
+import { ErrorTitle, ErrorInfo } from "./global-error.style";
 
 import "../../utils/enzymeSetup";
 
 describe("ErrorBoundary Component", () => {
-  it("renders without crashing and render messages", () => {
+  test("renders without crashing and render messages", () => {
     const wrapper = shallow(
       <GlobalError
         error="Error Message"
