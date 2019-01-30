@@ -15,6 +15,11 @@ const privateRoutes = [
     id: "welcome",
     path: "/welcome",
     component: WelcomeComponent
+  },
+  {
+    id: "profile",
+    path: "/profile",
+    component: WelcomeComponent
   }
 ];
 
