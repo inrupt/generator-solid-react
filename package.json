@@ -1,15 +1,33 @@
 {
-  "name": "generator-solid-react",
-  "version": "0.0.0",
+  "name": "@inrupt/generator-solid-react",
+  "version": "0.1.0",
   "description": "Solid React Application Generator",
-  "homepage": "",
-  "author": {
-    "name": "Pablo Rodriguez",
-    "email": "pablo.rodriguez@janeirodigital.com",
-    "url": ""
-  },
+  "homepage": "https://solid.inrupt.com/docs",
+  "contributors": [
+    {
+      "name": "Justin Bingham",
+      "email": "justin.bingham@janeirodigital.com"
+    },
+    {
+      "name": "James Martin",
+      "email": "james.martin@janeirodigital.com"
+    },
+    {
+      "name": "Pablo Rodriguez",
+      "email": "pablo.rodriguez@janeirodigital.com"
+    },
+    {
+      "name": "Jairo Campos",
+      "email": "jairo.campos@janeirodigital.com"
+    },
+    {
+      "name": "Arne Hassel",
+      "email": "arneh@inrupt.com"
+    }
+  ],
   "files": [
-    "generators"
+    "generators",
+    "CONTRIBUTING.md"
   ],
   "main": "generators/index.js",
   "keywords": [
@@ -19,23 +37,27 @@
     "yeoman-generator"
   ],
   "devDependencies": {
-    "yeoman-test": "^1.7.0",
-    "yeoman-assert": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.7.1",
     "eslint": "^5.9.0",
-    "prettier": "^1.15.2",
-    "husky": "^1.2.0",
-    "lint-staged": "^8.1.0",
     "eslint-config-prettier": "^3.3.0",
-    "eslint-plugin-prettier": "^3.0.0",
     "eslint-config-xo": "^0.25.0",
-    "jest": "^23.5.0"
+    "eslint-plugin-prettier": "^3.0.0",
+    "husky": "^1.2.0",
+    "jest": "^23.5.0",
+    "lint-staged": "^8.1.0",
+    "prettier": "^1.15.2",
+    "yeoman-assert": "^3.1.0",
+    "yeoman-test": "^1.7.0"
   },
   "engines": {
     "npm": ">= 4.0.0"
   },
   "dependencies": {
-    "yeoman-generator": "^2.0.1",
     "chalk": "^2.1.0",
+    "figlet": "^1.2.1",
+    "glob": "^7.1.3",
+    "voca": "^1.4.0",
+    "yeoman-generator": "^2.0.1",
     "yosay": "^2.0.1"
   },
   "jest": {
