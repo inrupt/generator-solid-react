@@ -3,7 +3,7 @@ import WelcomePageContent from "./welcome.component";
 import { withWebId } from "@inrupt/solid-react-components";
 import data from "@solid/query-ldflex";
 
-// hasPhoto context
+// Manually-created vcard#hasPhoto context link
 const hasPhotoContext = "http://www.w3.org/2006/vcard/ns#hasPhoto";
 
 /**
@@ -29,22 +29,34 @@ class WelcomeComponent extends Component<Props> {
       this.getProfileData();
     }
   }
+
   /**
-   * We are using LDFlex for Solid to fetch a user's profile.
-   * In this case we need to create a new Subject(hasPhoto)
-   * because it's not listed in the context.json file inside of the ldflex repository
-   * For more information please go to: https://github.com/solid/query-ldflex
+   * This function retrieves a user's card data and tries to grab both the user's name and profile photo if they exist.
+   *
+   * This is an example of how to use the LDFlex library to fetch different linked data fields.
    */
   getProfileData = async () => {
-    // fetching user card from pod. This makes a request and returns the data
-    const user = data[this.props.webId];
     /*
-     * In the backgorund LDFlex is using JSON-LD. Because of this, we need to
-     * make an async call. This will return a JSON-LD expanded object and expose the requested value(name).
-     * for more information please go to: https://github.com/digitalbazaar/jsonld.js
+     * This is an example of how to use LDFlex. Here, we're loading the webID link into a user variable. This user object
+     * will contain all of the data stored in the webID link, such as profile information. Then, we're grabbing the user.name property
+     * from the returned user object.
      */
-    const name = await user.name;
-    this.setState({ name: name.value, image: user[hasPhotoContext] });
+    const user = data[this.props.webId];
+    const nameLd = await user.name;
+
+    const name = nameLd ? nameLd.value : "";
+
+    /**
+     * This is where we set the state with the name and image values. The user[hasPhotoContext] line of code is an example of
+     * what to do when LDFlex doesn't have the full context. LDFlex has many data contexts already in place, but in case
+     * it's missing, you can manually add it like we're doing here.
+     *
+     * The hasPhotoContext variable stores a link to the definition of the vcard ontology and, specifically, the #hasPhoto
+     * property that we're using to store and link the profile image.
+     *
+     * For more information please go to: https://github.com/solid/query-ldflex
+     */
+    this.setState({ name, image: user[hasPhotoContext] });
   };
 
   render() {

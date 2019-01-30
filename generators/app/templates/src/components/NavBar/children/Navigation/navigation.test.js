@@ -4,12 +4,27 @@ import Navigation from "./navigation.component";
 
 import "@testSetup";
 
-const setup = () => shallow(<Navigation />);
-const setupMount = () => mount(<Navigation />);
+describe.only("Navigation", () => {
+  let wrapper, navigation;
+  beforeEach(() => {
+    navigation = [
+      {
+        id: "welcome",
+        icon: "img/icon/apps.svg",
+        label: "Welcome",
+        to: "/welcome"
+      }
+    ];
+    wrapper = shallow(<Navigation navigation={navigation} />);
+  });
 
-describe("Navigation", () => {
-  it("renders without crashing", () => {
-    const wrapper = setup();
+  test("renders without crashing", () => {
     expect(wrapper).toBeTruthy();
+  });
+
+  test("renders one navigation item", () => {
+    const li = wrapper.find("li");
+    expect(li.length).toEqual(1);
+    expect(li.find("span.label").text()).toBe("Welcome");
   });
 });

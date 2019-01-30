@@ -20,7 +20,7 @@ const shallowErrors = codeRun => {
 };
 
 describe("ErrorBoundary Component", () => {
-  it("caches error and display messages", () => {
+  test("caches error and display messages", () => {
     shallowErrors(() => {
       const wrapper = mount(
         <ErrorBoundary component={() => <h2>Error Message</h2>}>
