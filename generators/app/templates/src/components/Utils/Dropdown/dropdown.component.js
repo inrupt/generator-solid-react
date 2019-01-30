@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import enhanceWithClickOutside from "react-click-outside";
 import {
@@ -6,7 +6,11 @@ import {
   DropdownMain,
   DropdownItemContainer
 } from "./dropdown.style";
-type Props = { data: Array<Object>, children: React.Node, className: String };
+type Props = {
+  actions: Array<Object>,
+  children: React.Node,
+  className: String
+};
 
 type State = { open: Boolean };
 
@@ -23,10 +27,9 @@ class Dropdown extends Component<Props, State> {
   }
 
   render() {
-    const { data, children, className } = this.props;
+    const { actions, children, className } = this.props;
     const { open } = this.state;
-    return (
-      <DropdownContainer className={className} onClick={this.toggleOpen}>
+    /*   <DropdownContainer className={className} onClick={this.toggleOpen}>
         <DropdownMain onClick={this.toggleOpen}>{children}</DropdownMain>
         {open && (
           <DropdownItemContainer>
@@ -43,6 +46,23 @@ class Dropdown extends Component<Props, State> {
           </DropdownItemContainer>
         )}
       </DropdownContainer>
+              */
+    return (
+      <div className="hasChildren">
+        <button onClick={this.toggleOpen}>{children}</button>
+        <ul class="sub-nav-dropdown">
+          {actions.map((item, i) => (
+            <li key={i}>
+              <button onClick={item.onClick}>
+                {item.icon && (
+                  <FontAwesomeIcon icon={item.icon} className="checked" />
+                )}
+                <span>{item.label}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   }
 }
