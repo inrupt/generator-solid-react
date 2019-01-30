@@ -12,7 +12,7 @@
 - First version of prompting application configuration
 - Added voca as a dependency to handle casing properly for app name
 
-#### Devkit Demo
+#### Solid React Application Base
 
 ##### Added
 
