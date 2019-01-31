@@ -95,7 +95,11 @@ class RegisterComponent extends Component<Props, State> {
                 </PanelHeader>
                 <PanelBody className="panel-body">
                   <Fragment>
-                    <a href="https://solid.inrupt.com/how-it-works">
+                    <a
+                      href="https://solid.inrupt.com/how-it-works"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       What is a provider, and how should I choose one?
                     </a>
                     <Link to="/login" className="a-with-spacing">

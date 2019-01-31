@@ -1,15 +1,20 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import PageNotFound from './page-not-found.component';
-import { Link } from 'react-router-dom';
-import '../../utils/enzymeSetup';
+import React from "react";
+import { shallow } from "enzyme";
+import PageNotFound from "./page-not-found.component";
+import { Link } from "react-router-dom";
+import "../../utils/enzymeSetup";
 
-it('App renders without crashing', () => {
-  const wrapper = shallow(<PageNotFound />);
-  expect(wrapper).toBeTruthy();
-});
+describe("Page Not Found", () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallow(<PageNotFound />);
+  });
 
-it('includes link to homepage', () => {
-  const home = shallow(<PageNotFound/>);
-  expect(home.find(Link)).toHaveLength(1);
+  test("App renders without crashing", () => {
+    expect(wrapper).toBeTruthy();
+  });
+
+  test("includes link to homepage", () => {
+    expect(wrapper.find(Link)).toHaveLength(1);
+  });
 });

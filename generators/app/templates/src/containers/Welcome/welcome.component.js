@@ -106,7 +106,7 @@ const WelcomePageContent = props => {
             </li>
             <li>
               <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-registration"
+                href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-authentication"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -176,49 +176,62 @@ const WelcomePageContent = props => {
             >
               {" "}
               User Profile
-            </a>{" "} and <a
+            </a>{" "}
+            and{" "}
+            <a
               href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-preferences"
               target="_blank"
               rel="noopener noreferrer"
             >
               {" "}
               Preferences
-            </a>{" "}, <a
-              href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#internationalization"
+            </a>{" "}
+            ,{" "}
+            <a
+              href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#internationalization-i18n"
               target="_blank"
               rel="noopener noreferrer"
             >
               {" "}
               i18n
-            </a>{" "}, <a
+            </a>{" "}
+            ,{" "}
+            <a
               href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#notifications"
               target="_blank"
               rel="noopener noreferrer"
             >
               {" "}
               Notifications
-            </a>{" "}, <a
+            </a>{" "}
+            ,{" "}
+            <a
               href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#access-control"
               target="_blank"
               rel="noopener noreferrer"
             >
               {" "}
               Access Control
-            </a>{" "}, <a
-              href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#access-control"
+            </a>{" "}
+            ,{" "}
+            <a
+              href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#linking-things"
               target="_blank"
               rel="noopener noreferrer"
             >
               {" "}
               Linking Things
-            </a>{" "}, and <a
-              href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#access-control"
+            </a>{" "}
+            , and{" "}
+            <a
+              href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#data-discovery"
               target="_blank"
               rel="noopener noreferrer"
             >
               {" "}
               Data Discovery
-            </a>{" "}.
+            </a>{" "}
+            .
           </p>
         </WelcomeDetail>
       </WelcomeCard>

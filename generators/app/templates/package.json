@@ -135,7 +135,8 @@
             "@util-components": "./src/components/Utils",
             "@services": "./src/services",
             "@layouts": "./src/layouts",
-            "@contexts": "./src/contexts/"
+            "@contexts": "./src/contexts/",
+            "@testSetup": "./src/utils/enzymeSetup"
           }
         }
       ]
