@@ -59,7 +59,7 @@ export const WelcomeProfile = styled.div`
   position: relative;
 
   img {
-    max-width: 120px;
+    width: 120px;
     border-radius: 60px;
   }
 
