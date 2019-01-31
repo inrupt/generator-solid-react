@@ -12,6 +12,13 @@ export const LoginPanel = styled(Panel)``;
 export const PanelBody = styled.div`
   display: grid;
   flex-direction: column;
+  
+  .provider-login-component {
+    div[role=option] {
+      text-align: left !important;
+      padding-left: 20px;
+    }
+  }
 `;
 
 export const LoginTitle = styled.span`
