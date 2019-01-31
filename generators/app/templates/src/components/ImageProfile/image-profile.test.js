@@ -3,7 +3,7 @@ import { shallow, mount } from "enzyme";
 import { ImageProfile } from "./image-profile.component";
 import { ImageProfileLoader, ButtonStyled } from './image-profile.style';
 
-import "../../utils/enzymeSetup";
+import "@testSetup";
 
 describe("Image Profile", () => {
   const setup = (props) => shallow(<ImageProfile {...props} />)
