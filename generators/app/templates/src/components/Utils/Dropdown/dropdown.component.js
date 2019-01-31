@@ -37,7 +37,9 @@ class Dropdown extends Component<Props, State> {
               {data.map((item, i) => (
                 <li key={i}>
                   <button onClick={item.onClick}>
-                    <FontAwesomeIcon icon={item.icon} className="checked" />
+                    {item.icon && (
+                      <FontAwesomeIcon icon={item.icon} className="checked" />
+                    )}
                     <span>{item.label}</span>
                   </button>
                 </li>

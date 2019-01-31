@@ -10,7 +10,20 @@ Application Generator for [Solid](https://solid.inrupt.com) React applications. 
 * [LDFlex](https://github.com/solid/query-ldflex)
 * [React Toast Notifications](https://jossmac.github.io/react-toast-notifications/)
 * [Styled Components](https://www.styled-components.com)
+* [npm](https://www.npmjs.com)
 * [Yeoman](https://yeoman.io)
+
+## Prerequisites
+
+To install the Generator, you will need both npm and Yeoman if you don't already have them.
+
+npm makes it easy for JavaScript developers to share and reuse code, and makes it easy to update the code that you’re sharing. To install, follow the instructions at [npm](https://www.npmjs.com/get-npm).
+
+Yeoman provides a generator ecosystem to scaffold complete projects. You can install Yeoman using the following command:
+
+```
+npm install -g yo
+```
 
 ## Installation and Usage
 
