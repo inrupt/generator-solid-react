@@ -38,7 +38,7 @@
         "blankNode": "vcard:street-address"
       },
       {
-        "label": "Contry",
+        "label": "Country",
         "icon": "flag",
         "property": "vcard:hasAddress",
         "blankNode": "vcard:country-name"

@@ -38,7 +38,7 @@ export const Header = styled.div`
   };
 `;
 
-export const ProfileContent = styled.div`
+export const Form = styled.form`
   padding: 20px 40px;
   align-items: center;
   display:grid;
@@ -46,6 +46,19 @@ export const ProfileContent = styled.div`
   grid-gap: 20px 40px;
   ${media.tablet`
     grid-template-columns: 1fr 1fr;
+  `}
+`;
+
+export const Button = styled.button`
+  max-width: 128px !important;
+  display: inline-block !important;
+`;
+
+export const FullGridSize = styled.div`
+  grid-column: span 1;
+  text-align: right;
+  ${media.tablet`
+    grid-column: span 2;
   `}
 `;
 

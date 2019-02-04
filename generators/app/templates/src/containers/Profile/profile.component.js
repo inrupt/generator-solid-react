@@ -6,8 +6,10 @@ import { ImageProfile } from "@components";
 import {
   ProfileWrapper,
   ProfileContainer,
+  FullGridSize,
+  Button,
   Header,
-  ProfileContent,
+  Form,
   WebId
 } from "./profile.style";
 
@@ -16,6 +18,9 @@ type Props = {
   photo: String,
   formFields: Array<Object>,
   changeFormMode: () => void,
+  onInputChange: () => void,
+  onSubmit: () => void,
+  updatePhoto: (uri: String) => void,
   formMode: boolean
 };
 
@@ -23,6 +28,9 @@ export const ProfileComponent = ({
   webId,
   formFields,
   changeFormMode,
+  onInputChange,
+  updatePhoto,
+  onSubmit,
   formMode,
   photo
 }: Props) => {
@@ -41,24 +49,39 @@ export const ProfileComponent = ({
             {...{
               fileBase: webId && webId.split("/card")[0],
               limitFiles: 1,
+              onComplete: (uploadedFiles) => {
+                updatePhoto(uploadedFiles[0].uri);
+              },
               render: props => <ImageProfile {...{ ...props, webId, photo }} />
             }}
           />
         </Header>
-        <ProfileContent>
+        <Form onSubmit={onSubmit}>
           {formFields &&
             formFields.map(item => (
               <Input
                 key={item.label}
                 placeholder={item.label}
                 type="text"
+                name={item.blankNode || item.property}
                 value={item.value || ""}
+                onChange={onInputChange}
                 icon={item.icon}
-                onChange={() => {}}
                 readOnly={formMode}
+                required
               />
             ))}
-        </ProfileContent>
+          <FullGridSize>
+            {!formMode && (
+              <Button
+                type="submit"
+                className="ids-link-filled ids-link-filled--primary"
+              >
+                Save
+              </Button>
+            )}
+          </FullGridSize>
+        </Form>
         {formMode && (
           <WebId>
             <FontAwesomeIcon icon="id-card" />

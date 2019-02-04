@@ -33,6 +33,62 @@ export class Profile extends Component {
     this.setState({ formMode: !this.state.formMode });
   };
   /**
+   * onChangeInput will update a field into formFields array
+   * and will add updated flag to true, this will be taken
+   * for submit form to check which fields needs to be sent to POD
+  */
+  onInputChange = (e: Event) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    const updatedFormField = this.state.formFields.map(field => {
+      if (field.property === name || field.blankNode === name) {
+        return {
+          ...field,
+          updated: true,
+          value
+        };
+      }
+
+      return { ...field };
+    });
+
+    this.setState({ formFields: updatedFormField });
+  };
+  /**
+   * onSubmit will send all the updated fields to POD
+   * fields that was not updated will be not send it.
+  */
+  onSubmit = async (e: Event) => {
+    try {
+      e.preventDefault();
+      let node;
+      const updatedFormField = await Promise.all(
+        this.state.formFields.map(async field => {
+          if (field.updated) {
+            node = data.user[field.property];
+            if (field.blankNode) {
+              node = data[field.nodeParentUri][field.blankNode];
+            }
+            await node.set(field.value);
+
+            return {
+              ...field,
+              updated: false
+            };
+          }
+          return { ...field };
+        })
+      );
+      this.props.toastManager.add("Profile was updated successfully", {
+        appearance: "success"
+      });
+      this.setState({ formFields: updatedFormField });
+    } catch (error) {
+      this.props.toastManager.add(error.message, { appearance: "error" });
+    }
+  };
+  /**
    * Fetch profile photo from card
    */
   fetchPhoto = async () => {
@@ -41,6 +97,7 @@ export class Profile extends Component {
       const user = data[this.props.webId];
       // We access to document node using a node name
       let image = await user.image;
+      let hasImage = true;
       // If image is not present on card we try with hasPhoto
       if (!image) {
         /**
@@ -50,9 +107,34 @@ export class Profile extends Component {
          * https://github.com/digitalbazaar/jsonld.js
          */
         image = await user["vcard:hasPhoto"];
+
+        hasImage = false;
       }
 
-      this.setState({ photo: (image && image.value) || defaulProfilePhoto });
+      this.setState({
+        photo: (image && image.value) || defaulProfilePhoto,
+        hasImage
+      });
+    } catch (error) {
+      this.props.toastManager.add(error.message, { appearance: "error" });
+    }
+  };
+  /**
+   * updatedPhoto will update the photo url on vcard file
+   * this function will check if user has image or hasPhoto node if not
+   * will just update it, the idea is use image instead of hasPhoto
+   * @params{String} uri photo url
+  */
+  updatePhoto = async (uri: String) => {
+    try {
+      const { user } = data;
+      this.state.hasImage
+        ? await user.image.set(uri)
+        : await user.image.add(uri);
+
+      this.props.toastManager.add("Profile Image was updated", {
+        appearance: "success"
+      });
     } catch (error) {
       this.props.toastManager.add(error.message, { appearance: "error" });
     }
@@ -70,7 +152,6 @@ export class Profile extends Component {
       const { profile } = ProfileShape;
       // We are fetching profile card document
       const user = data[this.props.webId];
-      let node;
 
       /**
        * We run each shapes on profile-shape.json and access to each
@@ -80,12 +161,9 @@ export class Profile extends Component {
        */
       const formFields = await Promise.all(
         profile.shape.map(async field => {
-          node = field.blankNode
-            ? await user[field.property][field.blankNode]
-            : await user[field.property];
           return {
             ...field,
-            value: (node && node.value) || ""
+            ...(await this.getNodeValue(user, field))
           };
         })
       );
@@ -94,12 +172,39 @@ export class Profile extends Component {
       this.props.toastManager.add(error.message, { appearance: "error" });
     }
   };
+  /**
+   * getNodeValue will return node value and uri in case that node points to nodeBlank
+   * nodeParentUri is a workaround to fix blank node update fields on ldflex
+   * @params{Object} user
+   * @params{Object} field
+   */
+  getNodeValue = async (user: Object, field: Object) => {
+    let node;
+    let nodeParentUri;
+
+    if (field.blankNode) {
+      const parentNode = await user[field.property];
+
+      node = await user[field.property][field.blankNode];
+      nodeParentUri = parentNode.value;
+    } else {
+      node = await user[field.property];
+    }
+
+    return {
+      value: node.value || "",
+      nodeParentUri
+    };
+  };
   render() {
     return (
       <ProfileComponent
         webId={this.props.webId}
         formFields={this.state.formFields}
         formMode={this.state.formMode}
+        onInputChange={this.onInputChange}
+        onSubmit={this.onSubmit}
+        updatePhoto={this.updatePhoto}
         photo={this.state.photo}
         changeFormMode={this.changeFormMode}
       />
