@@ -1,10 +1,11 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import enhanceWithClickOutside from "react-click-outside";
 import {
   DropdownContainer,
   DropdownMain,
-  DropdownItemContainer
+  DropdownItemContainer,
+  Item
 } from "./dropdown.style";
 type Props = {
   actions: Array<Object>,
@@ -29,42 +30,26 @@ class Dropdown extends Component<Props, State> {
   render() {
     const { actions, children, className } = this.props;
     const { open } = this.state;
-    /*   <DropdownContainer className={className} onClick={this.toggleOpen}>
+    return (
+      <DropdownContainer className={className} onClick={this.toggleOpen}>
         <DropdownMain onClick={this.toggleOpen}>{children}</DropdownMain>
         {open && (
           <DropdownItemContainer>
             <ul>
-              {data.map((item, i) => (
-                <li key={i}>
-                  <button onClick={item.onClick}>
-                    {item.icon && (
-                      <FontAwesomeIcon icon={item.icon} className="checked" />
+              {actions.map((action, i) => (
+                <Item key={i}>
+                  <button onClick={action.onClick}>
+                    {action.icon && (
+                      <FontAwesomeIcon icon={action.icon} className="checked" />
                     )}
-                    <span>{item.label}</span>
+                    <span>{action.label}</span>
                   </button>
-                </li>
+                </Item>
               ))}
             </ul>
           </DropdownItemContainer>
         )}
       </DropdownContainer>
-              */
-    return (
-      <div className="hasChildren">
-        <button onClick={this.toggleOpen}>{children}</button>
-        <ul class="sub-nav-dropdown">
-          {actions.map((item, i) => (
-            <li key={i}>
-              <button onClick={item.onClick}>
-                {item.icon && (
-                  <FontAwesomeIcon icon={item.icon} className="checked" />
-                )}
-                <span>{item.label}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
     );
   }
 }

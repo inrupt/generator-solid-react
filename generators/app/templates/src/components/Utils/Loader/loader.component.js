@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { LoaderWrapper } from "./loader.style";
+import { LoaderWrapper, CubeGrid, Cube } from "./loader.style";
 type Props = {
   show: boolean
 };
@@ -7,19 +7,15 @@ type Props = {
 class Loader extends Component<Props> {
   render() {
     const { show } = this.props;
+    const cubes = [0.2, 0.3, 0.4, 0.1, 0.2, 0.3, 0, 0.1, 0.2];
+
     return (
       <LoaderWrapper show={show}>
-        <div className="sk-cube-grid">
-          <div className="sk-cube sk-cube1" />
-          <div className="sk-cube sk-cube2" />
-          <div className="sk-cube sk-cube3" />
-          <div className="sk-cube sk-cube4" />
-          <div className="sk-cube sk-cube5" />
-          <div className="sk-cube sk-cube6" />
-          <div className="sk-cube sk-cube7" />
-          <div className="sk-cube sk-cube8" />
-          <div className="sk-cube sk-cube9" />
-        </div>
+        <CubeGrid>
+          {cubes.map((delay, i) => (
+            <Cube key={i} delay={delay} />
+          ))}
+        </CubeGrid>
       </LoaderWrapper>
     );
   }

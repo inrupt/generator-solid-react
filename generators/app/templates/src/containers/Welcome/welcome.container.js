@@ -15,7 +15,8 @@ class WelcomeComponent extends Component<Props> {
 
     this.state = {
       name: "",
-      image: ""
+      image: "",
+      loading: false
     };
   }
   componentDidMount() {
@@ -36,6 +37,8 @@ class WelcomeComponent extends Component<Props> {
    * This is an example of how to use the LDFlex library to fetch different linked data fields.
    */
   getProfileData = async () => {
+    this.setState({ loading: true });
+
     /*
      * This is an example of how to use LDFlex. Here, we're loading the webID link into a user variable. This user object
      * will contain all of the data stored in the webID link, such as profile information. Then, we're grabbing the user.name property
@@ -56,13 +59,12 @@ class WelcomeComponent extends Component<Props> {
      *
      * For more information please go to: https://github.com/solid/query-ldflex
      */
-    this.setState({ name, image: user[hasPhotoContext] });
+    this.setState({ name, image: user[hasPhotoContext], loading: false });
   };
 
   render() {
-    return (
-      <WelcomePageContent name={this.state.name} image={this.state.image} />
-    );
+    const { name, image, loading } = this.state;
+    return <WelcomePageContent name={name} image={image} loading={loading} />;
   }
 }
 
