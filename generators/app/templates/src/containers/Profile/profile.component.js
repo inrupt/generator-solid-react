@@ -24,7 +24,7 @@ type Props = {
   formMode: boolean
 };
 
-export const ProfileComponent = ({
+const ProfileComponent = ({
   webId,
   formFields,
   changeFormMode,
@@ -49,7 +49,7 @@ export const ProfileComponent = ({
             {...{
               fileBase: webId && webId.split("/card")[0],
               limitFiles: 1,
-              onComplete: (uploadedFiles) => {
+              onComplete: uploadedFiles => {
                 updatePhoto(uploadedFiles[0].uri);
               },
               render: props => <ImageProfile {...{ ...props, webId, photo }} />
@@ -94,3 +94,5 @@ export const ProfileComponent = ({
     </ProfileWrapper>
   );
 };
+
+export default ProfileComponent;

@@ -31,7 +31,6 @@ class NavBarProfile extends Component {
       }
     ];
     const profilePic = img ? img : "/img/icon/empty-profile.svg";
-    console.log(this.props);
 
     return (
       <Dropdown actions={profileOpts} className="nav-bar--profile">

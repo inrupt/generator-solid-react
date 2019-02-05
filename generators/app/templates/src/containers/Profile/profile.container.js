@@ -3,7 +3,7 @@ import { withWebId } from "@inrupt/solid-react-components";
 import { withToastManager } from "react-toast-notifications";
 import data from "@solid/query-ldflex";
 import ProfileShape from "@contexts/profile-shape.json";
-import { ProfileComponent } from "./profile.component";
+import ProfileComponent from "./profile.component";
 
 const defaulProfilePhoto = "/img/icon/empty-profile.svg";
 
@@ -36,7 +36,7 @@ export class Profile extends Component {
    * onChangeInput will update a field into formFields array
    * and will add updated flag to true, this will be taken
    * for submit form to check which fields needs to be sent to POD
-  */
+   */
   onInputChange = (e: Event) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -58,7 +58,7 @@ export class Profile extends Component {
   /**
    * onSubmit will send all the updated fields to POD
    * fields that was not updated will be not send it.
-  */
+   */
   onSubmit = async (e: Event) => {
     try {
       e.preventDefault();
@@ -124,7 +124,7 @@ export class Profile extends Component {
    * this function will check if user has image or hasPhoto node if not
    * will just update it, the idea is use image instead of hasPhoto
    * @params{String} uri photo url
-  */
+   */
   updatePhoto = async (uri: String) => {
     try {
       const { user } = data;
@@ -190,9 +190,8 @@ export class Profile extends Component {
     } else {
       node = await user[field.property];
     }
-
     return {
-      value: node.value || "",
+      value: (node && node.value) || "",
       nodeParentUri
     };
   };
