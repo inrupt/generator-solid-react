@@ -1,28 +1,40 @@
 import React, { Component } from "react";
-import { LoaderWrapper } from "./loader.style";
+import { LoaderWrapper, CubeGrid, Cube } from "./loader.style";
+
 type Props = {
-  show: boolean
+  delay: Number
 };
 
 class Loader extends Component<Props> {
+  state = { show: false };
+  componentDidMount() {
+    this.delayTimer = setTimeout(this.show, this.props.delay);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.delayTimer);
+  }
+
+  show = () => this.setState({ show: true });
   render() {
-    const { show } = this.props;
+    const cubes = [0.2, 0.3, 0.4, 0.1, 0.2, 0.3, 0, 0.1, 0.2];
+    const { show } = this.state;
     return (
-      <LoaderWrapper show={show}>
-        <div className="sk-cube-grid">
-          <div className="sk-cube sk-cube1" />
-          <div className="sk-cube sk-cube2" />
-          <div className="sk-cube sk-cube3" />
-          <div className="sk-cube sk-cube4" />
-          <div className="sk-cube sk-cube5" />
-          <div className="sk-cube sk-cube6" />
-          <div className="sk-cube sk-cube7" />
-          <div className="sk-cube sk-cube8" />
-          <div className="sk-cube sk-cube9" />
-        </div>
-      </LoaderWrapper>
+      show && (
+        <LoaderWrapper>
+          <CubeGrid>
+            {cubes.map((delay, i) => (
+              <Cube key={i} delay={delay} />
+            ))}
+          </CubeGrid>
+        </LoaderWrapper>
+      )
     );
   }
 }
+
+Loader.defaultProps = {
+  delay: 300
+};
 
 export default Loader;

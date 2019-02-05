@@ -3,7 +3,7 @@ import { withWebId } from "@inrupt/solid-react-components";
 import { withToastManager } from "react-toast-notifications";
 import data from "@solid/query-ldflex";
 import ProfileShape from "@contexts/profile-shape.json";
-import { ProfileComponent } from "./profile.component";
+import ProfileComponent from "./profile.component";
 
 const defaulProfilePhoto = "/img/icon/empty-profile.svg";
 
@@ -22,12 +22,15 @@ export class Profile extends Component {
     this.state = {
       formFields: [],
       formMode: true,
-      photo: defaulProfilePhoto
+      photo: defaulProfilePhoto,
+      isLoading: false
     };
   }
-  componentDidMount() {
-    this.fetchPhoto();
-    this.fetchProfile();
+  async componentDidMount() {
+    this.setState({ isLoading: true });
+    await this.fetchPhoto();
+    await this.fetchProfile();
+    this.setState({ isLoading: false });
   }
   changeFormMode = () => {
     this.setState({ formMode: !this.state.formMode });
@@ -77,7 +80,7 @@ export class Profile extends Component {
 
             return {
               ...field,
-              action: 'update',
+              action: "update",
               updated: false
             };
           }
@@ -214,6 +217,7 @@ export class Profile extends Component {
         updatePhoto={this.updatePhoto}
         photo={this.state.photo}
         changeFormMode={this.changeFormMode}
+        isLoading={this.state.isLoading}
       />
     );
   }

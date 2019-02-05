@@ -8,27 +8,23 @@ import {
   PanelBody,
   LoginTitle
 } from "./login.style.js";
-import { CenterContainer, Loader } from "@util-components";
+import { CenterContainer } from "@util-components";
 
 type Props = { history: Object };
 
 type State = {
-  idp: String,
-  loading: Boolean
+  idp: String
 };
 export default class LoginComponent extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
       idp: "",
-      loading: false,
       withWebId: false
     };
   }
 
   render() {
-    const { loading } = this.state;
-
     return (
       <LoginWrapper>
         <CenterContainer>
@@ -56,7 +52,6 @@ export default class LoginComponent extends Component<Props, State> {
             </PanelBody>
           </LoginPanel>
         </CenterContainer>
-        <Loader show={loading} />
       </LoginWrapper>
     );
   }
