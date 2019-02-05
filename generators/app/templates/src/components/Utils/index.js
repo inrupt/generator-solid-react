@@ -5,6 +5,7 @@ import Dropdown from "./Dropdown";
 import RadioButton from "./Radiobutton";
 import Badge from "./Badge";
 import Loader from "./Loader";
+import Input from './Input';
 export {
   GradientBackground,
   CenterContainer,
@@ -12,5 +13,6 @@ export {
   Dropdown,
   RadioButton,
   Badge,
-  Loader
+  Loader,
+  Input
 };
