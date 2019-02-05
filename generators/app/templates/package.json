@@ -136,7 +136,8 @@
             "@services": "./src/services",
             "@layouts": "./src/layouts",
             "@contexts": "./src/contexts/",
-            "@testSetup": "./src/utils/enzymeSetup"
+            "@testSetup": "./src/utils/enzymeSetup",
+            "@hocs": "./src/hocs"
           }
         }
       ]
