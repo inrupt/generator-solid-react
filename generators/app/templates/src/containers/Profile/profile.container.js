@@ -29,7 +29,7 @@ export class Profile extends Component {
   async componentDidMount() {
     this.setState({ isLoading: true });
     await this.fetchPhoto();
-    await this.fetchShape();
+    await this.fetchProfile();
     this.setState({ isLoading: false });
   }
   changeFormMode = () => {
@@ -73,10 +73,14 @@ export class Profile extends Component {
             if (field.blankNode) {
               node = data[field.nodeParentUri][field.blankNode];
             }
-            await node.set(field.value);
+
+            field.action === "update"
+              ? await node.set(field.value)
+              : await node.add(field.value);
 
             return {
               ...field,
+              action: "update",
               updated: false
             };
           }
@@ -145,7 +149,7 @@ export class Profile extends Component {
   /**
    * Fetch Profile Shape data
    */
-  fetchShape = async () => {
+  fetchProfile = async () => {
     try {
       /**
        * We fetch profile shape from context/profile-shape.json
@@ -163,7 +167,7 @@ export class Profile extends Component {
        * access by a basic array.
        */
       const formFields = await Promise.all(
-        profile.shape.map(async field => {
+        profile.map(async field => {
           return {
             ...field,
             ...(await this.getNodeValue(user, field))
@@ -193,8 +197,12 @@ export class Profile extends Component {
     } else {
       node = await user[field.property];
     }
+
+    const nodeValue = node && node.value;
+
     return {
-      value: (node && node.value) || "",
+      action: nodeValue ? "update" : "create",
+      value: nodeValue || "",
       nodeParentUri
     };
   };

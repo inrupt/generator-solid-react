@@ -2,7 +2,6 @@ import React from "react";
 import { shallow } from "enzyme";
 import { Profile } from "./profile.container";
 import { ProfileComponent } from './profile.component';
-import data from "@solid/query-ldflex";
 
 import "@testSetup";
 
@@ -33,7 +32,7 @@ describe("Profile Container", () => {
       const mockFetchProfile = jest.fn();
       const mockFetchPhoto = jest.fn();
 
-      wrapper.instance().fetchShape = mockFetchProfile;
+      wrapper.instance().fetchProfile = mockFetchProfile;
       wrapper.instance().fetchPhoto = mockFetchPhoto;
 
       wrapper.instance().componentDidMount();

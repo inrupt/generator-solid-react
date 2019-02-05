@@ -1,5 +1,12 @@
 # Solid React Application Generator
 
+## 0.1.1 (February 5, 2019)
+
+#### Solid React Application Base
+
+##### Changed
+- Updated Welcome Page text to be more clear and concise
+
 ## 0.1.0 (January 30, 2019)
 
 ### First Release

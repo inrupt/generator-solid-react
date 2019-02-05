@@ -46,7 +46,7 @@ export default class LoginComponent extends Component<Props, State> {
                 What is a Solid Identity??
               </a>
               <LoginTitle> Log in</LoginTitle>
-              <ProviderLogin
+              <ProviderLogin className="provider-login-component"
                 callbackUri={`${window.location.origin}/welcome`}
               />
             </PanelBody>

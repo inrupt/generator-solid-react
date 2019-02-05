@@ -64,17 +64,33 @@ const WelcomePageContent = props => {
             </a>{" "}
             is a combination of libraries, components, documentation, best
             practices, and an application generator meant to accelerate the
-            development of high-quality Solid applications.
+            development of high-quality Solid applications:
           </p>
           <ul>
             <li>
-              Reusable Components that you can use on your own in the
+              <a
+                href="https://github.com/Inrupt-inc/solid-react-components"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Reusable Components
+              </a>{" "}
+              that you can use on your own in the
               applications that you build.
             </li>
             <li>
-              Application Generator that incorporates all of the components and
+              <a
+                href="https://github.com/Inrupt-inc/generator-solid-react"
+                target="_brank"
+                rel="noopener noreferrer"
+              >
+                Application Generator
+              </a>{" "}
+              that incorporates all of the components and
               best practices together for you, standing up THIS fully functional
-              Solid React application.
+              Solid React application. Note: The Solid React application illustrates
+              the use of the components installed by the Generator. It should not be
+              considered as a service provided by inrupt, and is subject to change.
             </li>
             <li>
               Best practice patterns that you can reference as examples of how
@@ -91,7 +107,26 @@ const WelcomePageContent = props => {
               {" "}
               Release Timeline{" "}
             </a>
-            for what’s currently currently planned. This release includes:
+            for what’s currently planned. This latest release builds on the prior version,
+            implementing a{" "}
+            <a
+              href="https://github.com/Inrupt-inc/solid-react-sdk#linked-data-javascript-api"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+               Linked Data Javascript API
+            </a>, and a
+            <a
+              href="https://github.com/Inrupt-inc/solid-react-sdk#user-profile"
+              target="_blank"
+              rel="noopener noreferrer">
+              {" "}
+              User Profile {" "}
+            </a>
+            that illustrates how to read and write Linked Data associated with a User Profile using LDFlex.
+          </p>
+          <p>
+            Version 0.1.0 implemented: 
           </p>
           <ul>
             <li>
@@ -168,72 +203,6 @@ const WelcomePageContent = props => {
               .
             </li>
           </ul>
-          <p>
-            Currently in the plan for release over the next components to handle
-            <a
-              href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-profile"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {" "}
-              User Profile
-            </a>{" "}
-            and{" "}
-            <a
-              href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-preferences"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {" "}
-              Preferences
-            </a>{" "}
-            ,{" "}
-            <a
-              href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#internationalization-i18n"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {" "}
-              i18n
-            </a>{" "}
-            ,{" "}
-            <a
-              href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#notifications"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {" "}
-              Notifications
-            </a>{" "}
-            ,{" "}
-            <a
-              href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#access-control"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {" "}
-              Access Control
-            </a>{" "}
-            ,{" "}
-            <a
-              href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#linking-things"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {" "}
-              Linking Things
-            </a>{" "}
-            , and{" "}
-            <a
-              href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#data-discovery"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {" "}
-              Data Discovery
-            </a>{" "}
-            .
-          </p>
         </WelcomeDetail>
       </WelcomeCard>
     </WelcomeWrapper>
