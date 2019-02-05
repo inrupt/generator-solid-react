@@ -6,6 +6,7 @@ import RadioButton from "./Radiobutton";
 import Badge from "./Badge";
 import Loader from "./Loader";
 import ToasterNotification from "./ToasterNotification";
+import Input from "./Input";
 export {
   GradientBackground,
   CenterContainer,
@@ -14,5 +15,6 @@ export {
   Dropdown,
   RadioButton,
   Badge,
-  Loader
+  Loader,
+  Input
 };
