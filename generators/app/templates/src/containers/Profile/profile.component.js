@@ -1,5 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import isLoading from "@hocs/isLoading";
 import { Uploader } from "@inrupt/solid-react-components";
 import { Input } from "@util-components";
 import { ImageProfile } from "@components";
@@ -95,4 +96,4 @@ const ProfileComponent = ({
   );
 };
 
-export default ProfileComponent;
+export default isLoading(ProfileComponent);

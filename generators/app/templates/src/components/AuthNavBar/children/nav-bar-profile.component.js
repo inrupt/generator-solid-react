@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Dropdown } from "@util-components";
-import { LogoutButton } from "@inrupt/solid-react-components";
+import auth from "solid-auth-client";
 
 export const Img = styled.img`
   width: 32px;
@@ -15,9 +15,29 @@ class NavBarProfile extends Component {
   state = {
     imageLoaded: false
   };
+
+  logout = async () => {
+    try {
+      await auth.logout();
+      // Remove localStorage
+      localStorage.removeItem("solid-auth-client");
+      // Redirect to login page
+      return true;
+    } catch (error) {
+      // console.log(`Error: ${error}`);
+    }
+  };
   onImageLoaded = async () => this.setState({ imageLoaded: true });
-  logOut = () => {
-    this.props.history.push("/login");
+  logOut = async () => {
+    try {
+      await auth.logout();
+      // Remove localStorage
+      localStorage.removeItem("solid-auth-client");
+      // Redirect to login page
+      this.props.history.push("/login");
+    } catch (error) {
+      // console.log(`Error: ${error}`);
+    }
   };
   render() {
     const { img } = this.props;

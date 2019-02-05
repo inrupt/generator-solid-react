@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, LogoutButton } from "@inrupt/solid-react-components";
-import { Loader } from "@util-components";
+import isLoading from "@hocs/isLoading";
 import {
   WelcomeWrapper,
   WelcomeCard,
@@ -236,9 +236,8 @@ const WelcomePageContent = props => {
           </p>
         </WelcomeDetail>
       </WelcomeCard>
-      <Loader show={props.loading} />
     </WelcomeWrapper>
   );
 };
 
-export default WelcomePageContent;
+export default isLoading(WelcomePageContent);

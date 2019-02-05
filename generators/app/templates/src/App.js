@@ -20,11 +20,11 @@ class App extends Component {
         components={{ Toast: ToasterNotification }}
         placement="top-center"
       >
-        <Fragment>
-          <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+          <Fragment>
             <Routes />
-          </ThemeProvider>
-        </Fragment>
+          </Fragment>
+        </ThemeProvider>
       </ToastProvider>
     );
   }

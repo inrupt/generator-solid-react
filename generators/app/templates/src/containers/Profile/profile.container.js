@@ -22,12 +22,15 @@ export class Profile extends Component {
     this.state = {
       formFields: [],
       formMode: true,
-      photo: defaulProfilePhoto
+      photo: defaulProfilePhoto,
+      isLoading: false
     };
   }
-  componentDidMount() {
-    this.fetchPhoto();
-    this.fetchShape();
+  async componentDidMount() {
+    this.setState({ isLoading: true });
+    await this.fetchPhoto();
+    await this.fetchShape();
+    this.setState({ isLoading: false });
   }
   changeFormMode = () => {
     this.setState({ formMode: !this.state.formMode });
@@ -206,6 +209,7 @@ export class Profile extends Component {
         updatePhoto={this.updatePhoto}
         photo={this.state.photo}
         changeFormMode={this.changeFormMode}
+        isLoading={this.state.isLoading}
       />
     );
   }
