@@ -28,10 +28,15 @@ class Dropdown extends Component<Props, State> {
   }
 
   render() {
-    const { actions, children, className } = this.props;
+    const { actions, children, className, hover } = this.props;
     const { open } = this.state;
     return (
-      <DropdownContainer className={className} onClick={this.toggleOpen}>
+      <DropdownContainer
+        className={className}
+        onClick={this.toggleOpen}
+        onMouseEnter={hover ? this.toggleOpen : null}
+        onMouseLeave={hover ? this.toggleOpen : null}
+      >
         <DropdownMain onClick={this.toggleOpen}>{children}</DropdownMain>
         {open && (
           <DropdownItemContainer>
@@ -53,5 +58,9 @@ class Dropdown extends Component<Props, State> {
     );
   }
 }
+
+Dropdown.defaultProps = {
+  hover: false
+};
 
 export default enhanceWithClickOutside(Dropdown);

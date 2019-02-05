@@ -1,6 +1,5 @@
 import React from "react";
-import { mount, shallow, render } from "enzyme";
-import sinon from "sinon";
+import { mount } from "enzyme";
 import Dropdown from "./dropdown.component";
 import {
   DropdownContainer,

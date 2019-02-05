@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Dropdown } from "@util-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import auth from "solid-auth-client";
+import { spawn } from "child_process";
 
 export const Img = styled.img`
   width: 32px;
@@ -46,21 +49,22 @@ class NavBarProfile extends Component {
     const profileOpts = [
       {
         label: "Log Out",
-        onClick: this.logOut,
-        icon: "sign-out-alt"
+        onClick: this.logOut
       }
     ];
-    const profilePic = img ? img : "/img/icon/empty-profile.svg";
 
-    return (
-      <Dropdown actions={profileOpts} className="nav-bar--profile">
+    return img ? (
+      <Dropdown actions={profileOpts} className="nav-bar--profile" hover={true}>
         <Img
           show={imageLoaded}
-          src={profilePic}
+          src={img}
           alt="profile"
           onLoad={this.onImageLoaded}
         />
+        {!imageLoaded && <FontAwesomeIcon icon="spinner" spin size="2x" />}
       </Dropdown>
+    ) : (
+      <div />
     );
   }
 }
