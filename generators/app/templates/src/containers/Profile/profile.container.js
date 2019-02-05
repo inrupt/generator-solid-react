@@ -27,7 +27,7 @@ export class Profile extends Component {
   }
   componentDidMount() {
     this.fetchPhoto();
-    this.fetchShape();
+    this.fetchProfile();
   }
   changeFormMode = () => {
     this.setState({ formMode: !this.state.formMode });
@@ -36,7 +36,7 @@ export class Profile extends Component {
    * onChangeInput will update a field into formFields array
    * and will add updated flag to true, this will be taken
    * for submit form to check which fields needs to be sent to POD
-  */
+   */
   onInputChange = (e: Event) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -58,7 +58,7 @@ export class Profile extends Component {
   /**
    * onSubmit will send all the updated fields to POD
    * fields that was not updated will be not send it.
-  */
+   */
   onSubmit = async (e: Event) => {
     try {
       e.preventDefault();
@@ -70,10 +70,14 @@ export class Profile extends Component {
             if (field.blankNode) {
               node = data[field.nodeParentUri][field.blankNode];
             }
-            await node.set(field.value);
+
+            field.action === "update"
+              ? await node.set(field.value)
+              : await node.add(field.value);
 
             return {
               ...field,
+              action: 'update',
               updated: false
             };
           }
@@ -124,7 +128,7 @@ export class Profile extends Component {
    * this function will check if user has image or hasPhoto node if not
    * will just update it, the idea is use image instead of hasPhoto
    * @params{String} uri photo url
-  */
+   */
   updatePhoto = async (uri: String) => {
     try {
       const { user } = data;
@@ -142,7 +146,7 @@ export class Profile extends Component {
   /**
    * Fetch Profile Shape data
    */
-  fetchShape = async () => {
+  fetchProfile = async () => {
     try {
       /**
        * We fetch profile shape from context/profile-shape.json
@@ -160,7 +164,7 @@ export class Profile extends Component {
        * access by a basic array.
        */
       const formFields = await Promise.all(
-        profile.shape.map(async field => {
+        profile.map(async field => {
           return {
             ...field,
             ...(await this.getNodeValue(user, field))
@@ -191,8 +195,11 @@ export class Profile extends Component {
       node = await user[field.property];
     }
 
+    const nodeValue = node && node.value;
+
     return {
-      value: node.value || "",
+      action: nodeValue ? "update" : "create",
+      value: nodeValue || "",
       nodeParentUri
     };
   };

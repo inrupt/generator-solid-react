@@ -8,7 +8,14 @@ import {
 } from "./image-profile.style";
 
 type Props = {
-  image: String
+  image: String,
+  overrideEventDefaults: () => void,
+  onDragLeave: () => void,
+  onDragEnter: () => void,
+  onDrop: () => void,
+  onClickFile: () => void,
+  inProgress: boolean,
+  uploadedFiles: Array<Object>
 };
 
 export const ImageProfile = (props: Props) => {
