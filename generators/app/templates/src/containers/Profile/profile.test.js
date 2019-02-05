@@ -32,7 +32,7 @@ describe("Profile Container", () => {
       const mockFetchProfile = jest.fn();
       const mockFetchPhoto = jest.fn();
 
-      wrapper.instance().fetchShape = mockFetchProfile;
+      wrapper.instance().fetchProfile = mockFetchProfile;
       wrapper.instance().fetchPhoto = mockFetchPhoto;
 
       wrapper.instance().componentDidMount();
