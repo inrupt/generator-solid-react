@@ -5,13 +5,11 @@ export const ImageProfileWrapper = styled.div`
   position: relative;
 
   img {
-    border-radius: 50%;
+    border-radius: 360px;
     border: 3px solid white;
     box-sizing: border-box;
     width: 100%;
     height: 128px;
-    object-fit: contain;
-
   }
 
   &:hover {
