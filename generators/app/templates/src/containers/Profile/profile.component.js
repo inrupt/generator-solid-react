@@ -25,7 +25,7 @@ type Props = {
   formMode: boolean
 };
 
-const ProfileComponent = ({
+export const ProfileComponent = ({
   webId,
   formFields,
   changeFormMode,
