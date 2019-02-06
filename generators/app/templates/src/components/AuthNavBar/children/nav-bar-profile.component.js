@@ -4,7 +4,6 @@ import { Dropdown } from "@util-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import auth from "solid-auth-client";
-import { spawn } from "child_process";
 
 export const Img = styled.img`
   width: 32px;
