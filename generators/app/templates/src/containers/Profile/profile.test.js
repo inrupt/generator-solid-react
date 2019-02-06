@@ -18,7 +18,7 @@ describe("Profile Container", () => {
   });
 
   it("Profile UI component should render without crashing", () => {
-    const wrapper = shallow(<ProfileComponent />);
+    const wrapper = shallow(<ProfileComponent />).dive();
     expect(wrapper).toBeTruthy();
   });
 
