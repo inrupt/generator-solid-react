@@ -39,13 +39,13 @@ const ProfileComponent = ({
     <ProfileWrapper>
       <ProfileContainer>
         <Header>
-          <button
+          { formMode && <button
             type="button"
             className="button edit-button"
             onClick={changeFormMode}
           >
             <FontAwesomeIcon icon="pencil-alt" /> EDIT
-          </button>
+          </button> }
           <Uploader
             {...{
               fileBase: webId && webId.split("/card")[0],
@@ -74,12 +74,21 @@ const ProfileComponent = ({
             ))}
           <FullGridSize>
             {!formMode && (
-              <Button
-                type="submit"
-                className="ids-link-filled ids-link-filled--primary"
-              >
-                Save
-              </Button>
+              <>
+                <Button
+                  type="button"
+                  onClick={changeFormMode}
+                  className="ids-link-stroke ids-link-stroke--primary"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="ids-link-filled ids-link-filled--primary"
+                >
+                  Save
+                </Button>
+              </>
             )}
           </FullGridSize>
         </Form>

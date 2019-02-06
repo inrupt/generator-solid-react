@@ -52,6 +52,10 @@ export const Form = styled.form`
 export const Button = styled.button`
   max-width: 128px !important;
   display: inline-block !important;
+
+  &:first-child {
+    margin-right: 10px;
+  }
 `;
 
 export const FullGridSize = styled.div`

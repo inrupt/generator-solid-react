@@ -19,6 +19,8 @@ class App extends Component {
       <ToastProvider
         components={{ Toast: ToasterNotification }}
         placement="top-center"
+        autoDismiss={true}
+        autoDismissTimeout={3000}
       >
         <ThemeProvider theme={theme}>
           <Fragment>
