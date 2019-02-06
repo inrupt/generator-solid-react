@@ -5,6 +5,8 @@ import data from "@solid/query-ldflex";
 
 // Manually-created vcard#hasPhoto context link
 const hasPhotoContext = "http://www.w3.org/2006/vcard/ns#hasPhoto";
+// img context 
+const imgContext = "http://xmlns.com/foaf/0.1/img"
 
 /**
  * Container component for the Welcome Page, containing example of how to fetch data from a POD
@@ -49,6 +51,9 @@ class WelcomeComponent extends Component<Props> {
 
     const name = nameLd ? nameLd.value : "";
 
+    let image = user[imgContext];
+    image = image ? user[imgContext] : user[hasPhotoContext];
+
     /**
      * This is where we set the state with the name and image values. The user[hasPhotoContext] line of code is an example of
      * what to do when LDFlex doesn't have the full context. LDFlex has many data contexts already in place, but in case
@@ -59,7 +64,7 @@ class WelcomeComponent extends Component<Props> {
      *
      * For more information please go to: https://github.com/solid/query-ldflex
      */
-    this.setState({ name, image: user[hasPhotoContext], isLoading: false });
+    this.setState({ name, image, isLoading: false });
   };
 
   render() {
