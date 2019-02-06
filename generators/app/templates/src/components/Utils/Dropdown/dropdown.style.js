@@ -28,6 +28,7 @@ export const DropdownItemContainer = styled.div`
   position: absolute;
   top: 100%;
   right: 0;
+  z-index: 2;
   ul {
     display: flex;
     position: relative;
