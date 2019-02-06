@@ -32,10 +32,11 @@ export const ImageProfile = (props: Props) => {
         onDrag: props.overrideEventDefaults,
         onDragLeave: props.onDragLeave,
         onDragEnter: props.onDragEnter,
-        onDrop: props.onDrop
+        onDrop: props.onDrop,
+        style: photo && { backgroundImage: `url(${photo})` }
       }}
     >
-      {photo && <img alt="Profile User" src={photo} />}
+      {/*photo && <img alt="Profile User" src={photo} /> */}
       <ButtonStyled onClick={props.onClickFile}>
         <FontAwesomeIcon icon="upload" className="upload-icon" />
         Upload New Photo

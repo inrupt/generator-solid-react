@@ -3,6 +3,10 @@ import styled from 'styled-components';
 export const ImageProfileWrapper = styled.div`
   width: 128px;
   position: relative;
+  padding-bottom: 100%;
+  background-size: cover;
+  overflow: hidden;
+  border-radius: 360px;
 
   img {
     border-radius: 360px;
@@ -36,7 +40,7 @@ export const ButtonStyled = styled.button`
   position: absolute;
   width: 100%;
   padding: 20px;
-  bottom: 4px;
+  bottom: 0;
   top: 0;
   left: 0;
 

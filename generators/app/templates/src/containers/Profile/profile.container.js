@@ -193,7 +193,7 @@ export class Profile extends Component {
       const parentNode = await user[field.property];
 
       node = await user[field.property][field.blankNode];
-      nodeParentUri = parentNode.value;
+      nodeParentUri = (parentNode && parentNode.value) || "";
     } else {
       node = await user[field.property];
     }
