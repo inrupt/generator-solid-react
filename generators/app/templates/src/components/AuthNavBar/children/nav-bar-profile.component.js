@@ -24,17 +24,8 @@ class NavBarProfile extends Component {
     imageLoaded: false
   };
 
-  logout = async () => {
-    try {
-      await auth.logout();
-      // Remove localStorage
-      localStorage.removeItem("solid-auth-client");
-      // Redirect to login page
-      return true;
-    } catch (error) {
-      // console.log(`Error: ${error}`);
-    }
-  };
+  profileRedirect = () => this.props.history.push("/profile");
+  
   onImageLoaded = async () => this.setState({ imageLoaded: true });
   logOut = async () => {
     try {
@@ -52,6 +43,10 @@ class NavBarProfile extends Component {
     const { imageLoaded } = this.state;
 
     const profileOpts = [
+      {
+      label: "Profile",
+      onClick: this.profileRedirect
+      },
       {
         label: "Log Out",
         onClick: this.logOut

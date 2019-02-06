@@ -51,7 +51,7 @@ class AuthNavBarContainer extends Component {
 
   render() {
     const { image } = this.state;
-    return <AuthNavBar img={image} />;
+    return <AuthNavBar img={image} {...this.props}/>;
   }
 }
 
