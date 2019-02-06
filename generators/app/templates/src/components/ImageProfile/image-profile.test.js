@@ -13,11 +13,6 @@ describe("Image Profile", () => {
     expect(wrapper).toBeTruthy();
   });
 
-  it("should render photo when comes on props", () => {
-    const wrapper = setup({ photo: '/img/icon/empty-profile.svg'});
-    expect(wrapper.find('img').length).toEqual(1);
-  });
-
   it("shouldn't render photo when not comes on props", () => {
     const wrapper = setup();
     expect(wrapper.find('img').length).toEqual(0);
