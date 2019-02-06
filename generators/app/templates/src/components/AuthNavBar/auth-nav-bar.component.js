@@ -25,7 +25,7 @@ const AuthNavBar = props => {
       navigation={navigation}
       toolbar={[
         {
-          component: () => <NavBarProfile img={props.img} />,
+          component: () => <NavBarProfile {...props} />,
           label: "Profile",
           id: "profile"
         }
