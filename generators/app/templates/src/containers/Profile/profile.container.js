@@ -90,7 +90,7 @@ export class Profile extends Component {
       this.props.toastManager.add("Profile was updated successfully", {
         appearance: "success"
       });
-      this.setState({ formFields: updatedFormField });
+      this.setState({ formFields: updatedFormField, formMode: true });
     } catch (error) {
       this.props.toastManager.add(error.message, { appearance: "error" });
     }
