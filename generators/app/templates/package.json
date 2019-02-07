@@ -78,6 +78,11 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "jest && eslint --ignore-path .gitignore ."
+    }
+  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
@@ -151,6 +156,7 @@
     "babel-plugin-module-resolver": "^3.1.2",
     "copy-webpack-plugin": "^4.6.0",
     "enzyme": "^3.8.0",
-    "enzyme-adapter-react-16": "^1.7.1"
+    "enzyme-adapter-react-16": "^1.7.1",
+    "husky": "^1.3.1"
   }
 }
