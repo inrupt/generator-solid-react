@@ -1,16 +1,16 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { Profile } from "./profile.container";
-import ProfileComponent from './profile.component';
+import ProfileComponent from "./profile.component";
+import { Form } from "./profile.style";
 
 import "@testSetup";
 
 const defaultWeb = "https://example.org/#me";
 
-
-
 describe("Profile Container", () => {
-  const setup = () => shallow(<Profile webId={defaultWeb} toastManager={{ add: () => {} }}/>)
+  const setup = () =>
+    shallow(<Profile webId={defaultWeb} toastManager={{ add: () => {} }} />);
 
   it("should render without crashing", () => {
     const wrapper = setup();
@@ -22,13 +22,13 @@ describe("Profile Container", () => {
     expect(wrapper).toBeTruthy();
   });
 
-  /* describe("ComponentDidMount", () => {
+  describe("ComponentDidMount", () => {
     const wrapper = setup();
     it("edit mode should be disable", () => {
       expect(wrapper.state().formMode).toEqual(true);
     });
 
-    it("should call fetch ProfileShape and ProfilePhoto methods", () => {
+    it("should call fetch ProfileShape and ProfilePhoto methods", async () => {
       const mockFetchProfile = jest.fn();
       const mockFetchPhoto = jest.fn();
 
@@ -38,8 +38,16 @@ describe("Profile Container", () => {
       wrapper.instance().componentDidMount();
       wrapper.update();
 
-      expect(mockFetchPhoto).toHaveBeenCalled();
-      expect(mockFetchProfile).toHaveBeenCalled();
+      await expect(mockFetchPhoto).toHaveBeenCalled();
+      await expect(mockFetchProfile).toHaveBeenCalled();
     });
-  }); */
+  });
+
+  describe("Should render Profile Component", () => {
+    const wrapper = setup();
+    it("render profile ui component", () => {
+      const uiComponent = wrapper.find(ProfileComponent);
+      expect(uiComponent.length).toEqual(1);
+    });
+  });
 });
