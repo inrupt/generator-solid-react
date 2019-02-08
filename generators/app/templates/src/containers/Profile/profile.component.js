@@ -23,6 +23,7 @@ type Props = {
   onSubmit: () => void,
   onCancel: () => void,
   updatePhoto: (uri: String) => void,
+  toastManager: (message: String, options: Object) => void,
   formMode: boolean
 };
 
@@ -32,6 +33,7 @@ const ProfileComponent = ({
   changeFormMode,
   onInputChange,
   updatePhoto,
+  toastManager,
   onSubmit,
   onCancel,
   formMode,
@@ -41,19 +43,26 @@ const ProfileComponent = ({
     <ProfileWrapper>
       <ProfileContainer>
         <Header>
-          { formMode && <button
-            type="button"
-            className="button edit-button"
-            onClick={changeFormMode}
-          >
-            <FontAwesomeIcon icon="pencil-alt" /> EDIT
-          </button> }
+          {formMode && (
+            <button
+              type="button"
+              className="button edit-button"
+              onClick={changeFormMode}
+            >
+              <FontAwesomeIcon icon="pencil-alt" /> EDIT
+            </button>
+          )}
           <Uploader
             {...{
               fileBase: webId && webId.split("/card")[0],
               limitFiles: 1,
               limitSize: 500000,
-              accept: 'image/*',
+              accept: "image/*",
+              onError: error => {
+                if (error && error.message) {
+                  toastManager.add(error.message, { appearance: "error" });
+                }
+              },
               onComplete: uploadedFiles => {
                 updatePhoto(uploadedFiles[0].uri);
               },
