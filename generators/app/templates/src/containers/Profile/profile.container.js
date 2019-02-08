@@ -21,6 +21,7 @@ export class Profile extends Component {
 
     this.state = {
       formFields: [],
+      originalFormField: [],
       formMode: true,
       photo: defaulProfilePhoto,
       isLoading: false
@@ -32,8 +33,16 @@ export class Profile extends Component {
     await this.fetchProfile();
     this.setState({ isLoading: false });
   }
+
   changeFormMode = () => {
     this.setState({ formMode: !this.state.formMode });
+  };
+  setDefaultData = () => {
+    this.setState({ formFields: [...this.state.originalFormField] });
+  };
+  onCancel = () => {
+    this.changeFormMode();
+    this.setDefaultData();
   };
   /**
    * onChangeInput will update a field into formFields array
@@ -90,7 +99,11 @@ export class Profile extends Component {
       this.props.toastManager.add("Profile was updated successfully", {
         appearance: "success"
       });
-      this.setState({ formFields: updatedFormField, formMode: true });
+      this.setState({
+        formFields: updatedFormField,
+        originalFormField: updatedFormField,
+        formMode: true
+      });
     } catch (error) {
       this.props.toastManager.add(error.message, { appearance: "error" });
     }
@@ -174,7 +187,7 @@ export class Profile extends Component {
           };
         })
       );
-      this.setState({ profile, formFields });
+      this.setState({ profile, formFields, originalFormField: formFields });
     } catch (error) {
       this.props.toastManager.add(error.message, { appearance: "error" });
     }
@@ -214,6 +227,7 @@ export class Profile extends Component {
         formMode={this.state.formMode}
         onInputChange={this.onInputChange}
         onSubmit={this.onSubmit}
+        onCancel={this.onCancel}
         updatePhoto={this.updatePhoto}
         photo={this.state.photo}
         changeFormMode={this.changeFormMode}

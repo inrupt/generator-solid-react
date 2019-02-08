@@ -21,6 +21,7 @@ type Props = {
   changeFormMode: () => void,
   onInputChange: () => void,
   onSubmit: () => void,
+  onCancel: () => void,
   updatePhoto: (uri: String) => void,
   formMode: boolean
 };
@@ -32,6 +33,7 @@ const ProfileComponent = ({
   onInputChange,
   updatePhoto,
   onSubmit,
+  onCancel,
   formMode,
   photo
 }: Props) => {
@@ -77,7 +79,7 @@ const ProfileComponent = ({
               <>
                 <Button
                   type="button"
-                  onClick={changeFormMode}
+                  onClick={onCancel}
                   className="ids-link-stroke ids-link-stroke--primary"
                 >
                   Cancel
