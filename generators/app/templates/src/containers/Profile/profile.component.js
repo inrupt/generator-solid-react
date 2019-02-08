@@ -52,6 +52,8 @@ const ProfileComponent = ({
             {...{
               fileBase: webId && webId.split("/card")[0],
               limitFiles: 1,
+              limitSize: 500000,
+              accept: 'image/*',
               onComplete: uploadedFiles => {
                 updatePhoto(uploadedFiles[0].uri);
               },
