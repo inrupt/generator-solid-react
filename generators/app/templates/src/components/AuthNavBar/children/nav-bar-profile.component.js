@@ -24,9 +24,10 @@ class NavBarProfile extends Component {
     imageLoaded: false
   };
 
-  profileRedirect = () => this.props.history.push("/profile");
   
   onImageLoaded = async () => this.setState({ imageLoaded: true });
+
+  redirect = (route) => this.props.history.push(route);
   logOut = async () => {
     try {
       await auth.logout();
@@ -45,7 +46,10 @@ class NavBarProfile extends Component {
     const profileOpts = [
       {
       label: "Profile",
-      onClick: this.profileRedirect
+      onClick: () => this.redirect('/profile')
+      },
+      {label:"Preferences",
+      onClick: () => this.redirect('/preferences')
       },
       {
         label: "Log Out",

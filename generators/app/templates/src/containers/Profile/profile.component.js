@@ -2,10 +2,9 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import isLoading from "@hocs/isLoading";
 import { Uploader } from "@inrupt/solid-react-components";
-import { Input } from "@util-components";
+import { Input, PageWrapper } from "@util-components";
 import { ImageProfile } from "@components";
 import {
-  ProfileWrapper,
   ProfileContainer,
   FullGridSize,
   Button,
@@ -36,7 +35,7 @@ const ProfileComponent = ({
   photo
 }: Props) => {
   return (
-    <ProfileWrapper>
+    <PageWrapper>
       <ProfileContainer>
         <Header>
           { formMode && <button
@@ -101,7 +100,7 @@ const ProfileComponent = ({
           </WebId>
         )}
       </ProfileContainer>
-    </ProfileWrapper>
+    </PageWrapper>
   );
 };
 

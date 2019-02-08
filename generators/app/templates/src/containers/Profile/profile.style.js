@@ -2,14 +2,6 @@ import styled from 'styled-components';
 
 import { media } from '../../utils';
 
-export const ProfileWrapper = styled.section`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: url('/img/concentric-hex-pattern_2x.png');
-  background-repeat: repeat;
-  height: 93vh;
-`;
 export const ProfileContainer = styled.div`
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
   background-color: white;
