@@ -232,6 +232,7 @@ export class Profile extends Component {
         photo={this.state.photo}
         changeFormMode={this.changeFormMode}
         isLoading={this.state.isLoading}
+        toastManager={this.props.toastManager}
       />
     );
   }
