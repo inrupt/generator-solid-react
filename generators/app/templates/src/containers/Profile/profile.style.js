@@ -8,15 +8,21 @@ export const ProfileWrapper = styled.section`
   justify-content: center;
   background-image: url('/img/concentric-hex-pattern_2x.png');
   background-repeat: repeat;
-  height: 93vh;
+  height: 79vh;
+  padding: 60px 0;
+  // overflow-y: auto;
 `;
 export const ProfileContainer = styled.div`
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
   background-color: white;
   max-width: 900px;
-  min-height: 580px;
   margin: 0 20px;
+  height: 100%;
   width: 100%;
+  overflow-y: auto;
+  ${media.tablet`
+    height: 80%;
+  `}
 `;
 
 export const Header = styled.div`
@@ -24,7 +30,13 @@ export const Header = styled.div`
   position: relative;
   align-items: center;
   justify-content: center;
-  background-image: url('/img/pattern-geo.png'), linear-gradient(306.44deg, #D97BFC 0%, #5E04C0 100%);
+  background-image: url('/img/pattern-geo.png'),linear-gradient(
+    135deg,
+    #7c4dff 0%,
+    #18a9e6 50%,
+    #01c9ea 100%
+  );
+  background-repeat: repeat, no-repeat;  
   padding: 30px 20px;
 
   .edit-button {
@@ -80,6 +92,7 @@ export const WebId = styled.div`
 
   a {
     display: inline-block;
+    word-break: break-all;
     margin-left: 10px;
   }
 `;

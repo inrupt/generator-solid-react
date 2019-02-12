@@ -51,8 +51,10 @@ class WelcomeComponent extends Component<Props> {
 
     const name = nameLd ? nameLd.value : "";
 
-    let image = user[imgContext];
-    image = image ? user[imgContext] : user[hasPhotoContext];
+    let imageLd = await user[imgContext];
+    imageLd = imageLd ? imageLd : await user[hasPhotoContext];
+
+    const image =  imageLd ? imageLd.value : "/img/icon/empty-profile.svg";
 
     /**
      * This is where we set the state with the name and image values. The user[hasPhotoContext] line of code is an example of
