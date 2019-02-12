@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Dropdown } from "@util-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import auth from "solid-auth-client";
 
@@ -33,7 +32,7 @@ class NavBarProfile extends Component {
   };
 
   profileRedirect = () => this.props.history.push("/profile");
-  
+
   onImageLoaded = async () => this.setState({ imageLoaded: true });
   logOut = async () => {
     try {
@@ -64,7 +63,7 @@ class NavBarProfile extends Component {
     return img ? (
       <Dropdown actions={profileOpts} className="nav-bar--profile" hover={true}>
       <ImageContainer show={imageLoaded}>
-        <Img 
+        <Img
           show={imageLoaded}
           src={img}
           alt="profile"
