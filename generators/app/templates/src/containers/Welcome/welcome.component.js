@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, LogoutButton } from "@inrupt/solid-react-components";
+import { LogoutButton } from "@inrupt/solid-react-components";
 import isLoading from "@hocs/isLoading";
 import {
   WelcomeWrapper,
@@ -126,7 +126,7 @@ const WelcomePageContent = props => {
             that illustrates how to read and write Linked Data associated with a User Profile using LDFlex.
           </p>
           <p>
-            Version 0.1.0 implemented: 
+            Version 0.1.0 implemented:
           </p>
           <ul>
             <li>
