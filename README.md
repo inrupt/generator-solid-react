@@ -10,22 +10,26 @@ Application Generator for [Solid](https://solid.inrupt.com) React applications. 
 * [LDFlex](https://github.com/solid/query-ldflex)
 * [React Toast Notifications](https://jossmac.github.io/react-toast-notifications/)
 * [Styled Components](https://www.styled-components.com)
-* [npm](https://www.npmjs.com)
-* [Yeoman](https://yeoman.io)
 
 ## Prerequisites
 
-To install the Generator, you will need both npm and Yeoman if you don't already have them.
+### Administrator Privilege
+You will need administrative privilege on your local computer to install the generator and prerequisites. Depending upon your operating system:
 
-npm makes it easy for JavaScript developers to share and reuse code, and makes it easy to update the code that you’re sharing. To install, follow the instructions at [npm](https://www.npmjs.com/get-npm).
+* Mac:
+  1. Prefix the command lines to be executed with sudo.
+  2. You will be prompted for the Administrator password. Refer to: https://support.apple.com/en-us/HT202035.
+* Windows:
+  1. Type cmd in the search bar.
+  2. Right click on "Command prompt" and select "Run as Administrator".
 
-Yeoman provides a generator ecosystem to scaffold complete projects. You can install Yeoman using the following command:
+### npm and Yeoman
+To install the generator, you will need both [npm](https://www.npmjs.com) and [Yeoman](https://yeoman.io) if you don't already have them.
 
-```
-npm install -g yo
-```
+* [npm](https://www.npmjs.com) makes it easy for JavaScript developers to share and reuse code, and makes it easy to update the code that you’re sharing. To install, follow the instructions at [npm](https://www.npmjs.com/get-npm).
+* [Yeoman](https://yeoman.io) provides a generator ecosystem to scaffold complete projects. You can install Yeoman using the running the command: ```npm install -g yo```
 
-## Installation and Usage
+## Installation
 
 To install the generator:
 
@@ -33,13 +37,19 @@ To install the generator:
 npm install -g @inrupt/generator-solid-react
 ``` 
 
-Once it is installed, you can create a new application with just a few steps.
+## Usage
+Once the generator is installed, you can create a new application with just a few steps.
 
 1. In a console window, navigate to the desired parent folder of the new application
 2. Use the command ``` yo @inrupt/solid-react ```
-3. You will be prompted to make an application name. This will be the new folder the app lives inside
+3. You will be prompted to set:
+ 1. An application name. This will also be the name of the new folder in which the new application lives
+ 2. A version number
+ 3. Whether the application is private or public
 4. Navigate into the new folder
 5. If you would like to start the application, simply run ``` npm run start ``` in the new folder, otherwise you can begin editing and writing your application!
+
+Note: We have noticed an error is sometimes thrown when the generator tries to install one of the dependencies of application. If this occurs, try installing [Git](https://git-scm.com/downloads) and then recreating your application.
 
 ## What is a Generator?
 
@@ -51,9 +61,9 @@ We have included integrations with essential libraries, as well as pages, routes
 
 The generated application also incorporates our [Atomic Style Guide](https://design.inrupt.com/atomic-core), featuring a nice integration with [Styled Components](https://www.styled-components.com).
 
-## Creating a Solid React Application
+## The Solid React Application
 
-Once you've [run the generator](#installation-and-usage) and created your starter application, you'll have a site with some basic functionality and style guide integration.
+Once you've [run the generator](#installation-and-usage) and created your starter application, you'll have a site with some basic functionality and style guide integration. As the SDK is continually evolving, take a look at the [React SDK for Solid](https://github.com/inrupt-inc/solid-react-sdk) [Release Timeline](https://github.com/Inrupt-inc/solid-react-sdk/tree/master#release-timeline) for what has been implemented and what is currently planned.
 
 If you would like to add your own look and feel, there are two options. First, you can override the styles from the style guide on demand. A list of the classes and example code can be found on the github page. Second, you could remove the style guide entirely, by removing the dependency from npm / package.json. Note if you do this, the application will lose almost all of its styling, and will need work to look "right" again.
 
@@ -61,16 +71,6 @@ Next, you can start building your application! Feel free to remove any pages or 
 
 There are also examples of how to use libraries like [LDFlex](https://github.com/solid/query-ldflex) for reading and writing data to a POD, and examples of using existing components.
 
-## What's in the starter application?
-
-The SDK is continually evolving. Take a look at the [Release Timeline](https://github.com/Inrupt-inc/solid-react-sdk/tree/master#release-timeline) for what’s currently currently planned. This release includes:
-
-* [User Registration](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-registration) for a Solid Pod.
-* [User Authentication](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-authentication) against user selected Providers.
-* Use of an [Atomic Style Guide](https://design.inrupt.com/) that you can use to style your applications.
-* Infrastructure and applied best practices for [Error Handling](https://github.com/Inrupt-inc/solid-react-sdk#error-handling), [Testing](https://github.com/Inrupt-inc/solid-react-sdk#test-infrastructure), and [Accessibility](https://github.com/Inrupt-inc/solid-react-sdk#accessibility).
- 
-Currently in the plan for release over the next components to handle [User Profiles](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-profile) and [Preferences](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-preferences), [i18n](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#internationalization), [Notifications](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#notifications), [Access Control](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#access-control), [Linking Things](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#linking-things), and [Data Discovery](https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#data-discovery).
 
 ## Error Handling
 
