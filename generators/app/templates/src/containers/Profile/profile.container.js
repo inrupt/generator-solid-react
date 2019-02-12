@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { namedNode } from "@rdfjs/data-model";
 import { withWebId } from "@inrupt/solid-react-components";
 import { withToastManager } from "react-toast-notifications";
 import data from "@solid/query-ldflex";
@@ -24,7 +25,8 @@ export class Profile extends Component {
       originalFormField: [],
       formMode: true,
       photo: defaulProfilePhoto,
-      isLoading: false
+      isLoading: false,
+      newLinkNodes: []
     };
   }
   async componentDidMount() {
@@ -193,6 +195,17 @@ export class Profile extends Component {
     }
   };
   /**
+   * Create a new node link on vcard document.
+   * @params{String} property
+   * Property param will be the name of node
+   */
+  createNewLinkNode = async (property: String) => {
+    const id = `#id${Date.parse(new Date())}`;
+    await data.user[property].add(namedNode(id));
+    // @TODO: add from ldflex should return this value instead of create by our self
+    return `${this.props.webId.split("#")[0]}${id}`;
+  };
+  /**
    * getNodeValue will return node value and uri in case that node points to nodeBlank
    * nodeParentUri is a workaround to fix blank node update fields on ldflex
    * @params{Object} user
@@ -201,12 +214,15 @@ export class Profile extends Component {
   getNodeValue = async (user: Object, field: Object) => {
     let node;
     let nodeParentUri;
-
+    // If node is a pointer to another node will get the value
     if (field.blankNode) {
-      const parentNode = await user[field.property];
+      let parentNode = await user[field.property];
+      // If the node link doesn't exist will create a new one.
+      nodeParentUri =
+        (parentNode && parentNode.value) ||
+        (await this.createNewLinkNode(field.property));
 
       node = await user[field.property][field.blankNode];
-      nodeParentUri = (parentNode && parentNode.value) || "";
     } else {
       node = await user[field.property];
     }
