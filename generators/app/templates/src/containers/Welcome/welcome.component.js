@@ -6,7 +6,9 @@ import {
   WelcomeCard,
   WelcomeLogo,
   WelcomeProfile,
-  WelcomeDetail
+  WelcomeDetail,
+  ImageContainer,
+  ImageWrapper
 } from "./welcome.style";
 
 /**
@@ -25,15 +27,13 @@ const WelcomePageContent = props => {
           <h3>
             Welcome, <span>{props.name}</span>
           </h3>
-          <div>
+          <ImageWrapper>
             {props.image && (
-              <Image
-                alt="User"
-                src={props.image}
-                defaultSrc="/img/icon/empty-profile.svg"
+              <ImageContainer
+                image={props.image}
               />
             )}
-          </div>
+          </ImageWrapper>
           <p>
             All Done ? <LogoutButton />
           </p>
