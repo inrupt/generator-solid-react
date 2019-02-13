@@ -1,16 +1,15 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { media } from '../../utils';
+import { media } from "../../utils";
 
 export const ProfileWrapper = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/img/concentric-hex-pattern_2x.png');
+  background-image: url("/img/concentric-hex-pattern_2x.png");
   background-repeat: repeat;
   height: 79vh;
   padding: 60px 0;
-  // overflow-y: auto;
 `;
 export const ProfileContainer = styled.div`
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
@@ -21,7 +20,7 @@ export const ProfileContainer = styled.div`
   width: 100%;
   overflow-y: auto;
   ${media.tablet`
-    height: 80%;
+    height: 90%;
   `}
 `;
 
@@ -30,13 +29,9 @@ export const Header = styled.div`
   position: relative;
   align-items: center;
   justify-content: center;
-  background-image: url('/img/pattern-geo.png'),linear-gradient(
-    135deg,
-    #7c4dff 0%,
-    #18a9e6 50%,
-    #01c9ea 100%
-  );
-  background-repeat: repeat, no-repeat;  
+  background-image: url("/img/pattern-geo.png"),
+    linear-gradient(135deg, #7c4dff 0%, #18a9e6 50%, #01c9ea 100%);
+  background-repeat: repeat, no-repeat;
   padding: 30px 20px;
 
   .edit-button {
@@ -47,13 +42,13 @@ export const Header = styled.div`
     right: 20px;
     top: 20px;
     font-size: 1rem;
-  };
+  }
 `;
 
 export const Form = styled.form`
   padding: 20px 40px;
   align-items: center;
-  display:grid;
+  display: grid;
   grid-template-columns: 1fr;
   grid-gap: 20px 40px;
   ${media.tablet`
@@ -82,9 +77,9 @@ export const WebId = styled.div`
   padding: 20px 40px;
 
   &:before {
-    background-color: #D8D8D8;
-    display:block;
-    content: '';
+    background-color: #d8d8d8;
+    display: block;
+    content: "";
     height: 1px;
     width: 100%;
     margin-bottom: 25px;

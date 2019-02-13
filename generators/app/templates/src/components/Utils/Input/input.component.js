@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { InputWrapper } from './input.style';
 
-export const Input = (props) => {
-  return(
-    <InputWrapper>
-      <FontAwesomeIcon icon={props.icon} className="icon" />
+export const Input = props => {
+  return (
+    <div className="input wrap input-wrap--inline">
+      <label>
+        <FontAwesomeIcon icon={props.icon} className="icon" />
+      </label>
       <input {...props} />
-    </InputWrapper>
+    </div>
   );
 };
