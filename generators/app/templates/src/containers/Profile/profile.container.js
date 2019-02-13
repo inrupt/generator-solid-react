@@ -172,7 +172,7 @@ export class Profile extends Component {
         ? await user.image.set(uri)
         : await user.image.add(uri);
 
-      this.props.toastManager.add('Profile Image was updated', {
+      this.props.toastManager.add(['','Profile Image was updated'], {
         appearance: 'success'
       });
     } catch (error) {

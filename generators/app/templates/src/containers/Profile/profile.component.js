@@ -59,8 +59,8 @@ const ProfileComponent = ({
               limitSize: 500000,
               accept: "image/*",
               onError: error => {
-                if (error && error.message) {
-                  toastManager.add(error.message, { appearance: "error" });
+                if (error && error.statusText) {
+                  toastManager.add(['', error.statusText], { appearance: "error" });
                 }
               },
               onComplete: uploadedFiles => {
