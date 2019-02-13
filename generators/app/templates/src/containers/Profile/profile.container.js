@@ -59,6 +59,7 @@ export class Profile extends Component {
       if (field.property === name || field.blankNode === name) {
         return {
           ...field,
+          action: field.value !== "" && value === "" ? "delete" : field.action,
           updated: true,
           value
         };
@@ -77,21 +78,29 @@ export class Profile extends Component {
     try {
       e.preventDefault();
       let node;
+      let nextAction;
       const updatedFormField = await Promise.all(
         this.state.formFields.map(async field => {
           if (field.updated) {
             node = data.user[field.property];
+            nextAction = "update";
+
             if (field.blankNode) {
               node = data[field.nodeParentUri][field.blankNode];
             }
 
-            field.action === "update"
-              ? await node.set(field.value)
-              : await node.add(field.value);
+            if (field.action === 'update') {
+              await node.set(field.value);
+            } else if (field.action === "create") {
+              await node.add(field.value);
+            } else {
+              await node.delete();
+              nextAction = "create";
+            }
 
             return {
               ...field,
-              action: "update",
+              action: nextAction,
               updated: false
             };
           }
