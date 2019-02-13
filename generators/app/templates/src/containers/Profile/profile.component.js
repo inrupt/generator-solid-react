@@ -59,7 +59,6 @@ const ProfileComponent = ({
               limitSize: 2100000,
               accept: "image/*",
               onError: error => {
-                console.log(error);
                 if (error && error.statusText) {
                   toastManager.add(['', error.statusText], { appearance: "error" });
                 }
