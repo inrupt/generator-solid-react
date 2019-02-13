@@ -1,12 +1,14 @@
 import React from "react";
-import { Image, LogoutButton } from "@inrupt/solid-react-components";
+import { LogoutButton } from "@inrupt/solid-react-components";
 import isLoading from "@hocs/isLoading";
 import {
   WelcomeWrapper,
   WelcomeCard,
   WelcomeLogo,
   WelcomeProfile,
-  WelcomeDetail
+  WelcomeDetail,
+  ImageContainer,
+  ImageWrapper
 } from "./welcome.style";
 
 /**
@@ -25,15 +27,13 @@ const WelcomePageContent = props => {
           <h3>
             Welcome, <span>{props.name}</span>
           </h3>
-          <div>
+          <ImageWrapper>
             {props.image && (
-              <Image
-                alt="User"
-                src={props.image}
-                defaultSrc="/img/icon/empty-profile.svg"
+              <ImageContainer
+                image={props.image}
               />
             )}
-          </div>
+          </ImageWrapper>
           <p>
             All Done ? <LogoutButton />
           </p>
@@ -126,7 +126,7 @@ const WelcomePageContent = props => {
             that illustrates how to read and write Linked Data associated with a User Profile using LDFlex.
           </p>
           <p>
-            Version 0.1.0 implemented: 
+            Version 0.1.0 implemented:
           </p>
           <ul>
             <li>

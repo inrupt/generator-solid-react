@@ -7,7 +7,8 @@
     {
       "label": "Name",
       "icon": "user",
-      "property": "foaf:name"
+      "property": "foaf:name",
+      "required": true
     },
     {
       "label": "Phone",

@@ -21,7 +21,9 @@ type Props = {
   changeFormMode: () => void,
   onInputChange: () => void,
   onSubmit: () => void,
+  onCancel: () => void,
   updatePhoto: (uri: String) => void,
+  toastManager: (message: String, options: Object) => void,
   formMode: boolean
 };
 
@@ -31,7 +33,9 @@ const ProfileComponent = ({
   changeFormMode,
   onInputChange,
   updatePhoto,
+  toastManager,
   onSubmit,
+  onCancel,
   formMode,
   photo
 }: Props) => {
@@ -39,17 +43,26 @@ const ProfileComponent = ({
     <ProfileWrapper>
       <ProfileContainer>
         <Header>
-          { formMode && <button
-            type="button"
-            className="button edit-button"
-            onClick={changeFormMode}
-          >
-            <FontAwesomeIcon icon="pencil-alt" /> EDIT
-          </button> }
+          {formMode && (
+            <button
+              type="button"
+              className="button edit-button"
+              onClick={changeFormMode}
+            >
+              <FontAwesomeIcon icon="pencil-alt" /> EDIT
+            </button>
+          )}
           <Uploader
             {...{
               fileBase: webId && webId.split("/card")[0],
               limitFiles: 1,
+              limitSize: 500000,
+              accept: "image/*",
+              onError: error => {
+                if (error && error.message) {
+                  toastManager.add(error.message, { appearance: "error" });
+                }
+              },
               onComplete: uploadedFiles => {
                 updatePhoto(uploadedFiles[0].uri);
               },
@@ -69,7 +82,7 @@ const ProfileComponent = ({
                 onChange={onInputChange}
                 icon={item.icon}
                 readOnly={formMode}
-                required
+                required={item.required}
               />
             ))}
           <FullGridSize>
@@ -77,7 +90,7 @@ const ProfileComponent = ({
               <>
                 <Button
                   type="button"
-                  onClick={changeFormMode}
+                  onClick={onCancel}
                   className="ids-link-stroke ids-link-stroke--primary"
                 >
                   Cancel

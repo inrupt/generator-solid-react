@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import { ImageProfile } from "./image-profile.component";
 import { ImageProfileLoader, ButtonStyled } from './image-profile.style';
 

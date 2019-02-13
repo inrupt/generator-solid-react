@@ -2,7 +2,6 @@ import React from "react";
 import { shallow } from "enzyme";
 import { Profile } from "./profile.container";
 import ProfileComponent from "./profile.component";
-import { Form } from "./profile.style";
 
 import "@testSetup";
 

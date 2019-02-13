@@ -1,5 +1,31 @@
 # Solid React Application Generator
 
+## 0.2.1 (February 13, 2019)
+
+#### Generator
+
+##### Removed
+- Deleted the default .yo-rc file, as it was not required by the generator
+
+#### Solid React Application Base
+
+##### Added
+- Profile Page
+  - View Profile
+  - Edit Profile
+- LDFlex for Solid Write integration
+- Shapes for working with linked data
+- Loading animation
+
+##### Updated
+- Additional navigation menu items
+- Dropdown menu for logout and profile
+- Updated style guide and LDFlex for Solid to the latest versions
+
+##### Fixed
+- Minor style tweaks
+
+
 ## 0.1.1 (February 5, 2019)
 
 #### Solid React Application Base
