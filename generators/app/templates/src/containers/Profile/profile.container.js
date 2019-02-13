@@ -116,7 +116,7 @@ export class Profile extends Component {
           return { ...field };
         })
       );
-      this.props.toastManager.add('Profile was updated successfully', {
+      this.props.toastManager.add(['','Profile was updated successfully'], {
         appearance: 'success'
       });
       this.setState({
@@ -125,7 +125,7 @@ export class Profile extends Component {
         formMode: true
       });
     } catch (error) {
-      this.props.toastManager.add(error.message, { appearance: 'error' });
+      this.props.toastManager.add(['Error', error.message], { appearance: 'error' });
     }
   };
   /**
@@ -156,7 +156,7 @@ export class Profile extends Component {
         hasImage
       });
     } catch (error) {
-      this.props.toastManager.add(error.message, { appearance: 'error' });
+      this.props.toastManager.add(['Error', error.message], { appearance: 'error' });
     }
   };
   /**
@@ -176,7 +176,7 @@ export class Profile extends Component {
         appearance: 'success'
       });
     } catch (error) {
-      this.props.toastManager.add(error.message, { appearance: 'error' });
+      this.props.toastManager.add(['Error', error.message], { appearance: 'error' });
     }
   };
   /**
@@ -209,7 +209,7 @@ export class Profile extends Component {
       );
       this.setState({ profile, formFields, originalFormField: formFields });
     } catch (error) {
-      this.props.toastManager.add(error.message, { appearance: 'error' });
+      this.props.toastManager.add(['Error', error.message], { appearance: 'error' });
     }
   };
   /**
