@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { mount } from "enzyme";
 import ErrorBoundary from "./error-boundary.component";
 
 import "../../utils/enzymeSetup";

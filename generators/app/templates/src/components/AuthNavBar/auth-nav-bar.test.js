@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import AuthNavBar from "./auth-nav-bar.container";
 import { BrowserRouter as Router } from "react-router-dom";
 
