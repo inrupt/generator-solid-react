@@ -56,9 +56,10 @@ const ProfileComponent = ({
             {...{
               fileBase: webId && webId.split("/card")[0],
               limitFiles: 1,
-              limitSize: 500000,
+              limitSize: 2100000,
               accept: "image/*",
               onError: error => {
+                console.log(error);
                 if (error && error.statusText) {
                   toastManager.add(['', error.statusText], { appearance: "error" });
                 }
