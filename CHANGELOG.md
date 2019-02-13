@@ -1,14 +1,5 @@
 # Solid React Application Generator
 
-## 0.2.2 (February 13, 2019)
-
-#### Solid React Application Base
-
-##### Fixed
-
-- Minor bug fixes
-- Solid React Components updated to V0.2.2
-
 ## 0.2.1 (February 13, 2019)
 
 #### Generator
@@ -37,6 +28,8 @@
 ##### Fixed
 
 - Minor style tweaks
+- Minor bug fixes
+- Solid React Components updated to V0.2.2
 
 ## 0.1.1 (February 5, 2019)
 
