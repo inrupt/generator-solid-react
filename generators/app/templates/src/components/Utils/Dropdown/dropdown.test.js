@@ -1,6 +1,5 @@
 import React from "react";
-import { mount, shallow, render } from "enzyme";
-import sinon from "sinon";
+import { mount } from "enzyme";
 import Dropdown from "./dropdown.component";
 import {
   DropdownContainer,
@@ -37,7 +36,6 @@ describe.only("Dropdown", () => {
     //TODO: Needs some work, apparently there are no "li"
     wrapper.setState({ open: true });
     wrapper.setProps({ data });
-    const list = wrapper.find("ul");
     expect(wrapper.find("li").length).toBe(0);
   });
 });

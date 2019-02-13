@@ -1,0 +1,47 @@
+{
+  "@context": {
+    "vcard": "http://www.w3.org/2006/vcard/ns#",
+    "foaf": "http://xmlns.com/foaf/0.1/"
+  },
+  "profile": [
+    {
+      "label": "Name",
+      "icon": "user",
+      "property": "foaf:name",
+      "required": true
+    },
+    {
+      "label": "Phone",
+      "icon": "phone",
+      "property": "vcard:phone"
+    },
+    {
+      "label": "Role",
+      "icon": "user-astronaut",
+      "property": "vcard:role"
+    },
+    {
+      "label": "Email",
+      "icon": "envelope",
+      "property": "vcard:hasEmail",
+      "blankNode": "vcard:value"
+    },
+    {
+      "label": "Company",
+      "icon": "building",
+      "property": "vcard:organization-name"
+    },
+    {
+      "label": "Address",
+      "icon": "map-marker-alt",
+      "property": "vcard:hasAddress",
+      "blankNode": "vcard:street-address"
+    },
+    {
+      "label": "Country",
+      "icon": "flag",
+      "property": "vcard:hasAddress",
+      "blankNode": "vcard:country-name"
+    }
+  ]
+}

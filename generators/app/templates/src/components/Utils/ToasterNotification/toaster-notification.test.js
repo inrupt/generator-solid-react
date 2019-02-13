@@ -2,7 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import ToasterNotification from "./toaster-notification.component";
 
-import "../../utils/enzymeSetup";
+import "@testSetup";
 
 const setup = props => shallow(<ToasterNotification {...props} />);
 

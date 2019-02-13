@@ -4,9 +4,10 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.12",
     "@fortawesome/free-solid-svg-icons": "^5.6.3",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "@inrupt/inrupt-atomic-style-guide": "^0.1.12",
-    "@inrupt/solid-react-components": "^0.1.0",
-    "@solid/query-ldflex": "^1.2.1",
+    "@inrupt/inrupt-atomic-style-guide": "^0.1.19",
+    "@inrupt/solid-react-components": "^0.2.1",
+    "@rdfjs/data-model": "^1.1.1",
+    "@solid/query-ldflex": "^2.0.0",
     "@svgr/webpack": "2.4.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
@@ -37,6 +38,7 @@
     "jest-pnp-resolver": "1.0.1",
     "jest-resolve": "23.6.0",
     "mini-css-extract-plugin": "0.4.3",
+    "moment": "^2.24.0",
     "normalize.css": "^8.0.1",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",
@@ -77,6 +79,11 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "jest && eslint --ignore-path .gitignore ."
+    }
+  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
@@ -135,7 +142,9 @@
             "@util-components": "./src/components/Utils",
             "@services": "./src/services",
             "@layouts": "./src/layouts",
-            "@testSetup": "./src/utils/enzymeSetup"
+            "@contexts": "./src/contexts/",
+            "@testSetup": "./src/utils/enzymeSetup",
+            "@hocs": "./src/hocs"
           }
         }
       ]
@@ -148,6 +157,7 @@
     "babel-plugin-module-resolver": "^3.1.2",
     "copy-webpack-plugin": "^4.6.0",
     "enzyme": "^3.8.0",
-    "enzyme-adapter-react-16": "^1.7.1"
+    "enzyme-adapter-react-16": "^1.7.1",
+    "husky": "^1.3.1"
   }
 }

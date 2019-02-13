@@ -59,8 +59,9 @@ export const WelcomeProfile = styled.div`
   position: relative;
 
   img {
-    max-width: 120px;
-    border-radius: 60px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
   }
 
   h1,
@@ -83,6 +84,20 @@ export const WelcomeProfile = styled.div`
     }
   `}
 `;
+
+export const ImageWrapper = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+`
+
+export const ImageContainer =  styled.div`
+  background-image: ${({image}) => image ? `url(${image})`: '#cccccc'};
+  background-size: cover;
+  border-radius: 50%;
+  width: 128px;
+  height: 128px;
+  `;
 
 export const WelcomeDetail = styled.div`
   padding: 1rem 3.5rem;

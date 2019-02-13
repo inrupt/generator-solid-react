@@ -6,8 +6,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import "@testSetup";
 
-const setup = () => mount(<NavBar />);
-
 describe.only("Nav Bar", () => {
   let wrapper, wrapperWithNavigation, wrapperWithToolbar;
   beforeAll(() => {

@@ -5,6 +5,8 @@ import data from "@solid/query-ldflex";
 
 // hasPhoto context
 const hasPhotoContext = "http://www.w3.org/2006/vcard/ns#hasPhoto";
+// img context 
+const imgContext = "http://xmlns.com/foaf/0.1/img"
 
 class AuthNavBarContainer extends Component {
   constructor(props) {
@@ -22,9 +24,10 @@ class AuthNavBarContainer extends Component {
        * for more information please go to: https://github.com/digitalbazaar/jsonld.js
        */
       const userName = await user.name;
-      const userImage = await user[hasPhotoContext];
+      let userImage = await user[imgContext];
+      userImage = userImage ? userImage : await user[hasPhotoContext];
       const name = userName ? userName.value : "";
-      const image = userImage ? userImage.value : null;
+      const image = userImage ? userImage.value : "/img/icon/empty-profile.svg";
       this.setState({
         name,
         image
@@ -48,7 +51,7 @@ class AuthNavBarContainer extends Component {
 
   render() {
     const { image } = this.state;
-    return <AuthNavBar img={image} />;
+    return <AuthNavBar img={image} {...this.props}/>;
   }
 }
 

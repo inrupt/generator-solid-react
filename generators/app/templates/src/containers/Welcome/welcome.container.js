@@ -5,6 +5,8 @@ import data from "@solid/query-ldflex";
 
 // Manually-created vcard#hasPhoto context link
 const hasPhotoContext = "http://www.w3.org/2006/vcard/ns#hasPhoto";
+// img context 
+const imgContext = "http://xmlns.com/foaf/0.1/img"
 
 /**
  * Container component for the Welcome Page, containing example of how to fetch data from a POD
@@ -15,7 +17,8 @@ class WelcomeComponent extends Component<Props> {
 
     this.state = {
       name: "",
-      image: ""
+      image: "",
+      isLoading: false
     };
   }
   componentDidMount() {
@@ -36,6 +39,8 @@ class WelcomeComponent extends Component<Props> {
    * This is an example of how to use the LDFlex library to fetch different linked data fields.
    */
   getProfileData = async () => {
+    this.setState({ isLoading: true });
+
     /*
      * This is an example of how to use LDFlex. Here, we're loading the webID link into a user variable. This user object
      * will contain all of the data stored in the webID link, such as profile information. Then, we're grabbing the user.name property
@@ -45,6 +50,11 @@ class WelcomeComponent extends Component<Props> {
     const nameLd = await user.name;
 
     const name = nameLd ? nameLd.value : "";
+
+    let imageLd = await user[imgContext];
+    imageLd = imageLd ? imageLd : await user[hasPhotoContext];
+
+    const image =  imageLd ? imageLd.value : "/img/icon/empty-profile.svg";
 
     /**
      * This is where we set the state with the name and image values. The user[hasPhotoContext] line of code is an example of
@@ -56,12 +66,13 @@ class WelcomeComponent extends Component<Props> {
      *
      * For more information please go to: https://github.com/solid/query-ldflex
      */
-    this.setState({ name, image: user[hasPhotoContext] });
+    this.setState({ name, image, isLoading: false });
   };
 
   render() {
+    const { name, image, isLoading } = this.state;
     return (
-      <WelcomePageContent name={this.state.name} image={this.state.image} />
+      <WelcomePageContent name={name} image={image} isLoading={isLoading} />
     );
   }
 }

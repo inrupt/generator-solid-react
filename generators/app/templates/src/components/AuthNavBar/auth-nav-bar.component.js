@@ -10,11 +10,28 @@ const navigation = [
     icon: "img/icon/apps.svg",
     label: "Welcome",
     to: "/welcome"
+  },
+  {
+    id: "profile",
+    icon: "img/people.svg",
+    label: "Profile",
+    to: "/profile"
   }
 ];
 
 const AuthNavBar = props => {
-  return <NavBar navigation={navigation} toolbar={[{ component: ()=> <NavBarProfile img={props.img}/>, label: 'Profile', id: 'profile' }]} />;
+  return (
+    <NavBar
+      navigation={navigation}
+      toolbar={[
+        {
+          component: () => <NavBarProfile {...props} />,
+          label: "Profile",
+          id: "profile"
+        }
+      ]}
+    />
+  );
 };
 
 export default AuthNavBar;

@@ -4,9 +4,14 @@ import enhanceWithClickOutside from "react-click-outside";
 import {
   DropdownContainer,
   DropdownMain,
-  DropdownItemContainer
+  DropdownItemContainer,
+  Item
 } from "./dropdown.style";
-type Props = { data: Array<Object>, children: React.Node, className: String };
+type Props = {
+  actions: Array<Object>,
+  children: React.Node,
+  className: String
+};
 
 type State = { open: Boolean };
 
@@ -23,23 +28,28 @@ class Dropdown extends Component<Props, State> {
   }
 
   render() {
-    const { data, children, className } = this.props;
+    const { actions, children, className, hover } = this.props;
     const { open } = this.state;
     return (
-      <DropdownContainer className={className} onClick={this.toggleOpen}>
+      <DropdownContainer
+        className={className}
+        onClick={this.toggleOpen}
+        onMouseEnter={hover ? this.toggleOpen : null}
+        onMouseLeave={hover ? this.toggleOpen : null}
+      >
         <DropdownMain onClick={this.toggleOpen}>{children}</DropdownMain>
         {open && (
           <DropdownItemContainer>
             <ul>
-              {data.map((item, i) => (
-                <li key={i}>
-                  <button onClick={item.onClick}>
-                    {item.icon && (
-                      <FontAwesomeIcon icon={item.icon} className="checked" />
+              {actions.map((action, i) => (
+                <Item key={i}>
+                  <button onClick={action.onClick}>
+                    {action.icon && (
+                      <FontAwesomeIcon icon={action.icon} className="checked" />
                     )}
-                    <span>{item.label}</span>
+                    <span>{action.label}</span>
                   </button>
-                </li>
+                </Item>
               ))}
             </ul>
           </DropdownItemContainer>
@@ -48,5 +58,9 @@ class Dropdown extends Component<Props, State> {
     );
   }
 }
+
+Dropdown.defaultProps = {
+  hover: false
+};
 
 export default enhanceWithClickOutside(Dropdown);
