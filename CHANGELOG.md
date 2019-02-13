@@ -24,12 +24,12 @@
 - Additional navigation menu items
 - Dropdown menu for logout and profile
 - Updated style guide and LDFlex for Solid to the latest versions
+- Solid React Components updated to V0.2.2
 
 ##### Fixed
 
 - Minor style tweaks
 - Minor bug fixes
-- Solid React Components updated to V0.2.2
 
 ## 0.1.1 (February 5, 2019)
 
