@@ -46,6 +46,15 @@ export class Profile extends Component {
     this.changeFormMode();
     this.setDefaultData();
   };
+  changeInputMode = (currentValue: String, nextValue: String, currentAction: String) => {
+    if (currentValue !== '' && nextValue === '') {
+      return 'delete';
+    } else if (nextValue !== '' && (currentAction === 'delete' || currentAction === 'update')) {
+      return 'update';
+    }
+
+    return 'create';
+  };
   /**
    * onChangeInput will update a field into formFields array
    * and will add updated flag to true, this will be taken
@@ -59,6 +68,7 @@ export class Profile extends Component {
       if (field.property === name || field.blankNode === name) {
         return {
           ...field,
+          action: this.changeInputMode(field.value, value, field.action),
           updated: true,
           value
         };
@@ -77,29 +87,37 @@ export class Profile extends Component {
     try {
       e.preventDefault();
       let node;
+      let nextAction;
       const updatedFormField = await Promise.all(
         this.state.formFields.map(async field => {
           if (field.updated) {
             node = data.user[field.property];
+            nextAction = 'update';
+
             if (field.blankNode) {
               node = data[field.nodeParentUri][field.blankNode];
             }
 
-            field.action === "update"
-              ? await node.set(field.value)
-              : await node.add(field.value);
+            if (field.action === 'update') {
+              await node.set(field.value);
+            } else if (field.action === 'create') {
+              await node.add(field.value);
+            } else {
+              await node.delete();
+              nextAction = 'create';
+            }
 
             return {
               ...field,
-              action: "update",
+              action: nextAction,
               updated: false
             };
           }
           return { ...field };
         })
       );
-      this.props.toastManager.add("Profile was updated successfully", {
-        appearance: "success"
+      this.props.toastManager.add('Profile was updated successfully', {
+        appearance: 'success'
       });
       this.setState({
         formFields: updatedFormField,
@@ -107,7 +125,7 @@ export class Profile extends Component {
         formMode: true
       });
     } catch (error) {
-      this.props.toastManager.add(error.message, { appearance: "error" });
+      this.props.toastManager.add(error.message, { appearance: 'error' });
     }
   };
   /**
@@ -128,7 +146,7 @@ export class Profile extends Component {
          * if you want to know more about context please go to:
          * https://github.com/digitalbazaar/jsonld.js
          */
-        image = await user["vcard:hasPhoto"];
+        image = await user['vcard:hasPhoto'];
 
         hasImage = false;
       }
@@ -138,7 +156,7 @@ export class Profile extends Component {
         hasImage
       });
     } catch (error) {
-      this.props.toastManager.add(error.message, { appearance: "error" });
+      this.props.toastManager.add(error.message, { appearance: 'error' });
     }
   };
   /**
@@ -154,11 +172,11 @@ export class Profile extends Component {
         ? await user.image.set(uri)
         : await user.image.add(uri);
 
-      this.props.toastManager.add("Profile Image was updated", {
-        appearance: "success"
+      this.props.toastManager.add('Profile Image was updated', {
+        appearance: 'success'
       });
     } catch (error) {
-      this.props.toastManager.add(error.message, { appearance: "error" });
+      this.props.toastManager.add(error.message, { appearance: 'error' });
     }
   };
   /**
@@ -191,7 +209,7 @@ export class Profile extends Component {
       );
       this.setState({ profile, formFields, originalFormField: formFields });
     } catch (error) {
-      this.props.toastManager.add(error.message, { appearance: "error" });
+      this.props.toastManager.add(error.message, { appearance: 'error' });
     }
   };
   /**
@@ -203,7 +221,7 @@ export class Profile extends Component {
     const id = `#id${Date.parse(new Date())}`;
     await data.user[property].add(namedNode(id));
     // @TODO: add from ldflex should return this value instead of create by our self
-    return `${this.props.webId.split("#")[0]}${id}`;
+    return `${this.props.webId.split('#')[0]}${id}`;
   };
   /**
    * getNodeValue will return node value and uri in case that node points to nodeBlank
@@ -230,8 +248,8 @@ export class Profile extends Component {
     const nodeValue = node && node.value;
 
     return {
-      action: nodeValue ? "update" : "create",
-      value: nodeValue || "",
+      action: nodeValue ? 'update' : 'create',
+      value: nodeValue || '',
       nodeParentUri
     };
   };

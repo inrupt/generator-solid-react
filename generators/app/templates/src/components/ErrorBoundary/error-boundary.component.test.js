@@ -1,11 +1,11 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { mount } from "enzyme";
 import ErrorBoundary from "./error-boundary.component";
 
 import "../../utils/enzymeSetup";
 
 const ErrorComponent = () => {
-  throw "Error";
+  throw Error("Error");
 };
 
 // This a hack to avoid error console when we run test

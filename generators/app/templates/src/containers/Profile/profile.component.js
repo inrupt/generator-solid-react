@@ -82,7 +82,7 @@ const ProfileComponent = ({
                 onChange={onInputChange}
                 icon={item.icon}
                 readOnly={formMode}
-                required
+                required={item.required}
               />
             ))}
           <FullGridSize>
