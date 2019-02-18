@@ -16,18 +16,18 @@ library.add(fas);
 class App extends Component {
   render() {
     return (
-      <ToastProvider
-        components={{ Toast: ToasterNotification }}
-        placement="top-center"
-        autoDismiss={true}
-        autoDismissTimeout={3000}
-      >
-        <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <ToastProvider
+          components={{ Toast: ToasterNotification }}
+          placement="top-center"
+          autoDismiss={true}
+          autoDismissTimeout={3000}
+        >
           <Fragment>
             <Routes />
           </Fragment>
-        </ThemeProvider>
-      </ToastProvider>
+        </ToastProvider>
+      </ThemeProvider>
     );
   }
 }

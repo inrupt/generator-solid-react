@@ -1,0 +1,92 @@
+{
+  "login": {
+    "title": "Hi! Welcome to Solid...",
+    "message": "Login to your Solid App",
+    "loginBtn": "Log in",
+    "register": "Register for a solid identity",
+    "solidHelp": "What is a Solid Identity??",
+    "providerLabel": "ID Provider",
+    "webId": "WebID",
+    "withWebId": "Log in with ID Provider",
+    "withProvider": "Log in with WebID",
+    "providerPlaceholder": "Select ID Provider"
+  },
+  "register": {
+    "title": "Hi! Welcome to Solid.",
+    "step1Title": "Select your Provider",
+    "whatIsAProvider": "What is a provider, and how should I choose one?",
+    "alreadySolid": "I already have a Solid identity",
+    "next": "Next"
+  },
+  "navBar": {
+    "logOut": "Log out",
+    "things": "Things",
+    "apps": "Apps",
+    "files": "Files",
+    "people": "People",
+    "profile": "Profile",
+    "demo": "Demo",
+    "notifications": "Notifications",
+    "permissions": "Permissions",
+    "thingtothing": "Thing Mapping"
+  },
+  "profile": {
+    "title": "Profile",
+    "save": "Save",
+    "success": "Profile was updates"
+  },
+  "preferences": {
+    "title": "My preferences",
+    "saveBtn": "Save",
+    "language": "Language"
+  },
+  "permissions": {
+    "createBtn": "Create",
+    "friendListHeadline": "Friend List",
+    "addGroupBtn": "Add to Group",
+    "onGroup": "Already on group",
+    "groupName": "Group Name",
+    "totalGroupUsers": "Total Users",
+    "loadUsersBtn": "Load Users",
+    "noUsersGroup": "You do not have groups yet",
+    "removeUserBtn": "Remove from group",
+    "addUserBtn": "Add user to group",
+    "groupNoUsers": "Group does not has users yet",
+    "title": "Set Thing permissions",
+    "setBtn": "Set file permission",
+    "errorPath": "Error path does not exist or need to be obsolute"
+  },
+  "usersFolder": {
+    "title": "Update user's Thing permissions",
+    "loadUser": "Load User",
+    "userPath": "Users on ACL",
+    "saveBtn": "Save Permissions",
+    "aclError": "ACL do no exist on this path or path is wrong"
+  },
+  "notification": {
+    "userRemovedGroup": "User was removed to group",
+    "userAddedToGroup": "was added to group",
+    "wasCreated": "was created on",
+    "permissionsUpdated": "Permissions updated",
+    "permissionsCreated": "Permissions was created on",
+    "title": "Notification",
+    "send": "Send Notification"
+  },
+  "forms": {
+    "pastePath": "Thing you’d like to assign permissions to"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "notFoundContent": "There may be an error in the URL entered into your web browser. Please check the URL and try again. Or the page you're looking for has been moved or deleted",
+    "redirectButton": "Take me back to my profile"
+  },
+  "error": {
+    "global": "Something is wrong try again"
+  },
+  "global": {
+    "message": "Message"
+  },
+  "connector": {
+    "notFound": "No Things found on folder"
+  }
+}

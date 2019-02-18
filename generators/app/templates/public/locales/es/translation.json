@@ -1,0 +1,84 @@
+{
+	"login": {
+		"title": "Hola! Bienvenido a Solid.",
+		"message": "Ingresa a tu aplicación Solid",
+		"loginBtn": "Iniciar sesión",
+		"register": "Registrarse por una identidad Solid",
+		"solidHelp": "Qué es una identidad Solid?",
+		"providerLabel": "ID de Proveedor",
+		"webId": "WebID",
+		"withWebIdText": "Inicia sesión con ID de Proveedor",
+		"withProvider": "Inicia sesión con WebID",
+		"providerPlaceholder": "Selecciona el Proveedor"
+	},
+	"register": {
+		"title": "Hola! Bienvenido a Solid.",
+		"step1Title": "Selecciona tu Proveedor",
+		"whatIsAProvider": "Qué es un Proveedor, cómo escoger uno?",
+		"alreadySolid": "Ya tengo una identidad Solid",
+		"next": "Siguiente"
+	},
+	"navBar": {
+		"logOut": "Cerrar Sesión",
+		"things": "Objetos",
+		"apps": "Apps",
+		"files": "Archivos",
+		"people": "Personas",
+		"profile": "Perfil",
+		"demo": "Demo"
+	},
+	"profile": {
+		"title": "Perfil",
+		"save": "Guardar",
+		"success": "Perfil actualizado"
+	},
+	"preferences": {
+		"title": "Mis preferencias",
+		"saveBtn": "Guardar",
+		"language": "Idioma"
+	},
+	"permissions": {
+		"createBtn": "Crear",
+		"friendListHeadline": "Lista de Amigos",
+		"addGroupBtn": "Agregar al group",
+		"onGroup": "Ya es parte del grupo",
+		"groupName": "Nombre del Group",
+		"totalGroupUsers": "Total de Usuarios",
+		"loadUsersBtn": "Cargar usuarios",
+		"noUsersGroup": "No hay groups",
+		"removeUserBtn": "Eliminar del grupo",
+		"groupNoUsers": "No hay usuarios en el grupo",
+		"addUserBtn": "Agregar al grupo",
+		"title": "Agregar permisos a un folder o un archivo",
+		"setBtn": "Agregar permisos",
+		"errorPath": "Error path is incorrecto o no existe"
+	},
+	"usersFolder": {
+		"title": "Editar permisos de usuarios",
+		"loadUser": "Cargar Usuario",
+		"userPath": "Usuarios en ACL",
+		"saveBtn": "Guardar permisos",
+		"aclError": "Web Access Control no existe o path es incorrecto"
+	},
+	"notification": {
+		"userRemovedGroup": "Usuario fue eliminado",
+		"userAddedToGroup": "fue agregado correctamente",
+		"wasCreated": "fue creado en",
+		"permissionsUpdated": "Permissos fueron actualizados",
+		"permissionsCreated": "Los permisos fueron creados en",
+		"title": "Notificaciones",
+		"send": "Enviar Notificacion"
+	},
+	"forms": {
+		"pastePath": "Folder o file para asignar los permisos"
+	},
+	"error": {
+		"global": "Ocurrió un error trate de nuevo"
+	},
+	"global": {
+		"message": "Mensaje"
+	},
+	"connector": {
+		"notFound": "No se han encontrado recursos"
+	}
+}
