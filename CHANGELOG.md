@@ -1,6 +1,6 @@
 # Solid React Application Generator
 
-## 0.2.1 (February 13, 2019)
+## 0.2.1 (February 20, 2019)
 
 #### Generator
 
@@ -12,11 +12,7 @@
 
 ##### Added
 
-- Profile Page
-  - View Profile
-  - Edit Profile
-- LDFlex for Solid Write integration
-- Shapes for working with linked data
+
 - Loading animation
 
 ##### Updated
