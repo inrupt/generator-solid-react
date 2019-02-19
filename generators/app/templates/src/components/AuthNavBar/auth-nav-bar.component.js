@@ -10,12 +10,6 @@ const navigation = [
     icon: "img/icon/apps.svg",
     label: "Welcome",
     to: "/welcome"
-  },
-  {
-    id: "profile",
-    icon: "img/people.svg",
-    label: "Profile",
-    to: "/profile"
   }
 ];
 

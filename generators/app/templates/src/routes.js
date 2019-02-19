@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import {
   Login,
   Register,
-  Profile,
   PageNotFound,
   Welcome,
   RegistrationSuccess
@@ -16,11 +15,6 @@ const privateRoutes = [
     id: "welcome",
     path: "/welcome",
     component: Welcome
-  },
-  {
-    id: "profile",
-    path: "/profile",
-    component: Profile
   }
 ];
 
