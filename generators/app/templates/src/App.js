@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, Suspense } from "react";
 import { ToastProvider } from "react-toast-notifications";
 import { ToasterNotification } from "@util-components";
 
@@ -16,18 +16,20 @@ library.add(fas);
 class App extends Component {
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <ToastProvider
-          components={{ Toast: ToasterNotification }}
-          placement="top-center"
-          autoDismiss={true}
-          autoDismissTimeout={3000}
-        >
-          <Fragment>
-            <Routes />
-          </Fragment>
-        </ToastProvider>
-      </ThemeProvider>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ThemeProvider theme={theme}>
+          <ToastProvider
+            components={{ Toast: ToasterNotification }}
+            placement="top-center"
+            autoDismiss={true}
+            autoDismissTimeout={3000}
+          >
+            <Fragment>
+              <Routes />
+            </Fragment>
+          </ToastProvider>
+        </ThemeProvider>
+      </Suspense>
     );
   }
 }
