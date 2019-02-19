@@ -12,20 +12,21 @@
 
 ##### Added
 
-
 - Loading animation
 
 ##### Updated
 
-- Additional navigation menu items
 - Dropdown menu for logout and profile
-- Updated style guide and LDFlex for Solid to the latest versions
-- Solid React Components updated to V0.2.2
+- Updated style guide to the latest version
+- Solid React Components updated to v0.2.3
 
 ##### Fixed
 
 - Minor style tweaks
-- Minor bug fixes
+- Welcome page image no longer becomes an oval on tall images
+- Fixed notification display so it properly uses the title and content fields
+- Error message is cleared when switching between provider login and webID login
+- Login error text has been updated to add clarity
 
 ## 0.1.1 (February 5, 2019)
 
