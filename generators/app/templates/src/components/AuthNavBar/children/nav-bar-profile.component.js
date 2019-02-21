@@ -31,8 +31,6 @@ class NavBarProfile extends Component {
     imageLoaded: false
   };
 
-  profileRedirect = () => this.props.history.push("/profile");
-
   onImageLoaded = async () => this.setState({ imageLoaded: true });
   logOut = async () => {
     try {
@@ -51,11 +49,7 @@ class NavBarProfile extends Component {
 
     const profileOpts = [
       {
-        label: t("navBar.profile"),
-        onClick: this.profileRedirect
-      },
-      {
-        label: t("navBar.logOut"),
+        label: "Log Out",
         onClick: this.logOut
       }
     ];

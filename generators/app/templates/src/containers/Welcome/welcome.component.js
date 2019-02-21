@@ -108,26 +108,10 @@ const WelcomePageContent = props => {
               Release Timeline{" "}
             </a>
             for what’s currently planned. This latest release builds on the
-            prior version, implementing a{" "}
-            <a
-              href="https://github.com/Inrupt-inc/solid-react-sdk#linked-data-javascript-api"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Linked Data Javascript API
-            </a>
-            , and a
-            <a
-              href="https://github.com/Inrupt-inc/solid-react-sdk#user-profile"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {" "}
-              User Profile{" "}
-            </a>
-            that illustrates how to read and write Linked Data associated with a
-            User Profile using LDFlex.
+            prior version, fixing some bugs and improving the general developer
+            experience.
           </p>
+          <p>Version 0.1.0 implemented:</p>
           <p>Version 0.1.0 implemented:</p>
           <ul>
             <li>
