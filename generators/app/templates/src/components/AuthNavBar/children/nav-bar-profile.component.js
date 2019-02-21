@@ -49,7 +49,7 @@ class NavBarProfile extends Component {
 
     const profileOpts = [
       {
-        label: "Log Out",
+        label: t("navBar.logOut"),
         onClick: this.logOut
       }
     ];
