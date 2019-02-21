@@ -1,7 +1,7 @@
 import React from "react";
 import { mount } from "enzyme";
 import { BrowserRouter as Router } from "react-router-dom";
-import Register from "./register.component";
+import { RegisterComponent } from "./register.component";
 import {
   RegisterWrapper,
   RegisterPanel,
@@ -16,7 +16,7 @@ describe.only("Register", () => {
   beforeEach(() => {
     wrapper = mount(
       <Router>
-        <Register providers={[]} />
+        <RegisterComponent t={key => key} providers={[]} />
       </Router>
     );
   });
@@ -34,7 +34,7 @@ describe.only("Register", () => {
   });
   test("renders title properly", () => {
     expect(
-      wrapper.containsMatchingElement(<h1>Hi! Welcome to Solid.</h1>)
+      wrapper.containsMatchingElement(<h1>register.title</h1>)
     ).toBeTruthy();
   });
 });

@@ -1,25 +1,26 @@
 import React from "react";
+import { withTranslation } from "react-i18next";
 
 import { NavBar } from "@components";
 
 import { NavBarProfile } from "./children";
 
-const navigation = [
-  {
-    id: "welcome",
-    icon: "img/icon/apps.svg",
-    label: "Welcome",
-    to: "/welcome"
-  },
-  {
-    id: "profile",
-    icon: "img/people.svg",
-    label: "Profile",
-    to: "/profile"
-  }
-];
-
 const AuthNavBar = props => {
+  const { t } = props;
+  const navigation = [
+    {
+      id: "welcome",
+      icon: "img/icon/apps.svg",
+      label: t("navBar.welcome"),
+      to: "/welcome"
+    },
+    {
+      id: "profile",
+      icon: "img/people.svg",
+      label: t("navBar.profile"),
+      to: "/profile"
+    }
+  ];
   return (
     <NavBar
       navigation={navigation}
@@ -34,4 +35,5 @@ const AuthNavBar = props => {
   );
 };
 
-export default AuthNavBar;
+export { AuthNavBar };
+export default withTranslation()(AuthNavBar);

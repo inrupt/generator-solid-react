@@ -5,8 +5,8 @@ import data from "@solid/query-ldflex";
 
 // hasPhoto context
 const hasPhotoContext = "http://www.w3.org/2006/vcard/ns#hasPhoto";
-// img context 
-const imgContext = "http://xmlns.com/foaf/0.1/img"
+// img context
+const imgContext = "http://xmlns.com/foaf/0.1/img";
 
 class AuthNavBarContainer extends Component {
   constructor(props) {
@@ -51,7 +51,7 @@ class AuthNavBarContainer extends Component {
 
   render() {
     const { image } = this.state;
-    return <AuthNavBar img={image} {...this.props}/>;
+    return <AuthNavBar img={image} {...this.props} />;
   }
 }
 

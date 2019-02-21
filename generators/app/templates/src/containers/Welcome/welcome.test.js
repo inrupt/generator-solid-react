@@ -1,6 +1,7 @@
 import React from "react";
 import { mount } from "enzyme";
 import { BrowserRouter as Router } from "react-router-dom";
+import "../../i18n";
 import Welcome from "./welcome.component";
 import {
   WelcomeWrapper,

@@ -7,6 +7,7 @@ import { ThemeProvider } from "styled-components";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 
+import { Loader } from "@util-components";
 import theme from "./utils/theme";
 import "normalize.css";
 import "./index.css";
@@ -16,7 +17,7 @@ library.add(fas);
 class App extends Component {
   render() {
     return (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <ThemeProvider theme={theme}>
           <ToastProvider
             components={{ Toast: ToasterNotification }}

@@ -1,6 +1,7 @@
 /* eslint-disable constructor-super */
 import React from "react";
 import { Link } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 import { ProviderLogin } from "@inrupt/solid-react-components";
 import {
   LoginWrapper,
@@ -10,18 +11,19 @@ import {
 } from "./login.style.js";
 import { CenterContainer } from "@util-components";
 
-const LoginComponent = () => {
+const LoginComponent = props => {
+  const { t } = props;
   return (
     <LoginWrapper>
       <CenterContainer>
-        <h1>Hi! Welcome to Solid.</h1>
+        <h1>{t("login.title")}</h1>
         <LoginPanel>
           <PanelBody>
             <Link
               className="ids-link-filled ids-link-filled--primary"
               to="/register"
             >
-              Register for a solid identity
+              {t("login.register")}
             </Link>
             <a
               href="https://solid.inrupt.com/get-a-solid-pod"
@@ -29,10 +31,15 @@ const LoginComponent = () => {
               target="_blank"
               className="link"
             >
-              What is a Solid Identity??
+              {t("login.solidHelp")}
             </a>
-            <LoginTitle> Log in</LoginTitle>
+            <LoginTitle> {t("login.loginTitle")}</LoginTitle>
             <ProviderLogin
+              selectPlaceholder={t("login.selectPlaceholder")}
+              inputPlaholder={t("login.inputPlaholder")}
+              formButtonText={t("login.formButtonText")}
+              btnTxtWebId={t("login.btnTxtWebId")}
+              btnTxtProvider={t("login.btnTxtProvider")}
               className="provider-login-component"
               callbackUri={`${window.location.origin}/welcome`}
             />
@@ -43,4 +50,6 @@ const LoginComponent = () => {
   );
 };
 
-export default LoginComponent;
+export { LoginComponent };
+
+export default withTranslation()(LoginComponent);

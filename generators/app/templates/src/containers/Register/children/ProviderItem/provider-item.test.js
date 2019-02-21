@@ -2,8 +2,11 @@ import React from "react";
 import { mount } from "enzyme";
 import ProviderItem from "./provider.item.component";
 import { Item, ProviderItemStyle } from "./provider.style";
-
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import "@testSetup";
+
+library.add(fas);
 
 describe("ProviderItem", () => {
   let wrapper;

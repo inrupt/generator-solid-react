@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import AuthNavBar from "./auth-nav-bar.container";
+import { AuthNavBar } from "./auth-nav-bar.component";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import "@testSetup";
@@ -8,7 +8,7 @@ import "@testSetup";
 const setup = () =>
   shallow(
     <Router>
-      <AuthNavBar />
+      <AuthNavBar t={key => key} />
     </Router>
   );
 
