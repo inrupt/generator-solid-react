@@ -35,7 +35,7 @@ To install the generator:
 
 ```
 npm install -g @inrupt/generator-solid-react
-``` 
+```
 
 ## Usage
 Once the generator is installed, you can create a new application with just a few steps.
@@ -59,7 +59,7 @@ Using a generator accelerates application development. You don't have to worry a
 
 We have included integrations with essential libraries, as well as pages, routes, and components that are both useful in most Solid applications (like login pages) but also serve as example code to demonstrate how to interface with Solid and [Linked Data](https://solid.inrupt.com/docs/intro-to-linked-data).
 
-The generated application also incorporates our [Atomic Style Guide](https://design.inrupt.com/atomic-core), featuring a nice integration with [Styled Components](https://www.styled-components.com).
+The generated application also incorporates our [Atomic Style Guide for Solid](https://design.inrupt.com/atomic-core) (source available [here](https://github.com/inrupt-inc/solid-style-guide)), featuring a nice integration with [Styled Components](https://www.styled-components.com).
 
 ## The Solid React Application
 
