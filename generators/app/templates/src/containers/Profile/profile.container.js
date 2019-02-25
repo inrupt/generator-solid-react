@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import { namedNode } from '@rdfjs/data-model';
-import { withWebId } from '@inrupt/solid-react-components';
-import { withToastManager } from 'react-toast-notifications';
+import React, {Component} from 'react';
+import {namedNode} from '@rdfjs/data-model';
+import {withWebId} from '@inrupt/solid-react-components';
+import {withToastManager} from 'react-toast-notifications';
 import data from '@solid/query-ldflex';
 import ProfileShape from '@contexts/profile-shape.json';
+import { entries } from '@utils';
 import ProfileComponent from './profile.component';
 
 const defaulProfilePhoto = '/img/icon/empty-profile.svg';
@@ -17,8 +18,8 @@ const defaulProfilePhoto = '/img/icon/empty-profile.svg';
  */
 
 export class Profile extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super (props);
 
     this.state = {
       formFields: [],
@@ -26,60 +27,53 @@ export class Profile extends Component {
       formMode: true,
       photo: defaulProfilePhoto,
       isLoading: false,
-      newLinkNodes: []
+      newLinkNodes: [],
+      updatedFields: {}
     };
   }
-  async componentDidMount() {
-    this.setState({ isLoading: true });
-    await this.fetchPhoto();
-    await this.fetchProfile();
-    this.setState({ isLoading: false });
+  async componentDidMount () {
+    this.setState ({isLoading: true});
+    await this.fetchPhoto ();
+    await this.fetchProfile ();
+    this.setState ({isLoading: false});
   }
 
   changeFormMode = () => {
-    this.setState({ formMode: !this.state.formMode });
+    this.setState ({formMode: !this.state.formMode, updatedFields: {}});
   };
   setDefaultData = () => {
-    this.setState({ formFields: [...this.state.originalFormField] });
+    this.setState ({formFields: [...this.state.originalFormField]});
   };
   onCancel = () => {
-    this.changeFormMode();
-    this.setDefaultData();
+    this.changeFormMode ();
+    this.setDefaultData ();
   };
-  changeInputMode = (
-    currentValue: String,
-    nextValue: String,
-    currentAction: String
-  ) => {
-    if (currentValue !== '' && nextValue === '') {
-      return 'delete';
+  
+  onInputChange = (e: Event) => {
+    const { target: input, target: { dataset } } = e; 
+    const name = input.name;
+    const value = input.value;
+    let action = 'update';
+
+    if (value === '') {
+      action = this.state.formFields.find (
+        field => field.property === name && field.value !== ''
+      )
+        ? 'delete'
+        : action;
     }
 
-    return 'update';
-  };
-  /**
-   * onChangeInput will update a field into formFields array
-   * and will add updated flag to true, this will be taken
-   * for submit form to check which fields needs to be sent to POD
-   */
-  onInputChange = (e: Event) => {
-    const name = e.target.name;
-    const value = e.target.value;
-
-    const updatedFormField = this.state.formFields.map(field => {
-      if (field.property === name || field.blankNode === name) {
-        return {
-          ...field,
-          action: this.changeInputMode(field.value, value, field.action),
-          updated: true,
-          value
-        };
-      }
-
-      return { ...field };
-    });
-
-    this.setState({ formFields: updatedFormField });
+    this.setState ({ updatedFields: {
+      ...this.state.updatedFields,
+      [name]: {
+        value, 
+        action,
+        nodeParentUri: dataset.nodeparenturi || false,
+        nodeBlank: dataset.nodeblank || false,
+        label: dataset.label,
+        icon: dataset.icon
+      } 
+    }});
   };
   /**
    * onSubmit will send all the updated fields to POD
@@ -87,43 +81,37 @@ export class Profile extends Component {
    */
   onSubmit = async (e: Event) => {
     try {
-      e.preventDefault();
+      e.preventDefault ();
       let node;
-      let nextAction;
       let updatedFields = [];
 
-      this.setState({ isLoading: true });
+      this.setState ({isLoading: true});
       /*
        * Solid server has an issue on concurrent updates,
        * so to fix this we have to await one change, and only when it is done, 
        * fire the next field update.
        * more info about the issue: https://github.com/solid/node-solid-server/issues/1106
       */
-      for await (const field of this.state.formFields) {
-        if (field.updated) {
-          node = data.user[field.property];
-          nextAction = 'update';
+      
+    for await (const [key, field] of entries(this.state.updatedFields)) {
+          node = data.user[key];
 
-          if (field.blankNode) {
-            node = data[field.nodeParentUri][field.blankNode];
+          if (field.nodeBlank) {
+            node = data[field.nodeParentUri][field.nodeBlank];
           }
 
           if (field.action === 'update') {
-            await node.set(field.value);
+            await node.set (field.value);
           } else {
-            await node.delete();
-            nextAction = 'update';
+            await node.delete ();
           }
 
           updatedFields = [
-            updatedFields,
+            ...updatedFields,
             {
-              ...field,
-              action: nextAction,
-              updated: false
-            }
-          ];
-        }
+              ...field
+            },
+        ];
       }
 
       /*
@@ -131,23 +119,24 @@ export class Profile extends Component {
        * we are using these states to know if field need to delete, update or create
        * on POD and know if fields were updated by the user on the profile.
       */
-      const updatedFormField = this.state.formFields.map(
-        field => updatedFields.find(f => f.label === field.label) || field
+      const updatedFormField = this.state.formFields.map (
+        field => updatedFields.find (f => f.label === field.label) || field
       );
 
-      this.setState({
+      this.setState ({
         formFields: updatedFormField,
         originalFormField: updatedFormField,
+        updatedFields: {},
         formMode: true,
-        isLoading: false
+        isLoading: false,
       });
 
-      this.props.toastManager.add(['', 'Profile was updated successfully'], {
-        appearance: 'success'
+      this.props.toastManager.add (['', 'Profile was updated successfully'], {
+        appearance: 'success',
       });
     } catch (error) {
-      this.props.toastManager.add(['Error', error.message], {
-        appearance: 'error'
+      this.props.toastManager.add (['Error', error.message], {
+        appearance: 'error',
       });
     }
   };
@@ -174,13 +163,13 @@ export class Profile extends Component {
         hasImage = false;
       }
 
-      this.setState({
+      this.setState ({
         photo: (image && image.value) || defaulProfilePhoto,
-        hasImage
+        hasImage,
       });
     } catch (error) {
-      this.props.toastManager.add(['Error', error.message], {
-        appearance: 'error'
+      this.props.toastManager.add (['Error', error.message], {
+        appearance: 'error',
       });
     }
   };
@@ -192,17 +181,17 @@ export class Profile extends Component {
    */
   updatePhoto = async (uri: String) => {
     try {
-      const { user } = data;
+      const {user} = data;
       this.state.hasImage
-        ? await user.image.set(uri)
-        : await user.image.add(uri);
+        ? await user.image.set (uri)
+        : await user.image.add (uri);
 
-      this.props.toastManager.add(['', 'Profile Image was updated'], {
-        appearance: 'success'
+      this.props.toastManager.add (['', 'Profile Image was updated'], {
+        appearance: 'success',
       });
     } catch (error) {
-      this.props.toastManager.add(['Error', error.message], {
-        appearance: 'error'
+      this.props.toastManager.add (['Error', error.message], {
+        appearance: 'error',
       });
     }
   };
@@ -216,7 +205,7 @@ export class Profile extends Component {
        * profile-shape.json has all the fields that we want to print
        * we are using icons on each field to mapping with the UI design.
        */
-      const { profile } = ProfileShape;
+      const {profile} = ProfileShape;
       // We are fetching profile card document
       const user = data[this.props.webId];
 
@@ -226,18 +215,18 @@ export class Profile extends Component {
        * node blank we acces using multidimensional array if not we
        * access by a basic array.
        */
-      const formFields = await Promise.all(
-        profile.map(async field => {
+      const formFields = await Promise.all (
+        profile.map (async field => {
           return {
             ...field,
-            ...(await this.getNodeValue(user, field))
+            ...(await this.getNodeValue (user, field)),
           };
         })
       );
-      this.setState({ profile, formFields, originalFormField: formFields });
+      this.setState ({profile, formFields, originalFormField: formFields});
     } catch (error) {
-      this.props.toastManager.add(['Error', error.message], {
-        appearance: 'error'
+      this.props.toastManager.add (['Error', error.message], {
+        appearance: 'error',
       });
     }
   };
@@ -247,10 +236,10 @@ export class Profile extends Component {
    * Property param will be the name of node
    */
   createNewLinkNode = async (property: String) => {
-    const id = `#id${Date.parse(new Date())}`;
-    await data.user[property].add(namedNode(id));
+    const id = `#id${Date.parse (new Date ())}`;
+    await data.user[property].add (namedNode (id));
     // @TODO: add from ldflex should return this value instead of create by our self
-    return `${this.props.webId.split('#')[0]}${id}`;
+    return `${this.props.webId.split ('#')[0]}${id}`;
   };
   /**
    * getNodeValue will return node value and uri in case that node points to nodeBlank
@@ -262,29 +251,30 @@ export class Profile extends Component {
     let node;
     let nodeParentUri;
     // If node is a pointer to another node will get the value
-    if (field.blankNode) {
+    if (field.nodeBlank) {
       let parentNode = await user[field.property];
       // If the node link doesn't exist will create a new one.
       nodeParentUri =
         (parentNode && parentNode.value) ||
-        (await this.createNewLinkNode(field.property));
+        (await this.createNewLinkNode (field.property));
 
-      node = await user[field.property][field.blankNode];
+      node = await user[field.property][field.nodeBlank];
     } else {
       node = await user[field.property];
     }
 
     return {
-      action: 'update' ,
+      action: 'update',
       value: (node && node.value) || '',
-      nodeParentUri
+      nodeParentUri,
     };
   };
-  render() {
+  render () {
     return (
       <ProfileComponent
         webId={this.props.webId}
         formFields={this.state.formFields}
+        updatedFields={this.state.updatedFields}
         formMode={this.state.formMode}
         onInputChange={this.onInputChange}
         onSubmit={this.onSubmit}
@@ -299,4 +289,4 @@ export class Profile extends Component {
   }
 }
 
-export default withWebId(withToastManager(Profile));
+export default withWebId (withToastManager (Profile));

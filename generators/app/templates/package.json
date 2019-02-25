@@ -144,7 +144,8 @@
             "@layouts": "./src/layouts",
             "@contexts": "./src/contexts/",
             "@testSetup": "./src/utils/enzymeSetup",
-            "@hocs": "./src/hocs"
+            "@hocs": "./src/hocs",
+            "@utils": "./src/utils"
           }
         }
       ]

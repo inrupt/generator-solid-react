@@ -27,6 +27,14 @@ type Props = {
   formMode: boolean
 };
 
+function getProfileValue(updatedFields, item) {
+  const currentKey = item.nodeBlank || item.property;
+  if (updatedFields[currentKey]) {
+    if (updatedFields[currentKey].value || updatedFields[currentKey].value === '') return updatedFields[currentKey].value;
+  }
+  return item.value || '';
+}
+
 const ProfileComponent = ({
   webId,
   formFields,
@@ -37,6 +45,7 @@ const ProfileComponent = ({
   onSubmit,
   onCancel,
   formMode,
+  updatedFields,
   photo
 }: Props) => {
   return (
@@ -77,12 +86,16 @@ const ProfileComponent = ({
                 key={item.label}
                 placeholder={item.label}
                 type="text"
-                name={item.blankNode || item.property}
-                value={item.value || ""}
+                name={item.nodeBlank || item.property}
+                value={getProfileValue(updatedFields, item)}
                 onChange={onInputChange}
                 icon={item.icon}
                 readOnly={formMode}
                 required={item.required}
+                data-nodeparenturi={item.nodeParentUri}
+                data-nodeblank={item.nodeBlank}
+                data-label={item.label}
+                data-icon={item.icon}
               />
             ))}
           <FullGridSize>
