@@ -22,11 +22,10 @@ export class Profile extends Component {
     super (props);
 
     this.state = {
-      formFields: [],
-      originalFormField: [],
       formMode: true,
-      photo: defaulProfilePhoto,
       isLoading: false,
+      photo: defaulProfilePhoto,
+      formFields: [],
       newLinkNodes: [],
       updatedFields: {}
     };
@@ -42,7 +41,7 @@ export class Profile extends Component {
     this.setState ({formMode: !this.state.formMode, updatedFields: {}});
   };
   setDefaultData = () => {
-    this.setState ({formFields: [...this.state.originalFormField]});
+    this.setState ({formFields: [...this.state.formFields]});
   };
   onCancel = () => {
     this.changeFormMode ();
@@ -93,7 +92,7 @@ export class Profile extends Component {
        * more info about the issue: https://github.com/solid/node-solid-server/issues/1106
       */
       
-    for await (const [key, field] of entries(this.state.updatedFields)) {
+      for await (const [key, field] of entries(this.state.updatedFields)) {
           node = data.user[key];
 
           if (field.nodeBlank) {
@@ -101,9 +100,9 @@ export class Profile extends Component {
           }
 
           if (field.action === 'update') {
-            await node.set (field.value);
+            await node.set(field.value);
           } else {
-            await node.delete ();
+            await node.delete();
           }
 
           updatedFields = [
@@ -125,7 +124,6 @@ export class Profile extends Component {
 
       this.setState ({
         formFields: updatedFormField,
-        originalFormField: updatedFormField,
         updatedFields: {},
         formMode: true,
         isLoading: false,
@@ -223,7 +221,7 @@ export class Profile extends Component {
           };
         })
       );
-      this.setState ({profile, formFields, originalFormField: formFields});
+      this.setState ({ profile, formFields });
     } catch (error) {
       this.props.toastManager.add (['Error', error.message], {
         appearance: 'error',
