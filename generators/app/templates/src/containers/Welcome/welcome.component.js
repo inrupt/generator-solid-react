@@ -1,5 +1,5 @@
 import React from "react";
-import { LogoutButton } from "@inrupt/solid-react-components";
+import { LogoutButton, Uploader } from "@inrupt/solid-react-components";
 import isLoading from "@hocs/isLoading";
 import {
   WelcomeWrapper,
@@ -7,9 +7,10 @@ import {
   WelcomeLogo,
   WelcomeProfile,
   WelcomeDetail,
-  ImageContainer,
   ImageWrapper
 } from "./welcome.style";
+import { withToastManager } from "react-toast-notifications";
+import { ImageProfile } from "@components";
 
 /**
  * Welcome Page UI component, containing the styled components for the Welcome Page
@@ -17,6 +18,10 @@ import {
  * @param props
  */
 const WelcomePageContent = props => {
+  const { webId, image, updatePhoto, toastManager } = props;
+
+  console.log(image);
+
   return (
     <WelcomeWrapper>
       <WelcomeCard className="card">
@@ -28,11 +33,23 @@ const WelcomePageContent = props => {
             Welcome, <span>{props.name}</span>
           </h3>
           <ImageWrapper>
-            {props.image && (
-              <ImageContainer
-                image={props.image}
-              />
-            )}
+            <Uploader
+              {...{
+                fileBase: webId && webId.split("/card")[0],
+                limitFiles: 1,
+                limitSize: 2100000,
+                accept: "image/*",
+                onError: error => {
+                  if (error && error.statusText) {
+                    toastManager.add(['', error.statusText], { appearance: "error" });
+                  }
+                },
+                onComplete: uploadedFiles => {
+                  updatePhoto(uploadedFiles[0].uri);
+                },
+                render: props => <ImageProfile {...{ ...props, webId, photo: image }} />
+              }}
+            />
           </ImageWrapper>
           <p>
             All Done ? <LogoutButton />
@@ -194,4 +211,4 @@ const WelcomePageContent = props => {
   );
 };
 
-export default isLoading(WelcomePageContent);
+export default isLoading(withToastManager(WelcomePageContent));
