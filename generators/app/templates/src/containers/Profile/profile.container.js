@@ -53,14 +53,9 @@ export class Profile extends Component {
   ) => {
     if (currentValue !== '' && nextValue === '') {
       return 'delete';
-    } else if (
-      nextValue !== '' &&
-      (currentAction === 'delete' || currentAction === 'update')
-    ) {
-      return 'update';
     }
 
-    return 'create';
+    return 'update';
   };
   /**
    * onChangeInput will update a field into formFields array
@@ -115,11 +110,9 @@ export class Profile extends Component {
 
           if (field.action === 'update') {
             await node.set(field.value);
-          } else if (field.action === 'create') {
-            await node.add(field.value);
           } else {
             await node.delete();
-            nextAction = 'create';
+            nextAction = 'update';
           }
 
           updatedFields = [
@@ -281,11 +274,9 @@ export class Profile extends Component {
       node = await user[field.property];
     }
 
-    const nodeValue = node && node.value;
-
     return {
-      action: nodeValue ? 'update' : 'create',
-      value: nodeValue || '',
+      action: 'update' ,
+      value: (node && node.value) || '',
       nodeParentUri
     };
   };
