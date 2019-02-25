@@ -1,9 +1,9 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import isLoading from "@hocs/isLoading";
-import { Uploader } from "@inrupt/solid-react-components";
-import { Input } from "@util-components";
-import { ImageProfile } from "@components";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import isLoading from '@hocs/isLoading';
+import { Uploader } from '@inrupt/solid-react-components';
+import { Input } from '@util-components';
+import { ImageProfile } from '@components';
 import {
   ProfileWrapper,
   ProfileContainer,
@@ -12,12 +12,13 @@ import {
   Header,
   Form,
   WebId
-} from "./profile.style";
+} from './profile.style';
 
 type Props = {
   webId: String,
   photo: String,
   formFields: Array<Object>,
+  updatedFields: Object,
   changeFormMode: () => void,
   onInputChange: () => void,
   onSubmit: () => void,
@@ -26,6 +27,18 @@ type Props = {
   toastManager: (message: String, options: Object) => void,
   formMode: boolean
 };
+
+function getProfileValue(updatedFields: Object, item: Object) {
+  const currentKey = item.nodeBlank || item.property;
+  if (updatedFields[currentKey]) {
+    if (
+      updatedFields[currentKey].value ||
+      updatedFields[currentKey].value === ''
+    )
+      return updatedFields[currentKey].value;
+  }
+  return item.value || '';
+}
 
 const ProfileComponent = ({
   webId,
@@ -37,6 +50,7 @@ const ProfileComponent = ({
   onSubmit,
   onCancel,
   formMode,
+  updatedFields,
   photo
 }: Props) => {
   return (
@@ -45,22 +59,24 @@ const ProfileComponent = ({
         <Header>
           {formMode && (
             <button
-              type="button"
-              className="button edit-button"
+              type='button'
+              className='button edit-button'
               onClick={changeFormMode}
             >
-              <FontAwesomeIcon icon="pencil-alt" /> EDIT
+              <FontAwesomeIcon icon='pencil-alt' /> EDIT
             </button>
           )}
           <Uploader
             {...{
-              fileBase: webId && webId.split("/card")[0],
+              fileBase: webId && webId.split('/card')[0],
               limitFiles: 1,
               limitSize: 2100000,
-              accept: "image/*",
+              accept: 'image/*',
               onError: error => {
                 if (error && error.statusText) {
-                  toastManager.add(['', error.statusText], { appearance: "error" });
+                  toastManager.add(['', error.statusText], {
+                    appearance: 'error'
+                  });
                 }
               },
               onComplete: uploadedFiles => {
@@ -76,28 +92,32 @@ const ProfileComponent = ({
               <Input
                 key={item.label}
                 placeholder={item.label}
-                type="text"
-                name={item.blankNode || item.property}
-                value={item.value || ""}
+                type='text'
+                name={item.nodeBlank || item.property}
+                value={getProfileValue(updatedFields, item)}
                 onChange={onInputChange}
                 icon={item.icon}
                 readOnly={formMode}
                 required={item.required}
+                data-nodeparenturi={item.nodeParentUri}
+                data-nodeblank={item.nodeBlank}
+                data-label={item.label}
+                data-icon={item.icon}
               />
             ))}
           <FullGridSize>
             {!formMode && (
               <>
                 <Button
-                  type="button"
+                  type='button'
                   onClick={onCancel}
-                  className="ids-link-stroke ids-link-stroke--primary"
+                  className='ids-link-stroke ids-link-stroke--primary'
                 >
                   Cancel
                 </Button>
                 <Button
-                  type="submit"
-                  className="ids-link-filled ids-link-filled--primary"
+                  type='submit'
+                  className='ids-link-filled ids-link-filled--primary'
                 >
                   Save
                 </Button>
@@ -107,8 +127,8 @@ const ProfileComponent = ({
         </Form>
         {formMode && (
           <WebId>
-            <FontAwesomeIcon icon="id-card" />
-            <a href={webId} target="_blank" rel="noopener noreferrer">
+            <FontAwesomeIcon icon='id-card' />
+            <a href={webId} target='_blank' rel='noopener noreferrer'>
               {webId}
             </a>
           </WebId>
