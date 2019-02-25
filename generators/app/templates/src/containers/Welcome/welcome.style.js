@@ -89,6 +89,10 @@ export const ImageWrapper = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
+
+button {
+  margin-left: 0px;
+}
 `
 
 export const ImageContainer =  styled.div`
