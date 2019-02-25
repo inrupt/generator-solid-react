@@ -9,6 +9,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 
 import { Loader } from "@util-components";
 import theme from "./utils/theme";
+import "flag-icon-css/css/flag-icon.min.css";
 import "normalize.css";
 import "./index.css";
 import "@inrupt/inrupt-atomic-style-guide";

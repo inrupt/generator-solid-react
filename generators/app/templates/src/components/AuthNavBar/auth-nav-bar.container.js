@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withWebId } from "@inrupt/solid-react-components";
+import { withTranslation } from "react-i18next";
 import AuthNavBar from "./auth-nav-bar.component";
 import data from "@solid/query-ldflex";
 
@@ -11,7 +12,8 @@ const imgContext = "http://xmlns.com/foaf/0.1/img";
 class AuthNavBarContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { image: null };
+    const language = this.getLanguage();
+    this.state = { image: null, language };
   }
 
   getProfileData = async () => {
@@ -37,6 +39,16 @@ class AuthNavBarContainer extends Component {
     }
   };
 
+  getLanguage = () => localStorage.getItem("i18nextLng") || "en";
+
+  onLanguageSelect = nextLanguage => {
+    const { i18n } = this.props;
+    i18n.changeLanguage(nextLanguage);
+    this.setState({
+      language: this.getLanguage()
+    });
+  };
+
   componentDidMount() {
     if (this.props.webId) {
       this.getProfileData();
@@ -51,8 +63,15 @@ class AuthNavBarContainer extends Component {
 
   render() {
     const { image } = this.state;
-    return <AuthNavBar img={image} {...this.props} />;
+    return (
+      <AuthNavBar
+        img={image}
+        {...this.props}
+        {...this.state}
+        onLanguageSelect={this.onLanguageSelect}
+      />
+    );
   }
 }
 
-export default withWebId(AuthNavBarContainer);
+export default withTranslation()(withWebId(AuthNavBarContainer));

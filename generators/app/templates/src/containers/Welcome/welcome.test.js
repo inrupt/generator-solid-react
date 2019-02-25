@@ -2,7 +2,7 @@ import React from "react";
 import { mount } from "enzyme";
 import { BrowserRouter as Router } from "react-router-dom";
 import "../../i18n";
-import Welcome from "./welcome.component";
+import { WelcomePageContent } from "./welcome.component";
 import {
   WelcomeWrapper,
   WelcomeCard,
@@ -17,7 +17,7 @@ describe.only("Welcome", () => {
   beforeEach(() => {
     wrapper = mount(
       <Router>
-        <Welcome providers={[]} />
+        <WelcomePageContent providers={[]} t={key => key} />
       </Router>
     );
   });

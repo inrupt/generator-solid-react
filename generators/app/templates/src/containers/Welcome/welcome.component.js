@@ -1,7 +1,7 @@
 import React from "react";
 import { LogoutButton } from "@inrupt/solid-react-components";
 import isLoading from "@hocs/isLoading";
-import { Trans } from "react-i18next";
+import { Trans, withTranslation } from "react-i18next";
 import {
   WelcomeWrapper,
   WelcomeCard,
@@ -18,6 +18,7 @@ import {
  * @param props
  */
 const WelcomePageContent = props => {
+  const { name, image, t } = props;
   return (
     <WelcomeWrapper>
       <WelcomeCard className="card">
@@ -26,13 +27,14 @@ const WelcomePageContent = props => {
         </WelcomeLogo>
         <WelcomeProfile>
           <h3>
-            Welcome, <span>{props.name}</span>
+            {t("welcome.welcome")}, <span>{name}</span>
           </h3>
           <ImageWrapper>
-            {props.image && <ImageContainer image={props.image} />}
+            {image && <ImageContainer image={image} />}
           </ImageWrapper>
           <p>
-            All Done ? <LogoutButton />
+            {t("welcome.doneMessage")}{" "}
+            <LogoutButton>{t("navBar.logOut")}</LogoutButton>
           </p>
         </WelcomeProfile>
       </WelcomeCard>
@@ -71,9 +73,9 @@ const WelcomePageContent = props => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  link
+                  Reusable Components
                 </a>
-                text
+                that you can use on your own in the applications that you build.
               </li>
               <li>
                 <a
@@ -97,101 +99,106 @@ const WelcomePageContent = props => {
             </ul>
           </Trans>
 
-          <p>
-            The SDK is continually evolving. Take a look at the
-            <a
-              href="https://github.com/Inrupt-inc/solid-react-sdk/tree/master#release-timeline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {" "}
-              Release Timeline{" "}
-            </a>
-            for what’s currently planned. This latest release builds on the
-            prior version, fixing some bugs and improving the general developer
-            experience.
-          </p>
-          <p>Version 0.1.0 implemented:</p>
-          <p>Version 0.1.0 implemented:</p>
-          <ul>
-            <li>
+          <Trans i18nKey="welcome.evolvingMessage">
+            <p>
+              The SDK is continually evolving. Take a look at the
               <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-registration"
+                href="https://github.com/Inrupt-inc/solid-react-sdk/tree/master#release-timeline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 {" "}
-                User Registration{" "}
+                Release Timeline{" "}
               </a>
-              for a Solid Pod.
-            </li>
-            <li>
-              <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-authentication"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {" "}
-                User Authentication{" "}
-              </a>
-              against user selected Providers.
-            </li>
-            <li>
-              Use of an{" "}
-              <a
-                href="http://design.inrupt.com/atomic-core/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {" "}
-                Atomic Style Guide{" "}
-              </a>{" "}
-              that you can use to{" "}
-              <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#design-system"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {" "}
-                style{" "}
-              </a>{" "}
-              your applications.
-            </li>
-            <li>
-              Infrastructure and applied best practices for{" "}
-              <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk#error-handling"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {" "}
-                Error Handling
-              </a>{" "}
-              ,
-              <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk#test-infrastructure"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {" "}
-                Testing
-              </a>{" "}
-              and{" "}
-              <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk#accessibility"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {" "}
-                Accessibility
-              </a>{" "}
-              .
-            </li>
-          </ul>
+              for what’s currently planned. This latest release builds on the
+              prior version, fixing some bugs and improving the general
+              developer experience.
+            </p>
+          </Trans>
+          <Trans
+            i18nKey="welcome.version010"
+            components={["p", "ul", "li", "a"]}
+          >
+            <p>Version 0.1.0 implemented:</p>
+            <ul>
+              <li>
+                <a
+                  href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-registration"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  User Registration
+                </a>
+                for a Solid Pod.
+              </li>
+              <li>
+                <a
+                  href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-authentication"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  User Authentication
+                </a>
+                against user selected Providers.
+              </li>
+              <li>
+                Use of an{" "}
+                <a
+                  href="http://design.inrupt.com/atomic-core/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {" "}
+                  Atomic Style Guide{" "}
+                </a>{" "}
+                that you can use to{" "}
+                <a
+                  href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#design-system"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {" "}
+                  style{" "}
+                </a>{" "}
+                your applications.
+              </li>
+              <li>
+                Infrastructure and applied best practices for{" "}
+                <a
+                  href="https://github.com/Inrupt-inc/solid-react-sdk#error-handling"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {" "}
+                  Error Handling
+                </a>{" "}
+                ,
+                <a
+                  href="https://github.com/Inrupt-inc/solid-react-sdk#test-infrastructure"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {" "}
+                  Testing
+                </a>{" "}
+                and{" "}
+                <a
+                  href="https://github.com/Inrupt-inc/solid-react-sdk#accessibility"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {" "}
+                  Accessibility
+                </a>{" "}
+                .
+              </li>
+            </ul>
+          </Trans>
         </WelcomeDetail>
       </WelcomeCard>
     </WelcomeWrapper>
   );
 };
 
-export default isLoading(WelcomePageContent);
+export { WelcomePageContent };
+export default withTranslation()(isLoading(WelcomePageContent));
