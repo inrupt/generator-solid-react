@@ -18,6 +18,7 @@ type Props = {
   webId: String,
   photo: String,
   formFields: Array<Object>,
+  updatedFields: Object,
   changeFormMode: () => void,
   onInputChange: () => void,
   onSubmit: () => void,
@@ -27,7 +28,7 @@ type Props = {
   formMode: boolean
 };
 
-function getProfileValue(updatedFields, item) {
+function getProfileValue(updatedFields: Object, item: Object) {
   const currentKey = item.nodeBlank || item.property;
   if (updatedFields[currentKey]) {
     if (
