@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { namedNode } from "@rdfjs/data-model";
-import { withWebId } from "@inrupt/solid-react-components";
-import { withToastManager } from "react-toast-notifications";
-import data from "@solid/query-ldflex";
-import ProfileShape from "@contexts/profile-shape.json";
-import ProfileComponent from "./profile.component";
+import React, { Component } from 'react';
+import { namedNode } from '@rdfjs/data-model';
+import { withWebId } from '@inrupt/solid-react-components';
+import { withToastManager } from 'react-toast-notifications';
+import data from '@solid/query-ldflex';
+import ProfileShape from '@contexts/profile-shape.json';
+import ProfileComponent from './profile.component';
 
-const defaulProfilePhoto = "/img/icon/empty-profile.svg";
+const defaulProfilePhoto = '/img/icon/empty-profile.svg';
 
 /**
  * We are using ldflex to fetch profile data from a solid pod.
@@ -46,10 +46,17 @@ export class Profile extends Component {
     this.changeFormMode();
     this.setDefaultData();
   };
-  changeInputMode = (currentValue: String, nextValue: String, currentAction: String) => {
+  changeInputMode = (
+    currentValue: String,
+    nextValue: String,
+    currentAction: String
+  ) => {
     if (currentValue !== '' && nextValue === '') {
       return 'delete';
-    } else if (nextValue !== '' && (currentAction === 'delete' || currentAction === 'update')) {
+    } else if (
+      nextValue !== '' &&
+      (currentAction === 'delete' || currentAction === 'update')
+    ) {
       return 'update';
     }
 
@@ -88,44 +95,67 @@ export class Profile extends Component {
       e.preventDefault();
       let node;
       let nextAction;
-      const updatedFormField = await Promise.all(
-        this.state.formFields.map(async field => {
-          if (field.updated) {
-            node = data.user[field.property];
-            nextAction = 'update';
+      let updatedFields = [];
 
-            if (field.blankNode) {
-              node = data[field.nodeParentUri][field.blankNode];
-            }
+      this.setState({ isLoading: true });
+      /*
+       * Solid server has an issue on concurrent updates,
+       * so to fix this we have to await one change, and only when it is done, 
+       * fire the next field update.
+       * more info about the issue: https://github.com/solid/node-solid-server/issues/1106
+      */
+      for await (const field of this.state.formFields) {
+        if (field.updated) {
+          node = data.user[field.property];
+          nextAction = 'update';
 
-            if (field.action === 'update') {
-              await node.set(field.value);
-            } else if (field.action === 'create') {
-              await node.add(field.value);
-            } else {
-              await node.delete();
-              nextAction = 'create';
-            }
+          if (field.blankNode) {
+            node = data[field.nodeParentUri][field.blankNode];
+          }
 
-            return {
+          if (field.action === 'update') {
+            await node.set(field.value);
+          } else if (field.action === 'create') {
+            await node.add(field.value);
+          } else {
+            await node.delete();
+            nextAction = 'create';
+          }
+
+          updatedFields = [
+            updatedFields,
+            {
               ...field,
               action: nextAction,
               updated: false
-            };
-          }
-          return { ...field };
-        })
+            }
+          ];
+        }
+      }
+
+      /*
+       * We need to update formFields with new fields states
+       * we are using these states to know if field need to delete, update or create
+       * on POD and know if fields were updated by the user on the profile.
+      */
+      const updatedFormField = this.state.formFields.map(
+        field => updatedFields.find(f => f.label === field.label) || field
       );
-      this.props.toastManager.add(['','Profile was updated successfully'], {
-        appearance: 'success'
-      });
+
       this.setState({
         formFields: updatedFormField,
         originalFormField: updatedFormField,
-        formMode: true
+        formMode: true,
+        isLoading: false
+      });
+
+      this.props.toastManager.add(['', 'Profile was updated successfully'], {
+        appearance: 'success'
       });
     } catch (error) {
-      this.props.toastManager.add(['Error', error.message], { appearance: 'error' });
+      this.props.toastManager.add(['Error', error.message], {
+        appearance: 'error'
+      });
     }
   };
   /**
@@ -146,7 +176,7 @@ export class Profile extends Component {
          * if you want to know more about context please go to:
          * https://github.com/digitalbazaar/jsonld.js
          */
-        image = await user['vcard:hasPhoto'];
+        image = await user.vcard_hasPhoto;
 
         hasImage = false;
       }
@@ -156,7 +186,9 @@ export class Profile extends Component {
         hasImage
       });
     } catch (error) {
-      this.props.toastManager.add(['Error', error.message], { appearance: 'error' });
+      this.props.toastManager.add(['Error', error.message], {
+        appearance: 'error'
+      });
     }
   };
   /**
@@ -172,11 +204,13 @@ export class Profile extends Component {
         ? await user.image.set(uri)
         : await user.image.add(uri);
 
-      this.props.toastManager.add(['','Profile Image was updated'], {
+      this.props.toastManager.add(['', 'Profile Image was updated'], {
         appearance: 'success'
       });
     } catch (error) {
-      this.props.toastManager.add(['Error', error.message], { appearance: 'error' });
+      this.props.toastManager.add(['Error', error.message], {
+        appearance: 'error'
+      });
     }
   };
   /**
@@ -209,7 +243,9 @@ export class Profile extends Component {
       );
       this.setState({ profile, formFields, originalFormField: formFields });
     } catch (error) {
-      this.props.toastManager.add(['Error', error.message], { appearance: 'error' });
+      this.props.toastManager.add(['Error', error.message], {
+        appearance: 'error'
+      });
     }
   };
   /**
