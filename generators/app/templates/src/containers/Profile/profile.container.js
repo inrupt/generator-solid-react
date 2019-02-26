@@ -137,6 +137,7 @@ export class Profile extends Component {
       this.props.toastManager.add (['Error', error.message], {
         appearance: 'error',
       });
+      this.setState ({isLoading: false});
     }
   };
   /**
