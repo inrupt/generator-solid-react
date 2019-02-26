@@ -21,12 +21,10 @@ const AuthNavBar = props => {
           component: () => (
             <LanguageDropdown {...props} onLanguageSelect={onLanguageSelect} />
           ),
-          label: "Language",
           id: "language"
         },
         {
           component: () => <NavBarProfile {...props} />,
-          label: "Profile",
           id: "profile"
         }
       ]}
