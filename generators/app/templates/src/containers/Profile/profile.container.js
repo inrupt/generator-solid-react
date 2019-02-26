@@ -67,8 +67,9 @@ export class Profile extends Component {
       [name]: {
         value, 
         action,
-        nodeParentUri: dataset.nodeparenturi || false,
-        nodeBlank: dataset.nodeblank || false,
+        property: name,
+        nodeParentUri: dataset.nodeparenturi || null,
+        nodeBlank: dataset.nodeblank || null,
         label: dataset.label,
         icon: dataset.icon
       } 
