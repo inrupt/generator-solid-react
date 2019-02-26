@@ -4,13 +4,7 @@ import { withWebId } from "@inrupt/solid-react-components";
 import data from "@solid/query-ldflex";
 import { withToastManager } from "react-toast-notifications";
 
-// Manually-created vcard#hasPhoto context link
-const hasPhotoContext = "http://www.w3.org/2006/vcard/ns#hasPhoto";
-// img context 
-const imgContext = "http://xmlns.com/foaf/0.1/img";
-
 const defaultProfilePhoto = "/img/icon/empty-profile.svg";
-
 
 /**
  * Container component for the Welcome Page, containing example of how to fetch data from a POD
@@ -55,20 +49,19 @@ class WelcomeComponent extends Component<Props> {
     const user = data[this.props.webId];
     const nameLd = await user.name;
 
-    const name = nameLd ? nameLd.value : '';
+    const name = nameLd ? nameLd.value : "";
 
-    let imageLd = await user[imgContext];
-    imageLd = imageLd ? imageLd : await user[hasPhotoContext];
+    let imageLd = await user.image;
+    imageLd = imageLd ? imageLd : await user.vcard_hasPhoto;
 
     let image;
-    if(imageLd) {
-       image = imageLd.value;
-       hasImage = true;
+    if (imageLd && imageLd.value) {
+      image = imageLd.value;
+      hasImage = true;
     } else {
-       hasImage = false;
-       image = defaultProfilePhoto;
+      hasImage = false;
+      image = defaultProfilePhoto;
     }
-
     /**
      * This is where we set the state with the name and image values. The user[hasPhotoContext] line of code is an example of
      * what to do when LDFlex doesn't have the full context. LDFlex has many data contexts already in place, but in case
@@ -95,20 +88,26 @@ class WelcomeComponent extends Component<Props> {
         ? await user.image.set(uri)
         : await user.image.add(uri);
 
-      this.props.toastManager.add(['','Profile Image was updated'], {
-        appearance: 'success'
+      this.props.toastManager.add(["", "Profile Image was updated"], {
+        appearance: "success"
       });
     } catch (error) {
-      this.props.toastManager.add(['Error', error.message], { appearance: 'error' });
+      this.props.toastManager.add(["Error", error.message], {
+        appearance: "error"
+      });
     }
   };
-
-
 
   render() {
     const { name, image, isLoading } = this.state;
     return (
-      <WelcomePageContent name={name} image={image} isLoading={isLoading} webId={this.props.webId} updatePhoto={this.updatePhoto} />
+      <WelcomePageContent
+        name={name}
+        image={image}
+        isLoading={isLoading}
+        webId={this.props.webId}
+        updatePhoto={this.updatePhoto}
+      />
     );
   }
 }

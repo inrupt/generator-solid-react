@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import { withWebId } from "@inrupt/solid-react-components";
+import { withTranslation } from "react-i18next";
 import AuthNavBar from "./auth-nav-bar.component";
 import data from "@solid/query-ldflex";
-
-// hasPhoto context
-const hasPhotoContext = "http://www.w3.org/2006/vcard/ns#hasPhoto";
-// img context 
-const imgContext = "http://xmlns.com/foaf/0.1/img"
 
 class AuthNavBarContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { image: null };
+    const language = this.getLanguage();
+    this.state = { image: null, language };
   }
 
   getProfileData = async () => {
@@ -24,8 +21,8 @@ class AuthNavBarContainer extends Component {
        * for more information please go to: https://github.com/digitalbazaar/jsonld.js
        */
       const userName = await user.name;
-      let userImage = await user[imgContext];
-      userImage = userImage ? userImage : await user[hasPhotoContext];
+      let userImage = await user.image;
+      userImage = userImage ? userImage : await user.vcard_hasPhoto;
       const name = userName ? userName.value : "";
       const image = userImage ? userImage.value : "/img/icon/empty-profile.svg";
       this.setState({
@@ -35,6 +32,16 @@ class AuthNavBarContainer extends Component {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  getLanguage = () => localStorage.getItem("i18nextLng") || "en";
+
+  onLanguageSelect = nextLanguage => {
+    const { i18n } = this.props;
+    i18n.changeLanguage(nextLanguage);
+    this.setState({
+      language: this.getLanguage()
+    });
   };
 
   componentDidMount() {
@@ -51,8 +58,15 @@ class AuthNavBarContainer extends Component {
 
   render() {
     const { image } = this.state;
-    return <AuthNavBar img={image} {...this.props}/>;
+    return (
+      <AuthNavBar
+        img={image}
+        {...this.props}
+        {...this.state}
+        onLanguageSelect={this.onLanguageSelect}
+      />
+    );
   }
 }
 
-export default withWebId(AuthNavBarContainer);
+export default withTranslation()(withWebId(AuthNavBarContainer));

@@ -1,13 +1,13 @@
 import React from "react";
 import { shallow } from "enzyme";
-import PageNotFound from "./page-not-found.component";
+import { PageNotFound } from "./page-not-found.component";
 import { Link } from "react-router-dom";
 import "../../utils/enzymeSetup";
 
 describe("Page Not Found", () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<PageNotFound />);
+    wrapper = shallow(<PageNotFound t={key => key} />);
   });
 
   test("App renders without crashing", () => {

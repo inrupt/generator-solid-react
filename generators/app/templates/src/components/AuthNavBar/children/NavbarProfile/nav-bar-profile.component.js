@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { withTranslation } from "react-i18next";
 import { Dropdown } from "@util-components";
 
 import auth from "solid-auth-client";
-
 
 export const ImageContainer = styled.div`
   width: 42px;
@@ -12,7 +12,8 @@ export const ImageContainer = styled.div`
   background-size: cover;
   overflow: hidden;
   visibility: ${({ show }) => (show ? "visible" : "hidden")};
-  display: ${({ show }) => (show ? "block" : "none")};;`;
+  display: ${({ show }) => (show ? "block" : "none")};
+`;
 
 export const Img = styled.img`
   box-sizing: border-box;
@@ -22,9 +23,8 @@ export const Img = styled.img`
 
 export const LoadingImage = styled(ImageContainer)`
   background: #cccccc;
-  display:block;
+  display: block;
 `;
-
 
 class NavBarProfile extends Component {
   state = {
@@ -44,26 +44,27 @@ class NavBarProfile extends Component {
     }
   };
   render() {
-    const { img } = this.props;
+    const { t, img } = this.props;
     const { imageLoaded } = this.state;
 
     const profileOpts = [
       {
-        label: "Log Out",
+        label: t("navBar.logOut"),
         onClick: this.logOut
       }
     ];
 
     return img ? (
       <Dropdown actions={profileOpts} className="nav-bar--profile" hover={true}>
-      <ImageContainer show={imageLoaded}>
-        <Img
-          show={imageLoaded}
-          src={img}
-          alt="profile"
-          onLoad={this.onImageLoaded}/>
-      </ImageContainer>
-        {!imageLoaded && <LoadingImage show={true}/>}
+        <ImageContainer show={imageLoaded}>
+          <Img
+            show={imageLoaded}
+            src={img}
+            alt="profile"
+            onLoad={this.onImageLoaded}
+          />
+        </ImageContainer>
+        {!imageLoaded && <LoadingImage show={true} />}
       </Dropdown>
     ) : (
       <div />
@@ -71,4 +72,5 @@ class NavBarProfile extends Component {
   }
 }
 
-export default NavBarProfile;
+export { NavBarProfile };
+export default withTranslation()(NavBarProfile);

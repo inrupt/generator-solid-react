@@ -1,2 +1,3 @@
-import NavBarProfile from "./nav-bar-profile.component";
-export { NavBarProfile };
+import NavBarProfile from "./NavbarProfile";
+import LanguageDropdown from "./Language";
+export { NavBarProfile, LanguageDropdown };

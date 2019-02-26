@@ -1,6 +1,7 @@
 /* eslint-disable constructor-super */
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 import { ProviderLogin } from "@inrupt/solid-react-components";
 import {
   LoginWrapper,
@@ -10,49 +11,45 @@ import {
 } from "./login.style.js";
 import { CenterContainer } from "@util-components";
 
-type Props = { history: Object };
-
-type State = {
-  idp: String
+const LoginComponent = props => {
+  const { t } = props;
+  return (
+    <LoginWrapper>
+      <CenterContainer>
+        <h1>{t("login.title")}</h1>
+        <LoginPanel>
+          <PanelBody>
+            <Link
+              className="ids-link-filled ids-link-filled--primary"
+              to="/register"
+            >
+              {t("login.register")}
+            </Link>
+            <a
+              href="https://solid.inrupt.com/get-a-solid-pod"
+              rel="noopener noreferrer"
+              target="_blank"
+              className="link"
+            >
+              {t("login.solidHelp")}
+            </a>
+            <LoginTitle> {t("login.loginTitle")}</LoginTitle>
+            <ProviderLogin
+              selectPlaceholder={t("login.selectPlaceholder")}
+              inputPlaholder={t("login.inputPlaholder")}
+              formButtonText={t("login.formButtonText")}
+              btnTxtWebId={t("login.btnTxtWebId")}
+              btnTxtProvider={t("login.btnTxtProvider")}
+              className="provider-login-component"
+              callbackUri={`${window.location.origin}/welcome`}
+            />
+          </PanelBody>
+        </LoginPanel>
+      </CenterContainer>
+    </LoginWrapper>
+  );
 };
-export default class LoginComponent extends Component<Props, State> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      idp: "",
-      withWebId: false
-    };
-  }
 
-  render() {
-    return (
-      <LoginWrapper>
-        <CenterContainer>
-          <h1>Hi! Welcome to Solid.</h1>
-          <LoginPanel>
-            <PanelBody>
-              <Link
-                className="ids-link-filled ids-link-filled--primary"
-                to="/register"
-              >
-                Register for a solid identity
-              </Link>
-              <a
-                href="https://solid.inrupt.com/get-a-solid-pod"
-                rel="noopener noreferrer"
-                target="_blank"
-                className="link"
-              >
-                What is a Solid Identity??
-              </a>
-              <LoginTitle> Log in</LoginTitle>
-              <ProviderLogin className="provider-login-component"
-                callbackUri={`${window.location.origin}/welcome`}
-              />
-            </PanelBody>
-          </LoginPanel>
-        </CenterContainer>
-      </LoginWrapper>
-    );
-  }
-}
+export { LoginComponent };
+
+export default withTranslation()(LoginComponent);
