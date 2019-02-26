@@ -48,12 +48,17 @@ export class Profile extends Component {
     this.setDefaultData ();
   };
   
+  /**
+   * All input changes values will add it into the updatedFields state. 
+   * This object will be run like an iterator, later on. We are using a flag to know 
+   * when to update or delete fields into PODS.
+   */
   onInputChange = (e: Event) => {
     const { target: input, target: { dataset } } = e; 
     const name = input.name;
     const value = input.value;
     let action = 'update';
-
+    
     if (value === '') {
       action = this.state.formFields.find (
         field => field.property === name && field.value !== ''
