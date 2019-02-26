@@ -6,7 +6,9 @@ import JSXAddon from "storybook-addon-jsx";
 import NavBar from "@components/NavBar";
 import { AuthNavBarComponent } from "@components/AuthNavBar";
 
+import "flag-icon-css/css/flag-icon.min.css";
 import "@inrupt/inrupt-atomic-style-guide";
+import "normalize.css";
 
 setAddon(JSXAddon);
 
