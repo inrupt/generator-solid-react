@@ -38,8 +38,9 @@
     "doneMessage": "¿Terminaste?",
     "title": "<0>Esta aplicacion fue generada con <1>React SDK for Solid.</1></0>",
     "description": "<0>El <1>React SDK for Solid</1>  es una combinación de librerias, componentes, documentación, buenas prácticas y un generador de aplicaciones diseñada para acelerar el desarrollo de aplicaciones Solid de alta calidad:</0>",
-    "libraryList": "<0><1><2> Componentes reutilizables </2>que puedes utilizar en tus propias aplicaciones.</1><1><2>Generador de aplicaciones</2>, incorpora todos los componentes y las buenas practicas en una misma aplicacion para el desarrollador. Nota: La aplicaciones Solid React, muestra el uso de los componentes instalados por el generador. No debe ser considerado como un servicio que Inrupt provee, y está sujeto a cambios.</1><1>Patrones de buenas prácticas que puedes referenciar como ejemplos para lograr resolver diferentes situaciones.</1></0>",
-    "evolvingMessage": "<0>El SDK se encuentra en constante evolución. Revisa el <1>Calendario de Desarrollo</1>  para lo que está planeado. Esta version se basa en la versión anterior, arreglando pequeños errores y mejorando la experiencia de desarrollo.</0>",
-    "version010": "<0><1><2>Registro de usuario</2> para un Pod de Solid.</1><1><2>Autenticación de usuario</2> para proveedores seleccionados por el usuario.</1><1>Uso de un <2>Atomic Style Guide</2> para poder <2>estilizar</2> tus aplicaciones.</1><1>Infraestructura y mejores prácticas para <2>Manejo de errores</2>, <2>Pruebas</2> y <2>Accesibilidad</2>.</1> </0>"
+    "libraryList": "<0><0><0> Componentes reutilizables </0>que puedes utilizar en tus propias aplicaciones.</0><1><0>Generador de aplicaciones</0>, incorpora todos los componentes y las buenas practicas en una misma aplicacion para el desarrollador. Nota: La aplicaciones Solid React, muestra el uso de los componentes instalados por el generador. No debe ser considerado como un servicio que Inrupt provee, y está sujeto a cambios.</0><0>Patrones de buenas prácticas que puedes referenciar como ejemplos para lograr resolver diferentes situaciones.</1></0>",
+    "evolvingMessage": "<0>El SDK se encuentra en constante evolución. Revisa el <1>Calendario de Desarrollo</1>  para lo que está planeado.</0>",
+    "implementing": "Esta última version se basa en las anteriores, implementando:",
+    "version010": "<0><0>Mejores prácticas para la <0>Internacionalización</0>, con selector de lenguaje para la sesión.</0><1>Habilidad para actualizar la imagen de perfil en la página de bienvenida.</1> </0>"
   }
 }

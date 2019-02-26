@@ -129,87 +129,26 @@ const WelcomePageContent = props => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {" "}
-                Release Timeline{" "}
+                Release Timeline
               </a>
-              for what’s currently planned. This latest release builds on the
-              prior version, fixing some bugs and improving the general
-              developer experience.
+              for what’s been implemented as part of the previous releases, and
+              what's currently planned.
             </p>
           </Trans>
+          <p>{t("welcome.implementing")}</p>
           <Trans i18nKey="welcome.version010">
             <ul>
               <li>
                 <a
-                  href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-registration"
+                  href="https://github.com/Inrupt-inc/solid-react-sdk#internationalization-i18n"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  User Registration
+                  Internationalization
                 </a>
-                for a Solid Pod.
+                best practices, with application session language selection.
               </li>
-              <li>
-                <a
-                  href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#user-authentication"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  User Authentication
-                </a>
-                against user selected Providers.
-              </li>
-              <li>
-                Use of an{" "}
-                <a
-                  href="http://design.inrupt.com/atomic-core/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {" "}
-                  Atomic Style Guide{" "}
-                </a>{" "}
-                that you can use to{" "}
-                <a
-                  href="https://github.com/Inrupt-inc/solid-react-sdk/blob/master/README.md#design-system"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {" "}
-                  style{" "}
-                </a>{" "}
-                your applications.
-              </li>
-              <li>
-                Infrastructure and applied best practices for{" "}
-                <a
-                  href="https://github.com/Inrupt-inc/solid-react-sdk#error-handling"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {" "}
-                  Error Handling
-                </a>{" "}
-                ,
-                <a
-                  href="https://github.com/Inrupt-inc/solid-react-sdk#test-infrastructure"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {" "}
-                  Testing
-                </a>{" "}
-                and{" "}
-                <a
-                  href="https://github.com/Inrupt-inc/solid-react-sdk#accessibility"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {" "}
-                  Accessibility
-                </a>{" "}
-                .
-              </li>
+              <li>Ability to update your profile image on the Welcome page.</li>
             </ul>
           </Trans>
         </WelcomeDetail>
