@@ -21,8 +21,6 @@ import { ImageProfile } from "@components";
 const WelcomePageContent = props => {
   const { webId, image, updatePhoto, toastManager, name, t } = props;
 
-  console.log(image);
-
   return (
     <WelcomeWrapper>
       <WelcomeCard className="card">

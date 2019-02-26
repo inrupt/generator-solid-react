@@ -10,7 +10,11 @@ import {
   WelcomeProfile,
   WelcomeDetail
 } from "./welcome.style";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import "@testSetup";
+
+library.add(fas);
 
 describe.only("Welcome", () => {
   let wrapper;
