@@ -115,11 +115,7 @@ const WelcomePageContent = props => {
               developer experience.
             </p>
           </Trans>
-          <Trans
-            i18nKey="welcome.version010"
-            components={["p", "ul", "li", "a"]}
-          >
-            <p>Version 0.1.0 implemented:</p>
+          <Trans i18nKey="welcome.version010">
             <ul>
               <li>
                 <a
