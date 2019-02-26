@@ -7,7 +7,7 @@
     "providerPlaceholder": "Proveedor de ID",
     "selectPlaceholder": "Seleccione su Proveedor",
     "inputPlaholder": "WebID",
-    "formButtonText": "Log In",
+    "formButtonText": "Iniciar sesión",
     "btnTxtWebId": "Iniciar sesión con WebID",
     "btnTxtProvider": "Iniciar sesión con Proveedor"
   },
