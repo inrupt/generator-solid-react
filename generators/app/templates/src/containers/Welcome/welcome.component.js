@@ -1,5 +1,5 @@
 import React from "react";
-import { LogoutButton } from "@inrupt/solid-react-components";
+import { LogoutButton, Uploader } from "@inrupt/solid-react-components";
 import isLoading from "@hocs/isLoading";
 import { Trans, withTranslation } from "react-i18next";
 import {
@@ -8,9 +8,10 @@ import {
   WelcomeLogo,
   WelcomeProfile,
   WelcomeDetail,
-  ImageContainer,
   ImageWrapper
 } from "./welcome.style";
+import { withToastManager } from "react-toast-notifications";
+import { ImageProfile } from "@components";
 
 /**
  * Welcome Page UI component, containing the styled components for the Welcome Page
@@ -18,7 +19,10 @@ import {
  * @param props
  */
 const WelcomePageContent = props => {
-  const { name, image, t } = props;
+  const { webId, image, updatePhoto, toastManager, name, t } = props;
+
+  console.log(image);
+
   return (
     <WelcomeWrapper>
       <WelcomeCard className="card">
@@ -30,7 +34,27 @@ const WelcomePageContent = props => {
             {t("welcome.welcome")}, <span>{name}</span>
           </h3>
           <ImageWrapper>
-            {image && <ImageContainer image={image} />}
+            <Uploader
+              {...{
+                fileBase: webId && webId.split("/card")[0],
+                limitFiles: 1,
+                limitSize: 2100000,
+                accept: "image/*",
+                onError: error => {
+                  if (error && error.statusText) {
+                    toastManager.add(["", error.statusText], {
+                      appearance: "error"
+                    });
+                  }
+                },
+                onComplete: uploadedFiles => {
+                  updatePhoto(uploadedFiles[0].uri);
+                },
+                render: props => (
+                  <ImageProfile {...{ ...props, webId, photo: image }} />
+                )
+              }}
+            />
           </ImageWrapper>
           <p>
             {t("welcome.doneMessage")}{" "}
@@ -197,4 +221,6 @@ const WelcomePageContent = props => {
 };
 
 export { WelcomePageContent };
-export default withTranslation()(isLoading(WelcomePageContent));
+export default withTranslation()(
+  isLoading(withToastManager(WelcomePageContent))
+);
