@@ -38,7 +38,7 @@ const WelcomePageContent = props => {
                 fileBase: webId && webId.split("/card")[0],
                 limitFiles: 1,
                 limitSize: 2100000,
-                accept: "image/*",
+                accept: 'jpg,jpeg,png',
                 onError: error => {
                   if (error && error.statusText) {
                     toastManager.add(['', error.statusText], { appearance: "error" });
