@@ -16,6 +16,10 @@ const LanguageDropdown = ({ language, onLanguageSelect, t }) => {
     es: {
       id: "es",
       icon: "es"
+    },
+    "en-US": {
+      id: "en-US",
+      icon: "us"
     }
   };
 
@@ -32,7 +36,11 @@ const LanguageDropdown = ({ language, onLanguageSelect, t }) => {
 
   return (
     <Dropdown actions={profileOpts} className="" hover={true}>
-      <Flag className={`flag-icon flag-icon-${languages[language].icon}`} />
+      <Flag
+        className={`flag-icon flag-icon-${
+          language && languages[language] ? languages[language].icon : "en"
+        }`}
+      />
     </Dropdown>
   );
 };
