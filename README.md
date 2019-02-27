@@ -145,7 +145,7 @@ An example of both setting and getting a language can be seen in our component `
 ### Adding a new language
 To add a new language, first add a new folder and translation file to the /public/locales folder, with translations in place.
 
-Next, inside language-dropdown.component.js, add the new language to `const languages`. This object contains the languages, with an id and an icon. In this case. the icon maps to a flag, which is mapped using [flag-icon-css](http://flag-icon-css.lip.is/). This will add the language and flag to the dropdown.
+Next, inside language-dropdown.component.js, add the new language to `const languages`. This object contains the languages, with an id and an icon. In this case, the icon maps to a flag, which is mapped using [flag-icon-css](http://flag-icon-css.lip.is/). This will add the language and flag to the dropdown.
 
 Once those two steps are complete then the new language should be compatible with the generated application.
 
