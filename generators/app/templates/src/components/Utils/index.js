@@ -7,6 +7,7 @@ import Badge from "./Badge";
 import Loader from "./Loader";
 import ToasterNotification from "./ToasterNotification";
 import Input from "./Input";
+import LanguageDropdown from "./LanguageDropdown";
 export {
   GradientBackground,
   CenterContainer,
@@ -16,5 +17,6 @@ export {
   RadioButton,
   Badge,
   Loader,
-  Input
+  Input,
+  LanguageDropdown
 };

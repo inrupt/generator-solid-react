@@ -1,7 +1,8 @@
 import React from "react";
 import { NavBar } from "@components";
 
-import { NavBarProfile, LanguageDropdown } from "./children";
+import { NavBarProfile } from "./children";
+import { LanguageDropdown } from "@util-components";
 
 const AuthNavBar = props => {
   const { t, onLanguageSelect } = props;

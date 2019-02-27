@@ -7,8 +7,7 @@ import data from "@solid/query-ldflex";
 class AuthNavBarContainer extends Component {
   constructor(props) {
     super(props);
-    const language = this.getLanguage();
-    this.state = { image: null, language };
+    this.state = { image: null };
   }
 
   getProfileData = async () => {
@@ -34,16 +33,6 @@ class AuthNavBarContainer extends Component {
     }
   };
 
-  getLanguage = () => localStorage.getItem("i18nextLng") || "en";
-
-  onLanguageSelect = nextLanguage => {
-    const { i18n } = this.props;
-    i18n.changeLanguage(nextLanguage);
-    this.setState({
-      language: this.getLanguage()
-    });
-  };
-
   componentDidMount() {
     if (this.props.webId) {
       this.getProfileData();
@@ -58,14 +47,7 @@ class AuthNavBarContainer extends Component {
 
   render() {
     const { image } = this.state;
-    return (
-      <AuthNavBar
-        img={image}
-        {...this.props}
-        {...this.state}
-        onLanguageSelect={this.onLanguageSelect}
-      />
-    );
+    return <AuthNavBar img={image} {...this.props} {...this.state} />;
   }
 }
 
