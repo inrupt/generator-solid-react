@@ -33,16 +33,23 @@ export const LoginTitle = styled.span`
   margin: 30px 0;
   display: inline-block;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &::before,
   &::after {
-    width: 37%;
+    width: 32%;
     content: "";
     background: #656e75;
     height: 1px;
-    position: absolute;
+    // position: absolute;
     box-sizing: border-box;
     top: 50%;
+  }
+
+  span {
+    padding: 0 5px;
   }
 
   &::before {
