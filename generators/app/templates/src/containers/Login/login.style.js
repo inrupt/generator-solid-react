@@ -43,7 +43,6 @@ export const LoginTitle = styled.span`
     content: "";
     background: #656e75;
     height: 1px;
-    // position: absolute;
     box-sizing: border-box;
     top: 50%;
   }
