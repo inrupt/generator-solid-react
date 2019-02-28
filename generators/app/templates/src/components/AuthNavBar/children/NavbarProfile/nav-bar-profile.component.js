@@ -71,5 +71,4 @@ class NavBarProfile extends Component {
   }
 }
 
-export { NavBarProfile };
 export default NavBarProfile;
