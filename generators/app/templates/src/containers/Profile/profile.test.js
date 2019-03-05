@@ -8,7 +8,7 @@ const defaultWeb = "https://example.org/#me";
 
 describe("Profile Container", () => {
 
-  const { container, getByTestId } = render(<Profile webId={defaultWeb} toastManager={{ add: () => {} }} />);
+  const { container } = render(<Profile webId={defaultWeb} toastManager={{ add: () => {} }} />);
 
   it("should render without crashing", async () => {
     expect(container).toBeTruthy();
