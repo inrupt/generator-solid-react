@@ -12,7 +12,7 @@ type Props = {
 const RadioButton = (props: Props) => {
   const { label, onChange, name, id, checked, value } = props;
   return (
-    <label class="radio" for={id}>
+    <label className="radio" htmlFor={id}>
       <input
         type="radio"
         id={id}

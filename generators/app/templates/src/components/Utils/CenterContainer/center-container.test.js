@@ -1,22 +1,21 @@
-import React from "react";
-import { mount } from "enzyme";
-import CenterContainer from "./center-container.component";
-import { CenterContainerWrapper } from "./center-container.style";
+import React from 'react';
+import { render, cleanup } from 'react-testing-library';
+import CenterContainer from './center-container.component';
 
-import "@testSetup";
+afterAll(cleanup)
 
-describe.only("CenterContainer", () => {
-  let wrapper;
-  beforeAll(() => {
-    wrapper = mount(<CenterContainer />);
-  });
-  it("renders without crashing", () => {
-    expect(wrapper).toBeTruthy();
-  });
-  it("renders styled components", () => {
-    expect(wrapper.find(CenterContainerWrapper)).toBeTruthy();
-  });
-  it("renders properly", () => {
-    expect(wrapper.find("div.wrapper")).toBeTruthy();
-  });
-});
+describe.only('CenterContainer', () => {
+    const { container } = render(
+        <CenterContainer className={'centerContainerWrapper'} />
+    )
+
+    it('renders without crashing', () => {
+        expect(container).toBeTruthy()
+    })
+    it('renders styled components', () => {
+        expect(document.querySelector('.centerContainerWrapper')).toBeTruthy()
+    })
+    it('renders properly', () => {
+        expect(document.querySelector('div.wrapper')).toBeTruthy()
+    })
+})

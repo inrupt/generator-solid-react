@@ -37,12 +37,12 @@ class Dropdown extends Component<Props, State> {
         onMouseEnter={hover ? this.toggleOpen : null}
         onMouseLeave={hover ? this.toggleOpen : null}
       >
-        <DropdownMain onClick={this.toggleOpen}>{children}</DropdownMain>
+        <DropdownMain onClick={this.toggleOpen} data-testid="dropdownMain">{children}</DropdownMain>
         {open && (
-          <DropdownItemContainer>
-            <ul>
+          <DropdownItemContainer className={'dropdownItem'}>
+            <ul data-testId="list">
               {actions.map((action, i) => (
-                <Item key={i}>
+                <Item key={i} className="item">
                   <button onClick={action.onClick}>
                     {action.icon && (
                       <FontAwesomeIcon icon={action.icon} className="checked" />

@@ -1,14 +1,13 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, cleanup } from 'react-testing-library';
 import Radio from "./radio.component";
 
-import "@testSetup";
+afterAll(cleanup);
 
-const setup = () => shallow(<Radio />);
+const { container } =  render(<Radio />);
 
 describe("Radio", () => {
   it("renders without crashing", () => {
-    const wrapper = setup();
-    expect(wrapper).toBeTruthy();
+    expect(container).toBeTruthy();
   });
 });
