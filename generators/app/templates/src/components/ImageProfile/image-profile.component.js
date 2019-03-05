@@ -38,12 +38,12 @@ export const ImageProfile = (props: Props) => {
       }}
     >
       {/*photo && <img alt="Profile User" src={photo} /> */}
-      <ButtonStyled onClick={props.onClickFile}>
+      <ButtonStyled onClick={props.onClickFile} className={'button-upload'}>
         <FontAwesomeIcon icon="upload" className="upload-icon" />
         Upload New Photo
       </ButtonStyled>
       {props.inProgress && (
-        <ImageProfileLoader>
+        <ImageProfileLoader className={"image-profile-loader"}>
           <FontAwesomeIcon icon="spinner" spin size="2x" />
           <LoaderText>Uploading</LoaderText>
         </ImageProfileLoader>

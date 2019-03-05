@@ -1,25 +1,22 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, cleanup } from 'react-testing-library';
 import Toolbar from "./toolbar.component";
 
-import "@testSetup";
-// import { exec } from "child_process";
+
+afterAll(cleanup);
 
 describe("Toolbar", () => {
-  let wrapper;
-  beforeEach(() => {
-    wrapper = shallow(
-      <Toolbar
-        toolbar={[
-          { component: () => <label>Test</label>, label: "Test", id: "test" }
-        ]}
-      />
-    );
-  });
+  const { container, getByTestId } = render(<Toolbar
+    toolbar={[
+      { component: () => <label>Test</label>, label: "Test", id: "test" }
+    ]}
+  />);
+
   test("renders without crashing", () => {
-    expect(wrapper).toBeTruthy();
+    expect(container).toBeTruthy();
   });
+
   test("renders 1 li", () => {
-    expect(wrapper.find("li")).toHaveLength(1);
+    expect(getByTestId('item').children.length).toBe(1);
   });
 });

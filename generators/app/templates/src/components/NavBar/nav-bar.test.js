@@ -1,37 +1,31 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render, cleanup } from 'react-testing-library';
 import NavBar from "./nav-bar.component";
-import { Navigation, Toolbar } from "./children";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import "@testSetup";
+afterAll(cleanup);
 
 describe.only("Nav Bar", () => {
-  let wrapper, wrapperWithNavigation, wrapperWithToolbar;
-  beforeAll(() => {
-    wrapper = mount(
-      <Router>
-        <NavBar />
-      </Router>
-    );
-    wrapperWithNavigation = mount(
-      <Router>
-        <NavBar navigation={[]} />
-      </Router>
-    );
-    wrapperWithToolbar = mount(
-      <Router>
-        <NavBar toolbar={[]} />
-      </Router>
-    );
-  });
+
+  const { container, rerender } = render(<Router>
+    <NavBar />
+  </Router>);
+
   it("renders without crashing", () => {
-    expect(wrapper).toBeTruthy();
+    expect(container).toBeTruthy();
   });
+
   it("renders with Navigation", () => {
-    expect(wrapperWithNavigation.find(Navigation)).toBeTruthy();
+    rerender(<Router>
+      <NavBar navigation={[]} />
+    </Router>);
+    expect(document.querySelector('.nav__primary')).toBeTruthy();
   });
+
   it("renders with Toolbar", () => {
-    expect(wrapperWithToolbar.find(Toolbar)).toBeTruthy();
+    rerender(<Router>
+      <NavBar toolbar={[]} />
+    </Router>);
+    expect(document.querySelector('.nav__toolbar')).toBeTruthy();
   });
 });

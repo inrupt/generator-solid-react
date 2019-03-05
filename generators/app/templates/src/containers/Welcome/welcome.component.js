@@ -22,12 +22,12 @@ const WelcomePageContent = props => {
   const { webId, image, updatePhoto, toastManager, name, t } = props;
 
   return (
-    <WelcomeWrapper>
+    <WelcomeWrapper data-testid="welcome-wrapper">
       <WelcomeCard className="card">
-        <WelcomeLogo>
+        <WelcomeLogo data-testid="welcome-logo">
           <img src="/img/logo.svg" alt="Inrupt" />
         </WelcomeLogo>
-        <WelcomeProfile>
+        <WelcomeProfile data-testid="welcome-profile">
           <h3>
             {t("welcome.welcome")}, <span>{name}</span>
           </h3>
@@ -61,7 +61,7 @@ const WelcomePageContent = props => {
         </WelcomeProfile>
       </WelcomeCard>
       <WelcomeCard className="card">
-        <WelcomeDetail>
+        <WelcomeDetail data-testid="welcome-detail">
           <Trans i18nKey="welcome.title">
             <h3>
               title

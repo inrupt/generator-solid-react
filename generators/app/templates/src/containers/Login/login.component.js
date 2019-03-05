@@ -14,11 +14,11 @@ import { CenterContainer } from "@util-components";
 const LoginComponent = props => {
   const { t } = props;
   return (
-    <LoginWrapper>
+    <LoginWrapper data-testid="login-wrapper">
       <CenterContainer>
-        <h1>{t("login.title")}</h1>
-        <LoginPanel>
-          <PanelBody>
+        <h1 data-testid="title">{t("login.title")}</h1>
+        <LoginPanel className={"login-panel"}>
+          <PanelBody className={"panel-body"}>
             <Link
               className="ids-link-filled ids-link-filled--primary"
               to="/register"
@@ -33,7 +33,7 @@ const LoginComponent = props => {
             >
               {t("login.solidHelp")}
             </a>
-            <LoginTitle> <span>{t("login.loginTitle")}</span></LoginTitle>
+            <LoginTitle data-testid="login-title"> <span>{t("login.loginTitle")}</span></LoginTitle>
             <ProviderLogin
               selectPlaceholder={t("login.selectPlaceholder")}
               inputPlaholder={t("login.inputPlaholder")}

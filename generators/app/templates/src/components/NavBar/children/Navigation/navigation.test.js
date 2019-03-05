@@ -1,30 +1,35 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, cleanup } from 'react-testing-library';
 import Navigation from "./navigation.component";
+import { BrowserRouter as Router } from "react-router-dom";
 
-import "@testSetup";
+import 'jest-dom/extend-expect';
+
+
+afterAll(cleanup);
 
 describe.only("Navigation", () => {
-  let wrapper, navigation;
-  beforeEach(() => {
-    navigation = [
-      {
-        id: "welcome",
-        icon: "img/icon/apps.svg",
-        label: "Welcome",
-        to: "/welcome"
-      }
-    ];
-    wrapper = shallow(<Navigation navigation={navigation} />);
-  });
+
+  const navigation = [
+    {
+      id: "welcome",
+      icon: "img/icon/apps.svg",
+      label: "Welcome",
+      to: "/welcome"
+    }
+  ];
+
+  const { container, getByTestId } = render(<Router><Navigation navigation={navigation} /></Router>);
+
 
   test("renders without crashing", () => {
-    expect(wrapper).toBeTruthy();
+    expect(container).toBeTruthy();
   });
 
   test("renders one navigation item", () => {
-    const li = wrapper.find("li");
-    expect(li.length).toEqual(1);
-    expect(li.find("span.label").text()).toBe("Welcome");
+    const item = getByTestId('item');
+
+    expect(item.children.length).toBe(1);
+    expect(item).toHaveTextContent("Welcome");
   });
 });
