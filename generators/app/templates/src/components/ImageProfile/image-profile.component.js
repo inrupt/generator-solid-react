@@ -15,7 +15,9 @@ type Props = {
   onDrop: () => void,
   onClickFile: () => void,
   inProgress: boolean,
-  uploadedFiles: Array<Object>
+  uploadedFiles: Array<Object>,
+  uploadingText: String,
+  text: String
 };
 
 export const ImageProfile = (props: Props) => {
@@ -34,20 +36,25 @@ export const ImageProfile = (props: Props) => {
         onDragLeave: props.onDragLeave,
         onDragEnter: props.onDragEnter,
         onDrop: props.onDrop,
-        style: photo && photo !=='' && { backgroundImage: `url(${photo})` }
+        style: photo && photo !== '' && { backgroundImage: `url(${photo})` }
       }}
     >
       {/*photo && <img alt="Profile User" src={photo} /> */}
       <ButtonStyled onClick={props.onClickFile}>
-        <FontAwesomeIcon icon="upload" className="upload-icon" />
-        Upload New Photo
+        <FontAwesomeIcon icon='upload' className='upload-icon' />
+        {props.text}
       </ButtonStyled>
       {props.inProgress && (
         <ImageProfileLoader>
-          <FontAwesomeIcon icon="spinner" spin size="2x" />
-          <LoaderText>Uploading</LoaderText>
+          <FontAwesomeIcon icon='spinner' spin size='2x' />
+          <LoaderText>{props.uploadingText}</LoaderText>
         </ImageProfileLoader>
       )}
     </ImageProfileWrapper>
   );
+};
+
+ImageProfile.defaultProps = {
+  text: 'Upload New Photo',
+  uploadingText: 'Uploading'
 };
