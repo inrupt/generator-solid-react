@@ -105,6 +105,7 @@ const ProfileComponent = ({
                 data-nodeblank={item.nodeBlank}
                 data-label={item.label}
                 data-icon={item.icon}
+                type={'text'}
               />
             ))}
           <FullGridSize>
