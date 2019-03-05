@@ -9,7 +9,13 @@
     "inputPlaholder": "WebID",
     "formButtonText": "Iniciar sesión",
     "btnTxtWebId": "Iniciar sesión con WebID",
-    "btnTxtProvider": "Iniciar sesión con Proveedor"
+    "btnTxtProvider": "Iniciar sesión con Proveedor",
+    "errors": {
+      "unknown": "Algo ha salido mal, por favor inténtelo de nuevo. Si el problema persiste, inténtelo más tarde....",
+      "webIdNotValid": "El WebId no es válido",
+      "emptyProvider": "El proveedor de Solid es requerido",
+      "emptyWebId": "Un WebId válido es requerido"
+    }
   },
   "register": {
     "title": "Hola! Bienvenido a Solid.",
@@ -41,6 +47,14 @@
     "libraryList": "<0><0><0> Componentes reutilizables </0>que puedes utilizar en tus propias aplicaciones.</0><1><0>Generador de aplicaciones</0>, incorpora todos los componentes y las buenas practicas en una misma aplicacion para el desarrollador. Nota: La aplicaciones Solid React, muestra el uso de los componentes instalados por el generador. No debe ser considerado como un servicio que Inrupt provee, y está sujeto a cambios.</0><0>Patrones de buenas prácticas que puedes referenciar como ejemplos para lograr resolver diferentes situaciones.</1></0>",
     "evolvingMessage": "<0>El SDK se encuentra en constante evolución. Revisa el <1>Calendario de Desarrollo</1>  para lo que está planeado.</0>",
     "implementing": "Esta última version se basa en las anteriores, implementando:",
-    "version010": "<0><0>Mejores prácticas para la <0>Internacionalización</0>, con selector de lenguaje para la sesión.</0><1>Habilidad para actualizar la imagen de perfil en la página de bienvenida.</1> </0>"
+    "version010": "<0><0>Mejores prácticas para la <0>Internacionalización</0>, con selector de lenguaje para la sesión.</0><1>Habilidad para actualizar la imagen de perfil en la página de bienvenida.</1> </0>",
+    "upload": "Subir foto",
+    "uploadSuccess": "Imagen de perfil actualizada correctamente",
+    "uploadingText": "Subiendo",
+    "errors": {
+      "sizeLimit": "El tamaño del archivo supera el límite permitido",
+      "unsupported": "Formato no soportado",
+      "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
+    }
   }
 }

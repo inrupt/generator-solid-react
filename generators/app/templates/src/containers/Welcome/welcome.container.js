@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import WelcomePageContent from "./welcome.component";
-import { withWebId } from "@inrupt/solid-react-components";
-import data from "@solid/query-ldflex";
-import { withToastManager } from "react-toast-notifications";
+import React, { Component } from 'react';
+import WelcomePageContent from './welcome.component';
+import { withWebId } from '@inrupt/solid-react-components';
+import data from '@solid/query-ldflex';
+import { withToastManager } from 'react-toast-notifications';
 
-const defaultProfilePhoto = "/img/icon/empty-profile.svg";
+const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 
 /**
  * Container component for the Welcome Page, containing example of how to fetch data from a POD
@@ -14,7 +14,7 @@ class WelcomeComponent extends Component<Props> {
     super(props);
 
     this.state = {
-      name: "",
+      name: '',
       image: defaultProfilePhoto,
       isLoading: false,
       hasImage: false
@@ -49,7 +49,7 @@ class WelcomeComponent extends Component<Props> {
     const user = data[this.props.webId];
     const nameLd = await user.name;
 
-    const name = nameLd ? nameLd.value : "";
+    const name = nameLd ? nameLd.value : '';
 
     let imageLd = await user.image;
     imageLd = imageLd ? imageLd : await user.vcard_hasPhoto;
@@ -81,19 +81,19 @@ class WelcomeComponent extends Component<Props> {
    * will just update it, the idea is use image instead of hasPhoto
    * @params{String} uri photo url
    */
-  updatePhoto = async (uri: String) => {
+  updatePhoto = async (uri: String, message) => {
     try {
       const { user } = data;
       this.state.hasImage
         ? await user.image.set(uri)
         : await user.image.add(uri);
 
-      this.props.toastManager.add(["", "Profile Image was updated"], {
-        appearance: "success"
+      this.props.toastManager.add(['', message], {
+        appearance: 'success'
       });
     } catch (error) {
-      this.props.toastManager.add(["Error", error.message], {
-        appearance: "error"
+      this.props.toastManager.add(['Error', error.message], {
+        appearance: 'error'
       });
     }
   };
