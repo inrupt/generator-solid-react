@@ -5,7 +5,7 @@ import { ImageProfile } from "./image-profile.component";
 
 describe("Image Profile", () => {
   afterAll(cleanup);
-  const { container, rerender,getByTestId } = render(<ImageProfile />)
+  const { container, rerender } = render(<ImageProfile />)
 
   it("should render without crashing", () => {
     expect(container).toBeTruthy();

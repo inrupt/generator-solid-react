@@ -1,7 +1,6 @@
 import React from "react";
 import { render } from 'react-testing-library';
 import { BrowserRouter as Router } from "react-router-dom";
-import { ProviderLogin } from "@inrupt/solid-react-components";
 import { LoginComponent } from "./login.component";
 import "../../i18n";
 
