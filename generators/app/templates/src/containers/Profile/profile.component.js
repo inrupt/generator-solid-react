@@ -54,7 +54,7 @@ const ProfileComponent = ({
   photo
 }: Props) => {
   return (
-    <ProfileWrapper>
+    <ProfileWrapper data-testid="profile-component">
       <ProfileContainer>
         <Header>
           {formMode && (
@@ -62,6 +62,7 @@ const ProfileComponent = ({
               type="button"
               className="button edit-button"
               onClick={changeFormMode}
+              data-testid="edit-profile-button"
             >
               <FontAwesomeIcon icon="pencil-alt" /> EDIT
             </button>

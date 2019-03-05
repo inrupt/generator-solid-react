@@ -295,3 +295,5 @@ export class Profile extends Component {
 }
 
 export default withWebId (withToastManager (Profile));
+
+
