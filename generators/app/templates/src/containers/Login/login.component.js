@@ -33,7 +33,9 @@ const LoginComponent = props => {
             >
               {t('login.solidHelp')}
             </a>
-            <LoginTitle> {t('login.loginTitle')}</LoginTitle>
+            <LoginTitle>
+              <span>{t('login.loginTitle')}</span>
+            </LoginTitle>
             <ProviderLogin
               selectPlaceholder={t('login.selectPlaceholder')}
               inputPlaholder={t('login.inputPlaholder')}
