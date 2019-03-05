@@ -7,7 +7,7 @@ afterAll(cleanup);
 
 describe.only("Dropdown", () => {
   const { container, getByTestId } = render(<Dropdown  className={'dropDownContainer'}/>);
-  
+
   test("renders without crashing", () => {
     expect(container).toBeTruthy();
   });
