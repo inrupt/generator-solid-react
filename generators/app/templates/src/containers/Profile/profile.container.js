@@ -68,17 +68,17 @@ export class Profile extends Component {
     }
 
     this.setState ({ updatedFields: {
-        ...this.state.updatedFields,
-        [name]: {
-          value,
-          action,
-          property: name,
-          nodeParentUri: dataset.nodeparenturi || null,
-          nodeBlank: dataset.nodeblank || null,
-          label: dataset.label,
-          icon: dataset.icon
-        }
-      }});
+      ...this.state.updatedFields,
+      [name]: {
+        value,
+        action,
+        property: name,
+        nodeParentUri: dataset.nodeparenturi || null,
+        nodeBlank: dataset.nodeblank || null,
+        label: dataset.label,
+        icon: dataset.icon
+      }
+    }});
   };
   /**
    * onSubmit will send all the updated fields to POD
@@ -99,23 +99,23 @@ export class Profile extends Component {
       */
 
       for await (const [key, field] of entries(this.state.updatedFields)) {
-        node = data.user[key];
+          node = data.user[key];
 
-        if (field.nodeBlank) {
-          node = data[field.nodeParentUri][field.nodeBlank];
-        }
+          if (field.nodeBlank) {
+            node = data[field.nodeParentUri][field.nodeBlank];
+          }
 
-        if (field.action === 'update') {
-          await node.set(field.value);
-        } else {
-          await node.delete();
-        }
+          if (field.action === 'update') {
+            await node.set(field.value);
+          } else {
+            await node.delete();
+          }
 
-        updatedFields = [
-          ...updatedFields,
-          {
-            ...field
-          },
+          updatedFields = [
+            ...updatedFields,
+            {
+              ...field
+            },
         ];
       }
 
@@ -295,5 +295,4 @@ export class Profile extends Component {
 }
 
 export default withWebId (withToastManager (Profile));
-
 

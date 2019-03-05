@@ -40,7 +40,7 @@ class Dropdown extends Component<Props, State> {
         <DropdownMain onClick={this.toggleOpen} data-testid="dropdownMain">{children}</DropdownMain>
         {open && (
           <DropdownItemContainer className={'dropdownItem'}>
-            <ul data-testId="list">
+            <ul data-testid="list">
               {actions.map((action, i) => (
                 <Item key={i} className="item">
                   <button onClick={action.onClick}>
