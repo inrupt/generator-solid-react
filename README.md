@@ -35,7 +35,7 @@ To install the generator:
 
 ```
 npm install -g @inrupt/generator-solid-react
-``` 
+```
 
 ## Usage
 Once the generator is installed, you can create a new application with just a few steps.
@@ -59,7 +59,7 @@ Using a generator accelerates application development. You don't have to worry a
 
 We have included integrations with essential libraries, as well as pages, routes, and components that are both useful in most Solid applications (like login pages) but also serve as example code to demonstrate how to interface with Solid and [Linked Data](https://solid.inrupt.com/docs/intro-to-linked-data).
 
-The generated application also incorporates our [Atomic Style Guide](https://design.inrupt.com/atomic-core), featuring a nice integration with [Styled Components](https://www.styled-components.com).
+The generated application also incorporates our [Atomic Style Guide for Solid](https://design.inrupt.com/atomic-core) (source available [here](https://github.com/inrupt-inc/solid-style-guide)), featuring a nice integration with [Styled Components](https://www.styled-components.com).
 
 ## The Solid React Application
 
@@ -128,6 +128,28 @@ In the event you want more specific errors in a given component, you can call Er
   <App />
 </ErrorBoundary>
   ```
+  
+## Internationalization
+Internationalization (commonly known as i18n) is a core part of many web applications. We have integrated the sample application with the common i18n tool, called [react-i18next](https://react.i18next.com/), which is a React plugin for the popular [i18next plugin](https://www.i18next.com/).
+
+### Resource Files
+Our language and translation files are added as JSON files stored in the application. You can find the files in the installed application, under the public/locales folder.
+
+Here you will find a folder per supported language, with a translation.json file inside. The JSON structure inside of the file is broken down by feature area, such as Welcome for the Welcome page.
+
+### Setting a Language
+The react-i18next plugin is automatically checking for a language code in the localStorage item `i18nextLng`. When the user takes an action that should change the language, simple store the language code (e.g. `en-us`) in this localStorage setting.
+
+An example of both setting and getting a language can be seen in our component `LanguageDropdown` under /src/components/Utils.
+
+### Adding a new language
+To add a new language:
+ 
+  1. First add a new folder and translation file to the /public/locales folder, with translations in place.
+
+  2. Next, inside language-dropdown.component.js, add the new language to `const languages`. This object contains the languages, with an id and an icon. In this case, the icon maps to a flag, which is mapped using [flag-icon-css](http://flag-icon-css.lip.is/). This will add the language and flag to the dropdown.
+
+Once those two steps are complete then the new language should be compatible with the generated application.
 
 ## Deployment
 

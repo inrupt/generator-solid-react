@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-
+import { withTranslation } from "react-i18next";
 import { GradientBackground, CenterContainer } from "@util-components";
 import {
   RegisterWrapper,
@@ -80,17 +80,17 @@ class RegisterComponent extends Component<Props, State> {
       canContinue,
       register: { provider }
     } = this.state;
-    const { providers } = this.props;
+    const { providers, t } = this.props;
 
     return (
       <GradientBackground>
         <CenterContainer>
           <RegisterWrapper>
-            <h1>Hi! Welcome to Solid.</h1>
+            <h1>{t("register.title")}</h1>
             <form onSubmit={this.onSubmit}>
               <RegisterPanel>
                 <PanelHeader className="panel-header">
-                  <h2>Select your Provider</h2>
+                  <h2>{t("register.step1Title")}</h2>
                   <div className="progress-bar" />
                 </PanelHeader>
                 <PanelBody className="panel-body">
@@ -100,10 +100,10 @@ class RegisterComponent extends Component<Props, State> {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      What is a provider, and how should I choose one?
+                      {t("register.whatIsAProvider")}
                     </a>
                     <Link to="/login" className="a-with-spacing">
-                      I already have a Solid identity
+                      {t("register.alreadySolid")}
                     </Link>
                     <ul>
                       {providers.map((providerData, i) => (
@@ -126,7 +126,7 @@ class RegisterComponent extends Component<Props, State> {
                     type="submit"
                     disabled={!canContinue}
                   >
-                    Next
+                    {t("register.next")}
                   </button>
                 </Actions>
               </RegisterPanel>
@@ -138,4 +138,5 @@ class RegisterComponent extends Component<Props, State> {
   }
 }
 
-export default RegisterComponent;
+export { RegisterComponent };
+export default withTranslation()(RegisterComponent);

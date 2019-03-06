@@ -1,2 +1,2 @@
-import NavBarProfile from "./nav-bar-profile.component";
+import NavBarProfile from "./NavbarProfile";
 export { NavBarProfile };
