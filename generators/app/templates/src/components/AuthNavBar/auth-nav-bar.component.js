@@ -16,7 +16,7 @@ const AuthNavBar = props => {
     {
       id: "profile",
       icon: "img/people.svg",
-      label: "Profile",
+      label: t("navBar.profile"),
       to: "/profile"
     }
   ];

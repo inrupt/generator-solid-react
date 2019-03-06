@@ -51,7 +51,7 @@ class NavBarProfile extends Component {
 
     const profileOpts = [
       {
-        label: "Profile",
+        label:  t("navBar.profile"),
         onClick: this.profileRedirect
       },
       {
