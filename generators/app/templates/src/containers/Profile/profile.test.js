@@ -1,52 +1,43 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, fireEvent, waitForElement } from 'react-testing-library';
 import { Profile } from "./profile.container";
 import ProfileComponent from "./profile.component";
 
-import "@testSetup";
 
 const defaultWeb = "https://example.org/#me";
 
 describe("Profile Container", () => {
-  const setup = () =>
-    shallow(<Profile webId={defaultWeb} toastManager={{ add: () => {} }} />);
 
-  it("should render without crashing", () => {
-    const wrapper = setup();
-    expect(wrapper).toBeTruthy();
+  const { container } = render(<Profile webId={defaultWeb} toastManager={{ add: () => {} }} />);
+
+  it("should render without crashing", async () => {
+    expect(container).toBeTruthy();
   });
 
   it("Profile UI component should render without crashing", () => {
-    const wrapper = shallow(<ProfileComponent />).dive();
-    expect(wrapper).toBeTruthy();
+    const { container } = render(<ProfileComponent />);
+    expect(container).toBeTruthy();
   });
 
-  describe("ComponentDidMount", () => {
-    const wrapper = setup();
-    it("edit mode should be disable", () => {
-      expect(wrapper.state().formMode).toEqual(true);
-    });
-
-    it("should call fetch ProfileShape and ProfilePhoto methods", async () => {
-      const mockFetchProfile = jest.fn();
-      const mockFetchPhoto = jest.fn();
-
-      wrapper.instance().fetchProfile = mockFetchProfile;
-      wrapper.instance().fetchPhoto = mockFetchPhoto;
-
-      wrapper.instance().componentDidMount();
-      wrapper.update();
-
-      await expect(mockFetchPhoto).toHaveBeenCalled();
-      await expect(mockFetchProfile).toHaveBeenCalled();
-    });
+  it("should show edit button by default", async () => {
+    const editButton = await waitForElement(() =>
+      document.querySelector('[data-testid="edit-profile-button"]'),
+    )
+    expect(editButton).toBeTruthy();
   });
 
-  describe("Should render Profile Component", () => {
-    const wrapper = setup();
-    it("render profile ui component", () => {
-      const uiComponent = wrapper.find(ProfileComponent);
-      expect(uiComponent.length).toEqual(1);
-    });
+  it("shouldn't show edit button on edit mode", async () => {
+    const editButton = await waitForElement(() =>
+      document.querySelector('[data-testid="edit-profile-button"]'),
+    );
+    fireEvent.click(editButton);
+    expect(editButton).toBeTruthy();
+  });
+
+  it("should render profile ui component", async () => {
+    const uiComponent = await waitForElement(() =>
+      document.querySelector('[data-testid="profile-component"]'),
+    );
+    expect(uiComponent).toBeTruthy();
   });
 });

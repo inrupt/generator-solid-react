@@ -5,10 +5,10 @@ import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import {
   Login,
   Register,
-  Profile,
   PageNotFound,
   Welcome,
-  RegistrationSuccess
+  RegistrationSuccess,
+  Profile
 } from "./containers";
 
 const privateRoutes = [
@@ -22,6 +22,7 @@ const privateRoutes = [
     path: "/profile",
     component: Profile
   }
+
 ];
 
 const Routes = () => (

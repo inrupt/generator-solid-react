@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import isLoading from '@hocs/isLoading';
@@ -26,7 +27,8 @@ type Props = {
   updatePhoto: (uri: String) => void,
   toastManager: (message: String, options: Object) => void,
   formMode: boolean
-};
+}
+
 
 function getProfileValue(updatedFields: Object, item: Object) {
   const currentKey = item.nodeBlank || item.property;
@@ -54,7 +56,7 @@ const ProfileComponent = ({
   photo
 }: Props) => {
   return (
-    <ProfileWrapper>
+    <ProfileWrapper data-testid="profile-component">
       <ProfileContainer>
         <Header>
           {formMode && (
@@ -62,6 +64,7 @@ const ProfileComponent = ({
               type='button'
               className='button edit-button'
               onClick={changeFormMode}
+              data-testid="edit-profile-button"
             >
               <FontAwesomeIcon icon='pencil-alt' /> EDIT
             </button>
@@ -80,7 +83,7 @@ const ProfileComponent = ({
                 }
               },
               onComplete: uploadedFiles => {
-                updatePhoto(uploadedFiles[0].uri);
+                updatePhoto(uploadedFiles[0].uri)
               },
               render: props => <ImageProfile {...{ ...props, webId, photo }} />
             }}
@@ -92,7 +95,6 @@ const ProfileComponent = ({
               <Input
                 key={item.label}
                 placeholder={item.label}
-                type='text'
                 name={item.nodeBlank || item.property}
                 value={getProfileValue(updatedFields, item)}
                 onChange={onInputChange}
@@ -103,6 +105,7 @@ const ProfileComponent = ({
                 data-nodeblank={item.nodeBlank}
                 data-label={item.label}
                 data-icon={item.icon}
+                type={'text'}
               />
             ))}
           <FullGridSize>
@@ -135,7 +138,7 @@ const ProfileComponent = ({
         )}
       </ProfileContainer>
     </ProfileWrapper>
-  );
-};
+  )
+}
 
-export default isLoading(ProfileComponent);
+export default isLoading(ProfileComponent)

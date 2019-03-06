@@ -1,10 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, cleanup } from 'react-testing-library';
 import App from './App';
 
-import './utils/enzymeSetup';
-
 it('App renders without crashing', () => {
-  const wrapper = shallow(<App />);
-  expect(wrapper).toBeTruthy();
+  afterAll(cleanup);
+  const { container } = render(<App />);
+  expect(container).toBeTruthy();
 });

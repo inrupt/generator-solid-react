@@ -47,18 +47,18 @@ export class Profile extends Component {
     this.changeFormMode ();
     this.setDefaultData ();
   };
-  
+
   /**
-   * All input changes values will add it into the updatedFields state. 
-   * This object will be run like an iterator, later on. We are using a flag to know 
+   * All input changes values will add it into the updatedFields state.
+   * This object will be run like an iterator, later on. We are using a flag to know
    * when to update or delete fields into PODS.
    */
   onInputChange = (e: Event) => {
-    const { target: input, target: { dataset } } = e; 
+    const { target: input, target: { dataset } } = e;
     const name = input.name;
     const value = input.value;
     let action = 'update';
-    
+
     if (value === '') {
       action = this.state.formFields.find (
         field => field.property === name && field.value !== ''
@@ -70,14 +70,14 @@ export class Profile extends Component {
     this.setState ({ updatedFields: {
       ...this.state.updatedFields,
       [name]: {
-        value, 
+        value,
         action,
         property: name,
         nodeParentUri: dataset.nodeparenturi || null,
         nodeBlank: dataset.nodeblank || null,
         label: dataset.label,
         icon: dataset.icon
-      } 
+      }
     }});
   };
   /**
@@ -93,11 +93,11 @@ export class Profile extends Component {
       this.setState ({isLoading: true});
       /*
        * Solid server has an issue on concurrent updates,
-       * so to fix this we have to await one change, and only when it is done, 
+       * so to fix this we have to await one change, and only when it is done,
        * fire the next field update.
        * more info about the issue: https://github.com/solid/node-solid-server/issues/1106
       */
-      
+
       for await (const [key, field] of entries(this.state.updatedFields)) {
           node = data.user[key];
 
@@ -295,3 +295,4 @@ export class Profile extends Component {
 }
 
 export default withWebId (withToastManager (Profile));
+

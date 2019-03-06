@@ -1,14 +1,14 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   ImageProfileWrapper,
   ButtonStyled,
   LoaderText,
   ImageProfileLoader
-} from "./image-profile.style";
+} from './image-profile.style';
 
 type Props = {
-  image: String,
+  photo: String,
   overrideEventDefaults: () => void,
   onDragLeave: () => void,
   onDragEnter: () => void,
@@ -23,6 +23,7 @@ export const ImageProfile = (props: Props) => {
     props.uploadedFiles && props.uploadedFiles.length > 0
       ? props.uploadedFiles[props.uploadedFiles.length - 1].uri
       : props.photo;
+
   return (
     <ImageProfileWrapper
       {...{
@@ -33,16 +34,16 @@ export const ImageProfile = (props: Props) => {
         onDragLeave: props.onDragLeave,
         onDragEnter: props.onDragEnter,
         onDrop: props.onDrop,
-        style: photo && { backgroundImage: `url(${photo})` }
+        style: photo && photo !=='' && { backgroundImage: `url(${photo})` }
       }}
     >
       {/*photo && <img alt="Profile User" src={photo} /> */}
-      <ButtonStyled onClick={props.onClickFile}>
+      <ButtonStyled onClick={props.onClickFile} className={'button-upload'}>
         <FontAwesomeIcon icon="upload" className="upload-icon" />
         Upload New Photo
       </ButtonStyled>
       {props.inProgress && (
-        <ImageProfileLoader>
+        <ImageProfileLoader className={"image-profile-loader"}>
           <FontAwesomeIcon icon="spinner" spin size="2x" />
           <LoaderText>Uploading</LoaderText>
         </ImageProfileLoader>

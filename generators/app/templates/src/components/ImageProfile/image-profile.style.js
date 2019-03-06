@@ -7,7 +7,6 @@ export const ImageProfileWrapper = styled.div`
   background-size: cover;
   overflow: hidden;
   border-radius: 360px;
-
   img {
     border-radius: 360px;
     border: 3px solid white;
@@ -15,13 +14,11 @@ export const ImageProfileWrapper = styled.div`
     width: 100%;
     height: 128px;
   }
-
   &:hover {
     button {
       opacity: 1;
     }
   }
-
   .upload-icon {
     display: block;
     margin: 0 auto 10px auto;
@@ -43,7 +40,6 @@ export const ButtonStyled = styled.button`
   bottom: 0;
   top: 0;
   left: 0;
-
   &:hover {
     border: 3px solid white;
     color: white;

@@ -1,6 +1,6 @@
 {
   "name": "@inrupt/generator-solid-react",
-  "version": "0.2.1",
+  "version": "0.3.0-rc.0",
   "description": "Solid React Application Generator",
   "homepage": "https://solid.inrupt.com/docs",
   "contributors": [

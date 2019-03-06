@@ -1,40 +1,32 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render, cleanup } from 'react-testing-library';
 import { BrowserRouter as Router } from "react-router-dom";
-import Register from "./register.component";
-import {
-  RegisterWrapper,
-  RegisterPanel,
-  PanelHeader,
-  PanelBody,
-  Actions
-} from "./register.style";
-import "@testSetup";
+import { RegisterComponent } from "./register.component";
+
 
 describe.only("Register", () => {
-  let wrapper;
-  beforeEach(() => {
-    wrapper = mount(
-      <Router>
-        <Register providers={[]} />
-      </Router>
-    );
-  });
+
+  afterAll(cleanup)
+
+  const { container, getByTestId } = render(<Router>
+    <RegisterComponent t={key => key} providers={[]} />
+  </Router>);
 
   test("renders without crashing", () => {
-    expect(wrapper).toBeTruthy();
+    expect(container).toBeTruthy();
   });
 
   test("renders with styled components", () => {
-    expect(wrapper.find(RegisterWrapper)).toBeTruthy();
-    expect(wrapper.find(RegisterPanel)).toBeTruthy();
-    expect(wrapper.find(PanelHeader)).toBeTruthy();
-    expect(wrapper.find(PanelBody)).toBeTruthy();
-    expect(wrapper.find(Actions)).toBeTruthy();
+    expect(getByTestId('register-wrapper')).toBeTruthy();
+    expect(getByTestId('panel-header')).toBeTruthy();
+    expect(document.querySelector('.register-panel')).toBeTruthy();
+    expect(document.querySelector('.panel-body')).toBeTruthy();
+    expect(document.querySelector('.actions')).toBeTruthy();
   });
+
   test("renders title properly", () => {
     expect(
-      wrapper.containsMatchingElement(<h1>Hi! Welcome to Solid.</h1>)
+      getByTestId('title')
     ).toBeTruthy();
   });
 });
