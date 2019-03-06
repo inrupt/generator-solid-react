@@ -1,5 +1,19 @@
 # Solid React Application Generator
 
+## 0.3.0 (March 6, 2019)
+
+#### Solid React Application Base
+
+##### Added
+- Internationalization support using [react-i18next](https://react.i18next.com/). This includes resource files for English and Spanish languages
+- Language selection dropdown added to top navigation bar
+- Ability to edit and upload a new profile image
+
+##### Updated
+- Solid Style Guide has been updated to the most recent version
+- Solid React Components library has been updated to the most recent version
+- Several changes to existing Solid React Components, such as new added parameters
+
 ## 0.2.1 (February 20, 2019)
 
 #### Generator
