@@ -8,7 +8,7 @@ const PrivateLayout = ({ routes, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={matchProps => (
+      component={matchProps => (
         <Fragment>
           <AuthNavBar {...matchProps} />
           <Fragment>

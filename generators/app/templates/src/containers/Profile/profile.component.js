@@ -69,73 +69,9 @@ const ProfileComponent = ({
               <FontAwesomeIcon icon='pencil-alt' /> EDIT
             </button>
           )}
-          <Uploader
-            {...{
-              fileBase: webId && webId.split('/card')[0],
-              limitFiles: 1,
-              limitSize: 2100000,
-              accept: 'image/*',
-              onError: error => {
-                if (error && error.statusText) {
-                  toastManager.add(['', error.statusText], {
-                    appearance: 'error'
-                  });
-                }
-              },
-              onComplete: uploadedFiles => {
-                updatePhoto(uploadedFiles[0].uri)
-              },
-              render: props => <ImageProfile {...{ ...props, webId, photo }} />
-            }}
-          />
+          <u></u>
         </Header>
-        <Form onSubmit={onSubmit}>
-          {formFields &&
-            formFields.map(item => (
-              <Input
-                key={item.label}
-                placeholder={item.label}
-                name={item.nodeBlank || item.property}
-                value={getProfileValue(updatedFields, item)}
-                onChange={onInputChange}
-                icon={item.icon}
-                readOnly={formMode}
-                required={item.required}
-                data-nodeparenturi={item.nodeParentUri}
-                data-nodeblank={item.nodeBlank}
-                data-label={item.label}
-                data-icon={item.icon}
-                type={'text'}
-              />
-            ))}
-          <FullGridSize>
-            {!formMode && (
-              <>
-                <Button
-                  type='button'
-                  onClick={onCancel}
-                  className='ids-link-stroke ids-link-stroke--primary'
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type='submit'
-                  className='ids-link-filled ids-link-filled--primary'
-                >
-                  Save
-                </Button>
-              </>
-            )}
-          </FullGridSize>
-        </Form>
-        {formMode && (
-          <WebId>
-            <FontAwesomeIcon icon='id-card' />
-            <a href={webId} target='_blank' rel='noopener noreferrer'>
-              {webId}
-            </a>
-          </WebId>
-        )}
+        <F></F>
       </ProfileContainer>
     </ProfileWrapper>
   )

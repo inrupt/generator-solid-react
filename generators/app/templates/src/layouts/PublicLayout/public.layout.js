@@ -10,7 +10,7 @@ const PublicLayout = props => {
   return (
     <Route
       {...rest}
-      render={matchProps => (
+      component={matchProps => (
         <Fragment>
           {webId ? (
             <AuthNavBar {...matchProps} />
