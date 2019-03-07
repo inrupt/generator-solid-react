@@ -27,7 +27,7 @@ const Profile  = ({ toastManager }) => {
   return (
     <ProfileWrapper data-testid="profile-component">
       <ProfileContainer>
-        { webId && <LiveUpdate subscribe={webId}>
+        { webId && <LiveUpdate subscribe={webId.replace(/#.*/, '')}>
             <Header>
               {mode && (
                 <button

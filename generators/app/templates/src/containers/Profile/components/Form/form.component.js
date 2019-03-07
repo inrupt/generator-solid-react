@@ -8,6 +8,8 @@ import { entries } from '@utils';
 import { FormUi } from './form.component.ui';
 
 
+let beforeContext = {};
+
 /**
  * We are using ldflex to fetch profile data from a solid pod.
  * ldflex libary is using json-LD for this reason you will see async calls
@@ -35,6 +37,12 @@ export class ProfileForm extends Component {
   async componentDidUpdate(prevProps: Readonly<P>): void {
     if (prevProps.webId !== this.props.webId) {
       await this.fetchProfile();
+    }
+
+    if (this.context.timestamp !== beforeContext.timestamp) {
+      await this.fetchProfile();
+
+      beforeContext = this.context;
     }
   }
 
