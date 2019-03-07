@@ -12,30 +12,32 @@ type Props = {
 export const Image = ({ webId, toastManager }: Props) => {
   const [image, setImage] = useState('');
 
-  useEffect( async () => {
-    await fetchPhoto();
+  useEffect( () => {
+    fetchPhoto();
   }, [webId]);
   /**
    * Fetch profile photo from card
    */
   const fetchPhoto = async () => {
     try {
-      // We are fetching profile card document
-      const user = data[webId];
-      // We access to document node using a node name
-      let image = await user.image;
-      // If image is not present on card we try with hasPhoto
-      if (!image) {
-        /**
-         * hasPhoto is a new context that ldflex doesn't having
-         * we need to add it manually.
-         * if you want to know more about context please go to:
-         * https://github.com/digitalbazaar/jsonld.js
-         */
-        image = await user.vcard_hasPhoto;
-      }
+      if (webId) {
+        // We are fetching profile card document
+        const user = data[webId];
+        // We access to document node using a node name
+        let image = await user.image;
+        // If image is not present on card we try with hasPhoto
+        if (!image) {
+          /**
+           * hasPhoto is a new context that ldflex doesn't having
+           * we need to add it manually.
+           * if you want to know more about context please go to:
+           * https://github.com/digitalbazaar/jsonld.js
+           */
+          image = await user.vcard_hasPhoto;
+        }
 
-      setImage (image && image.value);
+        setImage(image && image.value);
+      }
     } catch (error) {
       toastManager.add (['Error', error.message], {
         appearance: 'error',

@@ -4,7 +4,7 @@ import { Input } from '@util-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-export const FormUi = ({ onSubmit, formFields, formMode, onCancel, onInputChange, updatedFields, webId }) => {
+export const FormUi = ({ onSubmit, formFields, mode, onCancel, onInputChange, updatedFields, webId }) => {
 
   function getProfileValue(updatedFields: Object, item: Object) {
     const currentKey = item.nodeBlank || item.property;
@@ -30,7 +30,7 @@ export const FormUi = ({ onSubmit, formFields, formMode, onCancel, onInputChange
             value={getProfileValue(updatedFields, item)}
             onChange={onInputChange}
             icon={item.icon}
-            readOnly={formMode}
+            readOnly={mode}
             required={item.required}
             data-nodeparenturi={item.nodeParentUri}
             data-nodeblank={item.nodeBlank}
@@ -40,7 +40,7 @@ export const FormUi = ({ onSubmit, formFields, formMode, onCancel, onInputChange
           />
         ))}
         <FullGridSize>
-          {!formMode && (
+          {!mode && (
             <>
               <Button
                 type='button'
@@ -59,7 +59,7 @@ export const FormUi = ({ onSubmit, formFields, formMode, onCancel, onInputChange
           )}
         </FullGridSize>
       </Form>
-      {formMode && (
+      {mode && (
         <WebId>
           <FontAwesomeIcon icon='id-card' />
           <a href={webId} target='_blank' rel='noopener noreferrer'>

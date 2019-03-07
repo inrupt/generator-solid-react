@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { withWebId } from '@inrupt/solid-react-components';
 import { withToastManager } from 'react-toast-notifications';
-import { useWebId } from "@solid/react";
+import { useWebId, LiveUpdate } from "@solid/react";
 import { Header, ProfileContainer, ProfileWrapper } from "./profile.style";
 import { Image, Form } from './components';
 
@@ -20,26 +19,34 @@ const Profile  = ({ toastManager }) => {
   const webId = useWebId();
   const [mode, setMode] = useState(true);
 
+
+  const onCancel = () => {
+    setMode(!mode);
+  }
+
   return (
     <ProfileWrapper data-testid="profile-component">
       <ProfileContainer>
-          <Header>
-            {mode && (
-              <button
-                type='button'
-                className='button edit-button'
-                onClick={setMode(!mode)}
-                data-testid="edit-profile-button"
-              >
-                <FontAwesomeIcon icon='pencil-alt' /> EDIT
-              </button>
-            )}
-            <Image {...{webId, defaultProfilePhoto, toastManager}}/>
-          </Header>
-          <Form {...{mode, toastManager, webId}} />
+        { webId && <LiveUpdate subscribe={webId}>
+            <Header>
+              {mode && (
+                <button
+                  type='button'
+                  className='button edit-button'
+                  onClick={ onCancel }
+                  data-testid="edit-profile-button"
+                >
+                  <FontAwesomeIcon icon='pencil-alt' /> EDIT
+                </button>
+              )}
+              <Image {...{webId, defaultProfilePhoto, toastManager}}/>
+            </Header>
+            <Form {...{mode, toastManager, webId, onCancel}} />
+          </LiveUpdate> }
       </ProfileContainer>
     </ProfileWrapper>
   );
 }
+
 
 export default withToastManager (Profile);

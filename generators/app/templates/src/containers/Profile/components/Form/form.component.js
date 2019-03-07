@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { namedNode } from '@rdfjs/data-model';
 import data from '@solid/query-ldflex';
 import ProfileShape from '@contexts/profile-shape.json';
+import { UpdateContext } from "@solid/react";
 import { entries } from '@utils';
 
 import { FormUi } from './form.component.ui';
@@ -20,7 +21,6 @@ export class ProfileForm extends Component {
     super (props);
 
     this.state = {
-      formMode: true,
       isLoading: false,
       formFields: [],
       newLinkNodes: [],
@@ -28,18 +28,22 @@ export class ProfileForm extends Component {
     };
   }
   async componentDidMount () {
+    console.log('reload');
     await this.fetchProfile ();
   }
 
-  changeFormMode = () => {
-    this.setState ({formMode: !this.state.formMode, updatedFields: {}});
-  };
+  async componentDidUpdate(prevProps: Readonly<P>): void {
+    if (prevProps.webId !== this.props.webId) {
+      await this.fetchProfile();
+    }
+  }
+
   setDefaultData = () => {
-    this.setState ({formFields: [...this.state.formFields]});
+    this.setState ({formFields: [...this.state.formFields], updatedFields: {}});
   };
 
   onCancel = () => {
-    this.changeFormMode ();
+    this.props.onCancel ();
     this.setDefaultData ();
   };
 
@@ -145,30 +149,32 @@ export class ProfileForm extends Component {
    */
   fetchProfile = async () => {
     try {
-      /**
-       * We fetch profile shape from context/profile-shape.json
-       * profile-shape.json has all the fields that we want to print
-       * we are using icons on each field to mapping with the UI design.
-       */
-      const {profile} = ProfileShape;
-      // We are fetching profile card document
-      const user = data[this.props.webId];
+      if (this.props.webId) {
+        /**
+         * We fetch profile shape from context/profile-shape.json
+         * profile-shape.json has all the fields that we want to print
+         * we are using icons on each field to mapping with the UI design.
+         */
+        const { profile } = ProfileShape;
+        // We are fetching profile card document
+        const user = data[this.props.webId];
 
-      /**
-       * We run each shapes on profile-shape.json and access to each
-       * field value, in case that node field value point to another
-       * node blank we acces using multidimensional array if not we
-       * access by a basic array.
-       */
-      const formFields = await Promise.all (
-        profile.map (async field => {
-          return {
-            ...field,
-            ...(await this.getNodeValue (user, field)),
-          };
-        })
-      );
-      this.setState ({ profile, formFields });
+        /**
+         * We run each shapes on profile-shape.json and access to each
+         * field value, in case that node field value point to another
+         * node blank we acces using multidimensional array if not we
+         * access by a basic array.
+         */
+        const formFields = await Promise.all(
+          profile.map(async field => {
+            return {
+              ...field,
+              ...(await this.getNodeValue(user, field)),
+            };
+          })
+        );
+        this.setState({ profile, formFields });
+      }
     } catch (error) {
       this.props.toastManager.add (['Error', error.message], {
         appearance: 'error',
@@ -215,9 +221,12 @@ export class ProfileForm extends Component {
     };
   };
   render () {
-    const { state: { formFields, formMode, updatedFields }, props: { webId }, onInputChange, onCancel, onSubmit } = this;
-    return <FormUi {...{ formFields, formMode, updatedFields, onInputChange, onCancel, onSubmit, webId }} />;
+    const { state: { formFields, updatedFields }, props: { webId, mode }, onInputChange, onCancel, onSubmit } = this;
+
+    return <FormUi {...{ formFields, mode, updatedFields, onInputChange, onCancel, onSubmit, webId }} />;
   }
 }
+
+ProfileForm.contextType = UpdateContext;
 
 export default ProfileForm;
