@@ -10,7 +10,7 @@ type Props = {
 };
 
 
-export const Image = ({ webId, toastManager }: Props) => {
+export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
   const [image, setImage] = useState('');
 
   const latestUpdate = useLiveUpdate();
@@ -87,7 +87,7 @@ export const Image = ({ webId, toastManager }: Props) => {
         onComplete: uploadedFiles => {
           updatePhoto(uploadedFiles[0].uri)
         },
-        render: props => <ImageProfile {...{ ...props, webId, photo: image || '/img/icon/empty-profile.svg' }} />
+        render: props => <ImageProfile {...{ ...props, webId, photo: image || defaultProfilePhoto }} />
       }}
     />
   );
