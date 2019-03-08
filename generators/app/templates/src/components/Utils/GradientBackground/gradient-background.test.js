@@ -1,14 +1,13 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, cleanup } from 'react-testing-library';
 import GradientBackground from "./gradient-background.component";
 
-import "@testSetup";
+afterAll(cleanup);
 
-const setup = () => shallow(<GradientBackground />);
+const { container } = render(<GradientBackground />);
 
 describe("GradientBackground", () => {
   it("renders without crashing", () => {
-    const wrapper = setup();
-    expect(wrapper).toBeTruthy();
+    expect(container).toBeTruthy();
   });
 });

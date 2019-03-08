@@ -11,7 +11,7 @@ const Navigation = ({ navigation }: Props) => {
       <ul>
         {navigation &&
           navigation.map(item => (
-            <li key={item.id}>
+            <li key={item.id} data-testid="item">
               <NavLink to={item.to} activeClassName="active">
                 <span className="icon">
                   <img src={item.icon} alt={item.id} className="nav-icon" />

@@ -22,7 +22,7 @@ const ToasterNotification = (props: Props) => {
       </div>
       <div className="toaster-wrap__dismiss">
       <ToastConsumer>
-        {({ remove, id }) => (
+        {() => (
           <FontAwesomeIcon icon="times" className="fa fa-times" onClick={onDismiss} />
         )}
       </ToastConsumer>

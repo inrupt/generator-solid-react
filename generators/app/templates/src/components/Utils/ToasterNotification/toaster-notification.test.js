@@ -1,23 +1,22 @@
 import React from "react";
-import { shallow } from "enzyme";
+
+import { render, cleanup } from 'react-testing-library';
 import ToasterNotification from "./toaster-notification.component";
 
-import "@testSetup";
+afterAll(cleanup);
 
-const setup = props => shallow(<ToasterNotification {...props} />);
+const { container } = render(<ToasterNotification children={["Error", "Message"]} />);
 
 describe("Toaster Notification Component", () => {
   it("Toaster Notification renders without crashing", () => {
-    const wrapper = setup();
-    expect(wrapper).toBeTruthy();
+    expect(container).toBeTruthy();
   });
 
   it("render title and message when children prop comes", () => {
-    const wrapper = setup({ children: ["Error", "Message"] });
-    const title = wrapper.find(".content__title").length;
-    const message = wrapper.find(".content__message").length;
+    const title = document.querySelector('.content__title');
+    const message = document.querySelector('.content__message');
 
-    expect(title).toEqual(1);
-    expect(message).toEqual(1);
+    expect(title).toBeTruthy();
+    expect(message).toBeTruthy();
   });
 });

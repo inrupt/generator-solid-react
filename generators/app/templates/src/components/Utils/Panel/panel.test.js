@@ -1,14 +1,13 @@
-import React from "react";
-import { shallow } from "enzyme";
-import Panel from "./panel.component";
+import React from 'react';
+import { render, cleanup } from 'react-testing-library';
+import Panel from './panel.component';
 
-import "@testSetup";
+afterAll(cleanup);
 
-const setup = () => shallow(<Panel />);
+const { container } = render(<Panel />);
 
-describe("Panel", () => {
-  it("renders without crashing", () => {
-    const wrapper = setup();
-    expect(wrapper).toBeTruthy();
-  });
+describe('Panel', () => {
+    it('renders without crashing', () => {
+        expect(container).toBeTruthy();
+    });
 });

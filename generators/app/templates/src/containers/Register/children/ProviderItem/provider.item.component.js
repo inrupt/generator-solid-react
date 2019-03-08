@@ -12,7 +12,7 @@ type Props = {
 
 const ProviderItem = ({ data, onSelect, radioName, id, checked }: Props) => {
   return (
-    <Item>
+    <Item data-testid="provider-item">
       <input
         type="radio"
         name={radioName}
@@ -24,7 +24,7 @@ const ProviderItem = ({ data, onSelect, radioName, id, checked }: Props) => {
       <ProviderItemStyle htmlFor={id} className="provider-item">
         <div className="img-group">
           <img src={data.image} alt={data.label} />
-          <span>{data.label}</span>
+          <span className={"label"}>{data.label}</span>
         </div>
         <FontAwesomeIcon icon="check" className="checked" />
       </ProviderItemStyle>

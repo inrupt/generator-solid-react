@@ -1,14 +1,13 @@
 import React from "react";
-import { shallow } from "enzyme";
-import NavBarProfile from "./nav-bar-profile.component";
+import { render, cleanup } from 'react-testing-library';
+import { NavBarProfile } from "./nav-bar-profile.component";
 
-import "@testSetup";
+afterAll(cleanup);
 
-const setup = () => shallow(<NavBarProfile t={key => key} />);
+const { container } = render(<NavBarProfile t={key => key} />);
 
 describe("NavBarProfile", () => {
   it("renders without crashing", () => {
-    const wrapper = setup();
-    expect(wrapper).toBeTruthy();
+    expect(container).toBeTruthy();
   });
 });
