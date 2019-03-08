@@ -1,7 +1,7 @@
-import React from "react";
-import { LogoutButton, Uploader } from "@inrupt/solid-react-components";
-import isLoading from "@hocs/isLoading";
-import { Trans, withTranslation } from "react-i18next";
+import React from 'react';
+import { LogoutButton, Uploader } from '@inrupt/solid-react-components';
+import isLoading from '@hocs/isLoading';
+import { Trans, withTranslation } from 'react-i18next';
 import {
   WelcomeWrapper,
   WelcomeCard,
@@ -9,9 +9,9 @@ import {
   WelcomeProfile,
   WelcomeDetail,
   ImageWrapper
-} from "./welcome.style";
-import { withToastManager } from "react-toast-notifications";
-import { ImageProfile } from "@components";
+} from './welcome.style';
+import { withToastManager } from 'react-toast-notifications';
+import { ImageProfile } from '@components';
 
 /**
  * Welcome Page UI component, containing the styled components for the Welcome Page
@@ -29,34 +29,47 @@ const WelcomePageContent = props => {
         </WelcomeLogo>
         <WelcomeProfile data-testid="welcome-profile">
           <h3>
-            {t("welcome.welcome")}, <span>{name}</span>
+            {t('welcome.welcome')}, <span>{name}</span>
           </h3>
           <ImageWrapper>
             <Uploader
               {...{
-                fileBase: webId && webId.split("/card")[0],
+                fileBase: webId && webId.split('/card')[0],
                 limitFiles: 1,
                 limitSize: 2100000,
                 accept: 'jpg,jpeg,png',
+                errorsText: {
+                  sizeLimit: t('welcome.errors.sizeLimit'),
+                  unsupported: t('welcome.errors.unsupported'),
+                  maximumFiles: t('welcome.errors.maximumFiles')
+                },
                 onError: error => {
                   if (error && error.statusText) {
-                    toastManager.add(["", error.statusText], {
-                      appearance: "error"
+                    toastManager.add(['', error.statusText], {
+                      appearance: 'error'
                     });
                   }
                 },
                 onComplete: uploadedFiles => {
-                  updatePhoto(uploadedFiles[0].uri);
+                  updatePhoto(uploadedFiles[0].uri, t('welcome.uploadSuccess'));
                 },
                 render: props => (
-                  <ImageProfile {...{ ...props, webId, photo: image }} />
+                  <ImageProfile
+                    {...{
+                      ...props,
+                      webId,
+                      photo: image,
+                      text: t('welcome.upload'),
+                      uploadingText: t('welcome.uploadingText')
+                    }}
+                  />
                 )
               }}
             />
           </ImageWrapper>
           <p>
-            {t("welcome.doneMessage")}{" "}
-            <LogoutButton>{t("navBar.logOut")}</LogoutButton>
+            {t('welcome.doneMessage')}{' '}
+            <LogoutButton>{t('navBar.logOut')}</LogoutButton>
           </p>
         </WelcomeProfile>
       </WelcomeCard>
@@ -66,34 +79,34 @@ const WelcomePageContent = props => {
             <h3>
               title
               <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk"
-                target="_blank"
-                rel="noopener noreferrer"
+                href='https://github.com/Inrupt-inc/solid-react-sdk'
+                target='_blank'
+                rel='noopener noreferrer'
               >
                 link
               </a>
             </h3>
           </Trans>
-          <Trans i18nKey="welcome.description">
+          <Trans i18nKey='welcome.description'>
             <p>
               text
               <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk"
-                target="_blank"
-                rel="noopener noreferrer"
+                href='https://github.com/Inrupt-inc/solid-react-sdk'
+                target='_blank'
+                rel='noopener noreferrer'
               >
-                link{" "}
-              </a>{" "}
+                link{' '}
+              </a>{' '}
               text
             </p>
           </Trans>
-          <Trans i18nKey="welcome.libraryList">
+          <Trans i18nKey='welcome.libraryList'>
             <ul>
               <li>
                 <a
-                  href="https://github.com/Inrupt-inc/solid-react-components"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href='https://github.com/Inrupt-inc/solid-react-components'
+                  target='_blank'
+                  rel='noopener noreferrer'
                 >
                   Reusable Components
                 </a>
@@ -101,9 +114,9 @@ const WelcomePageContent = props => {
               </li>
               <li>
                 <a
-                  href="https://github.com/Inrupt-inc/generator-solid-react"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href='https://github.com/Inrupt-inc/generator-solid-react'
+                  target='_blank'
+                  rel='noopener noreferrer'
                 >
                   Application Generator
                 </a>
@@ -121,13 +134,13 @@ const WelcomePageContent = props => {
             </ul>
           </Trans>
 
-          <Trans i18nKey="welcome.evolvingMessage">
+          <Trans i18nKey='welcome.evolvingMessage'>
             <p>
               The SDK is continually evolving. Take a look at the
               <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk/tree/master#release-timeline"
-                target="_blank"
-                rel="noopener noreferrer"
+                href='https://github.com/Inrupt-inc/solid-react-sdk/tree/master#release-timeline'
+                target='_blank'
+                rel='noopener noreferrer'
               >
                 Release Timeline
               </a>
@@ -135,14 +148,14 @@ const WelcomePageContent = props => {
               what's currently planned.
             </p>
           </Trans>
-          <p>{t("welcome.implementing")}</p>
-          <Trans i18nKey="welcome.version010">
+          <p>{t('welcome.implementing')}</p>
+          <Trans i18nKey='welcome.version010'>
             <ul>
               <li>
                 <a
-                  href="https://github.com/Inrupt-inc/solid-react-sdk#internationalization-i18n"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href='https://github.com/Inrupt-inc/solid-react-sdk#internationalization-i18n'
+                  target='_blank'
+                  rel='noopener noreferrer'
                 >
                   Internationalization
                 </a>

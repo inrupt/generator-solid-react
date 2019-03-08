@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { withTranslation } from "react-i18next";
 import { Dropdown } from "@util-components";
 
 import auth from "solid-auth-client";
@@ -78,5 +77,4 @@ class NavBarProfile extends Component {
   }
 }
 
-export { NavBarProfile };
-export default withTranslation()(NavBarProfile);
+export default NavBarProfile;
