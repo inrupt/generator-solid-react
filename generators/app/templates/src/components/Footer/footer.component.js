@@ -12,7 +12,7 @@ const Footer = () => {
       <section className='solid-footer__content'>
         <div className='solid-footer__content--copyright'>
           <ul>
-            <li>© inrupt Inc.</li>
+            <li>© {process.env.REACT_APP_COMPANY_NAME}</li>
             <li>Build <span className='build-value'>{process.env.REACT_APP_VERSION}</span></li>
           </ul>
         </div>
