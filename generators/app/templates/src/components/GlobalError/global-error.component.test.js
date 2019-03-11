@@ -1,25 +1,25 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, cleanup } from 'react-testing-library';
 import { GlobalError } from "./global-error.component";
-import { ErrorTitle, ErrorInfo } from "./global-error.style";
 
-import "../../utils/enzymeSetup";
+afterAll(cleanup);
 
 describe("ErrorBoundary Component", () => {
   test("renders without crashing and render messages", () => {
-    const wrapper = shallow(
+    const { container, getByTestId } = render(
       <GlobalError
         error="Error Message"
         info={{ componentStack: "Detail Error" }}
       />
     );
 
-    expect(wrapper).toBeTruthy();
+    expect(container).toBeTruthy();
 
-    const detail = wrapper.find(ErrorInfo).length;
-    const title = wrapper.find(ErrorTitle).length;
+    const info = getByTestId('error-info');
+    const title = getByTestId('error-title');
 
-    expect(detail).toEqual(1);
-    expect(title).toEqual(1);
+    expect(info).toBeTruthy();
+    expect(title).toBeTruthy();
+    expect(document.querySelector('.subheadline')).toBeTruthy();
   });
 });

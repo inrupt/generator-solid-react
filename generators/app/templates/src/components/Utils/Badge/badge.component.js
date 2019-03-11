@@ -7,7 +7,7 @@ type Props = {
 };
 
 const Badge = ({ badge }: Props) => {
-  return <BadgeWrapper>{badge}</BadgeWrapper>;
+  return <BadgeWrapper className={'badgeWrapper'}>{badge}</BadgeWrapper>;
 };
 
 export default Badge;

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { withTranslation } from "react-i18next";
 import { Dropdown } from "@util-components";
 
 import auth from "solid-auth-client";
@@ -31,6 +30,8 @@ class NavBarProfile extends Component {
     imageLoaded: false
   };
 
+  profileRedirect = () => this.props.history.push("/profile");
+
   onImageLoaded = async () => this.setState({ imageLoaded: true });
   logOut = async () => {
     try {
@@ -48,6 +49,10 @@ class NavBarProfile extends Component {
     const { imageLoaded } = this.state;
 
     const profileOpts = [
+      {
+        label:  t("navBar.profile"),
+        onClick: this.profileRedirect
+      },
       {
         label: t("navBar.logOut"),
         onClick: this.logOut
@@ -72,5 +77,4 @@ class NavBarProfile extends Component {
   }
 }
 
-export { NavBarProfile };
-export default withTranslation()(NavBarProfile);
+export default NavBarProfile;

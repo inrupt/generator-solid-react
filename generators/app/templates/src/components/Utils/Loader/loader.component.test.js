@@ -1,11 +1,11 @@
-import React from "react";
-import Loader from "./";
-import { shallow } from "enzyme";
+import React from 'react';
+import Loader from './';
+import { render, cleanup } from 'react-testing-library';
 
-import "@testSetup";
+afterAll(cleanup);
 
-it("renders without crashing", () => {
-  const component = shallow(<Loader />);
+it('renders without crashing', () => {
+    const { container } = render(<Loader />);
 
-  expect(component).toBeTruthy();
+    expect(container).toBeTruthy();
 });

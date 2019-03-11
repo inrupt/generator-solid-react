@@ -1,31 +1,28 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render, cleanup } from 'react-testing-library';
 import RegistrationSuccess from "./registration-success.component";
-import { RegistrationPage } from "./registration-success.style";
 
-import "@testSetup";
+import 'jest-dom/extend-expect';
 
 describe("RegistrationSuccess", () => {
-  let wrapper;
-  beforeEach(() => {
-    wrapper = mount(<RegistrationSuccess />);
-  });
+  afterAll(cleanup);
+
+  const { container } = render(<RegistrationSuccess />);
+
   test("renders without crashing", () => {
-    expect(wrapper).toBeTruthy();
+    expect(container).toBeTruthy();
   });
   test("renders with styled components", () => {
-    expect(wrapper.find(RegistrationPage)).toBeTruthy();
+    const registrationPage = document.querySelector('.registration-success--page');
+    expect(registrationPage).toBeTruthy();
   });
 
   test("renders title properly", () => {
-    expect(
-      wrapper.containsMatchingElement(
-        <h1>Success! Welcome to the decentralized web.</h1>
-      )
-    ).toBeTruthy();
+    expect(container).toBeInTheDocument('<h1>Success! Welcome to the decentralized web.</h1>');
   });
 
   test("rendering item properly", () => {
-    expect(wrapper.find("img").hasClass("rocket")).toBeTruthy();
+    const image = document.querySelector('.rocket');
+    expect(image).toBeTruthy();
   });
 });

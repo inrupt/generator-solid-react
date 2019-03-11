@@ -7,7 +7,8 @@ import {
   Register,
   PageNotFound,
   Welcome,
-  RegistrationSuccess
+  RegistrationSuccess,
+  Profile
 } from "./containers";
 
 const privateRoutes = [
@@ -15,7 +16,13 @@ const privateRoutes = [
     id: "welcome",
     path: "/welcome",
     component: Welcome
+  },
+  {
+    id: "profile",
+    path: "/profile",
+    component: Profile
   }
+
 ];
 
 const Routes = () => (

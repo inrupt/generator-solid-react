@@ -1,34 +1,36 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render, cleanup } from 'react-testing-library';
 import ProviderItem from "./provider.item.component";
-import { Item, ProviderItemStyle } from "./provider.style";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import "@testSetup";
+
+import 'jest-dom/extend-expect';
 
 library.add(fas);
 
 describe("ProviderItem", () => {
-  let wrapper;
-  beforeEach(() => {
-    let data = {
-      label: "Inrupt",
-      image: "/img/inrupt.svg",
-      value: "https://inrupt.net/auth",
-      registerLink: "https://inrupt.net/register",
-      description: "Lorem ipsum dolor sit amet non ipsom dolor"
-    };
-    wrapper = mount(<ProviderItem data={data} />);
-  });
+  afterAll(cleanup);
+
+  let data = {
+    label: "Inrupt",
+    image: "/img/inrupt.svg",
+    value: "https://inrupt.net/auth",
+    registerLink: "https://inrupt.net/register",
+    description: "Lorem ipsum dolor sit amet non ipsom dolor"
+  };
+
+  const { container, getByTestId } = render(<ProviderItem data={data} />);
+
   test("renders without crashing", () => {
-    expect(wrapper).toBeTruthy();
+    expect(container).toBeTruthy();
   });
   test("renders with styled components", () => {
-    expect(wrapper.find(Item)).toBeTruthy();
-    expect(wrapper.find(ProviderItemStyle)).toBeTruthy();
+    expect(getByTestId('provider-item')).toBeTruthy();
+    expect(document.querySelector('.provider-item')).toBeTruthy();
   });
 
   test("rendering item properly", () => {
-    expect(wrapper.find("span").text()).toBe("Inrupt");
+    const label = document.querySelector('.label');
+    expect(label).toHaveTextContent('Inrupt');
   });
 });

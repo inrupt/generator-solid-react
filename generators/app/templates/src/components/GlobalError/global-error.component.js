@@ -23,8 +23,8 @@ export const GlobalError = ({ error, info }: Props) => {
         <img src="/img/error-ufo.svg" alt="Error" />
       </ImageWrapper>
       <DetailWrapper>
-        <ErrorTitle>Error:</ErrorTitle>
-        <ErrorInfo>Something Went Wrong</ErrorInfo>
+        <ErrorTitle data-testid="error-title">Error:</ErrorTitle>
+        <ErrorInfo data-testid="error-info">Something Went Wrong</ErrorInfo>
         <ErrorDetail className="subheadline">
           You may refresh the page, or try again at a later time.
         </ErrorDetail>

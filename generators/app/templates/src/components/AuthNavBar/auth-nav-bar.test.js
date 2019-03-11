@@ -1,23 +1,16 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, cleanup } from 'react-testing-library';
 import AuthNavBar from "./auth-nav-bar.component";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import "@testSetup";
-
-const setup = () =>
-  shallow(
-    <Router>
-      <AuthNavBar t={key => key} />
-    </Router>
-  );
-
 describe.only("AuthNavBar", () => {
-  let wrapper;
-  beforeAll(() => {
-    wrapper = setup();
-  });
+  afterAll(cleanup);
+
+  const { container } = render(<Router>
+    <AuthNavBar t={key => key} />
+  </Router>);
+
   test("renders without crashing", () => {
-    expect(wrapper).toBeTruthy();
+    expect(container).toBeTruthy();
   });
 });

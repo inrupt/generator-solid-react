@@ -1,14 +1,13 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, cleanup } from 'react-testing-library';
 import Language from "./language-dropdown.component";
 
-import "@testSetup";
+afterAll(cleanup);
 
-const setup = () => shallow(<Language t={key => key} />);
+const { container } = render(<Language t={key => key} />);
 
 describe("Language", () => {
   it("renders without crashing", () => {
-    const wrapper = setup();
-    expect(wrapper).toBeTruthy();
+    expect(container).toBeTruthy();
   });
 });
