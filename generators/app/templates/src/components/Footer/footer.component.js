@@ -8,7 +8,7 @@ const Footer = () => {
   const githubIconDef: IconDefinition = findIconDefinition(githubIcon);
 
   return (
-    <footer role='footer' className='solid-footer footer'>
+    <footer className='solid-footer footer'>
       <section className='solid-footer__content'>
         <div className='solid-footer__content--copyright'>
           <ul>
