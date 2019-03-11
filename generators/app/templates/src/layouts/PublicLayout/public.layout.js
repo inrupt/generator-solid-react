@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Route, Link } from "react-router-dom";
 import { withTranslation } from "react-i18next";
-import { NavBar, AuthNavBar } from "@components";
+import { NavBar, AuthNavBar, Footer } from "@components";
 import { withWebId } from "@inrupt/solid-react-components";
 import { LanguageDropdown } from "@util-components";
 
@@ -31,6 +31,7 @@ const PublicLayout = props => {
             />
           )}
           <Component {...matchProps} />
+          <Footer></Footer>
         </Fragment>
       )}
     />

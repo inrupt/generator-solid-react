@@ -1,8 +1,7 @@
 import React, { Fragment } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { withAuthorization } from "@inrupt/solid-react-components";
-
-import { AuthNavBar } from "@components";
+import { AuthNavBar, Footer } from "@components";
 
 const PrivateLayout = ({ routes, ...rest }) => {
   return (
@@ -19,6 +18,7 @@ const PrivateLayout = ({ routes, ...rest }) => {
               <Redirect to="/404" />
             </Switch>
           </Fragment>
+          <Footer></Footer>
         </Fragment>
       )}
     />
