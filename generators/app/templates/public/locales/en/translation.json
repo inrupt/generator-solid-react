@@ -56,5 +56,26 @@
       "unsupported": "Unsupported media type",
       "maximumFiles": "Sorry, you have exceeded the maximum number of files allowed per upload"
     }
+  },
+  "profile": {
+    "edit": "EDIT",
+    "cancelBtn": "Cancel",
+    "saveBtn": "Save",
+    "phone": "Phone",
+    "role": "Role",
+    "email": "Email",
+    "country": "Country",
+    "name": "Name",
+    "company": "Company",
+    "address": "Address",
+    "upload": "Upload New Photo",
+    "uploadSuccess": "Profile Image was updated",
+    "uploadingText": "Uploading",
+    "updateSuccess": "Profile was updated successfully",
+    "errors": {
+      "sizeLimit": "File size exceeds the allowable limit",
+      "unsupported": "Unsupported media type",
+      "maximumFiles": "Sorry, you have exceeded the maximum number of files allowed per upload"
+    }
   }
 }

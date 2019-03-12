@@ -8,7 +8,7 @@ export const ProfileWrapper = styled.section`
   justify-content: center;
   background-image: url("/img/concentric-hex-pattern_2x.png");
   background-repeat: repeat;
-  height: 79vh;
+  min-height: 79vh;
   padding: 60px 0;
 `;
 export const ProfileContainer = styled.div`

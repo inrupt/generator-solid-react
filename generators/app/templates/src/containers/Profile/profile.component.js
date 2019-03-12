@@ -5,6 +5,7 @@ import isLoading from '@hocs/isLoading';
 import { Uploader } from '@inrupt/solid-react-components';
 import { Input } from '@util-components';
 import { ImageProfile } from '@components';
+import { useTranslation } from 'react-i18next'
 import {
   ProfileWrapper,
   ProfileContainer,
@@ -55,6 +56,7 @@ const ProfileComponent = ({
   updatedFields,
   photo
 }: Props) => {
+  const { t } = useTranslation();
   return (
     <ProfileWrapper data-testid="profile-component">
       <ProfileContainer>
@@ -66,7 +68,7 @@ const ProfileComponent = ({
               onClick={changeFormMode}
               data-testid="edit-profile-button"
             >
-              <FontAwesomeIcon icon='pencil-alt' /> EDIT
+              <FontAwesomeIcon icon='pencil-alt' /> {t('profile.edit')}
             </button>
           )}
           <Uploader
@@ -75,6 +77,11 @@ const ProfileComponent = ({
               limitFiles: 1,
               limitSize: 2100000,
               accept: 'png,jpg,jpeg',
+              errorsText: {
+                sizeLimit: t('profile.errors.sizeLimit'),
+                unsupported: t('profile.errors.unsupported'),
+                maximumFiles: t('profile.errors.maximumFiles')
+              },
               onError: error => {
                 if (error && error.statusText) {
                   toastManager.add(['', error.statusText], {
@@ -83,18 +90,19 @@ const ProfileComponent = ({
                 }
               },
               onComplete: uploadedFiles => {
-                updatePhoto(uploadedFiles[0].uri)
+                updatePhoto(uploadedFiles[0].uri, t('profile.uploadSuccess'))
               },
-              render: props => <ImageProfile {...{ ...props, webId, photo }} />
+              render: props => <ImageProfile {...{ ...props, webId, photo, text: t('welcome.upload'),
+                uploadingText: t('welcome.uploadingText') }} />
             }}
           />
         </Header>
-        <Form onSubmit={onSubmit}>
+        <Form onSubmit={(e) => onSubmit(e,t('profile.updateSuccess'))}>
           {formFields &&
             formFields.map(item => (
               <Input
-                key={item.label}
-                placeholder={item.label}
+                key={item.key}
+                placeholder={t(`profile.${item.key}`)}
                 name={item.nodeBlank || item.property}
                 value={getProfileValue(updatedFields, item)}
                 onChange={onInputChange}
@@ -116,13 +124,13 @@ const ProfileComponent = ({
                   onClick={onCancel}
                   className='ids-link-stroke ids-link-stroke--primary'
                 >
-                  Cancel
+                  {t('profile.cancelBtn')}
                 </Button>
                 <Button
                   type='submit'
                   className='ids-link-filled ids-link-filled--primary'
                 >
-                  Save
+                  {t('profile.saveBtn')}
                 </Button>
               </>
             )}
