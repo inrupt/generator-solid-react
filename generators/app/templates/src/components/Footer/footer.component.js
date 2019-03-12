@@ -19,10 +19,10 @@ const Footer = () => {
 
         <div className='solid-footer__content--links'>
           <ul>
-            <li><a href='https://github.com/Inrupt-inc/solid-react-sdk' target='_blank'>
+            <li><a href='https://github.com/Inrupt-inc/solid-react-sdk' target='_blank' rel="noopener noreferrer">
               <FontAwesomeIcon className='link-icon' icon={githubIconDef}/>react-solid-sdk</a>
             </li>
-            <li><a href='https://github.com/Inrupt-inc/solid-style-guide' target='_blank'>
+            <li><a href='https://github.com/Inrupt-inc/solid-style-guide' target='_blank' rel="noopener noreferrer">
               <FontAwesomeIcon className='link-icon' icon={githubIconDef}/>solid-style-guide</a>
             </li>
           </ul>
