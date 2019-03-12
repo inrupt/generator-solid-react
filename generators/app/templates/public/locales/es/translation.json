@@ -56,5 +56,26 @@
       "unsupported": "Formato no soportado",
       "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
     }
+  },
+  "profile": {
+    "edit": "EDITAR",
+    "cancelBtn": "Cancelar",
+    "saveBtn": "Guardar",
+    "phone": "Teléfono",
+    "role": "Rol",
+    "email": "Correo",
+    "country": "País",
+    "name": "Nombre",
+    "company": "Compañía",
+    "address": "Dirección",
+    "upload": "Subir foto",
+    "uploadSuccess": "Imagen de perfil actualizada correctamente",
+    "uploadingText": "Subiendo",
+    "updateSuccess": "Perfil actualizado correctamente",
+    "errors": {
+      "sizeLimit": "El tamaño del archivo supera el límite permitido",
+      "unsupported": "Formato no soportado",
+      "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
+    }
   }
 }

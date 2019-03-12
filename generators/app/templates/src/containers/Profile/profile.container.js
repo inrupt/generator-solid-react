@@ -84,7 +84,7 @@ export class Profile extends Component {
    * onSubmit will send all the updated fields to POD
    * fields that was not updated will be not send it.
    */
-  onSubmit = async (e: Event) => {
+  onSubmit = async (e: Event, successMessage: String) => {
     try {
       e.preventDefault ();
       let node;
@@ -135,7 +135,7 @@ export class Profile extends Component {
         isLoading: false,
       });
 
-      this.props.toastManager.add (['', 'Profile was updated successfully'], {
+      this.props.toastManager.add (['', successMessage], {
         appearance: 'success',
       });
     } catch (error) {
@@ -184,14 +184,14 @@ export class Profile extends Component {
    * will just update it, the idea is use image instead of hasPhoto
    * @params{String} uri photo url
    */
-  updatePhoto = async (uri: String) => {
+  updatePhoto = async (uri: String, message: String) => {
     try {
       const {user} = data;
       this.state.hasImage
         ? await user.image.set (uri)
         : await user.image.add (uri);
 
-      this.props.toastManager.add (['', 'Profile Image was updated'], {
+      this.props.toastManager.add (['', message], {
         appearance: 'success',
       });
     } catch (error) {
