@@ -8,7 +8,7 @@ const Footer = () => {
   const githubIconDef: IconDefinition = findIconDefinition(githubIcon);
 
   return (
-    <footer role='footer' className='solid-footer footer'>
+    <footer className='solid-footer footer'>
       <section className='solid-footer__content'>
         <div className='solid-footer__content--copyright'>
           <ul>
@@ -19,10 +19,10 @@ const Footer = () => {
 
         <div className='solid-footer__content--links'>
           <ul>
-            <li><a href='https://github.com/Inrupt-inc/solid-react-sdk'>
+            <li><a href='https://github.com/Inrupt-inc/solid-react-sdk' target='_blank'>
               <FontAwesomeIcon className='link-icon' icon={githubIconDef}/>react-solid-sdk</a>
             </li>
-            <li><a href='https://github.com/Inrupt-inc/solid-style-guide'>
+            <li><a href='https://github.com/Inrupt-inc/solid-style-guide' target='_blank'>
               <FontAwesomeIcon className='link-icon' icon={githubIconDef}/>solid-style-guide</a>
             </li>
           </ul>
