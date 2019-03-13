@@ -114,6 +114,7 @@ const ProfileComponent = ({
                 data-label={item.label}
                 data-icon={item.icon}
                 type={'text'}
+                onInvalid={(e) => e.target.setCustomValidity(t('profile.nameRequired'))}
               />
             ))}
           <FullGridSize>

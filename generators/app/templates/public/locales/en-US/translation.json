@@ -72,6 +72,7 @@
     "uploadSuccess": "Profile Image was updated",
     "uploadingText": "Uploading",
     "updateSuccess": "Profile was updated successfully",
+    "nameRequired": "Name is required",
     "errors": {
       "sizeLimit": "File size exceeds the allowable limit",
       "unsupported": "Unsupported media type",
