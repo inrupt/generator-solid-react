@@ -92,8 +92,8 @@ const ProfileComponent = ({
               onComplete: uploadedFiles => {
                 updatePhoto(uploadedFiles[0].uri, t('profile.uploadSuccess'))
               },
-              render: props => <ImageProfile {...{ ...props, webId, photo, text: t('welcome.upload'),
-                uploadingText: t('welcome.uploadingText') }} />
+              render: props => <ImageProfile {...{ ...props, webId, photo, text: t('profile.upload'),
+                uploadingText: t('profile.uploadingText') }} />
             }}
           />
         </Header>
