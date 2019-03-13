@@ -57,6 +57,7 @@ export class Profile extends Component {
     const { target: input, target: { dataset } } = e;
     const name = input.name;
     const value = input.value;
+    const key = input.id;
     let action = 'update';
 
     if (value === '') {
@@ -76,7 +77,8 @@ export class Profile extends Component {
         nodeParentUri: dataset.nodeparenturi || null,
         nodeBlank: dataset.nodeblank || null,
         label: dataset.label,
-        icon: dataset.icon
+        icon: dataset.icon,
+        key
       }
     }});
   };
