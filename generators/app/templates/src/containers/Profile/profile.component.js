@@ -1,18 +1,20 @@
 
-import React from 'react';
+import React, {Fragment} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from "yup";
+import { useTranslation } from 'react-i18next'
 import isLoading from '@hocs/isLoading';
 import { Uploader } from '@inrupt/solid-react-components';
 import { Input } from '@util-components';
 import { ImageProfile } from '@components';
-import { useTranslation } from 'react-i18next'
 import {
   ProfileWrapper,
   ProfileContainer,
   FullGridSize,
   Button,
   Header,
-  Form,
+  FormWrapper,
   WebId
 } from './profile.style';
 
@@ -97,45 +99,53 @@ const ProfileComponent = ({
             }}
           />
         </Header>
-        <Form onSubmit={(e) => onSubmit(e,t('profile.updateSuccess'))}>
-          {formFields &&
-            formFields.map(item => (
-              <Input
-                key={item.key}
-                placeholder={t(`profile.${item.key}`)}
-                name={item.nodeBlank || item.property}
-                value={getProfileValue(updatedFields, item)}
-                onChange={onInputChange}
-                icon={item.icon}
-                readOnly={formMode}
-                required={item.required}
-                data-nodeparenturi={item.nodeParentUri}
-                data-nodeblank={item.nodeBlank}
-                data-label={item.label}
-                data-icon={item.icon}
-                type={'text'}
-              />
-            ))}
-          <FullGridSize>
-            {!formMode && (
-              <>
-                <Button
-                  type='button'
-                  onClick={onCancel}
-                  className='ids-link-stroke ids-link-stroke--primary'
-                >
-                  {t('profile.cancelBtn')}
-                </Button>
-                <Button
-                  type='submit'
-                  className='ids-link-filled ids-link-filled--primary'
-                >
-                  {t('profile.saveBtn')}
-                </Button>
-              </>
-            )}
-          </FullGridSize>
-        </Form>
+
+        <Formik
+          initialValues={formFields}
+          onSubmit={(values) => onSubmit(values,t('profile.updateSuccess'))}>
+          {
+            ({ errors, touched }) => (<Form>
+              {formFields &&
+              formFields.map(item => (
+                <Fragment key={item.key}>
+                  <Field
+                    placeholder={t(`profile.${item.key}`)}
+                    name={item.nodeBlank || item.property}
+                    value={getProfileValue(updatedFields, item)}
+                    onChange={onInputChange}
+                    icon={item.icon}
+                    readOnly={formMode}
+                    required={item.required}
+                    data-nodeparenturi={item.nodeParentUri}
+                    data-nodeblank={item.nodeBlank}
+                    data-label={item.label}
+                    data-icon={item.icon}
+                    type={'text'}/>
+                  <ErrorMessage name={item.nodeBlank || item.property}/>
+                </Fragment>
+              ))}
+              <FullGridSize>
+                {!formMode && (
+                  <>
+                    <Button
+                      type='button'
+                      onClick={onCancel}
+                      className='ids-link-stroke ids-link-stroke--primary'
+                    >
+                      {t('profile.cancelBtn')}
+                    </Button>
+                    <Button
+                      type='submit'
+                      className='ids-link-filled ids-link-filled--primary'
+                    >
+                      {t('profile.saveBtn')}
+                    </Button>
+                  </>
+                )}
+              </FullGridSize>
+            </Form>)
+          }
+        </Formik>
         {formMode && (
           <WebId>
             <FontAwesomeIcon icon='id-card' />

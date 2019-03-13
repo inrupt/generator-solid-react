@@ -45,7 +45,7 @@ export const Header = styled.div`
   }
 `;
 
-export const Form = styled.form`
+export const FormWrapper = styled.form`
   padding: 20px 40px;
   align-items: center;
   display: grid;
