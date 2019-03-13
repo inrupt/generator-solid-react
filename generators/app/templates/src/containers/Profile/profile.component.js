@@ -102,6 +102,7 @@ const ProfileComponent = ({
             formFields.map(item => (
               <Input
                 key={item.key}
+                id={item.key}
                 placeholder={t(`profile.${item.key}`)}
                 name={item.nodeBlank || item.property}
                 value={getProfileValue(updatedFields, item)}
@@ -114,6 +115,8 @@ const ProfileComponent = ({
                 data-label={item.label}
                 data-icon={item.icon}
                 type={'text'}
+                onInvalid={(e) => e.target.setCustomValidity(t('profile.nameRequired'))}
+                onInput={(e) => e.target.setCustomValidity('')}
               />
             ))}
           <FullGridSize>

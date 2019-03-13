@@ -76,6 +76,7 @@
     "uploadSuccess": "Imagen de perfil actualizada correctamente",
     "uploadingText": "Subiendo",
     "updateSuccess": "Perfil actualizado correctamente",
+    "nameRequired": "Nombre es un campo obligatorio",
     "errors": {
       "sizeLimit": "El tamaño del archivo supera el límite permitido",
       "unsupported": "Formato no soportado",
