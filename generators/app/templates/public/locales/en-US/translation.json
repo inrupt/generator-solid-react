@@ -48,7 +48,7 @@
     "evolvingMessage": "<0>The SDK is continually evolving. Take a look at the <1>Release Timeline</1>  for what’s been implemented as part of the previous releases, and what's currently planned.</0>",
     "implementing": "This latest release builds on the prior versions:",
     "version010": "<0><0><0>Internationalization</0> best practices, with application session language selection.</0><0>Ability to update your profile image on the Welcome page.</0> </0>",
-    "version030": "<0><0>Implementing the ability to view and edit your <0>User Profile</0></0><0>Including an Application Footer that displays the build number and links to resources.</0><0>Addressing several minor issues based on user feedback.</0></0>",
+    "version030": "<0><0>Implementing the ability to view and edit your <1>User Profile</1></0><1>Including an Application Footer that displays the build number and links to resources.</1><2>Addressing several minor issues based on user feedback.</2></0>",
     "upload": "Upload New Photo",
     "uploadSuccess": "Profile Image was updated",
     "uploadingText": "Uploading",
