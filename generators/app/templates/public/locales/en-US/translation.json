@@ -34,6 +34,9 @@
       "es": "Español (Spanish)"
     }
   },
+  "footer": {
+    "version": "Version"
+  },
   "notFound": {
     "title": "Page not found",
     "content": "There may be an error in the URL entered into your web browser. Please check the URL and try again. Or the page you're looking for has been moved or deleted",
