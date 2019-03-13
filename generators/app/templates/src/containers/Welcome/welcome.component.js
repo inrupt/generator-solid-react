@@ -149,19 +149,25 @@ const WelcomePageContent = props => {
             </p>
           </Trans>
           <p>{t('welcome.implementing')}</p>
-          <Trans i18nKey='welcome.version010'>
+          <Trans i18nKey='welcome.version030'>
             <ul>
               <li>
+                Implementing the ability to view and edit your
                 <a
-                  href='https://github.com/Inrupt-inc/solid-react-sdk#internationalization-i18n'
+                  href='https://github.com/Inrupt-inc/solid-react-sdk#user-profile'
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  Internationalization
+                  User Profile
                 </a>
-                best practices, with application session language selection.
               </li>
-              <li>Ability to update your profile image on the Welcome page.</li>
+              <li>
+                Including an Application Footer that displays the build number
+                and links to resources
+              </li>
+              <li>
+                Addressing several minor issues based on user feedback.
+              </li>
             </ul>
           </Trans>
         </WelcomeDetail>
