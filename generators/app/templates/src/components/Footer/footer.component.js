@@ -1,9 +1,11 @@
 import React from 'react';
 import { IconLookup, IconDefinition, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { withTranslation } from "react-i18next";
 
-const Footer = () => {
+const Footer = (props) => {
 
+  const { t } = props;
   const githubIcon: IconLookup = { prefix: 'fab', iconName: 'github' };
   const githubIconDef: IconDefinition = findIconDefinition(githubIcon);
 
@@ -13,7 +15,7 @@ const Footer = () => {
         <div className='solid-footer__content--copyright'>
           <ul>
             <li>© {process.env.REACT_APP_COMPANY_NAME}</li>
-            <li>Build <span className='build-value'>{process.env.REACT_APP_VERSION}</span></li>
+            <li>{t('footer.version')}{''} <span className='build-value'>{process.env.REACT_APP_VERSION}</span></li>
           </ul>
         </div>
 
@@ -32,4 +34,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default withTranslation()(Footer);
