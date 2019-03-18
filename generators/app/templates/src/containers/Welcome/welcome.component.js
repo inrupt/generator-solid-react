@@ -67,10 +67,6 @@ const WelcomePageContent = props => {
               }}
             />
           </ImageWrapper>
-          <p>
-            {t('welcome.doneMessage')}{' '}
-            <LogoutButton>{t('navBar.logOut')}</LogoutButton>
-          </p>
         </WelcomeProfile>
       </WelcomeCard>
       <WelcomeCard className="card">
