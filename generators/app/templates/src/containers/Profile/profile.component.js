@@ -100,8 +100,9 @@ const ProfileComponent = ({
         <Form onSubmit={(e) => onSubmit(e,t('profile.updateSuccess'))}>
           {formFields &&
             formFields.map(fields => (
+
               <div>
-                {fields.items.map(item => (
+                {fields.map(item => (
                   <Input
                     key={item.key}
                     id={item.key}

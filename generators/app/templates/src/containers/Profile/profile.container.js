@@ -234,19 +234,16 @@ export class Profile extends Component {
 
       //Create a two dimensional array, to logically group different shapes in the form
       if(profile.type === 'Shape' && profile.expression.type === 'EachOf') {
-        let formFields = await expressions.reduce(async (output, fields) => {
-          let fieldValues = await Promise.all(
-            fields.map(async field => {
-              return {
+        let formFields = [];
+        for (let fields of expressions){
+          const fieldValues = await Promise.all(
+            fields.map(async field => ({
                 ...(await this.getNodeValue(user, field))
-              }
-            })
+              })
+            )
           );
-          return output.concat(fieldValues);
-          //return [...output, fieldValues];
-        }, []);
-
-        //console.log(formFields);
+          formFields = [...formFields, fieldValues];
+        }
         this.setState({profile, formFields});
       }
     } catch (error) {
