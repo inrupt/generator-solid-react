@@ -4,6 +4,7 @@ import {withWebId} from '@inrupt/solid-react-components';
 import {withToastManager} from 'react-toast-notifications';
 import data from '@solid/query-ldflex';
 import ProfileShape from '@contexts/profile-shape.json';
+import ProfileShex from '@contexts/profile-shex.json';
 import { entries } from '@utils';
 import ProfileComponent from './profile.component';
 
@@ -207,36 +208,82 @@ export class Profile extends Component {
    */
   fetchProfile = async () => {
     try {
-      /**
-       * We fetch profile shape from context/profile-shape.json
-       * profile-shape.json has all the fields that we want to print
-       * we are using icons on each field to mapping with the UI design.
-       */
-      const {profile} = ProfileShape;
-      // We are fetching profile card document
       const user = data[this.props.webId];
+      const shapes = ProfileShex.shapes;
+      //search for the ID of the shape, "UserProfile", which would be the whole shape URL + #foo
+      const profile = ProfileShex.shapes.find(shape => shape.id === 'http://example.com#UserProfile');
+      let expressions = [[]];
 
-      /**
-       * We run each shapes on profile-shape.json and access to each
-       * field value, in case that node field value point to another
-       * node blank we acces using multidimensional array if not we
-       * access by a basic array.
-       */
-      const formFields = await Promise.all (
-        profile.map (async field => {
-          return {
-            ...field,
-            ...(await this.getNodeValue (user, field)),
-          };
-        })
-      );
-      this.setState ({ profile, formFields });
+      profile.expression.expressions.forEach(async (exp) => {
+        if (exp.type !== 'OneOf') {
+          if (typeof exp.valueExpr === 'string') {
+            //Get shape used here
+            let shape = shapes.find(shape => shape.id === exp.valueExpr);
+            let newExprs = [];
+
+            shape.expression.expressions.forEach((shapeExp) => {
+              newExprs.push(shapeExp);
+            });
+
+            expressions.push(newExprs);
+          } else {
+            expressions[0].push(exp);
+          }
+        }
+      });
+
+      //Create a two dimensional array, to logically group different shapes in the form
+      if(profile.type === 'Shape' && profile.expression.type === 'EachOf') {
+        let formFields = await expressions.reduce(async (output, fields) => {
+          let fieldValues = await Promise.all(
+            fields.map(async field => {
+              return {
+                ...(await this.getNodeValue(user, field))
+              }
+            })
+          );
+          return output.concat(fieldValues);
+          //return [...output, fieldValues];
+        }, []);
+
+        //console.log(formFields);
+        this.setState({profile, formFields});
+      }
     } catch (error) {
-      this.props.toastManager.add (['Error', error.message], {
+      console.log(error);
+       this.props.toastManager.add (['Error', error.message], {
         appearance: 'error',
       });
     }
   };
+
+  /**
+   * Nest function - takes the profile shape and walks through expressions formatting the data into an array
+   * if the expression is a link to another shape, then call it again with the new expression
+   */
+  formatNestedShape = (expression, expressions, shapes) => {
+    try {
+      if (!expression || !expression.valueExpr || expression.type === 'OneOf') { return; }
+
+      // Check expression valueExpr for object or string
+      if (typeof expression.valueExpr === 'string') {
+        const newShape = shapes.find(shape => shape.id === expression.valueExpr);
+        if(newShape.type === 'Shape') {
+          newShape.expression.expressions.forEach((exp) => {
+            exp.referenceNode = true;
+            this.formatNestedShape(exp, expressions, shapes);
+          });
+        }
+      } else {
+        expressions.push(expression);
+        return;
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
+
   /**
    * Create a new node link on vcard document.
    * @params{String} property
@@ -255,22 +302,35 @@ export class Profile extends Component {
    * @params{Object} field
    */
   getNodeValue = async (user: Object, field: Object) => {
+    if(field.type === 'OneOf') { return; }
+    const annotations = field.annotations;
+    let newField = {};
+    if (annotations) {
+      annotations.map(note => {
+        let key = note.predicate.substr(note.predicate.indexOf('#') + 1);
+        newField[key] = note.object.value;
+      });
+    }
+    newField.property = field.predicate;
+
     let node;
     let nodeParentUri;
     // If node is a pointer to another node will get the value
-    if (field.nodeBlank) {
-      let parentNode = await user[field.property];
+    if (field.referenceNode) {
+      let parentNode = await user[newField.property];
       // If the node link doesn't exist will create a new one.
       nodeParentUri =
         (parentNode && parentNode.value) ||
-        (await this.createNewLinkNode (field.property));
+        (await this.createNewLinkNode (newField.property));
 
-      node = await user[field.property][field.nodeBlank];
+      node = await user[newField.property][newField.nodeBlank];
     } else {
-      node = await user[field.property];
+      node = await user[newField.property];
     }
 
+
     return {
+      ...newField,
       action: 'update',
       value: (node && node.value) || '',
       nodeParentUri,

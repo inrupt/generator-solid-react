@@ -19,7 +19,7 @@ import {
 type Props = {
   webId: String,
   photo: String,
-  formFields: Array<Object>,
+  formFields: Array<Array>,
   updatedFields: Object,
   changeFormMode: () => void,
   onInputChange: () => void,
@@ -99,25 +99,29 @@ const ProfileComponent = ({
         </Header>
         <Form onSubmit={(e) => onSubmit(e,t('profile.updateSuccess'))}>
           {formFields &&
-            formFields.map(item => (
-              <Input
-                key={item.key}
-                id={item.key}
-                placeholder={t(`profile.${item.key}`)}
-                name={item.nodeBlank || item.property}
-                value={getProfileValue(updatedFields, item)}
-                onChange={onInputChange}
-                icon={item.icon}
-                readOnly={formMode}
-                required={item.required}
-                data-nodeparenturi={item.nodeParentUri}
-                data-nodeblank={item.nodeBlank}
-                data-label={item.label}
-                data-icon={item.icon}
-                type={'text'}
-                onInvalid={(e) => e.target.setCustomValidity(t('profile.nameRequired'))}
-                onInput={(e) => e.target.setCustomValidity('')}
-              />
+            formFields.map(fields => (
+              <div>
+                {fields.items.map(item => (
+                  <Input
+                    key={item.key}
+                    id={item.key}
+                    placeholder={t(`profile.${item.key}`)}
+                    name={item.nodeBlank || item.property}
+                    value={getProfileValue(updatedFields, item)}
+                    onChange={onInputChange}
+                    icon={item.icon}
+                    readOnly={formMode}
+                    required={item.required}
+                    data-nodeparenturi={item.nodeParentUri}
+                    data-nodeblank={item.nodeBlank}
+                    data-label={item.label}
+                    data-icon={item.icon}
+                    type={'text'}
+                    onInvalid={(e) => e.target.setCustomValidity(t('profile.nameRequired'))}
+                    onInput={(e) => e.target.setCustomValidity('')}
+                  />
+                ))}
+              </div>
             ))}
           <FullGridSize>
             {!formMode && (
