@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogoutButton, Uploader } from '@inrupt/solid-react-components';
+import { Uploader } from '@inrupt/solid-react-components';
 import isLoading from '@hocs/isLoading';
 import { Trans, withTranslation } from 'react-i18next';
 import {
@@ -20,7 +20,7 @@ import { ImageProfile } from '@components';
  */
 const WelcomePageContent = props => {
   const { webId, image, updatePhoto, toastManager, name, t } = props;
-
+  const limit = 2100000;
   return (
     <WelcomeWrapper data-testid="welcome-wrapper">
       <WelcomeCard className="card">
@@ -36,7 +36,7 @@ const WelcomePageContent = props => {
               {...{
                 fileBase: webId && webId.split('/card')[0],
                 limitFiles: 1,
-                limitSize: 2100000,
+                limitSize: limit,
                 accept: 'jpg,jpeg,png',
                 errorsText: {
                   sizeLimit: t('welcome.errors.sizeLimit'),
