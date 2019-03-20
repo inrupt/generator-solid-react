@@ -97,7 +97,7 @@ const ProfileComponent = ({
             }}
           />
         </Header>
-        <Form onSubmit={(e) => onSubmit(e,t('profile.updateSuccess'))}>
+        <Form onSubmit={(e) => onSubmit(e,t('profile.updateSuccess'),t('profile.nameRequired') )} noValidate>
           {formFields &&
             formFields.map(item => (
               <Input

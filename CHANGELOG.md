@@ -1,5 +1,24 @@
 # Solid React Application Generator
 
+## 0.4.0 (March 20, 2019)
+
+#### Solid React Application Base
+
+##### Added
+- Incorporated LDFlex data writing examples
+- Profile Page
+  - View Profile
+  - Edit Profile
+- Site Footer
+  
+##### Updated
+- Made some adjustments to prepare for [React Hooks](https://reactjs.org/docs/hooks-intro.html) support
+- Created environment file to store branding-specific variables. This should make it easier to change the branding on generated applications
+
+##### Fixed
+ - Toast messages now close when the site's language changes, to prevent confusion
+ - Added some form validation to the profile form
+
 ## 0.3.0 (March 6, 2019)
 
 #### Solid React Application Base
