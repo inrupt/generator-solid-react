@@ -48,11 +48,18 @@ export class Profile extends Component {
         this.setDefaultData();
     };
 
-    isFormValid = updatedFields => {
+  /**
+   * Checks if the form is valid to be submitted by comparing and mapping the ProfileShape fields with the form inputs
+   * @param updatedFields
+   * @returns {*|boolean}
+   */
+  isFormValid = updatedFields => {
         const { profile } = ProfileShape;
+        // Gets all of the required fields from the profile shape
         const requiredFields = profile
             .filter(field => field.required)
             .map(field => field.property);
+        // Checks  if the required fields in the form are not empty
         return Object.keys(updatedFields)
             .reduce((a, z) => [...a, updatedFields[z]], [])
             .reduce(
