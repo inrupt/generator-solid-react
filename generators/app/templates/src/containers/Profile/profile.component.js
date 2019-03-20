@@ -101,7 +101,7 @@ const ProfileComponent = ({
           {formFields &&
             formFields.map(fields => (
 
-              <div>
+              <span>
                 {fields.map(item => (
                   <Input
                     key={item.key}
@@ -122,7 +122,7 @@ const ProfileComponent = ({
                     onInput={(e) => e.target.setCustomValidity('')}
                   />
                 ))}
-              </div>
+              </span>
             ))}
           <FullGridSize>
             {!formMode && (

@@ -101,11 +101,19 @@ export class Profile extends Component {
        * more info about the issue: https://github.com/solid/node-solid-server/issues/1106
       */
 
-      for await (const [key, field] of entries(this.state.updatedFields)) {
-          node = data.user[key];
+      console.log(this.state.updatedFields);
 
-          if (field.nodeBlank) {
-            node = data[field.nodeParentUri][field.nodeBlank];
+      for await (const [key, field] of entries(this.state.updatedFields)) {
+
+        console.log(field);
+        this.setState ({isLoading: false});
+        return;
+
+
+        node = data.user[key];
+
+          if (field.referenceNode) {
+            node = data[field.nodeParentUri][field.referenceNode];
           }
 
           if (field.action === 'update') {
@@ -208,44 +216,36 @@ export class Profile extends Component {
    */
   fetchProfile = async () => {
     try {
-      const user = data[this.props.webId];
       const shapes = ProfileShex.shapes;
       //search for the ID of the shape, "UserProfile", which would be the whole shape URL + #foo
       const profile = ProfileShex.shapes.find(shape => shape.id === 'http://example.com#UserProfile');
       let expressions = [[]];
 
-      profile.expression.expressions.forEach(async (exp) => {
-        if (exp.type !== 'OneOf') {
+      for(let exp of profile.expression.expressions) {
+        if(exp.type !== 'OneOf') {
+          const subject = await this.getSubject(exp);
           if (typeof exp.valueExpr === 'string') {
             //Get shape used here
             let shape = shapes.find(shape => shape.id === exp.valueExpr);
             let newExprs = [];
 
-            shape.expression.expressions.forEach((shapeExp) => {
-              newExprs.push(shapeExp);
-            });
+            for (let shapeExp of shape.expression.expressions) {
+              let nodeValue = await this.getNodeValue(subject, shapeExp);
+              nodeValue.subject = subject;
+              newExprs.push(nodeValue);
+            }
 
             expressions.push(newExprs);
           } else {
-            expressions[0].push(exp);
+            let nodeValue = await this.getNodeValue(subject, exp);
+            nodeValue.subject = subject;
+            expressions[0].push(nodeValue);
           }
         }
-      });
-
-      //Create a two dimensional array, to logically group different shapes in the form
-      if(profile.type === 'Shape' && profile.expression.type === 'EachOf') {
-        let formFields = [];
-        for (let fields of expressions){
-          const fieldValues = await Promise.all(
-            fields.map(async field => ({
-                ...(await this.getNodeValue(user, field))
-              })
-            )
-          );
-          formFields = [...formFields, fieldValues];
-        }
-        this.setState({profile, formFields});
       }
+
+      this.setState({formFields: expressions});
+
     } catch (error) {
       console.log(error);
        this.props.toastManager.add (['Error', error.message], {
@@ -253,6 +253,18 @@ export class Profile extends Component {
       });
     }
   };
+
+  async getSubject(exp) {
+    const webId = data[this.props.webId].value;
+    if(!exp.valueExpr) { return; }
+    if (typeof exp.valueExpr === 'string') {
+      exp.referenceNode = true;
+      const data = await this.getNodeValue(webId, exp);
+      return data.nodeParentUri;
+    } else {
+      return webId;
+    }
+  }
 
   /**
    * Nest function - takes the profile shape and walks through expressions formatting the data into an array
@@ -298,7 +310,7 @@ export class Profile extends Component {
    * @params{Object} user
    * @params{Object} field
    */
-  getNodeValue = async (user: Object, field: Object) => {
+  getNodeValue = async (subject: string, field: Object) => {
     if(field.type === 'OneOf') { return; }
     const annotations = field.annotations;
     let newField = {};
@@ -314,17 +326,22 @@ export class Profile extends Component {
     let nodeParentUri;
     // If node is a pointer to another node will get the value
     if (field.referenceNode) {
-      let parentNode = await user[newField.property];
-      // If the node link doesn't exist will create a new one.
-      nodeParentUri =
-        (parentNode && parentNode.value) ||
-        (await this.createNewLinkNode (newField.property));
+      try {
+        let parentNode = await data[subject][newField.property];
+        // If the node link doesn't exist will create a new one.
+        nodeParentUri =
+          (parentNode && parentNode.value) ||
+          (await this.createNewLinkNode(newField.property));
 
-      node = await user[newField.property][newField.nodeBlank];
-    } else {
-      node = await user[newField.property];
+        node = await data[subject][newField.property][newField.referenceNode];
+      } catch(err) {
+        console.log(field);
+        console.log(err);
+      }
     }
-
+    else {
+      node = await data[subject][newField.property];
+    }
 
     return {
       ...newField,
