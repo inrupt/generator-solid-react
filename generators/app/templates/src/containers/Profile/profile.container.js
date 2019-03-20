@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withToastManager } from 'react-toast-notifications';
-import { useWebId, LiveUpdate } from "@solid/react";
-import { Header, ProfileContainer, ProfileWrapper } from "./profile.style";
+import { useWebId, LiveUpdate } from '@inrupt/solid-react-components';
+import { Header, ProfileContainer, ProfileWrapper } from './profile.style';
 import { Image, Form } from './components';
 
 const defaultProfilePhoto = '/img/icon/empty-profile.svg';
@@ -15,38 +15,45 @@ const defaultProfilePhoto = '/img/icon/empty-profile.svg';
  * for more information please go to: https://github.com/solid/query-ldflex
  */
 
-const Profile  = ({ toastManager }) => {
-  const webId = useWebId();
-  const [mode, setMode] = useState(true);
+const Profile = ({ toastManager }) => {
+    const webId = useWebId();
+    const [mode, setMode] = useState(true);
 
+    console.log(useWebId);
+    const onCancel = () => {
+        setMode(!mode);
+    };
 
-  const onCancel = () => {
-    setMode(!mode);
-  }
+    return (
+        <ProfileWrapper data-testid="profile-component">
+            <ProfileContainer>
+                {webId && (
+                    <LiveUpdate subscribe={webId.replace(/#.*/, '')}>
+                        <Header>
+                            {mode && (
+                                <button
+                                    type="button"
+                                    className="button edit-button"
+                                    onClick={onCancel}
+                                    data-testid="edit-profile-button"
+                                >
+                                    <FontAwesomeIcon icon="pencil-alt" /> EDIT
+                                </button>
+                            )}
+                            <Image
+                                {...{
+                                    webId,
+                                    defaultProfilePhoto,
+                                    toastManager,
+                                }}
+                            />
+                        </Header>
+                        <Form {...{ mode, toastManager, webId, onCancel }} />
+                    </LiveUpdate>
+                )}
+            </ProfileContainer>
+        </ProfileWrapper>
+    );
+};
 
-  return (
-    <ProfileWrapper data-testid="profile-component">
-      <ProfileContainer>
-        { webId && <LiveUpdate subscribe={webId.replace(/#.*/, '')}>
-            <Header>
-              {mode && (
-                <button
-                  type='button'
-                  className='button edit-button'
-                  onClick={ onCancel }
-                  data-testid="edit-profile-button"
-                >
-                  <FontAwesomeIcon icon='pencil-alt' /> EDIT
-                </button>
-              )}
-              <Image {...{webId, defaultProfilePhoto, toastManager}}/>
-            </Header>
-            <Form {...{mode, toastManager, webId, onCancel}} />
-          </LiveUpdate> }
-      </ProfileContainer>
-    </ProfileWrapper>
-  );
-}
-
-
-export default withToastManager (Profile);
+export default withToastManager(Profile);

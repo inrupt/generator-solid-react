@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import data from "@solid/query-ldflex";
-import { Uploader } from '@inrupt/solid-react-components';
+import { Uploader, useLiveUpdate } from '@inrupt/solid-react-components';
 import { ImageProfile } from '@components';
-import { useLiveUpdate } from "@solid/react";
 
 type Props = {
   webId: String,

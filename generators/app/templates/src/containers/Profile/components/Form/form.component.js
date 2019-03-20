@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { namedNode } from '@rdfjs/data-model';
 import data from '@solid/query-ldflex';
 import ProfileShape from '@contexts/profile-shape.json';
-import { UpdateContext } from "@solid/react";
+import { UpdateContext } from '@inrupt/solid-react-components';
 import { entries } from '@utils';
 
 import { FormUi } from './form.component.ui';
