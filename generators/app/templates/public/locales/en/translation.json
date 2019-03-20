@@ -56,7 +56,7 @@
     "uploadSucces": "Profile Image was updated",
     "uploadingText": "Uploading",
     "errors": {
-      "sizeLimit": "File size exceeds the allowable limit",
+      "sizeLimit": "File size exceeds the allowable limit ({{limit}})",
       "unsupported": "Unsupported media type",
       "maximumFiles": "Sorry, you have exceeded the maximum number of files allowed per upload"
     }
@@ -78,7 +78,7 @@
     "updateSuccess": "Profile was updated successfully",
     "nameRequired": "Name is required",
     "errors": {
-      "sizeLimit": "File size exceeds the allowable limit ( {{limit}} )",
+      "sizeLimit": "File size exceeds the allowable limit ({{limit}})",
       "unsupported": "Unsupported media type",
       "maximumFiles": "Sorry, you have exceeded the maximum number of files allowed per upload"
     }

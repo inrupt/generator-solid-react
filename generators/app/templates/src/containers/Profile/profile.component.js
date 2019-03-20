@@ -57,6 +57,7 @@ const ProfileComponent = ({
   photo
 }: Props) => {
   const { t } = useTranslation();
+  const limit = 2100000;
   return (
     <ProfileWrapper data-testid="profile-component">
       <ProfileContainer>
@@ -75,10 +76,10 @@ const ProfileComponent = ({
             {...{
               fileBase: webId && webId.split('/card')[0],
               limitFiles: 1,
-              limitSize: 2100000,
+              limitSize: limit,
               accept: 'png,jpg,jpeg',
               errorsText: {
-                sizeLimit: t('profile.errors.sizeLimit'),
+                sizeLimit: t('profile.errors.sizeLimit', {limit: `${limit/1000000}Mbs`}),
                 unsupported: t('profile.errors.unsupported'),
                 maximumFiles: t('profile.errors.maximumFiles')
               },

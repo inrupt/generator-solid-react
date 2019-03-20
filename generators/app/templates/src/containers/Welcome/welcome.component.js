@@ -39,7 +39,7 @@ const WelcomePageContent = props => {
                 limitSize: limit,
                 accept: 'jpg,jpeg,png',
                 errorsText: {
-                  sizeLimit: t('welcome.errors.sizeLimit'),
+                  sizeLimit: t('profile.errors.sizeLimit', {limit: `${limit/1000000}Mbs`}),
                   unsupported: t('welcome.errors.unsupported'),
                   maximumFiles: t('welcome.errors.maximumFiles')
                 },
