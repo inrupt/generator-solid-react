@@ -24,19 +24,15 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
     try {
       if (webId) {
         // We are fetching profile card document
-        const user = data[webId];
-        // We access to document node using a node name
-        let image = await user.image;
-        // If image is not present on card we try with hasPhoto
-        if (!image) {
-          /**
-           * hasPhoto is a new context that ldflex doesn't having
-           * we need to add it manually.
-           * if you want to know more about context please go to:
-           * https://github.com/digitalbazaar/jsonld.js
-           */
-          image = await user.vcard_hasPhoto;
-        }
+        const user = data.user;
+        /**
+         * We access to document node using a node name
+         * hasPhoto is a new context that ldflex doesn't having
+         * we need to add it manually.
+         * if you want to know more about context please go to:
+         * https://github.com/digitalbazaar/jsonld.js
+         */
+        const image = await user.image || await user.vcard_hasPhoto;
 
         setImage(image && image.value);
       }
@@ -55,9 +51,8 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
   const updatePhoto = async (uri: String) => {
     try {
       const {user} = data;
-      image
-        ? await user.image.set (uri)
-        : await user.image.add (uri);
+
+      await user.image.set (uri)
 
       toastManager.add (['', 'Profile Image was updated'], {
         appearance: 'success',
