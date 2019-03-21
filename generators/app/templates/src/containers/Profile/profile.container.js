@@ -19,7 +19,6 @@ const Profile = ({ toastManager }) => {
     const webId = useWebId();
     const [mode, setMode] = useState(true);
 
-    console.log(useWebId);
     const onCancel = () => {
         setMode(!mode);
     };
