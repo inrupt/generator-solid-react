@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withToastManager } from 'react-toast-notifications';
-import { useWebId, LiveUpdate } from '@inrupt/solid-react-components';
+import { LiveUpdate, useWebId } from '@inrupt/solid-react-components';
 import { Header, ProfileContainer, ProfileWrapper } from './profile.style';
 import { Image, Form } from './components';
 
