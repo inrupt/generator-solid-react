@@ -59,7 +59,15 @@ export class Profile extends Component {
     const name = input.name;
     const value = input.value;
     const key = input.id;
+    let field = {};
     let action = 'update';
+
+    this.state.formFields.forEach(fields => {
+      const foundField = fields.find(field => field.property === name);
+      if(foundField) {
+        field = foundField;
+      }
+    });
 
     if (value === '') {
       action = this.state.formFields.find (
@@ -79,7 +87,8 @@ export class Profile extends Component {
         nodeBlank: dataset.nodeblank || null,
         label: dataset.label,
         icon: dataset.icon,
-        key
+        key,
+        subject: field.subject
       }
     }});
   };
@@ -101,16 +110,8 @@ export class Profile extends Component {
        * more info about the issue: https://github.com/solid/node-solid-server/issues/1106
       */
 
-      console.log(this.state.updatedFields);
-
       for await (const [key, field] of entries(this.state.updatedFields)) {
-
-        console.log(field);
-        this.setState ({isLoading: false});
-        return;
-
-
-        node = data.user[key];
+        node = data[field.subject][key];
 
           if (field.referenceNode) {
             node = data[field.nodeParentUri][field.referenceNode];
@@ -221,6 +222,8 @@ export class Profile extends Component {
       const profile = ProfileShex.shapes.find(shape => shape.id === 'http://example.com#UserProfile');
       let expressions = [[]];
 
+      console.log(shapes);
+
       for(let exp of profile.expression.expressions) {
         if(exp.type !== 'OneOf') {
           const subject = await this.getSubject(exp);
@@ -243,7 +246,6 @@ export class Profile extends Component {
           }
         }
       }
-
       this.setState({formFields: expressions});
 
     } catch (error) {
@@ -335,7 +337,6 @@ export class Profile extends Component {
 
         node = await data[subject][newField.property][newField.referenceNode];
       } catch(err) {
-        console.log(field);
         console.log(err);
       }
     }
