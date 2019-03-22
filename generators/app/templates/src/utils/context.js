@@ -3,4 +3,3 @@ export const expandedProperty = (context: Object, property: String) => {
 
   return `${context}:${suffix}`;
 }
-
