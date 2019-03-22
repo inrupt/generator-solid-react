@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { withWebId } from "@inrupt/solid-react-components";
+import { UpdateContext, withWebId } from "@inrupt/solid-react-components";
 import { withTranslation } from "react-i18next";
 import AuthNavBar from "./auth-nav-bar.component";
 import data from "@solid/query-ldflex";
+
+let beforeContext = {};
 
 class AuthNavBarContainer extends Component {
   constructor(props) {
@@ -13,7 +15,7 @@ class AuthNavBarContainer extends Component {
   getProfileData = async () => {
     try {
       // fetching user card from pod. This makes a request and returns the data
-      const user = data[this.props.webId];
+      const user = data.user;
       /*
        * In the backgorund LDFlex is using JSON-LD. Because of this, we need to
        * make an async call. This will return a JSON-LD expanded object and expose the requested value(name).
@@ -39,9 +41,17 @@ class AuthNavBarContainer extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     if (this.props.webId && this.props.webId !== prevProps.webId) {
       this.getProfileData();
+    }
+
+    console.log(this.context);
+
+    if (this.context && this.context.timestamp !== beforeContext.timestamp) {
+      this.getProfileData();
+
+      beforeContext = this.context;
     }
   }
 
@@ -50,5 +60,7 @@ class AuthNavBarContainer extends Component {
     return <AuthNavBar img={image} {...this.props} {...this.state} />;
   }
 }
+AuthNavBarContainer.contextType = UpdateContext;
+
 
 export default withTranslation()(withWebId(AuthNavBarContainer));
