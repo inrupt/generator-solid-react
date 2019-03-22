@@ -1,15 +1,17 @@
 import React, { Fragment } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { withAuthorization } from "@inrupt/solid-react-components";
+import { withAuthorization, LiveUpdate } from "@inrupt/solid-react-components";
 import { AuthNavBar, Footer } from "@components";
 
 const PrivateLayout = ({ routes, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={matchProps => (
+      component={matchProps => (
         <Fragment>
-          <AuthNavBar {...matchProps} />
+          <LiveUpdate>
+            <AuthNavBar {...matchProps} />
+          </LiveUpdate>
           <Fragment>
             <Switch>
               {routes.map(route => (
