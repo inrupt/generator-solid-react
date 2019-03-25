@@ -3,6 +3,7 @@ import { UpdateContext, withWebId } from "@inrupt/solid-react-components";
 import { withTranslation } from "react-i18next";
 import AuthNavBar from "./auth-nav-bar.component";
 import data from "@solid/query-ldflex";
+import { withToastManager } from "react-toast-notifications";
 
 let beforeContext = {};
 
@@ -17,7 +18,7 @@ class AuthNavBarContainer extends Component {
       // fetching user card from pod. This makes a request and returns the data
       const user = data.user;
       /*
-       * In the backgorund LDFlex is using JSON-LD. Because of this, we need to
+       * In the background LDFlex is using JSON-LD. Because of this, we need to
        * make an async call. This will return a JSON-LD expanded object and expose the requested value(name).
        * for more information please go to: https://github.com/digitalbazaar/jsonld.js
        */
@@ -31,7 +32,9 @@ class AuthNavBarContainer extends Component {
         image
       });
     } catch (error) {
-      console.error(error);
+      this.props.toastManager.add (['Error', error.message], {
+        appearance: 'error',
+      });
     }
   };
 
@@ -45,8 +48,6 @@ class AuthNavBarContainer extends Component {
     if (this.props.webId && this.props.webId !== prevProps.webId) {
       this.getProfileData();
     }
-
-    console.log(this.context);
 
     if (this.context && this.context.timestamp !== beforeContext.timestamp) {
       this.getProfileData();
@@ -63,4 +64,4 @@ class AuthNavBarContainer extends Component {
 AuthNavBarContainer.contextType = UpdateContext;
 
 
-export default withTranslation()(withWebId(AuthNavBarContainer));
+export default withTranslation()(withToastManager(withWebId(AuthNavBarContainer)));

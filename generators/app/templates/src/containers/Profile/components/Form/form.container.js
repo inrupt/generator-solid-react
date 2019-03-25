@@ -30,7 +30,6 @@ export class ProfileForm extends Component {
     };
   }
   async componentDidMount () {
-    console.log('reload');
     await this.fetchProfile ();
   }
 
