@@ -1,21 +1,17 @@
 import React from "react";
 import { render, fireEvent, waitForElement } from 'react-testing-library';
-import { Profile } from "./profile.container";
-import ProfileComponent from "./profile.component";
-
+import Profile from "./profile.container";
+import auth from 'solid-auth-client';
 
 const defaultWeb = "https://example.org/#me";
 
 describe("Profile Container", () => {
 
-  const { container } = render(<Profile webId={defaultWeb} toastManager={{ add: () => {} }} />);
+  beforeAll(() => auth.mockWebId(defaultWeb));
+
+  const { container } = render(<Profile toastManager={{ add: () => {} }}  />);
 
   it("should render without crashing", async () => {
-    expect(container).toBeTruthy();
-  });
-
-  it("Profile UI component should render without crashing", () => {
-    const { container } = render(<ProfileComponent />);
     expect(container).toBeTruthy();
   });
 
@@ -30,14 +26,13 @@ describe("Profile Container", () => {
     const editButton = await waitForElement(() =>
       document.querySelector('[data-testid="edit-profile-button"]'),
     );
+
     fireEvent.click(editButton);
-    expect(editButton).toBeTruthy();
+
+    const hideButton = document.querySelector('[data-testid="edit-profile-button"]');
+
+    expect(hideButton).not.toBeTruthy();
   });
 
-  it("should render profile ui component", async () => {
-    const uiComponent = await waitForElement(() =>
-      document.querySelector('[data-testid="profile-component"]'),
-    );
-    expect(uiComponent).toBeTruthy();
-  });
 });
+
