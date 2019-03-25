@@ -41,11 +41,15 @@ class LanguageDropdown extends Component {
     const profileOpts = [
       {
         label: t("navBar.languages.en"),
-        onClick: () => this.onLanguageSelect("en")
+        onClick: () => this.onLanguageSelect("en"),
+        icon: 'us',
+        customIcon: true,
       },
       {
         label: t("navBar.languages.es"),
-        onClick: () => this.onLanguageSelect("es")
+        onClick: () => this.onLanguageSelect("es"),
+        icon: 'es',
+        customIcon: true
       }
     ];
     return (

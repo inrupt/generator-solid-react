@@ -50,6 +50,7 @@ export const Item = styled.li`
   padding: 0;
   text-align: left;
   button {
+    background: #fff;
     line-height: 2;
     padding: 1rem;
     text-align: left;
@@ -67,5 +68,8 @@ export const Item = styled.li`
       transition: all 0.5s ease-in-out;
       color: #083575;
     }
+  }
+  .flag-icon {
+    margin-right: 10px;
   }
 `;

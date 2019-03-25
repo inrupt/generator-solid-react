@@ -27,9 +27,16 @@ class Dropdown extends Component<Props, State> {
     this.setState({ open: false });
   }
 
+  renderIcon = (action: Object) => {
+    return action.customIcon ? <div
+      className={`flag-icon flag-icon-${action.icon}`}
+    /> : <FontAwesomeIcon icon={action.icon} className="checked" />
+  }
+
   render() {
     const { actions, children, className, hover } = this.props;
     const { open } = this.state;
+
     return (
       <DropdownContainer
         className={className}
@@ -45,7 +52,7 @@ class Dropdown extends Component<Props, State> {
                 <Item key={i} className="item">
                   <button onClick={action.onClick}>
                     {action.icon && (
-                      <FontAwesomeIcon icon={action.icon} className="checked" />
+                      this.renderIcon(action)
                     )}
                     <span>{action.label}</span>
                   </button>
