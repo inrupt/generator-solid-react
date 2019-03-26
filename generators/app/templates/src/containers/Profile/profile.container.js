@@ -7,6 +7,7 @@ import ProfileShape from '@contexts/profile-shape.json';
 import ProfileShex from '@contexts/profile-shex.json';
 import { entries } from '@utils';
 import ProfileComponent from './profile.component';
+import { Validator } from '@shexjs/core';
 
 const defaulProfilePhoto = '/img/icon/empty-profile.svg';
 
@@ -59,6 +60,9 @@ export class Profile extends Component {
     const name = input.name;
     const value = input.value;
     const key = input.id;
+    const subject = input.dataset.subject;
+    const dataType = input.dataset.datatype;
+    const prefix = input.dataset.prefix;
     let field = {};
     let action = 'update';
 
@@ -88,7 +92,9 @@ export class Profile extends Component {
         label: dataset.label,
         icon: dataset.icon,
         key,
-        subject: field.subject
+        subject: subject,
+        dataType: dataType,
+        prefix: prefix
       }
     }});
   };
@@ -112,22 +118,33 @@ export class Profile extends Component {
 
       for await (const [key, field] of entries(this.state.updatedFields)) {
         node = data[field.subject][key];
+        let dataValue = field.value;
 
-          if (field.referenceNode) {
-            node = data[field.nodeParentUri][field.referenceNode];
+        if (field.referenceNode) {
+          node = data[field.nodeParentUri][field.referenceNode];
+        }
+
+        if (field.action === 'update') {
+          //Special case for prefixed fields
+          if(field.prefix) {
+            dataValue = field.prefix + dataValue;
           }
 
-          if (field.action === 'update') {
-            await node.set(field.value);
+          // IRI type requires named node call
+          if(field.dataType && field.dataType === 'iri') {
+            await node.set(namedNode(dataValue));
           } else {
-            await node.delete();
+            await node.set(dataValue);
           }
+        } else {
+          await node.delete();
+        }
 
-          updatedFields = [
-            ...updatedFields,
-            {
-              ...field
-            },
+        updatedFields = [
+          ...updatedFields,
+          {
+            ...field
+          },
         ];
       }
 
@@ -151,6 +168,7 @@ export class Profile extends Component {
         appearance: 'success',
       });
     } catch (error) {
+      console.log(error);
       this.props.toastManager.add (['Error', error.message], {
         appearance: 'error',
       });
@@ -217,35 +235,65 @@ export class Profile extends Component {
    */
   fetchProfile = async () => {
     try {
+      // Fetch the list of all profile shapes
       const shapes = ProfileShex.shapes;
-      //search for the ID of the shape, "UserProfile", which would be the whole shape URL + #foo
+
+      // Find the UserProfile shape, which is the base shape for our profile
       const profile = ProfileShex.shapes.find(shape => shape.id === 'http://example.com#UserProfile');
       let expressions = [[]];
 
-      console.log(shapes);
-
+      // Loop over all expressions in the profile shape
+      // The intention here is to build a two-dimensional array that can be used
+      // to bind to the UI. The existing shexj data is not very easy to loop over in a template.
       for(let exp of profile.expression.expressions) {
+
+        //For now, we skip OneOf, which means there is a choice of multiple fields. This is temporary.
         if(exp.type !== 'OneOf') {
+
+          //Fetch the subject. The shex shape can't know about the subject used, but we will need it for writing later, or fetching
           const subject = await this.getSubject(exp);
+
+          // If the valueExpr is a string, that means this is a linked shape, so we need to fetch it and process it
+          // This should be recursive, but for now is just one level deep
           if (typeof exp.valueExpr === 'string') {
-            //Get shape used here
+            // First, find the linked shape. In the future, this could be from a URL
             let shape = shapes.find(shape => shape.id === exp.valueExpr);
             let newExprs = [];
 
+            // Loop over all expressions in the new shape (see, this could be recursive) and process each field inside of it
             for (let shapeExp of shape.expression.expressions) {
-              let nodeValue = await this.getNodeValue(subject, shapeExp);
-              nodeValue.subject = subject;
-              newExprs.push(nodeValue);
-            }
+              // Fetch the value at the given subject and shape definition
 
+              //ShapeAnd is something in shex that defines a shape and a type in different array items
+              if(shapeExp.valueExpr.type === 'ShapeAnd') {
+                if(!shapeExp.valueExpr.values) {
+                  shapeExp.valueExpr.values = [];
+                }
+                shapeExp.valueExpr.shapeExprs.forEach(async exp => {
+                  if(exp.values) {
+                    shapeExp.valueExpr.values = exp.values;
+                  }
+
+                  if(exp.nodeKind) {
+                    shapeExp.valueExpr.nodeKind = exp.nodeKind;
+                  }
+                })
+              }
+              let nodeValue = await this.getFormattedExpression(subject, shapeExp);
+              nodeValue.parentPredicate = exp.predicate;
+              newExprs.push(nodeValue);
+
+            }
             expressions.push(newExprs);
           } else {
-            let nodeValue = await this.getNodeValue(subject, exp);
-            nodeValue.subject = subject;
+            //Fetch the value at the given subject and shape definition
+            let nodeValue = await this.getFormattedExpression(subject, exp);
             expressions[0].push(nodeValue);
           }
         }
       }
+
+      console.log(expressions);
       this.setState({formFields: expressions});
 
     } catch (error) {
@@ -255,6 +303,30 @@ export class Profile extends Component {
       });
     }
   };
+
+  async getFormattedExpression(subject, shapeExp) {
+    let nodeValue = await this.getNodeValue(subject, shapeExp);
+
+    //remove the prefix for display purposes
+    let hasPrefix = false;
+
+    if(shapeExp.annotations) {
+      shapeExp.annotations.forEach(annotation => {
+        if(annotation.predicate.split('#')[1].includes('prefix')) {
+          hasPrefix = true;
+        }
+      });
+    }
+
+    if(hasPrefix) {
+      nodeValue.value = nodeValue.value.substr(nodeValue.prefix.length);
+    }
+
+    nodeValue.subject = subject;
+    nodeValue.dataType = shapeExp.valueExpr.nodeKind;
+    nodeValue.valueExpr = shapeExp.valueExpr;
+    return nodeValue;
+  }
 
   async getSubject(exp) {
     const webId = data[this.props.webId].value;
@@ -348,7 +420,7 @@ export class Profile extends Component {
       ...newField,
       action: 'update',
       value: (node && node.value) || '',
-      nodeParentUri,
+      nodeParentUri
     };
   };
   render () {

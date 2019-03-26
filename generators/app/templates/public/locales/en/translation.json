@@ -76,6 +76,7 @@
     "locality": "Locality",
     "region": "Region",
     "postalCode": "Postal Code",
+    "coworker": "Co-worker",
     "upload": "Upload New Photo",
     "uploadSuccess": "Profile Image was updated",
     "uploadingText": "Uploading",

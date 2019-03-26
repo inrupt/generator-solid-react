@@ -91,3 +91,13 @@ export const WebId = styled.div`
     margin-left: 10px;
   }
 `;
+
+export const ShapeSelect = styled.select`
+  webkit-appearance: initial !important;
+  pointer-events: initial !important;
+      border-width: 1px;
+    border-style: solid;
+    border-color: rgb(166, 166, 166);
+    border-image: initial;
+  
+`;

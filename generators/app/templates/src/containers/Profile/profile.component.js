@@ -13,8 +13,8 @@ import {
   Button,
   Header,
   Form,
-  WebId
-} from './profile.style';
+  WebId, ShapeSelect
+} from "./profile.style";
 
 type Props = {
   webId: String,
@@ -57,6 +57,7 @@ const ProfileComponent = ({
   photo
 }: Props) => {
   const { t } = useTranslation();
+
   return (
     <ProfileWrapper data-testid="profile-component">
       <ProfileContainer>
@@ -102,7 +103,32 @@ const ProfileComponent = ({
             formFields.map(fields => (
 
               <span>
-                {fields.map(item => (
+                {fields && fields.map(item =>
+                  item.valueExpr.values ? (
+
+                  <ShapeSelect type="dropdown"
+                    placeholder={t(`profile.${item.key}`)}
+                    key={item.key}
+                    id={item.key}
+                    name={item.nodeBlank || item.property}
+                    onChange={onInputChange}
+                    onInvalid={(e) => e.target.setCustomValidity(t('profile.nameRequired'))}
+                    onInput={(e) => e.target.setCustomValidity('')}
+                    data-nodeparenturi={item.nodeParentUri}
+                    data-nodeblank={item.nodeBlank}
+                    data-label={item.label}
+                    data-icon={item.icon}
+                    data-datatype={item.dataType}
+                    data-subject={item.subject}>
+
+                    <option></option>
+                      {item.valueExpr.values.map(opt =>
+                        <option value={opt} name={item.key + 'opts'}>{opt.toString().split('#')[1]}</option>
+                      )}
+
+                  </ShapeSelect>
+
+                  ) : (
                   <Input
                     key={item.key}
                     id={item.key}
@@ -117,6 +143,9 @@ const ProfileComponent = ({
                     data-nodeblank={item.nodeBlank}
                     data-label={item.label}
                     data-icon={item.icon}
+                    data-subject={item.subject}
+                    data-datatype={item.dataType}
+                    data-prefix={item.prefix}
                     type={'text'}
                     onInvalid={(e) => e.target.setCustomValidity(t('profile.nameRequired'))}
                     onInput={(e) => e.target.setCustomValidity('')}
