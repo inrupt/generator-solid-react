@@ -14,8 +14,6 @@
               "type": "NodeConstraint",
               "datatype": "http://www.w3.org/2001/XMLSchema#string"
             },
-            "min": -1,
-            "max": 1,
             "annotations": [
               {
                 "type": "Annotation",
@@ -46,7 +44,7 @@
             "valueExpr": {
               "type": "NodeConstraint",
               "nodeKind": "iri",
-              "pattern": "^tel:\\+?[0-9.-]+"
+              "pattern": "^[0-9]{9}$"
             },
             "min": 0,
             "max": 1,
@@ -70,6 +68,13 @@
                 "predicate": "http://example.com#icon",
                 "object": {
                   "value": "phone"
+                }
+              },
+              {
+                "type": "Annotation",
+                "predicate": "http://example.com#prefix",
+                "object": {
+                  "value": "tel:"
                 }
               }
             ]
@@ -110,9 +115,9 @@
           {
             "type": "TripleConstraint",
             "predicate": "http://www.w3.org/2006/vcard/ns#hasEmail",
-            "valueExpr": "http://example.com#vcard_value",
+            "valueExpr": "http://example.com#vcard_emailAddress",
             "min": 0,
-            "max": 1,
+            "max": -1,
             "annotations": [
               {
                 "type": "Annotation",
@@ -180,7 +185,7 @@
           {
             "type": "TripleConstraint",
             "predicate": "http://www.w3.org/2006/vcard/ns#hasAddress",
-            "valueExpr": "http://example.com#vcard_street-address",
+            "valueExpr": "http://example.com#vcard_address",
             "min": 0,
             "max": 1,
             "annotations": [
@@ -204,6 +209,14 @@
                 "object": {
                   "value": "map-marker-alt"
                 }
+              },
+              {
+                "type": "Annotation",
+                "predicate": "http://example.com#hasMultiple",
+                "object": {
+                  "value": "true",
+                  "type": "http://www.w3.org/2001/XMLSchema#boolean"
+                }
               }
             ]
           }
@@ -211,7 +224,7 @@
       }
     },
     {
-      "id": "http://example.com#vcard_value",
+      "id": "http://example.com#vcard_emailAddress",
       "type": "Shape",
       "closed": true,
       "expression": {
@@ -302,7 +315,7 @@
       }
     },
     {
-      "id": "http://example.com#vcard_street-address",
+      "id": "http://example.com#vcard_address",
       "type": "Shape",
       "closed": true,
       "expression": {
@@ -471,39 +484,6 @@
                 "predicate": "http://example.com#label",
                 "object": {
                   "value": "Postal Code"
-                }
-              },
-              {
-                "type": "Annotation",
-                "predicate": "http://example.com#icon",
-                "object": {
-                  "value": "flag"
-                }
-              }
-            ]
-          },
-          {
-            "type": "TripleConstraint",
-            "predicate": "http://www.w3.org/2006/vcard/ns#coworker",
-            "valueExpr": {
-              "type": "NodeConstraint",
-              "datatype": "http://www.w3.org/2001/XMLSchema#string"
-            },
-            "min": 0,
-            "max": 1,
-            "annotations": [
-              {
-                "type": "Annotation",
-                "predicate": "http://example.com#key",
-                "object": {
-                  "value": "coworker"
-                }
-              },
-              {
-                "type": "Annotation",
-                "predicate": "http://example.com#label",
-                "object": {
-                  "value": "Coworker"
                 }
               },
               {

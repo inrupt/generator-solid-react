@@ -67,7 +67,7 @@ export class Profile extends Component {
     let action = 'update';
 
     this.state.formFields.forEach(fields => {
-      const foundField = fields.find(field => field.property === name);
+      const foundField = fields.expressions.find(field => field.property === name);
       if(foundField) {
         field = foundField;
       }
@@ -240,7 +240,11 @@ export class Profile extends Component {
 
       // Find the UserProfile shape, which is the base shape for our profile
       const profile = ProfileShex.shapes.find(shape => shape.id === 'http://example.com#UserProfile');
-      let expressions = [[]];
+      let shapeValues = [];
+      shapeValues[0] = {
+        expressions: [],
+        id: 'http://example.com#UserProfile'
+      };
 
       // Loop over all expressions in the profile shape
       // The intention here is to build a two-dimensional array that can be used
@@ -258,7 +262,13 @@ export class Profile extends Component {
           if (typeof exp.valueExpr === 'string') {
             // First, find the linked shape. In the future, this could be from a URL
             let shape = shapes.find(shape => shape.id === exp.valueExpr);
-            let newExprs = [];
+            const hasMultiple = this.shapeHasMultiple(shape, profile);
+
+            let newExprs = {
+              expressions: [],
+              id: shape.id,
+              hasMultiple: hasMultiple
+            };
 
             // Loop over all expressions in the new shape (see, this could be recursive) and process each field inside of it
             for (let shapeExp of shape.expression.expressions) {
@@ -281,20 +291,20 @@ export class Profile extends Component {
               }
               let nodeValue = await this.getFormattedExpression(subject, shapeExp);
               nodeValue.parentPredicate = exp.predicate;
-              newExprs.push(nodeValue);
+              newExprs.expressions.push(nodeValue);
 
             }
-            expressions.push(newExprs);
+            shapeValues.push(newExprs);
           } else {
             //Fetch the value at the given subject and shape definition
             let nodeValue = await this.getFormattedExpression(subject, exp);
-            expressions[0].push(nodeValue);
+            shapeValues[0].expressions.push(nodeValue);
           }
         }
       }
 
-      console.log(expressions);
-      this.setState({formFields: expressions});
+      console.log(shapeValues);
+      this.setState({formFields: shapeValues});
 
     } catch (error) {
       console.log(error);
@@ -304,8 +314,14 @@ export class Profile extends Component {
     }
   };
 
+  shapeHasMultiple(shape, profile): boolean {
+    let parentShape = profile.expression.expressions.find(exp => exp.valueExpr === shape.id);
+    return parentShape.max === -1 || parentShape.max > 1;
+  }
+
   async getFormattedExpression(subject, shapeExp) {
     let nodeValue = await this.getNodeValue(subject, shapeExp);
+    let required = false;
 
     //remove the prefix for display purposes
     let hasPrefix = false;
@@ -322,9 +338,19 @@ export class Profile extends Component {
       nodeValue.value = nodeValue.value.substr(nodeValue.prefix.length);
     }
 
+    if(shapeExp.min === -1 || shapeExp.min === undefined) {
+      required = true;
+    }
+
+    if(shapeExp.valueExpr.pattern) {
+      nodeValue.pattern = shapeExp.valueExpr.pattern;
+    }
+
     nodeValue.subject = subject;
     nodeValue.dataType = shapeExp.valueExpr.nodeKind;
     nodeValue.valueExpr = shapeExp.valueExpr;
+    nodeValue.required = required;
+    nodeValue.max = shapeExp.max || 1;
     return nodeValue;
   }
 
@@ -337,32 +363,6 @@ export class Profile extends Component {
       return data.nodeParentUri;
     } else {
       return webId;
-    }
-  }
-
-  /**
-   * Nest function - takes the profile shape and walks through expressions formatting the data into an array
-   * if the expression is a link to another shape, then call it again with the new expression
-   */
-  formatNestedShape = (expression, expressions, shapes) => {
-    try {
-      if (!expression || !expression.valueExpr || expression.type === 'OneOf') { return; }
-
-      // Check expression valueExpr for object or string
-      if (typeof expression.valueExpr === 'string') {
-        const newShape = shapes.find(shape => shape.id === expression.valueExpr);
-        if(newShape.type === 'Shape') {
-          newShape.expression.expressions.forEach((exp) => {
-            exp.referenceNode = true;
-            this.formatNestedShape(exp, expressions, shapes);
-          });
-        }
-      } else {
-        expressions.push(expression);
-        return;
-      }
-    } catch(err) {
-      console.log(err);
     }
   }
 
@@ -402,7 +402,7 @@ export class Profile extends Component {
     if (field.referenceNode) {
       try {
         let parentNode = await data[subject][newField.property];
-        // If the node link doesn't exist will create a new one.
+        //If the node link doesn't exist will create a new one.
         nodeParentUri =
           (parentNode && parentNode.value) ||
           (await this.createNewLinkNode(newField.property));

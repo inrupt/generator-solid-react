@@ -103,7 +103,7 @@ const ProfileComponent = ({
             formFields.map(fields => (
 
               <span>
-                {fields && fields.map(item =>
+                {fields && fields.expressions.map(item =>
                   item.valueExpr.values ? (
 
                   <ShapeSelect type="dropdown"
@@ -112,6 +112,7 @@ const ProfileComponent = ({
                     id={item.key}
                     name={item.nodeBlank || item.property}
                     onChange={onInputChange}
+                    value={item.value}
                     onInvalid={(e) => e.target.setCustomValidity(t('profile.nameRequired'))}
                     onInput={(e) => e.target.setCustomValidity('')}
                     data-nodeparenturi={item.nodeParentUri}
@@ -138,6 +139,7 @@ const ProfileComponent = ({
                     onChange={onInputChange}
                     icon={item.icon}
                     readOnly={formMode}
+                    pattern={item.pattern}
                     required={item.required}
                     data-nodeparenturi={item.nodeParentUri}
                     data-nodeblank={item.nodeBlank}
@@ -151,6 +153,9 @@ const ProfileComponent = ({
                     onInput={(e) => e.target.setCustomValidity('')}
                   />
                 ))}
+                {fields.hasMultiple && (
+                  <button> + </button>
+                )}
               </span>
             ))}
           <FullGridSize>

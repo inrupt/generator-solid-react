@@ -1,7 +1,7 @@
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX : <#>
+PREFIX : <http://example.com#>
 
 # PREFIX solid: <http://www.w3.org/ns/solid/terms#>
 
@@ -10,30 +10,32 @@ PREFIX : <#>
         // :key "name"
         // :label "Name"
         // :icon "user" ;
-  vcard:phone IRI /^tel:\+?[0-9.-]+/ ?
+  vcard:phone IRI /^[0-9]{9}$/ ?
     // :key "phone"
     // :label "Phone"
-    // :icon "phone" ;
+    // :icon "phone"
+    // :prefix "tel:" ;
   vcard:role xsd:string ?
     // :key "role"
     // :label "Role"
     // :icon "user-astronaut" ;
-  vcard:hasEmail @<#vcard_value> ?
+  vcard:hasEmail @<#vcard_emailAddress> * ?
     // :key "email"
     // :label "Email"
     // :icon "envelope"
-    // :nodeBlank "vcard:value" ;
+    // :nodeBlank "vcard:value"
   vcard:organization-name xsd:string ?
     // :key "company"
     // :label "Company"
     // :icon "building" ;
-  vcard:hasAddress @<#vcard_street-address> ?
+  vcard:hasAddress @<#vcard_address> ?
     // :key "address"
     // :label "Address"
-    // :icon "map-marker-alt" ;
+    // :icon "map-marker-alt"
+    // :hasMultiple true ;
 }
 
-<#vcard_value> CLOSED {
+<#vcard_emailAddress> CLOSED {
   a [vcard:Home vcard:Work] AND IRI
     // :key "streetAddress"
     // :label "Street Address"
@@ -43,10 +45,9 @@ PREFIX : <#>
     // :label "Email Address"
     // :icon "envelope"
     // :prefix "mailto:" ;
+} // :label "Email Address"
 
-}
-
-<#vcard_street-address> CLOSED {
+<#vcard_address> CLOSED {
   a [vcard:StreetAddress] ? ;
   vcard:street-address xsd:string ?
     // :key "streetAddress"
