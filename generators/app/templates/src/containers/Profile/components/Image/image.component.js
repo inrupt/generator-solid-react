@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import data from "@solid/query-ldflex";
 import { Uploader, useLiveUpdate } from '@inrupt/solid-react-components';
+import { useTranslation } from "react-i18next";
+
 import { ImageProfile } from '@components';
 
 type Props = {
@@ -13,6 +15,8 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
   const [image, setImage] = useState('');
 
   const latestUpdate = useLiveUpdate();
+
+  const {t} = useTranslation();
 
   useEffect( () => {
     fetchPhoto();
@@ -54,7 +58,7 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
 
       await user.image.set (uri)
 
-      toastManager.add (['', 'Profile Image was updated'], {
+      toastManager.add (['', t('profile.uploadSuccess')], {
         appearance: 'success',
       });
     } catch (error) {
@@ -63,14 +67,19 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
       });
     }
   };
-
+  const limit = 2100000 ;
   return (
     <Uploader
       {...{
         fileBase: webId && webId.split('/card')[0],
         limitFiles: 1,
-        limitSize: 2100000,
-        accept: 'png, jpeg, jpg',
+        limitSize: limit,
+        accept: 'png,jpeg,jpg',
+        errorsText: {
+          sizeLimit: t('profile.errors.sizeLimit', {limit: `${limit/1000000}Mbs`}),
+          unsupported: t('profile.errors.unsupported'),
+          maximumFiles: t('profile.errors.maximumFiles')
+        },
         onError: error => {
           if (error && error.statusText) {
             toastManager.add(['', error.statusText], {
@@ -85,5 +94,4 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
       }}
     />
   );
-
-}
+};
