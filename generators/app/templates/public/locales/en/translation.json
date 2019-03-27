@@ -53,10 +53,10 @@
     "version010": "<0><0><0>Internationalization</0> best practices, with application session language selection.</0><0>Ability to update your profile image on the Welcome page.</0> </0>",
     "version030": "<0><0>Implementing the ability to view and edit your <1>User Profile</1></0><1>Including an Application Footer that displays the build number and links to resources.</1><2>Addressing several minor issues based on user feedback.</2></0>",
     "upload": "Upload New Photo",
-    "uploadSucces": "Profile Image was updated",
+    "uploadSuccess": "Profile Image was updated",
     "uploadingText": "Uploading",
     "errors": {
-      "sizeLimit": "File size exceeds the allowable limit",
+      "sizeLimit": "File size exceeds the allowable limit ({{limit}})",
       "unsupported": "Unsupported media type",
       "maximumFiles": "Sorry, you have exceeded the maximum number of files allowed per upload"
     }
@@ -78,7 +78,7 @@
     "updateSuccess": "Profile was updated successfully",
     "nameRequired": "Name is required",
     "errors": {
-      "sizeLimit": "File size exceeds the allowable limit",
+      "sizeLimit": "File size exceeds the allowable limit ({{limit}})",
       "unsupported": "Unsupported media type",
       "maximumFiles": "Sorry, you have exceeded the maximum number of files allowed per upload"
     }
