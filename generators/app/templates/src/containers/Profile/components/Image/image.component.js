@@ -88,7 +88,7 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
           }
         },
         onComplete: uploadedFiles => {
-          updatePhoto(uploadedFiles[0].uri)
+          updatePhoto(uploadedFiles[uploadedFiles.length - 1].uri)
         },
         render: props => <ImageProfile {...{ ...props, webId, photo: image || defaultProfilePhoto }} />
       }}
