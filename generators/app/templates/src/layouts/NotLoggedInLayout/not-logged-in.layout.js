@@ -21,7 +21,7 @@ const NotLoggedInLayout = props => {
               }
             ]}
           />
-          <Component {...matchProps} />
+          <Component {...matchProps}  className={'contentApp'} />
           <Footer></Footer>
         </Fragment>
       )}

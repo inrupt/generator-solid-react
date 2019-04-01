@@ -12,14 +12,14 @@ const PrivateLayout = ({ routes, ...rest }) => {
           <LiveUpdate>
             <AuthNavBar {...matchProps} />
           </LiveUpdate>
-          <Fragment>
+          <div className={'contentApp'}>
             <Switch>
               {routes.map(route => (
                 <Route key={route.id} {...route} exact />
               ))}
               <Redirect to="/404" />
             </Switch>
-          </Fragment>
+          </div>
           <Footer></Footer>
         </Fragment>
       )}
