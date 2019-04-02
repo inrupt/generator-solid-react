@@ -10,7 +10,8 @@ import {
 type Props = {
   actions: Array<Object>,
   children: React.Node,
-  className: String
+  className: String,
+  open: boolean
 };
 
 type State = { open: Boolean };
@@ -21,7 +22,7 @@ class Dropdown extends Component<Props, State> {
     this.state = { open: false };
   }
 
-  toggleOpen = () => this.setState({ open: !this.state.open });
+  toggleOpen = () => this.props.open && this.setState({ open: !this.state.open });
 
   handleClickOutside() {
     this.setState({ open: false });
@@ -31,6 +32,16 @@ class Dropdown extends Component<Props, State> {
     return action.customIcon ? <div
       className={`flag-icon flag-icon-${action.icon}`}
     /> : <FontAwesomeIcon icon={action.icon} className="checked" />
+  }
+
+  componentDidMount(): void {
+    this.openByDefault();
+  }
+
+  openByDefault() {
+    if (this.props.open) {
+      this.setState({ open: true });
+    }
   }
 
   render() {

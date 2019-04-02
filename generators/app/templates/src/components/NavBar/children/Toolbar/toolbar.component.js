@@ -5,14 +5,14 @@ type Props = {
   t: Function
 };
 
-const Toolbar = ({ toolbar }: Props) => {
+const Toolbar = ({ toolbar, open }: Props) => {
   return (
     <nav className="nav nav__toolbar">
       <ul>
         {toolbar &&
           toolbar.map(({ component: Component, props }, i) => (
             <li key={i} data-testid="item">
-              <Component {...props} />
+              <Component {...props} open={open} />
             </li>
           ))}
       </ul>

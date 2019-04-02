@@ -16,6 +16,7 @@ type Props = {
 const NavBar = (props: Props) => {
     const { navigation, toolbar, sticky, t } = props;
     const [ isOpenMobile, setOpenMobile ] = useState(false);
+    const [profileOptions, setProfileOption] = useState([]);
     let componentElement = React.createRef();
 
     const setNavFixed = () => {
@@ -43,11 +44,19 @@ const NavBar = (props: Props) => {
         if (sticky) {
             onComponentResize();
         }
-    });
+
+        getUserProfileOptions();
+    }, [props]);
 
     const toggleMobileMenu = () => {
       setOpenMobile(!isOpenMobile);
     }
+
+    const getUserProfileOptions = () => {
+        const profile = toolbar ? toolbar.filter(bar => bar.id !== 'language') : [];
+        setProfileOption(profile);
+    }
+
     return (
         <header
             role="navigation"
@@ -71,6 +80,7 @@ const NavBar = (props: Props) => {
                         t={t}
                     >
                         <Navigation navigation={navigation} />
+                        <Toolbar toolbar={profileOptions} open={true} />
                     </MobileNavigation>
                 )}
                 <HamburgerButton toggleMobileMenu={toggleMobileMenu} />
