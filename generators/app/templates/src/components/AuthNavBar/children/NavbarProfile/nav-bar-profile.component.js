@@ -45,7 +45,7 @@ class NavBarProfile extends Component {
         }
     };
     render() {
-        const { t, img, open } = this.props;
+        const { t, img, open, customClass } = this.props;
         const { imageLoaded } = this.state;
 
         const profileOpts = [
@@ -61,7 +61,7 @@ class NavBarProfile extends Component {
         return img ? (
             <Dropdown
                 actions={profileOpts}
-                className="nav-bar--profile"
+                className={`nav-bar--profile ${customClass}`}
                 hover={true}
                 open={open}
             >

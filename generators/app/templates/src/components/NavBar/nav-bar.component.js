@@ -46,7 +46,7 @@ const NavBar = (props: Props) => {
         }
 
         getUserProfileOptions();
-    }, [props]);
+    }, [props, isOpenMobile]);
 
     const toggleMobileMenu = () => {
       setOpenMobile(!isOpenMobile);
@@ -80,7 +80,7 @@ const NavBar = (props: Props) => {
                         t={t}
                     >
                         <Navigation navigation={navigation} />
-                        <Toolbar toolbar={profileOptions} open={true} />
+                        <Toolbar toolbar={profileOptions} open={true} customClass={'profile-list'} />
                     </MobileNavigation>
                 )}
                 <HamburgerButton toggleMobileMenu={toggleMobileMenu} />

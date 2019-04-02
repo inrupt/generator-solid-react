@@ -26,11 +26,11 @@ const AuthNavBar = props => {
       sticky={true}
       toolbar={[
         {
-          component: () => <LanguageDropdown {...props} className={'accordion'} />,
+          component: () => <LanguageDropdown {...props} />,
           id: "language"
         },
         {
-          component: () => <NavBarProfile {...props} />,
+          component: ({open, customClass}) => <NavBarProfile {...props} open={open} customClass={customClass} />,
           id: "profile"
         }
       ]}

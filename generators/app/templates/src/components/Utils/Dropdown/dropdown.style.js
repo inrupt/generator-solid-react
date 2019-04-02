@@ -43,6 +43,9 @@ export const DropdownItemContainer = styled.div`
     transition: all 0.25s ease-in-out;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   }
+  .profile-list & {
+    position: relative;
+  }
 `;
 
 export const Item = styled.li`

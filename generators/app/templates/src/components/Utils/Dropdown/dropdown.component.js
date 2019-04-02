@@ -22,7 +22,7 @@ class Dropdown extends Component<Props, State> {
     this.state = { open: false };
   }
 
-  toggleOpen = () => this.props.open && this.setState({ open: !this.state.open });
+  toggleOpen = () => !this.props.open && this.setState({ open: !this.state.open });
 
   handleClickOutside() {
     this.setState({ open: false });
@@ -34,18 +34,8 @@ class Dropdown extends Component<Props, State> {
     /> : <FontAwesomeIcon icon={action.icon} className="checked" />
   }
 
-  componentDidMount(): void {
-    this.openByDefault();
-  }
-
-  openByDefault() {
-    if (this.props.open) {
-      this.setState({ open: true });
-    }
-  }
-
   render() {
-    const { actions, children, className, hover } = this.props;
+    const { actions, children, className, hover}  = this.props;
     const { open } = this.state;
 
     return (
@@ -56,7 +46,7 @@ class Dropdown extends Component<Props, State> {
         onMouseLeave={hover ? this.toggleOpen : null}
       >
         <DropdownMain onClick={this.toggleOpen} data-testid="dropdownMain">{children}</DropdownMain>
-        {open && (
+        {(open || this.props.open) && (
           <DropdownItemContainer className={'dropdownItem'}>
             <ul data-testid="list">
               {actions.map((action, i) => (
