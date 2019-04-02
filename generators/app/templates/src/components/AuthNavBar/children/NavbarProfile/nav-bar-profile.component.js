@@ -45,7 +45,7 @@ class NavBarProfile extends Component {
     }
   };
   render() {
-    const { t, img } = this.props;
+    const { t, img, accordion } = this.props;
     const { imageLoaded } = this.state;
 
     const profileOpts = [
@@ -58,9 +58,8 @@ class NavBarProfile extends Component {
         onClick: this.logOut
       }
     ];
-
     return img ? (
-      <Dropdown actions={profileOpts} className="nav-bar--profile" hover={true}>
+      <Dropdown actions={profileOpts} className="nav-bar--profile" hover={true} accordion={accordion}>
         <ImageContainer show={imageLoaded}>
           <Img
             show={imageLoaded}

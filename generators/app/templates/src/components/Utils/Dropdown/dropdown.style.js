@@ -5,6 +5,10 @@ export const DropdownContainer = styled.div`
   height: 100%;
   width: 100%;
   padding: 0 !important;
+  
+  label {
+    display: none;
+  }
 `;
 
 export const DropdownMain = styled.button`
@@ -14,14 +18,13 @@ export const DropdownMain = styled.button`
   height: 100%;
   width: 100%;
   padding: 0 16px;
-  margin: 0;
+  margin: 5px 0;
   display: flex;
   align-items: center;
-  justify-content: center;
 
   &:focus {
     outline: none;
-  }
+  } 
 `;
 
 export const DropdownItemContainer = styled.div`
@@ -37,8 +40,8 @@ export const DropdownItemContainer = styled.div`
     right: 0;
     height: auto;
     background: #fff;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.25s ease-in-out;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   }
 `;
 

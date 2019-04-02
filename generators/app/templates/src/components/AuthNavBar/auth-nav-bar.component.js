@@ -26,7 +26,7 @@ const AuthNavBar = props => {
       sticky={true}
       toolbar={[
         {
-          component: () => <LanguageDropdown {...props} />,
+          component: () => <LanguageDropdown {...props} className={'accordion'} />,
           id: "language"
         },
         {
