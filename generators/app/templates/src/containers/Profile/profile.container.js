@@ -24,6 +24,10 @@ const Profile = ({ toastManager }) => {
     const onCancel = () => {
         setMode(!mode);
     };
+
+    const exitEditMode = () => {
+      setMode(true);
+    };
     const { t } = useTranslation();
     return (
         <ProfileWrapper data-testid="profile-component">
@@ -49,7 +53,7 @@ const Profile = ({ toastManager }) => {
                                 }}
                             />
                         </Header>
-                        <Form {...{ mode, toastManager, webId, onCancel }} />
+                        <Form {...{ mode, toastManager, webId, onCancel, exitEditMode }} />
                     </LiveUpdate>
                 )}
             </ProfileContainer>
