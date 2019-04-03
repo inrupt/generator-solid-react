@@ -80,10 +80,10 @@ class RegisterComponent extends Component<Props, State> {
       canContinue,
       register: { provider }
     } = this.state;
-    const { providers, t } = this.props;
+    const { providers, t, className } = this.props;
 
     return (
-      <GradientBackground>
+      <GradientBackground className={className}>
         <CenterContainer>
           <RegisterWrapper data-testid="register-wrapper">
             <h1 data-testid="title">{t("register.title")}</h1>

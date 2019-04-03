@@ -12,9 +12,9 @@ import {
 import { CenterContainer } from '@util-components';
 
 const LoginComponent = props => {
-  const { t } = props;
+  const { t, className } = props;
   return (
-    <LoginWrapper data-testid="login-wrapper">
+    <LoginWrapper data-testid="login-wrapper" className={className}>
       <CenterContainer>
         <h1 data-testid="title">{t("login.title")}</h1>
         <LoginPanel className={"login-panel"}>

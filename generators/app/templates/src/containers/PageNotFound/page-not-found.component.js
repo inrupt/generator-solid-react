@@ -11,9 +11,9 @@ import {
  * A React component page that is displayed when there's no valid route. Users can click the button
  * to get back to the home/welcome page.
  */
-const PageNotFound = ({ t }) => {
+const PageNotFound = ({ t, className }) => {
   return (
-    <PageNotFoundWrapper>
+    <PageNotFoundWrapper className={className}>
       <PageNotFoundContent>
         <img src="/img/404.svg" alt="404" />
         <h3>{t("notFound.title")}</h3>
