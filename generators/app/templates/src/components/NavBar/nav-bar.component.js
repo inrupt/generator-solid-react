@@ -24,7 +24,7 @@ const NavBar = (props: Props) => {
     if (sticky) {
       onComponentResize();
     }
-  }, [props]);
+  });
   return (
     <header role="navigation" className="header header__desktop fixed" ref={el => componentElement = el}>
       <section className="header-wrap">
