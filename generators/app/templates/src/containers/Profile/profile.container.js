@@ -4,6 +4,7 @@ import { withToastManager } from 'react-toast-notifications';
 import { LiveUpdate, useWebId } from '@inrupt/solid-react-components';
 import { Header, ProfileContainer, ProfileWrapper } from './profile.style';
 import { Image, Form } from './components';
+import { useShex } from '@hooks';
 
 const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 
@@ -18,6 +19,9 @@ const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 const Profile = ({ toastManager }) => {
     const webId = useWebId();
     const [mode, setMode] = useState(true);
+    const { shexData } = useShex('/shapes/userProfile.shex');
+
+    console.log(shexData, 'Shex into Profile Container');
 
     const onCancel = () => {
         setMode(!mode);
