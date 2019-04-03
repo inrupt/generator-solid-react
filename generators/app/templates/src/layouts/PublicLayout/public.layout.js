@@ -30,7 +30,7 @@ const PublicLayout = props => {
               ]}
             />
           )}
-          <Component {...matchProps} className={'contentApp'} />
+          <Component {...matchProps} />
           <Footer></Footer>
         </Fragment>
       )}

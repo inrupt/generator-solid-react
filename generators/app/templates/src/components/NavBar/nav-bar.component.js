@@ -1,32 +1,12 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Navigation, Toolbar } from "./children";
-type Props = { navigation: Array<Object>, toolbar: Array<React.Node>, sticky: boolean };
+type Props = { navigation: Array<Object>, toolbar: Array<React.Node> };
 
 const NavBar = (props: Props) => {
-  const { navigation, toolbar, sticky } = props;
-  let componentElement = React.createRef();
-
-  const setNavFixed = () => {
-    const navHeight = componentElement.clientHeight;
-    const content = document.getElementsByClassName('contentApp');
-    if (content.length > 0) {
-      content[0].style['margin-top'] = `${navHeight}px`;
-    }
-
-  };
-
-  const onComponentResize = () => {
-    window.addEventListener('resize', setNavFixed());
-  }
-
-  useEffect(() => {
-    if (sticky) {
-      onComponentResize();
-    }
-  });
+  const { navigation, toolbar } = props;
   return (
-    <header role="navigation" className="header header__desktop fixed" ref={el => componentElement = el}>
+    <header role="navigation" className="header header__desktop">
       <section className="header-wrap">
         <div className="logo-block">
           <Link to="/welcome">
@@ -38,10 +18,6 @@ const NavBar = (props: Props) => {
       </section>
     </header>
   );
-};
-
-NavBar.defaultProps = {
-  sticky: true
 };
 
 export default NavBar;
