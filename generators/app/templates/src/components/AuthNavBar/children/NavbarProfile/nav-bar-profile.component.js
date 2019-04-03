@@ -25,6 +25,11 @@ export const LoadingImage = styled(ImageContainer)`
     display: block;
 `;
 
+export const UserName = styled.span`
+  display: inline-block;
+  margin-left: 10px;
+`;
+
 class NavBarProfile extends Component {
     state = {
         imageLoaded: false,
@@ -45,19 +50,22 @@ class NavBarProfile extends Component {
         }
     };
     render() {
-        const { t, img, open, customClass } = this.props;
+        const { t, img, open, customClass, name } = this.props;
         const { imageLoaded } = this.state;
 
         const profileOpts = [
             {
                 label: t('navBar.profile'),
                 onClick: this.profileRedirect,
+                icon: 'cog'
             },
             {
                 label: t('navBar.logOut'),
                 onClick: this.logOut,
+                icon: 'lock'
             },
         ];
+
         return img ? (
             <Dropdown
                 actions={profileOpts}
@@ -74,6 +82,7 @@ class NavBarProfile extends Component {
                     />
                 </ImageContainer>
                 {!imageLoaded && <LoadingImage show={true} />}
+                <UserName>{name}</UserName>
             </Dropdown>
         ) : (
             <div />

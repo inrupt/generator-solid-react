@@ -31,7 +31,7 @@ class Dropdown extends Component<Props, State> {
   renderIcon = (action: Object) => {
     return action.customIcon ? <div
       className={`flag-icon flag-icon-${action.icon}`}
-    /> : <FontAwesomeIcon icon={action.icon} className="checked" />
+    /> : <FontAwesomeIcon icon={action.icon} className="checked icon" />
   }
 
   render() {

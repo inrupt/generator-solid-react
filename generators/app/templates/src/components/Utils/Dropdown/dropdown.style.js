@@ -1,13 +1,19 @@
 import styled from "styled-components";
 
+import { media } from '../../../utils';
+
 export const DropdownContainer = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
   padding: 0 !important;
-  
-  label {
-    display: none;
+ 
+ 
+  .icon {
+    margin-right: 5px;
+    font-size: 1rem;
+    color: #7C4DFF;
+    ${media.desktop`display: none; path { display: none }`}
   }
 `;
 
