@@ -11,7 +11,7 @@ const Toolbar = ({ toolbar }: Props) => {
       <ul>
         {toolbar &&
           toolbar.map(({ component: Component, props }, i) => (
-            <li key={i}>
+            <li key={i} data-testid="item">
               <Component {...props} />
             </li>
           ))}

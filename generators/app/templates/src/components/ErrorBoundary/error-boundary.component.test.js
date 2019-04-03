@@ -1,8 +1,8 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render, cleanup } from 'react-testing-library';
 import ErrorBoundary from "./error-boundary.component";
 
-import "../../utils/enzymeSetup";
+import 'jest-dom/extend-expect';
 
 const ErrorComponent = () => {
   throw Error("Error");
@@ -19,18 +19,18 @@ const shallowErrors = codeRun => {
   console.error = error;
 };
 
+afterAll(cleanup);
+
 describe("ErrorBoundary Component", () => {
   test("caches error and display messages", () => {
     shallowErrors(() => {
-      const wrapper = mount(
+      const { container } = render(
         <ErrorBoundary component={() => <h2>Error Message</h2>}>
           <ErrorComponent />
         </ErrorBoundary>
       );
 
-      const message = wrapper.text();
-
-      expect(message).toEqual("Error Message");
+      expect(container).toHaveTextContent("Error Message");
     });
   });
 });

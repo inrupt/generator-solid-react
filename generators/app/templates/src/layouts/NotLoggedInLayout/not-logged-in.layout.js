@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { withTranslation } from "react-i18next";
-import { NavBar } from "@components";
+import { NavBar, Footer } from "@components";
 import { withWebId } from "@inrupt/solid-react-components";
 import { LanguageDropdown } from "@util-components";
 
@@ -10,7 +10,7 @@ const NotLoggedInLayout = props => {
   return !webId ? (
     <Route
       {...rest}
-      render={matchProps => (
+      component={matchProps => (
         <Fragment>
           <NavBar
             {...matchProps}
@@ -22,6 +22,7 @@ const NotLoggedInLayout = props => {
             ]}
           />
           <Component {...matchProps} />
+          <Footer></Footer>
         </Fragment>
       )}
     />

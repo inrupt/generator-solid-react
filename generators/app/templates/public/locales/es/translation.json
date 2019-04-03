@@ -34,6 +34,9 @@
       "es": "Español (Español)"
     }
   },
+  "footer": {
+    "version": "Versión"
+  },
   "notFound": {
     "title": "Página no encontrada",
     "content": "Puede existir un problema con la dirección buscada. Por favor verifiquela e intente de nuevo. O la página que buscaste ha sido movida o eliminada",
@@ -46,13 +49,36 @@
     "description": "<0>El <1>React SDK for Solid</1>  es una combinación de librerias, componentes, documentación, buenas prácticas y un generador de aplicaciones diseñada para acelerar el desarrollo de aplicaciones Solid de alta calidad:</0>",
     "libraryList": "<0><0><0> Componentes reutilizables </0>que puedes utilizar en tus propias aplicaciones.</0><1><0>Generador de aplicaciones</0>, incorpora todos los componentes y las buenas practicas en una misma aplicacion para el desarrollador. Nota: La aplicaciones Solid React, muestra el uso de los componentes instalados por el generador. No debe ser considerado como un servicio que Inrupt provee, y está sujeto a cambios.</0><0>Patrones de buenas prácticas que puedes referenciar como ejemplos para lograr resolver diferentes situaciones.</1></0>",
     "evolvingMessage": "<0>El SDK se encuentra en constante evolución. Revisa el <1>Calendario de Desarrollo</1>  para lo que está planeado.</0>",
-    "implementing": "Esta última version se basa en las anteriores, implementando:",
+    "implementing": "Esta última version se basa en las anteriores, incluye:",
     "version010": "<0><0>Mejores prácticas para la <0>Internacionalización</0>, con selector de lenguaje para la sesión.</0><1>Habilidad para actualizar la imagen de perfil en la página de bienvenida.</1> </0>",
+    "version030": "<0><0>La habilidad de ver y editar el <1>Perfil del usuario</1></0><1>Inclusión de un pie de página con el número de versión y enlances a los recursos.</1><2>Se corrigieron varios errores pequeños de acuerdo a la retroalimentación de los usuarios.</2></0>",
     "upload": "Subir foto",
     "uploadSuccess": "Imagen de perfil actualizada correctamente",
     "uploadingText": "Subiendo",
     "errors": {
-      "sizeLimit": "El tamaño del archivo supera el límite permitido",
+      "sizeLimit": "El tamaño del archivo supera el límite permitido ({{limit}})",
+      "unsupported": "Formato no soportado",
+      "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
+    }
+  },
+  "profile": {
+    "edit": "EDITAR",
+    "cancelBtn": "Cancelar",
+    "saveBtn": "Guardar",
+    "phone": "Teléfono",
+    "role": "Rol",
+    "email": "Correo",
+    "country": "País",
+    "name": "Nombre",
+    "company": "Compañía",
+    "address": "Dirección",
+    "upload": "Subir foto",
+    "uploadSuccess": "Imagen de perfil actualizada correctamente",
+    "uploadingText": "Subiendo",
+    "updateSuccess": "Perfil actualizado correctamente",
+    "nameRequired": "Nombre es un campo obligatorio",
+    "errors": {
+      "sizeLimit": "El tamaño del archivo supera el límite permitido ({{limit}})",
       "unsupported": "Formato no soportado",
       "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
     }

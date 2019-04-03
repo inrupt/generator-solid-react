@@ -6,15 +6,17 @@ import Routes from "./routes";
 import { ThemeProvider } from "styled-components";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 import { Loader } from "@util-components";
 import theme from "./utils/theme";
 import "flag-icon-css/css/flag-icon.min.css";
 import "normalize.css";
 import "./index.css";
-import "@inrupt/inrupt-atomic-style-guide";
+import "@inrupt/solid-style-guide";
 
 library.add(fas);
+library.add(faGithub);
 class App extends Component {
   render() {
     return (

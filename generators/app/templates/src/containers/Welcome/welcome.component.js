@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogoutButton, Uploader } from '@inrupt/solid-react-components';
+import { Uploader } from '@inrupt/solid-react-components';
 import isLoading from '@hocs/isLoading';
 import { Trans, withTranslation } from 'react-i18next';
 import {
@@ -20,14 +20,14 @@ import { ImageProfile } from '@components';
  */
 const WelcomePageContent = props => {
   const { webId, image, updatePhoto, toastManager, name, t } = props;
-
+  const limit = 2100000;
   return (
-    <WelcomeWrapper>
-      <WelcomeCard className='card'>
-        <WelcomeLogo>
-          <img src='/img/logo.svg' alt='Inrupt' />
+    <WelcomeWrapper data-testid="welcome-wrapper">
+      <WelcomeCard className="card">
+        <WelcomeLogo data-testid="welcome-logo">
+          <img src="/img/logo.svg" alt="Inrupt" />
         </WelcomeLogo>
-        <WelcomeProfile>
+        <WelcomeProfile data-testid="welcome-profile">
           <h3>
             {t('welcome.welcome')}, <span>{name}</span>
           </h3>
@@ -36,10 +36,10 @@ const WelcomePageContent = props => {
               {...{
                 fileBase: webId && webId.split('/card')[0],
                 limitFiles: 1,
-                limitSize: 2100000,
+                limitSize: limit,
                 accept: 'jpg,jpeg,png',
                 errorsText: {
-                  sizeLimit: t('welcome.errors.sizeLimit'),
+                  sizeLimit: t('welcome.errors.sizeLimit', {limit: `${limit/1000000}Mbs`}),
                   unsupported: t('welcome.errors.unsupported'),
                   maximumFiles: t('welcome.errors.maximumFiles')
                 },
@@ -67,15 +67,11 @@ const WelcomePageContent = props => {
               }}
             />
           </ImageWrapper>
-          <p>
-            {t('welcome.doneMessage')}{' '}
-            <LogoutButton>{t('navBar.logOut')}</LogoutButton>
-          </p>
         </WelcomeProfile>
       </WelcomeCard>
-      <WelcomeCard className='card'>
-        <WelcomeDetail>
-          <Trans i18nKey='welcome.title'>
+      <WelcomeCard className="card">
+        <WelcomeDetail data-testid="welcome-detail">
+          <Trans i18nKey="welcome.title">
             <h3>
               title
               <a
@@ -149,19 +145,25 @@ const WelcomePageContent = props => {
             </p>
           </Trans>
           <p>{t('welcome.implementing')}</p>
-          <Trans i18nKey='welcome.version010'>
+          <Trans i18nKey='welcome.version030'>
             <ul>
               <li>
+                Implementing the ability to view and edit your
                 <a
-                  href='https://github.com/Inrupt-inc/solid-react-sdk#internationalization-i18n'
+                  href='https://github.com/Inrupt-inc/solid-react-sdk#user-profile'
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  Internationalization
+                  User Profile
                 </a>
-                best practices, with application session language selection.
               </li>
-              <li>Ability to update your profile image on the Welcome page.</li>
+              <li>
+                Including an Application Footer that displays the build number
+                and links to resources
+              </li>
+              <li>
+                Addressing several minor issues based on user feedback.
+              </li>
             </ul>
           </Trans>
         </WelcomeDetail>

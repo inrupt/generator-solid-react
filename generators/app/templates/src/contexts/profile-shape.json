@@ -5,43 +5,50 @@
   },
   "profile": [
     {
+      "key": "name",
       "label": "Name",
       "icon": "user",
       "property": "foaf:name",
       "required": true
     },
     {
+      "key": "phone",
       "label": "Phone",
       "icon": "phone",
       "property": "vcard:phone"
     },
     {
+      "key": "role",
       "label": "Role",
       "icon": "user-astronaut",
       "property": "vcard:role"
     },
     {
+      "key": "email",
       "label": "Email",
       "icon": "envelope",
       "property": "vcard:hasEmail",
-      "blankNode": "vcard:value"
+      "nodeBlank": "vcard:value"
     },
     {
+      "key": "company",
       "label": "Company",
       "icon": "building",
       "property": "vcard:organization-name"
     },
     {
+      "key": "address",
       "label": "Address",
       "icon": "map-marker-alt",
       "property": "vcard:hasAddress",
-      "blankNode": "vcard:street-address"
+      "nodeBlank": "vcard:street-address"
     },
     {
+      "key": "country",
       "label": "Country",
       "icon": "flag",
       "property": "vcard:hasAddress",
-      "blankNode": "vcard:country-name"
+      "nodeBlank": "vcard:country-name"
     }
   ]
 }

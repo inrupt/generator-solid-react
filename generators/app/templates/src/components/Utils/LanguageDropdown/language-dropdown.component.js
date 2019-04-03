@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Dropdown } from "@util-components";
+import { withToastManager } from 'react-toast-notifications';
+
 
 const languages = {
   en: {
@@ -25,11 +27,13 @@ class LanguageDropdown extends Component {
   getLanguage = () => localStorage.getItem("i18nextLng") || "en";
 
   onLanguageSelect = nextLanguage => {
-    const { i18n } = this.props;
+    const { i18n, toastManager } = this.props;
+    toastManager.toasts.forEach(toast=> toastManager.remove(toast.id))
     i18n.changeLanguage(nextLanguage);
     this.setState({
       language: this.getLanguage()
     });
+
   };
   render() {
     const { t } = this.props;
@@ -37,11 +41,15 @@ class LanguageDropdown extends Component {
     const profileOpts = [
       {
         label: t("navBar.languages.en"),
-        onClick: () => this.onLanguageSelect("en")
+        onClick: () => this.onLanguageSelect("en"),
+        icon: 'us',
+        customIcon: true,
       },
       {
         label: t("navBar.languages.es"),
-        onClick: () => this.onLanguageSelect("es")
+        onClick: () => this.onLanguageSelect("es"),
+        icon: 'es',
+        customIcon: true
       }
     ];
     return (
@@ -56,4 +64,4 @@ class LanguageDropdown extends Component {
   }
 }
 
-export default LanguageDropdown;
+export default withToastManager(LanguageDropdown);
