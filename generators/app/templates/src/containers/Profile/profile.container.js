@@ -19,9 +19,9 @@ const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 const Profile = ({ toastManager }) => {
     const webId = useWebId();
     const [mode, setMode] = useState(true);
-    const { shexData } = useShex('/shapes/userProfile.shex');
+    const { shexData } = useShex('/shapes/userProfile.shex', 'https://jairocampos.solid.community/profile/card#me');
 
-    console.log(shexData, 'Shex into Profile Container');
+    console.log(shexData, 'Shex');
 
     const onCancel = () => {
         setMode(!mode);
