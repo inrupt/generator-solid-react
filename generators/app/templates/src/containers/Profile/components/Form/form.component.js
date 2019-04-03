@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import { Button, Form, FullGridSize, WebId } from "../../profile.style";
 import { Input } from '@util-components';
+import { useTranslation } from "react-i18next";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
@@ -18,6 +20,7 @@ export const FormUi = ({ onSubmit, formFields, mode, onCancel, onInputChange, up
     return item.value || '';
   }
 
+  const {t} = useTranslation();
   return(
     <Fragment>
       <Form onSubmit={onSubmit}>
@@ -37,6 +40,8 @@ export const FormUi = ({ onSubmit, formFields, mode, onCancel, onInputChange, up
             data-label={item.label}
             data-icon={item.icon}
             type={'text'}
+            onInvalid={(e) => e.target.setCustomValidity(t('profile.nameRequired'))}
+            onInput={(e) => e.target.setCustomValidity('')}
           />
         ))}
         <FullGridSize>
@@ -47,13 +52,13 @@ export const FormUi = ({ onSubmit, formFields, mode, onCancel, onInputChange, up
                 onClick={onCancel}
                 className='ids-link-stroke ids-link-stroke--primary'
               >
-                Cancel
+                {t('profile.cancelBtn')}
               </Button>
               <Button
                 type='submit'
                 className='ids-link-filled ids-link-filled--primary'
               >
-                Save
+                {t('profile.saveBtn')}
               </Button>
             </>
           )}
@@ -69,4 +74,4 @@ export const FormUi = ({ onSubmit, formFields, mode, onCancel, onInputChange, up
       )}
     </Fragment>
   );
-}
+};
