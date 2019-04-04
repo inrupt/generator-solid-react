@@ -25,74 +25,36 @@ export const useShex = (root: String, documentUri: String) => {
     };
 
     const fillShexJData = useCallback(
-        async (rootShape: Object, document, parentExpression: Object) => {
+        async (rootShape: Object, document) => {
             const shape = shapes.find(shape => shape.id.includes(rootShape.id));
             let expressions = [];
-            let newParentExpression = null;
-
-            for await (let expression of shape.expression.expressions) {
+            if (shape.expression) {
+              for await (let expression of shape.expression.expressions) {
                 expression._formValues = [];
-                if ( typeof expression.valueExpr === 'string') {
-                  const newRootShape = {
-                    parentShapeId: rootShape.id,
-                    id: expression.valueExpr,
-                    predicate: expression.predicate
-                  };
-                  return fillShexJData(newRootShape, document[expression.predicate], shape.expression.expressions);
+                if (typeof expression.valueExpr === 'string') {
+
+                  await fillShexJData({ id: expression.valueExpr }, document[expression.predicate]);
                 }
 
-                for await (let predicateValue of document[expression.predicate] ) {
-                  if (rootShape.parentShapeId) {
-
-                    newParentExpression = parentExpression.find(pre => pre.predicate === rootShape.predicate);
-                    newParentExpression = {
-                      ...newParentExpression,
-                      _formValues: [...newParentExpression._formValues, predicateValue.value]
-                    }
-                    // console.log(newParentExpression, 'new ex');
-                  } else {
-                    expression._formValues.push(predicateValue.value);
-                  }
+                for await (let predicateValue of document[expression.predicate]) {
+                  expression._formValues.push(predicateValue.value);
                 }
 
                 expressions = [...expressions, expression];
-            }
+              }
 
-            if (newParentExpression) {
 
               const newShapes = shapes.map(shape => {
-                if (shape.id.includes(rootShape.parentShapeId)) {
+                if (shape.id.includes(rootShape.id)) {
                   return {
                     ...shape,
-                    expression : shape.expression.expressions.map(sh => {
-                      // console.log(sh.predicate, newParentExpression, 'into other map');
-                      if ( sh.predicate === newParentExpression.predicate) {
-                        return newParentExpression
-                      }
-                      return sh;
-                    }),
+                    expressions,
                   };
                 }
-
-                return shape;
               });
 
-              console.log(newShapes, 'new shapes');
-
-              return { ...shexData, shapes: newShapes };
-
+              setShexData({ ...shexData, shapes: newShapes });
             }
-
-            const newShapes = shapes.map(shape => {
-                if (shape.id.includes(rootShape.id)) {
-                    return {
-                        ...shape,
-                        expressions,
-                    };
-                }
-            });
-
-            return { ...shexData, shapes: newShapes };
         }
     );
 
@@ -105,11 +67,11 @@ export const useShex = (root: String, documentUri: String) => {
         shapes = shexJ.shapes;
 
         if (shapes.length > 0) {
-          const newShex = await fillShexJData(
+          await fillShexJData(
             { id : 'UserProfile'},
             podDocument
           );
-          return setShexData({...shexJ, ...newShex});
+
         }
         setShexData(shexJ);
     });
