@@ -38,9 +38,9 @@ export const useShex = (root: String, documentUri: String) => {
                         rootShape.parentLink || expression.predicate;
 
                     if (formData[idAttribute]) {
-                        if (!Array.isArray(formData[idAttribute].value)) {
+                        if (Array.isArray(formData[idAttribute].value) && formData[idAttribute].value.length === 1 ) {
                           formData[idAttribute] = {
-                            value: [{ predicate: formData[idAttribute].predicate, value: formData[idAttribute].value}]
+                            value: [{ predicate: formData[idAttribute].predicate, value: formData[idAttribute].value[0]}]
                           }
                         }
                         formData[idAttribute] = {
