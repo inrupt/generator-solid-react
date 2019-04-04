@@ -5,6 +5,7 @@ import shexCore from '@shexjs/core';
 
 export const useShex = (root: String, documentUri: String) => {
     const [shexData, setShexData] = useState({});
+    let shapes = [];
 
     const fetchShex = useCallback(async () => {
         const rootShex = await fetch(root, {
@@ -24,27 +25,27 @@ export const useShex = (root: String, documentUri: String) => {
     };
 
     const fillShexJData = useCallback(
-        async (shapes: Array<Object>, shapeId: String, document) => {
-            const shape = shapes.find(shape => shape.id === shapeId);
+        async (shapeId: String, document) => {
+            const shape = shapes.find(shape => shape.id.includes(shapeId));
             let expressions = [];
-            console.log(shape, 'shape');
+
             for await (let expression of shape.expression.expressions) {
                 expression._formValues = [];
-                /* if ( typeof expression.valueExpr === 'string') {
-            // return fillShexJData(expression.valueExpr, expression.predicate, document);
-          } */
+                if ( typeof expression.valueExpr === 'string') {
+                  expression.parentPredicate = expression.predicate;
+                  return fillShexJData(expression.valueExpr, document[expression.predicate]);
+                }
 
-                const predicateValue = await document[expression.predicate];
+                for await (let predicateValue of document[expression.predicate] ) {
+                  expression._formValues.push(predicateValue.value);
+                }
 
-                expression._formValues.push(predicateValue.value);
-
+                
                 expressions = [...expressions, expression];
             }
 
-            // const parentExpresion = {...shape.expression, expressions};
-            // const newShape = {...shape, expression: {...shape.expression, expressions}};
             const newShapes = shapes.map(shape => {
-                if (shape.id === shapeId) {
+                if (shape.id ===  shapeId) {
                     return {
                         ...shape,
                         expressions,
@@ -61,13 +62,16 @@ export const useShex = (root: String, documentUri: String) => {
         const parser = shexParser.construct(window.location.href);
         const podDocument = await fetchDocument();
         const shexJ = shexCore.Util.AStoShExJ(parser.parse(shexString));
-        console.log(newShex, shexJ, 'hello');
-        const newShex = await fillShexJData(
-            shexJ.shapes,
-            'https://localhost:3001/profile#UserProfile',
-            podDocument
-        );
 
+        shapes = shexJ.shapes;
+
+        if (shapes.length > 0) {
+          const newShex = await fillShexJData(
+            'UserProfile',
+            podDocument
+          );
+
+        }
         setShexData(shexJ);
     });
 
