@@ -90,7 +90,7 @@ export class ProfileForm extends Component {
    * onSubmit will send all the updated fields to POD
    * fields that was not updated will be not send it.
    */
-  onSubmit = async (e: Event) => {
+  onSubmit = async (e: Event, successMessage: String) => {
     try {
       e.preventDefault ();
       let node;
@@ -137,11 +137,10 @@ export class ProfileForm extends Component {
       this.setState ({
         formFields: updatedFormField,
         updatedFields: {},
-        formMode: true,
         isLoading: false,
       });
-
-      this.props.toastManager.add (['', 'Profile was updated successfully'], {
+      this.props.exitEditMode();
+      this.props.toastManager.add (['', successMessage], {
         appearance: 'success',
       });
     } catch (error) {
