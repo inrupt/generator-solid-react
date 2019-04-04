@@ -73,6 +73,8 @@ export const useShex = (root: String, documentUri: String) => {
                     }),
                   };
                 }
+
+                return shape;
               });
 
               console.log(newShapes, 'new shapes');
@@ -107,7 +109,7 @@ export const useShex = (root: String, documentUri: String) => {
             { id : 'UserProfile'},
             podDocument
           );
-
+          return setShexData({...shexJ, ...newShex});
         }
         setShexData(shexJ);
     });
