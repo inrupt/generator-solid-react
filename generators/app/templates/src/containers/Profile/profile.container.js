@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from "react-i18next";
+
 import { withToastManager } from 'react-toast-notifications';
 import { LiveUpdate, useWebId } from '@inrupt/solid-react-components';
 import { Header, ProfileContainer, ProfileWrapper } from './profile.style';
@@ -23,6 +25,10 @@ const Profile = ({ toastManager }) => {
         setMode(!mode);
     };
 
+    const exitEditMode = () => {
+      setMode(true);
+    };
+    const { t } = useTranslation();
     return (
         <ProfileWrapper data-testid="profile-component">
             <ProfileContainer>
@@ -36,7 +42,7 @@ const Profile = ({ toastManager }) => {
                                     onClick={onCancel}
                                     data-testid="edit-profile-button"
                                 >
-                                    <FontAwesomeIcon icon="pencil-alt" /> EDIT
+                                    <FontAwesomeIcon icon="pencil-alt" /> {t('profile.edit')}
                                 </button>
                             )}
                             <Image
@@ -47,7 +53,7 @@ const Profile = ({ toastManager }) => {
                                 }}
                             />
                         </Header>
-                        <Form {...{ mode, toastManager, webId, onCancel }} />
+                        <Form {...{ mode, toastManager, webId, onCancel, exitEditMode }} />
                     </LiveUpdate>
                 )}
             </ProfileContainer>
