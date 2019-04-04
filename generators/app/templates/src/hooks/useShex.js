@@ -25,27 +25,64 @@ export const useShex = (root: String, documentUri: String) => {
     };
 
     const fillShexJData = useCallback(
-        async (shapeId: String, document) => {
-            const shape = shapes.find(shape => shape.id.includes(shapeId));
+        async (rootShape: Object, document, parentExpression: Object) => {
+            const shape = shapes.find(shape => shape.id.includes(rootShape.id));
             let expressions = [];
+            let newParentExpression = null;
 
             for await (let expression of shape.expression.expressions) {
                 expression._formValues = [];
                 if ( typeof expression.valueExpr === 'string') {
-                  expression.parentPredicate = expression.predicate;
-                  return fillShexJData(expression.valueExpr, document[expression.predicate]);
+                  const newRootShape = {
+                    parentShapeId: rootShape.id,
+                    id: expression.valueExpr,
+                    predicate: expression.predicate
+                  };
+                  return fillShexJData(newRootShape, document[expression.predicate], shape.expression.expressions);
                 }
 
                 for await (let predicateValue of document[expression.predicate] ) {
-                  expression._formValues.push(predicateValue.value);
+                  if (rootShape.parentShapeId) {
+
+                    newParentExpression = parentExpression.find(pre => pre.predicate === rootShape.predicate);
+                    newParentExpression = {
+                      ...newParentExpression,
+                      _formValues: [...newParentExpression._formValues, predicateValue.value]
+                    }
+                    // console.log(newParentExpression, 'new ex');
+                  } else {
+                    expression._formValues.push(predicateValue.value);
+                  }
                 }
 
-                
                 expressions = [...expressions, expression];
             }
 
+            if (newParentExpression) {
+
+              const newShapes = shapes.map(shape => {
+                if (shape.id.includes(rootShape.parentShapeId)) {
+                  return {
+                    ...shape,
+                    expression : shape.expression.expressions.map(sh => {
+                      // console.log(sh.predicate, newParentExpression, 'into other map');
+                      if ( sh.predicate === newParentExpression.predicate) {
+                        return newParentExpression
+                      }
+                      return sh;
+                    }),
+                  };
+                }
+              });
+
+              console.log(newShapes, 'new shapes');
+
+              return { ...shexData, shapes: newShapes };
+
+            }
+
             const newShapes = shapes.map(shape => {
-                if (shape.id ===  shapeId) {
+                if (shape.id.includes(rootShape.id)) {
                     return {
                         ...shape,
                         expressions,
@@ -67,7 +104,7 @@ export const useShex = (root: String, documentUri: String) => {
 
         if (shapes.length > 0) {
           const newShex = await fillShexJData(
-            'UserProfile',
+            { id : 'UserProfile'},
             podDocument
           );
 
