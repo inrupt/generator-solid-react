@@ -24,74 +24,69 @@ export const useShex = (root: String, documentUri: String) => {
         return document;
     };
 
-    let shexDataG = {};
+    let formData = {};
 
-    const fillShexJData = useCallback(
-        async (rootShape: Object, document) => {
-            const shape = shapes.find(shape => shape.id.includes(rootShape.id));
-            let expressions = [];
-            if (shape.expression) {
-              for await (let expression of shape.expression.expressions) {
-                expression._formValues = [];
-                console.log(shape, rootShape, 'child');
-                if (typeof expression.valueExpr === 'string') {
-                  const newRootShape = {
-                    id: expression.valueExpr,
-                    parentRootId: rootShape.id,
-                    predicate: expression.predicate
-                  };
-                  await fillShexJData(newRootShape, document[expression.predicate]);
-                }
+    const fillShexJData = useCallback(async (rootShape: Object, document) => {
+        const shape = shapes.find(shape => shape.id.includes(rootShape.id));
 
-                for await (let predicateValue of document[expression.predicate]) {
-                  expression._formValues.push(predicateValue.value);
-                  console.log(predicateValue.value);
-                }
+        if (shape.expression) {
+            for await (let expression of shape.expression.expressions) {
+                for await (let predicateValue of document[
+                    expression.predicate
+                ]) {
+                    const idAttribute =
+                        rootShape.parentLink || expression.predicate;
 
-                if (! rootShape.parentRootId) {
-                  expressions = [...expressions, expression];
-                } else {
-                  if (shexDataG.shapes) {
-                    // console.log(shexDataG, 'into');
-                    const newShex = shexDataG.shapes.map(shex => {
-                      if (shex.id.includes(rootShape.parentRootId)) {
-                        // console.log(shex);
-                        return {
-                          ...shex,
-                          expression: {
-                            expressions: shex.expression.expressions.map(exp => {
-                              // if (exp.predicate === 'http://www.w3.org/2006/vcard/ns#hasEmail') console.log(exp, expression);
-                              if (exp.predicate === rootShape.predicate) {
-                                return { ...exp, _formValues: [...exp._formValues, ...expression._formValues]};
-                              }
-                              return exp;
-                            })
+                    if (formData[idAttribute]) {
+                        if (!Array.isArray(formData[idAttribute].value)) {
+                          formData[idAttribute] = {
+                            value: [{ predicate: formData[idAttribute].predicate, value: formData[idAttribute].value}]
                           }
+                        }
+                        formData[idAttribute] = {
+                            ...formData[idAttribute],
+                            value: [
+                              ...formData[idAttribute].value,
+                              {
+                                predicate: expression.predicate,
+                                value: predicateValue.value
+                              }
+                            ],
                         };
-                      }
-                      return shex;
-                    });
-                    // console.log(newShex, 'new');
-                    shexDataG = { ...shexData, shapes: newShex };
-                  }
+                    } else {
+                        /// const value = expression.valueExpr === 'string' ?
+                        formData = {
+                            ...formData,
+                            [idAttribute]: {
+                                link:
+                                    typeof expression.valueExpr === 'string' ||
+                                    null,
+                                predicate: expression.predicate,
+                                value: predicateValue.value,
+                            },
+                        };
+                    }
                 }
-              }
 
-
-              const newShapes = shapes.map(shape => {
-                if (shape.id.includes(rootShape.id)) {
-                  return {
-                    ...shape,
-                    expressions,
-                  };
+                if (typeof expression.valueExpr === 'string') {
+                    const newRootShape = {
+                        id: expression.valueExpr,
+                        parentRootId: rootShape.id,
+                        predicate: expression.predicate,
+                        parentLink:
+                            formData[expression.predicate] &&
+                            formData[expression.predicate].value,
+                    };
+                    await fillShexJData(
+                        newRootShape,
+                        document[expression.predicate]
+                    );
                 }
-                return shape;
-              });
-
-              return shexDataG = { ...shexData, shapes: newShapes };
             }
+
+            return formData;
         }
-    );
+    });
 
     const toShexJS = useCallback(async () => {
         const shexString = await fetchShex();
@@ -102,13 +97,12 @@ export const useShex = (root: String, documentUri: String) => {
         shapes = shexJ.shapes;
 
         if (shapes.length > 0) {
-          const newShex = await fillShexJData(
-            { id : 'UserProfile'},
-            podDocument
-          );
+            const newShex = await fillShexJData(
+                { id: 'UserProfile' },
+                podDocument
+            );
 
-          setShexData(newShex);
-
+            setShexData(newShex);
         }
         setShexData(shexJ);
     });
