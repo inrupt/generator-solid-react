@@ -62,7 +62,7 @@ export const useShex = (root: String, documentUri: String) => {
                                     typeof expression.valueExpr === 'string' ||
                                     null,
                                 predicate: expression.predicate,
-                                value: predicateValue.value,
+                                value: [predicateValue.value],
                             },
                         };
                     }
