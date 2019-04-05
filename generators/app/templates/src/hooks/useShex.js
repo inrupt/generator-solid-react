@@ -40,11 +40,11 @@ export const useShex = (root: String, documentUri: String) => {
         return values;
     };
 
-    const isSelect = async (id) => {
+    const isSelect = (id) => {
       const currentShape = shapes.find(shape =>
-        shape.id === id
+        shape.id === id && shape.values
       );
-      return currentShape && currentShape.values || null;
+      return currentShape;
     }
 
     const fillShexJData = async (rootShape: Object, document) => {
@@ -67,8 +67,7 @@ export const useShex = (root: String, documentUri: String) => {
                 );
 
                 for await (let value of values) {
-                    const optionsSelect = !isSelect(currentExpression.valueExpr);
-                    if (isLink(currentExpression.valueExpr) && !optionsSelect) {
+                    if (isLink(currentExpression.valueExpr)) {
                       linksValues = await fillShexJData(
                         {
                           id: currentExpression.valueExpr,
@@ -76,8 +75,11 @@ export const useShex = (root: String, documentUri: String) => {
                         },
                         document[currentExpression.predicate]
                       );
-                    } else {
-                      linksValues = optionsSelect;
+                      const optionsSelect = isSelect(currentExpression.valueExpr);
+
+                      if (optionsSelect) {
+                        linksValues = optionsSelect.values;
+                      }
                     }
                     // console.log(value, currentExpression);
                     const idAttribute = currentExpression.predicate;
