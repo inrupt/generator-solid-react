@@ -78,12 +78,18 @@ export const useShex = (root: String, documentUri: String) => {
                       const optionsSelect = isSelect(currentExpression.valueExpr);
 
                       if (optionsSelect) {
-                        linksValues = optionsSelect.values;
+                        linksValues = optionsSelect.values.map(option => {
+                          if (option.value === value) {
+                            return {
+                              value: option.value,
+                              selected: true
+                            }
+                          }
+                          return option;
+                        });
                       }
                     }
-                    // console.log(value, currentExpression);
                     const idAttribute = currentExpression.predicate;
-                    // console.log(value, 'value', currentExpression);
                     formData = {
                         ...formData,
                         [idAttribute]: {
