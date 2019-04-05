@@ -49,4 +49,13 @@
     vcard:postal-code xsd:string ?
   }
 
-  <#vcard_country-name> xsd:string MINLENGTH 2
+  <#vcard_country-name> [
+     "Afghanistan"
+     "Belgium"
+     "Costa Rica"
+     "France"
+     "日本"
+     "United Kingdom"
+     "United States"
+     "Zimbabwe"
+  ]

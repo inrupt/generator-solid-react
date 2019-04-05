@@ -19,10 +19,8 @@ const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 const Profile = ({ toastManager }) => {
     const webId = useWebId();
     const [mode, setMode] = useState(true);
-    const { shexData } = useShex('/shapes/userProfile.shex', webId);
-
-    console.log(shexData, 'Shex');
-
+    const { shexData, formValues } = useShex('/shapes/userProfile.shex', webId);
+    console.log(formValues, shexData);
     const onCancel = () => {
         setMode(!mode);
     };
