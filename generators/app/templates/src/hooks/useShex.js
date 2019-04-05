@@ -1,15 +1,14 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import data from '@solid/query-ldflex';
 import shexParser from '@shexjs/parser';
 import shexCore from '@shexjs/core';
 
-export const useShex = (root: String, documentUri: String) => {
+export const useShex = (fileShex: String, documentUri: String, shapeName: String) => {
     const [shexData, setShexData] = useState({});
-    const [formValues, setFormValues] = useState({});
     let shapes = [];
 
     const fetchShex = useCallback(async () => {
-        const rootShex = await fetch(root, {
+        const rootShex = await fetch(fileShex, {
             headers: {
                 'Content-Type': 'text/plain',
             },
@@ -29,8 +28,6 @@ export const useShex = (root: String, documentUri: String) => {
         return typeof valueExpr === 'string' || null;
     };
 
-    let formData = {};
-
     const getNodeValues = async (predicate, document) => {
         const values = [];
 
@@ -47,49 +44,49 @@ export const useShex = (root: String, documentUri: String) => {
       return currentShape;
     }
 
-    const fillShexJData = async (rootShape: Object, document) => {
-        const currentShape = shapes.find(shape =>
-            shape.id.includes(rootShape.id)
-        );
+    const selectDefaultOption = (options, defaultValue) => {
+      return options.values.map(option => {
+        if (option.value === defaultValue) {
+          return {
+            value: option.value,
+            selected: true
+          }
+        }
+        return option;
+      });
+    }
+
+    const fillFormData = async (rootShape: Object, document) => {
+        const currentShape = shapes.find(shape => shape.id.includes(rootShape.id));
         let formData = {};
         let linksValues = [];
 
         if (currentShape && currentShape.expression) {
-            const {
-                expression: { expressions },
-            } = currentShape;
+            const { expression: { expressions } } = currentShape;
 
             for await (let currentExpression of expressions) {
-
-                const values = await getNodeValues(
-                    currentExpression,
-                    document[currentExpression.predicate]
-                );
+                const values = await getNodeValues(currentExpression, document[currentExpression.predicate]);
 
                 for await (let value of values) {
+
                     if (isLink(currentExpression.valueExpr)) {
-                      linksValues = await fillShexJData(
+                      linksValues = await fillFormData(
                         {
                           id: currentExpression.valueExpr,
                           parentPredicate: currentExpression.predicate,
                         },
                         document[currentExpression.predicate]
                       );
+
                       const optionsSelect = isSelect(currentExpression.valueExpr);
 
                       if (optionsSelect) {
-                        linksValues = optionsSelect.values.map(option => {
-                          if (option.value === value) {
-                            return {
-                              value: option.value,
-                              selected: true
-                            }
-                          }
-                          return option;
-                        });
+                        linksValues = selectDefaultOption(optionsSelect, value);
                       }
                     }
+
                     const idAttribute = currentExpression.predicate;
+
                     formData = {
                         ...formData,
                         [idAttribute]: {
@@ -105,73 +102,6 @@ export const useShex = (root: String, documentUri: String) => {
         }
     };
 
-    /* const fillShexJData = useCallback(async (rootShape: Object, document) => {
-        const shape = shapes.find(shape => shape.id.includes(rootShape.id));
-
-        if (shape.expression) {
-            for await (let expression of shape.expression.expressions) {
-
-              if (isLink(expression.valueExpr)) {
-                  const newRootShape = {
-                    id: expression.valueExpr,
-                    parentRootId: rootShape.id,
-                    predicate: expression.predicate,
-                    parentLink:
-                      formData[expression.predicate] &&
-                      formData[expression.predicate].value,
-                  };
-                  await fillShexJData(
-                    newRootShape,
-                    document[expression.predicate]
-                  );
-                }
-
-                for await (let predicateValue of document[expression.predicate]) {
-                    const idAttribute =
-                        rootShape.parentLink || expression.predicate;
-
-                    if (formData[idAttribute]) {
-                        if (
-                            Array.isArray(formData[idAttribute].value) &&
-                            formData[idAttribute].value.length === 1
-                        ) {
-                            formData[idAttribute] = {
-                                value: [
-                                    {
-                                        link: isLink(expression.valueExpr) ,
-                                        predicate:
-                                            formData[idAttribute].predicate,
-                                        value: formData[idAttribute].value[0],
-                                    },
-                                ],
-                            };
-                        }
-                        formData[idAttribute] = {
-                            ...formData[idAttribute],
-                            value: [
-                                ...formData[idAttribute].value,
-                                {
-                                    predicate: expression.predicate,
-                                    value: predicateValue.value,
-                                },
-                            ],
-                        };
-                    } else {
-                        formData = {
-                            ...formData,
-                            [idAttribute]: {
-                                link: isLink(expression.valueExpr),
-                                predicate: expression.predicate,
-                                value: [predicateValue.value],
-                            },
-                        };
-                    }
-                }
-            }
-
-            return formData;
-        }
-    }); */
 
     const toShexJS = useCallback(async () => {
         const shexString = await fetchShex();
@@ -182,21 +112,19 @@ export const useShex = (root: String, documentUri: String) => {
         shapes = shexJ.shapes;
 
         if (shapes.length > 0) {
-            const podResult = await fillShexJData(
-                { id: 'UserProfile' },
+            const formData = await fillFormData(
+                { id: shapeName },
                 podDocument
             );
-            setFormValues(podResult);
+            setShexData({ shexJ, formData });
         }
-        setShexData(shexJ);
     });
 
     useEffect(() => {
         toShexJS();
-    }, [root, documentUri]);
+    }, [fileShex, documentUri]);
 
     return {
-        shexData,
-        formValues,
+        shexData
     };
 };
