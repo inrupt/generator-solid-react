@@ -4,14 +4,33 @@ import { withTranslation } from "react-i18next";
 import { NavBar, Footer } from "@components";
 import { withWebId } from "@inrupt/solid-react-components";
 import { LanguageDropdown } from "@util-components";
+import styled from "styled-components";
+
+
+const Container = styled.div`
+height: 100%;
+position: relative;
+`;
+
+const FooterContainer = styled.div`
+position:absolute;
+bottom:0;
+width: 100%;
+`
+
 
 const NotLoggedInLayout = props => {
   const { component: Component, webId, ...rest } = props;
+  const ComponentWrapper = styled(Component)`
+    padding-bottom: 60px;
+    height: 100%;
+    padding-top: 60px;
+  `;
   return !webId ? (
     <Route
       {...rest}
       component={matchProps => (
-        <Fragment>
+        <Container>
           <NavBar
             {...matchProps}
             toolbar={[
@@ -21,9 +40,11 @@ const NotLoggedInLayout = props => {
               }
             ]}
           />
-          <Component {...matchProps}  className={'contentApp'} />
-          <Footer></Footer>
-        </Fragment>
+          <ComponentWrapper {...matchProps}  />
+          <FooterContainer>
+            <Footer />
+          </FooterContainer>
+        </Container>
       )}
     />
   ) : (
