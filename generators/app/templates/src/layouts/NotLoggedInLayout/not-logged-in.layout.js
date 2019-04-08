@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import { NavBar, Footer } from "@components";
