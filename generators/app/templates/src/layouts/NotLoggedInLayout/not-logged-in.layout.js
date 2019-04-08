@@ -42,7 +42,7 @@ const NotLoggedInLayout = props => {
           />
           <ComponentWrapper {...matchProps}  />
           <FooterContainer>
-            <Footer></Footer>
+            <Footer />
           </FooterContainer>
         </Container>
       )}

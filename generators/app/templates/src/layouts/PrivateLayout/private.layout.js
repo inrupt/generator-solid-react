@@ -38,7 +38,7 @@ const PrivateLayout = ({ routes, ...rest }) => {
             </Switch>
           </Content>
           <FooterContainer>
-            <Footer/>
+            <Footer />
           </FooterContainer>
         </Container>
       )}
