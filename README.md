@@ -156,3 +156,8 @@ Once those two steps are complete then the new language should be compatible wit
 Once your application is ready, you can deploy it to a server of your choice.
 
 It is ***highly recommended*** that you ensure your server is utilizing TLS. If not, you may encounter security-related errors in the browser, particular in Google Chrome.
+
+----
+
+Testing CI Release
+
