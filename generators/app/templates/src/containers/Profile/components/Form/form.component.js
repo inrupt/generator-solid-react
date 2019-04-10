@@ -29,7 +29,7 @@ export const FormUi = ({
     const { t } = useTranslation();
     return (
         <Fragment>
-            <Form onSubmit={onSubmit}>
+            <Form onSubmit={e => onSubmit(e, t('profile.updateSuccess'))}>
                 {formFields &&
                     formFields.map(item => (
                         <Input

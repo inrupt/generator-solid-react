@@ -21,6 +21,10 @@ const Profile = ({ toastManager }) => {
     const webId = useWebId();
     const [mode, setMode] = useState(true);
 
+  const exitEditMode = () => {
+    setMode(true);
+  };
+
     const onCancel = () => {
         setMode(!mode);
     };
@@ -50,7 +54,7 @@ const Profile = ({ toastManager }) => {
                                 }}
                             />
                         </Header>
-                        <Form {...{ mode, toastManager, webId, onCancel }} />
+                            <Form {...{ mode, toastManager, webId, onCancel, exitEditMode }} />
                     </LiveUpdate>
                 )}
             </ProfileContainer>
