@@ -166,6 +166,24 @@ const WelcomePageContent = props => {
               </li>
             </ul>
           </Trans>
+          <h3>{t('welcome.fairUsageTitle')}</h3>
+          <p>{t('welcome.fairUsageText')}</p>
+          <Trans i18nKey='welcome.fairUsageExamples'>
+            <ul>
+              <li>If your application is Solid compatible, you can use the Solid logo to indicate that. If not, please don’t misrepresent yourself by using the Solid logo.</li>
+              <li>Please don't use the inrupt name as a part of your company name, website name, domain name, service name, or app name. Don't use our logo as your own or modify it to fit into your own logo.</li>
+              <li>If you’d like, you may use the inrupt logo to indicate that your application is powered by inrupt’s SDK, but please make sure the context is clear to the user. Your own logo should always be larger than inrupt’s logo, for example.</li>
+            </ul>
+          </Trans>
+          <p>{t('welcome.fairUsageSummary')}</p>
+          <h3>{t('welcome.contactUsTitle')}</h3>
+          <Trans i18nKey={'welcome.contactUsText'}>
+            <p>
+              If you have additional questions about the use of the React SDK for Solid, the Application Generator, or inrupt’s brand, please contact
+              <a href='mailto:support@inrupt.com'>support@inrupt.com</a>.
+            </p>
+          </Trans>
+
         </WelcomeDetail>
       </WelcomeCard>
     </WelcomeWrapper>
