@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { media } from '../../../utils';
 
 export const ToasterWrapper = styled.section`
+  //Temporary fix to a z-index problem with fixed headers
+  margin-top: 60px;
   min-width: 310px;
   &.toaster-wrap--primary {
     box-sizing: border-box;
