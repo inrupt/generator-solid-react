@@ -4,7 +4,7 @@ import { media } from '../../../utils';
 
 export const DropdownContainer = styled.div`
   position: relative;
-  height: 100%;
+  height: auto;
   width: 100%;
   padding: 0 !important;
  
