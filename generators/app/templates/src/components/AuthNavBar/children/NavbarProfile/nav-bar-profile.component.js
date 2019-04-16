@@ -50,7 +50,7 @@ class NavBarProfile extends Component {
         }
     };
     render() {
-        const { t, img, open, customClass, name } = this.props;
+        const { t, img, open, customClass } = this.props;
         const { imageLoaded } = this.state;
 
         const profileOpts = [
@@ -82,7 +82,6 @@ class NavBarProfile extends Component {
                     />
                 </ImageContainer>
                 {!imageLoaded && <LoadingImage show={true} />}
-                <UserName>{name}</UserName>
             </Dropdown>
         ) : (
             <div />
