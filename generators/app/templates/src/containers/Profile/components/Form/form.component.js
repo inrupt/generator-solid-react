@@ -31,29 +31,32 @@ export const FormUi = ({
         <Fragment>
             <Form onSubmit={e => onSubmit(e, t('profile.updateSuccess'))}>
                 {formFields &&
-                    formFields.map(item => (
+                    formFields.map(item => {
+                      console.log(item);
+                      return (
                         <Input
-                            key={item.label}
-                            placeholder={item.label}
-                            name={item.nodeBlank || item.property}
-                            value={getProfileValue(updatedFields, item)}
-                            onChange={onInputChange}
-                            icon={item.icon}
-                            readOnly={mode}
-                            required={item.required}
-                            data-nodeparenturi={item.nodeParentUri}
-                            data-nodeblank={item.nodeBlank}
-                            data-label={item.label}
-                            data-icon={item.icon}
-                            type={'text'}
-                            onInvalid={e =>
-                                e.target.setCustomValidity(
-                                    t('profile.nameRequired')
-                                )
-                            }
-                            onInput={e => e.target.setCustomValidity('')}
+                          key={item.key}
+                          placeholder={t(`profile.${item.key}`)}
+                          name={item.nodeBlank || item.property}
+                          value={getProfileValue(updatedFields, item)}
+                          onChange={onInputChange}
+                          icon={item.icon}
+                          readOnly={mode}
+                          required={item.required}
+                          data-nodeparenturi={item.nodeParentUri}
+                          data-nodeblank={item.nodeBlank}
+                          data-label={item.label}
+                          data-icon={item.icon}
+                          type={'text'}
+                          onInvalid={e =>
+                            e.target.setCustomValidity(
+                              t('profile.nameRequired')
+                            )
+                          }
+                          onInput={e => e.target.setCustomValidity('')}
                         />
-                    ))}
+                      )
+                    })}
                 <FullGridSize>
                     {!mode && (
                         <>
