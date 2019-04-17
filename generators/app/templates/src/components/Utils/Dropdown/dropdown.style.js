@@ -21,7 +21,6 @@ export const DropdownMain = styled.button`
   position: relative;
   border: none;
   background: none;
-  height: 100%;
   width: 100%;
   padding: 0 16px;
   margin: 5px 0;
@@ -31,6 +30,7 @@ export const DropdownMain = styled.button`
   &:focus {
     outline: none;
   } 
+  ${media.desktop`height: 100%;`}
 `;
 
 export const DropdownItemContainer = styled.div`
@@ -51,6 +51,7 @@ export const DropdownItemContainer = styled.div`
   }
   .profile-list & {
     position: relative;
+    top: 0;
   }
 `;
 
