@@ -1,5 +1,38 @@
 # Solid React Application Generator
 
+## 0.4.2 (April 17, 2019)
+
+#### Solid React Application Base
+
+##### Updated
+* Changed favicon
+* Version number increment for the Solid Style Guide
+* Changed the name of the SDK across the site to "Solid React SDK by inrupt"
+
+##### Fixed
+* Form placeholder text now properly translates to Spanish
+* Responsive top navbar is more consistent in when it appears
+* Language selection dropdown now appears in the responsive top navbar when the user is not logged in
+* [FireFox] Responsive top navbar menu hover state is position properly
+* [Safari] Responsive top navbar hamburger menu list now displays properly
+
+
+## 0.4.1 (April 4, 2019)
+
+#### Solid React Application Base
+
+##### Added
+- Profile page now receives updates in real time. If you change your profile elsewhere, such as the data browser, the profile page will immediately be updated to reflect those changes
+- Language Selection dropdown now includes flag icons
+
+##### Removed
+- Welcome page no longer has a logout button
+
+##### Fixed
+- Max image size is now displayed in the error message displayed when the size is exceeded
+- Profile image in top nav is now updated immediately when a new profile image is uploaded
+- Footer now has a mobile-friendly display when resolution is too low
+
 ## 0.4.0 (March 20, 2019)
 
 #### Solid React Application Base
