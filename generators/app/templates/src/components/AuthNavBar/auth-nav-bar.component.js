@@ -29,7 +29,7 @@ const AuthNavBar = props => {
           id: "language"
         },
         {
-          component: () => <NavBarProfile {...props} />,
+          component: ({open, customClass}) => <NavBarProfile {...props} open={open} customClass={customClass} />,
           id: "profile"
         }
       ]}

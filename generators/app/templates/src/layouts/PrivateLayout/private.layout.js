@@ -1,27 +1,46 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { withAuthorization, LiveUpdate } from "@inrupt/solid-react-components";
 import { AuthNavBar, Footer } from "@components";
+import styled from "styled-components";
+
+const Container = styled.div`
+min-height: 100%;
+position: relative;
+`;
+
+const FooterContainer = styled.div`
+position:absolute;
+bottom:0;
+width: 100%;
+`;
+
+const Content = styled.div`
+padding-bottom: 60px;
+height: 100%;
+`;
 
 const PrivateLayout = ({ routes, ...rest }) => {
   return (
     <Route
       {...rest}
       component={matchProps => (
-        <Fragment>
+        <Container>
           <LiveUpdate>
             <AuthNavBar {...matchProps} />
           </LiveUpdate>
-          <Fragment>
+          <Content>
             <Switch>
               {routes.map(route => (
                 <Route key={route.id} {...route} exact />
               ))}
               <Redirect to="/404" />
             </Switch>
-          </Fragment>
-          <Footer></Footer>
-        </Fragment>
+          </Content>
+          <FooterContainer>
+            <Footer />
+          </FooterContainer>
+        </Container>
       )}
     />
   );

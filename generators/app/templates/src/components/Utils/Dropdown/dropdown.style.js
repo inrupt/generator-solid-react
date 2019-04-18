@@ -1,27 +1,36 @@
 import styled from "styled-components";
 
+import { media } from '../../../utils';
+
 export const DropdownContainer = styled.div`
   position: relative;
-  height: 100%;
+  height: auto;
   width: 100%;
   padding: 0 !important;
+ 
+ 
+  .icon {
+    margin-right: 5px;
+    font-size: 1rem;
+    color: #7C4DFF;
+    ${media.desktop`display: none; path { display: none }`}
+  }
 `;
 
 export const DropdownMain = styled.button`
   position: relative;
   border: none;
   background: none;
-  height: 100%;
   width: 100%;
   padding: 0 16px;
-  margin: 0;
+  margin: 5px 0;
   display: flex;
   align-items: center;
-  justify-content: center;
 
   &:focus {
     outline: none;
-  }
+  } 
+  ${media.desktop`height: 100%;`}
 `;
 
 export const DropdownItemContainer = styled.div`
@@ -37,8 +46,12 @@ export const DropdownItemContainer = styled.div`
     right: 0;
     height: auto;
     background: #fff;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.25s ease-in-out;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  .profile-list & {
+    position: relative;
+    top: 0;
   }
 `;
 

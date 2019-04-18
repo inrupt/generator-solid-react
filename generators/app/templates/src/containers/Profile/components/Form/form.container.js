@@ -143,6 +143,7 @@ export class ProfileForm extends Component {
       this.props.toastManager.add (['', successMessage], {
         appearance: 'success',
       });
+      
     } catch (error) {
       this.props.toastManager.add (['Error', error.message], {
         appearance: 'error',

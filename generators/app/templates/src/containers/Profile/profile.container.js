@@ -21,13 +21,14 @@ const Profile = ({ toastManager }) => {
     const webId = useWebId();
     const [mode, setMode] = useState(true);
 
+  const exitEditMode = () => {
+    setMode(true);
+  };
+
     const onCancel = () => {
         setMode(!mode);
     };
 
-    const exitEditMode = () => {
-      setMode(true);
-    };
     const { t } = useTranslation();
     return (
         <ProfileWrapper data-testid="profile-component">
@@ -42,7 +43,8 @@ const Profile = ({ toastManager }) => {
                                     onClick={onCancel}
                                     data-testid="edit-profile-button"
                                 >
-                                    <FontAwesomeIcon icon="pencil-alt" /> {t('profile.edit')}
+                                    <FontAwesomeIcon icon="pencil-alt" />{' '}
+                                    {t('profile.edit')}
                                 </button>
                             )}
                             <Image
