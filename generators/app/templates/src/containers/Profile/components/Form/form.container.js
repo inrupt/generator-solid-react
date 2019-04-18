@@ -137,7 +137,6 @@ export class ProfileForm extends Component {
       this.setState ({
         formFields: updatedFormField,
         updatedFields: {},
-        formMode: true,
         isLoading: false,
       });
       this.props.exitEditMode();

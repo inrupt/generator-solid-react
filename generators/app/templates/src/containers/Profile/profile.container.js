@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 import { withToastManager } from 'react-toast-notifications';
 import { LiveUpdate, useWebId } from '@inrupt/solid-react-components';
@@ -28,6 +28,7 @@ const Profile = ({ toastManager }) => {
     const onCancel = () => {
         setMode(!mode);
     };
+
     const { t } = useTranslation();
     return (
         <ProfileWrapper data-testid="profile-component">
@@ -54,7 +55,7 @@ const Profile = ({ toastManager }) => {
                                 }}
                             />
                         </Header>
-                            <Form {...{ mode, toastManager, webId, onCancel, exitEditMode }} />
+                        <Form {...{ mode, toastManager, webId, onCancel, exitEditMode }} />
                     </LiveUpdate>
                 )}
             </ProfileContainer>

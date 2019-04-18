@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react';
 import { Button, Form, FullGridSize, WebId } from '../../profile.style';
 import { Input } from '@util-components';
-import { useTranslation } from 'react-i18next';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const FormUi = ({
     onSubmit,
