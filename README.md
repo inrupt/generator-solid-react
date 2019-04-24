@@ -1,12 +1,12 @@
 # Solid React Application Generator
 Based on Facebook's <a href="https://github.com/facebookincubator/create-react-app" target="_blank">Create React App</a>.
 
-Application Generator for [Solid](https://solid.inrupt.com) React applications. Part of the [React SDK for Solid](https://github.com/inrupt-inc/solid-react-sdk).
+Application Generator for [Solid](https://solid.inrupt.com) React applications. Part of the [Solid React SDK by inrupt](https://github.com/inrupt/solid-react-sdk).
 
 ## External Dependencies
 
-* [Solid React Components](https://github.com/Inrupt-inc/solid-react-components)
-* [Solid Atomic Style Guide](https://design.inrupt.com)
+* [Solid React Components](https://github.com/inrupt/solid-react-components)
+* [Solid Style Guide by inrupt](https://design.inrupt.com)
 * [LDFlex](https://github.com/solid/query-ldflex)
 * [React Toast Notifications](https://jossmac.github.io/react-toast-notifications/)
 * [Styled Components](https://www.styled-components.com)
@@ -40,13 +40,13 @@ npm install -g @inrupt/generator-solid-react
 ## Usage
 Once the generator is installed, you can create a new application with just a few steps.
 
-1. In a console window, navigate to the desired parent folder of the new application
-2. Use the command ``` yo @inrupt/solid-react ```
+1. In a console window, navigate to the desired parent folder of the new application.
+2. Use the command: ``` yo @inrupt/solid-react ```
 3. You will be prompted to set:
- 1. An application name. This will also be the name of the new folder in which the new application lives
- 2. A version number
- 3. Whether the application is private or public
-4. Navigate into the new folder
+   1. An application name. This will also be the name of the new folder in which the new application lives.
+   2. A version number.
+   3. Whether the application is private or public.
+4. Navigate into the new folder.
 5. If you would like to start the application, simply run ``` npm run start ``` in the new folder, otherwise you can begin editing and writing your application!
 
 Note: We have noticed an error is sometimes thrown when the generator tries to install one of the dependencies of application. If this occurs, try installing [Git](https://git-scm.com/downloads) and then recreating your application.
@@ -59,11 +59,11 @@ Using a generator accelerates application development. You don't have to worry a
 
 We have included integrations with essential libraries, as well as pages, routes, and components that are both useful in most Solid applications (like login pages) but also serve as example code to demonstrate how to interface with Solid and [Linked Data](https://solid.inrupt.com/docs/intro-to-linked-data).
 
-The generated application also incorporates our [Atomic Style Guide for Solid](https://design.inrupt.com/atomic-core) (source available [here](https://github.com/inrupt-inc/solid-style-guide)), featuring a nice integration with [Styled Components](https://www.styled-components.com).
+The generated application also incorporates our [Solid Style Guide by inrupt](https://design.inrupt.com) (source available [here](https://github.com/inrupt/solid-style-guide)), featuring a nice integration with [Styled Components](https://www.styled-components.com).
 
 ## The Solid React Application
 
-Once you've [run the generator](#installation-and-usage) and created your starter application, you'll have a site with some basic functionality and style guide integration. As the SDK is continually evolving, take a look at the [React SDK for Solid](https://github.com/inrupt-inc/solid-react-sdk) [Release Timeline](https://github.com/Inrupt-inc/solid-react-sdk/tree/master#release-timeline) for what has been implemented and what is currently planned.
+Once you've [run the generator](#installation-and-usage) and created your starter application, you'll have a site with some basic functionality and style guide integration. As the SDK is continually evolving, take a look at the [Release Timeline](https://github.com/inrupt/solid-react-sdk/tree/master#release-timeline) for what has been implemented and what is currently planned.
 
 If you would like to add your own look and feel, there are two options. First, you can override the styles from the style guide on demand. A list of the classes and example code can be found on the github page. Second, you could remove the style guide entirely, by removing the dependency from npm / package.json. Note if you do this, the application will lose almost all of its styling, and will need work to look "right" again.
 
