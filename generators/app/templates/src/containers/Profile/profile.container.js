@@ -3,9 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
 
 import { withToastManager } from 'react-toast-notifications';
-import { LiveUpdate, useWebId } from '@inrupt/solid-react-components';
+import {
+    LiveUpdate,
+    useWebId,
+    ShexFormBuilder,
+} from '@inrupt/solid-react-components';
 import { Header, ProfileContainer, ProfileWrapper } from './profile.style';
 import { Image, Form } from './components';
+import './profile-shex-form.css';
 
 const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 
@@ -19,33 +24,26 @@ const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 
 const Profile = ({ toastManager }) => {
     const webId = useWebId();
-    const [mode, setMode] = useState(true);
+    const { t, i18n } = useTranslation();
 
-  const exitEditMode = () => {
-    setMode(true);
-  };
-
-    const onCancel = () => {
-        setMode(!mode);
+    const successCallback = () => {
+        toastManager.add(['Success', t('profile.successCallback')], {
+            appearance: 'success',
+        });
     };
-    const { t } = useTranslation();
+
+    const errorCallback = e => {
+        toastManager.add(['Error', t('profile.errorCallback')], {
+            appearance: 'error',
+        });
+    };
+
     return (
         <ProfileWrapper data-testid="profile-component">
             <ProfileContainer>
                 {webId && (
                     <LiveUpdate subscribe={webId.replace(/#.*/, '')}>
                         <Header>
-                            {mode && (
-                                <button
-                                    type="button"
-                                    className="button edit-button"
-                                    onClick={onCancel}
-                                    data-testid="edit-profile-button"
-                                >
-                                    <FontAwesomeIcon icon="pencil-alt" />{' '}
-                                    {t('profile.edit')}
-                                </button>
-                            )}
                             <Image
                                 {...{
                                     webId,
@@ -54,7 +52,28 @@ const Profile = ({ toastManager }) => {
                                 }}
                             />
                         </Header>
-                            <Form {...{ mode, toastManager, webId, onCancel, exitEditMode }} />
+                        <ShexFormBuilder
+                            {...{
+                                documentUri: webId,
+                                shexUri:
+                                    'https://jpablo.solid.community/public/shapes/profile.shex',
+                                theme: {
+                                    form: 'shexForm',
+                                    shexPanel: 'shexPanel',
+                                    shexRoot: 'shexRoot',
+                                    deleteButton:
+                                        'deleteButton ids-button-stroke ids-button-stroke--secondary',
+                                    inputContainer: 'inputContainer',
+                                    addButtonStyle:
+                                        'addButton ids-button-stroke ids-button-stroke--secondary',
+                                },
+                                languageTheme: {
+                                    language: 'en',
+                                },
+                                successCallback,
+                                errorCallback,
+                            }}
+                        />
                     </LiveUpdate>
                 )}
             </ProfileContainer>

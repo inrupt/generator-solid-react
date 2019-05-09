@@ -68,6 +68,8 @@
     }
   },
   "profile": {
+    "successCallback": "Form submitted successfully",
+    "errorCallback": "Error submitting form",
     "edit": "EDIT",
     "cancelBtn": "Cancel",
     "saveBtn": "Save",

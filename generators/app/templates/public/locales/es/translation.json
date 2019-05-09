@@ -68,6 +68,8 @@
     }
   },
   "profile": {
+    "successCallback": "Formulario enviado correctamente",
+    "errorCallback": "Ha ocurrido un error al enviar el formulario",
     "edit": "EDITAR",
     "cancelBtn": "Cancelar",
     "saveBtn": "Guardar",

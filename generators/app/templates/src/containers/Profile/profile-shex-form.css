@@ -1,0 +1,50 @@
+.shexForm {
+    border: solid #cacaca 1px !important;
+    background: #f9f9f9;
+    box-sizing: border-box;
+    padding: 0 12px;
+}
+
+.shexPanel {
+    border: solid #cacaca 1px;
+    background: #ffffff;
+    box-sizing: border-box;
+    padding: 12px;
+    position: relative;
+}
+
+.shexRoot {
+    border: none;
+    background: transparent;
+}
+
+.inputContainer{
+  padding: 12px;
+}
+
+.deleteButton{
+  margin: 0 4px 0 12px !important;
+  position: relative;
+  float: right;
+  width: 100px !important;
+  color: #fb4a3e !important;
+  border-color: #fb4a3e !important;
+}
+
+.deleteButton:hover{
+  background: rgba(251, 74, 62,.8) !important;
+  color: #fff !important;
+}
+
+.addButton {
+  width: 200px !important;
+  color: rgb(145,194,250) !important;
+  border-color: rgb(145,194,250) !important;
+  background: #fff !important;
+  padding: 5px 30px !important;
+}
+
+.addButton:hover{
+  background: rgba(145,194,250,.8) !important;
+  color: #fff !important;
+}
