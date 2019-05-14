@@ -74,17 +74,16 @@ export const FullGridSize = styled.div`
 `;
 
 export const WebId = styled.div`
-    padding: 20px 40px;
-
-    &:before {
-        background-color: #d8d8d8;
-        display: block;
-        content: '';
-        height: 1px;
-        width: 100%;
-        margin-bottom: 25px;
+    padding: 20px 40px 0px 40px;
+    position: relative;
+    &:after{
+      background-color: #d8d8d8;
+    display: block;
+    content: "";
+    height: 1px;
+    width: 100%;
+    margin: 25px 0 0 0;
     }
-
     a {
         display: inline-block;
         word-break: break-all;
@@ -93,9 +92,11 @@ export const WebId = styled.div`
 `;
 
 export const ShexForm = styled.div`
+border: solid #cacaca 1px;
+background: #f9f9f9;
     & .shexForm {
-        border: solid #cacaca 1px;
-        background: #f9f9f9;
+        border: none;
+        background: transparent;
         box-sizing: border-box;
         padding: 0 12px;
     }
@@ -127,7 +128,7 @@ export const ShexForm = styled.div`
     }
 
     & .addButton {
-        width: 200px;
+        width: 210px;
         color: rgb(145, 194, 250);
         border-color: rgb(145, 194, 250);
         background: #fff;

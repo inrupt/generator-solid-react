@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withToastManager } from 'react-toast-notifications';
 import { useWebId, ShexFormBuilder } from '@inrupt/solid-react-components';
 import {
@@ -9,6 +9,7 @@ import {
     ProfileWrapper,
     ShexForm,
     DeleteNotification,
+    WebId,
 } from './profile.style';
 import { Image } from './components';
 
@@ -52,13 +53,25 @@ const Profile = ({ toastManager }) => {
                                 }}
                             />
                         </Header>
+
                         <DeleteNotification className="banner-wrap--warning banner">
                             <div className="banner-wrap__content">
                                 <i className="icon fa fa-exclamation-circle" />
                                 {t('profile.deleteNotification')}
                             </div>
                         </DeleteNotification>
+
                         <ShexForm>
+                            <WebId>
+                                <FontAwesomeIcon icon="id-card" />
+                                <a
+                                    href={webId}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {webId}
+                                </a>
+                            </WebId>
                             <ShexFormBuilder
                                 {...{
                                     documentUri: webId,
