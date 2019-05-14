@@ -89,6 +89,7 @@
       "sizeLimit": "El tamaño del archivo supera el límite permitido ({{limit}})",
       "unsupported": "Formato no soportado",
       "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
-    }
+    },
+    "deleteNotification": "Dar click a 'Remove' borraría el elemento asociado inmediatamente. No hay vuelta atrás."
   }
 }

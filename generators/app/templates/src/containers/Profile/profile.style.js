@@ -91,3 +91,7 @@ export const WebId = styled.div`
     margin-left: 10px;
   }
 `;
+
+export const DeleteNotification = styled.section`
+  margin-bottom:0px !important;
+`;

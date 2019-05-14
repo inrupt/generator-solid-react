@@ -1,5 +1,4 @@
-import React, { Fragment, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { withToastManager } from 'react-toast-notifications';
@@ -8,7 +7,7 @@ import {
     useWebId,
     ShexFormBuilder,
 } from '@inrupt/solid-react-components';
-import { Header, ProfileContainer, ProfileWrapper } from './profile.style';
+import { Header, ProfileContainer, ProfileWrapper, DeleteNotification } from './profile.style';
 import { Image, Form } from './components';
 import './profile-shex-form.css';
 
@@ -52,6 +51,12 @@ const Profile = ({ toastManager }) => {
                                 }}
                             />
                         </Header>
+                      <DeleteNotification className="banner-wrap--warning banner">
+                        <div className="banner-wrap__content">
+                          <i className="icon fa fa-exclamation-circle"></i>
+                          {t('profile.deleteNotification')}
+                        </div>
+                      </DeleteNotification>
                         <ShexFormBuilder
                             {...{
                                 documentUri: webId,
