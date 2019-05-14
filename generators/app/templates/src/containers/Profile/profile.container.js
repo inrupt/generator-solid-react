@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
 
@@ -42,7 +42,7 @@ const Profile = ({ toastManager }) => {
         <ProfileWrapper data-testid="profile-component">
             <ProfileContainer>
                 {webId && (
-                    <LiveUpdate subscribe={webId.replace(/#.*/, '')}>
+                    <Fragment>
                         <Header>
                             <Image
                                 {...{
@@ -68,13 +68,13 @@ const Profile = ({ toastManager }) => {
                                         'addButton ids-button-stroke ids-button-stroke--secondary',
                                 },
                                 languageTheme: {
-                                    language: 'en',
+                                    language: i18n.language.substring(0, 2),
                                 },
                                 successCallback,
                                 errorCallback,
                             }}
                         />
-                    </LiveUpdate>
+                    </Fragment>
                 )}
             </ProfileContainer>
         </ProfileWrapper>
