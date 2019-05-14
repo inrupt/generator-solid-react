@@ -56,7 +56,7 @@ const Profile = ({ toastManager }) => {
                             {...{
                                 documentUri: webId,
                                 shexUri:
-                                    'https://jpablo.solid.community/public/shapes/profile.shex',
+                                    'https://shexshapes.inrupt.net/public/userprofile.shex',
                                 theme: {
                                     form: 'shexForm',
                                     shexPanel: 'shexPanel',
