@@ -68,6 +68,8 @@
     }
   },
   "profile": {
+    "successCallback": "Form submitted successfully",
+    "errorCallback": "Error submitting form",
     "edit": "EDIT",
     "cancelBtn": "Cancel",
     "saveBtn": "Save",
@@ -87,6 +89,7 @@
       "sizeLimit": "File size exceeds the allowable limit ({{limit}})",
       "unsupported": "Unsupported media type",
       "maximumFiles": "Sorry, you have exceeded the maximum number of files allowed per upload"
-    }
+    },
+    "deleteNotification": "Clicking ‘Delete’ will delete the associated element immediately. There is no undo."
   }
 }

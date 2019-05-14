@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withToastManager } from 'react-toast-notifications';
-import { LiveUpdate, useWebId } from '@inrupt/solid-react-components';
-import { Header, ProfileContainer, ProfileWrapper } from './profile.style';
-import { Image, Form } from './components';
+import { useWebId, ShexFormBuilder } from '@inrupt/solid-react-components';
+import {
+    Header,
+    ProfileContainer,
+    ProfileWrapper,
+    ShexForm,
+    DeleteNotification,
+    WebId,
+} from './profile.style';
+import { Image } from './components';
 
 const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 
@@ -19,33 +25,26 @@ const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 
 const Profile = ({ toastManager }) => {
     const webId = useWebId();
-    const [mode, setMode] = useState(true);
+    const { t, i18n } = useTranslation();
 
-  const exitEditMode = () => {
-    setMode(true);
-  };
-
-    const onCancel = () => {
-        setMode(!mode);
+    const successCallback = () => {
+        toastManager.add(['Success', t('profile.successCallback')], {
+            appearance: 'success',
+        });
     };
-    const { t } = useTranslation();
+
+    const errorCallback = e => {
+        toastManager.add(['Error', t('profile.errorCallback')], {
+            appearance: 'error',
+        });
+    };
+
     return (
         <ProfileWrapper data-testid="profile-component">
             <ProfileContainer>
                 {webId && (
-                    <LiveUpdate subscribe={webId.replace(/#.*/, '')}>
+                    <Fragment>
                         <Header>
-                            {mode && (
-                                <button
-                                    type="button"
-                                    className="button edit-button"
-                                    onClick={onCancel}
-                                    data-testid="edit-profile-button"
-                                >
-                                    <FontAwesomeIcon icon="pencil-alt" />{' '}
-                                    {t('profile.edit')}
-                                </button>
-                            )}
                             <Image
                                 {...{
                                     webId,
@@ -54,8 +53,49 @@ const Profile = ({ toastManager }) => {
                                 }}
                             />
                         </Header>
-                            <Form {...{ mode, toastManager, webId, onCancel, exitEditMode }} />
-                    </LiveUpdate>
+
+                        <DeleteNotification className="banner-wrap--warning banner">
+                            <div className="banner-wrap__content">
+                                <i className="icon fa fa-exclamation-circle" />
+                                {t('profile.deleteNotification')}
+                            </div>
+                        </DeleteNotification>
+
+                        <ShexForm>
+                            <WebId>
+                                <FontAwesomeIcon icon="id-card" />
+                                <a
+                                    href={webId}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {webId}
+                                </a>
+                            </WebId>
+                            <ShexFormBuilder
+                                {...{
+                                    documentUri: webId,
+                                    shexUri:
+                                        'https://shexshapes.inrupt.net/public/userprofile.shex',
+                                    theme: {
+                                        form: 'shexForm',
+                                        shexPanel: 'shexPanel',
+                                        shexRoot: 'shexRoot',
+                                        deleteButton:
+                                            'deleteButton ids-button-stroke ids-button-stroke--secondary',
+                                        inputContainer: 'inputContainer',
+                                        addButtonStyle:
+                                            'addButton ids-button-stroke ids-button-stroke--secondary',
+                                    },
+                                    languageTheme: {
+                                        language: i18n.language.substring(0, 2),
+                                    },
+                                    successCallback,
+                                    errorCallback,
+                                }}
+                            />
+                        </ShexForm>
+                    </Fragment>
                 )}
             </ProfileContainer>
         </ProfileWrapper>
