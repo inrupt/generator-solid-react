@@ -142,3 +142,7 @@ export const ShexForm = styled.div`
         }
     }
 `;
+
+export const DeleteNotification = styled.section`
+  margin-bottom:0px !important;
+`;

@@ -2,15 +2,13 @@ import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { withToastManager } from 'react-toast-notifications';
-import {
-    useWebId,
-    ShexFormBuilder,
-} from '@inrupt/solid-react-components';
+import { useWebId, ShexFormBuilder } from '@inrupt/solid-react-components';
 import {
     Header,
     ProfileContainer,
     ProfileWrapper,
     ShexForm,
+    DeleteNotification,
 } from './profile.style';
 import { Image } from './components';
 
@@ -54,6 +52,12 @@ const Profile = ({ toastManager }) => {
                                 }}
                             />
                         </Header>
+                        <DeleteNotification className="banner-wrap--warning banner">
+                            <div className="banner-wrap__content">
+                                <i className="icon fa fa-exclamation-circle" />
+                                {t('profile.deleteNotification')}
+                            </div>
+                        </DeleteNotification>
                         <ShexForm>
                             <ShexFormBuilder
                                 {...{
