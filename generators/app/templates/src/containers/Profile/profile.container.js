@@ -89,6 +89,11 @@ const Profile = ({ toastManager }) => {
                                     },
                                     languageTheme: {
                                         language: i18n.language.substring(0, 2),
+                                        saveBtn: t('profile.saveBtn'),
+                                        resetBtn: t('profile.resetBtn'),
+                                        addButtonText: t('profile.addBtn'),
+                                        deleteButton: t('profile.deleteBtn'),
+                                        dropdownDefaultText: t('profile.dropdownDefaultText')
                                     },
                                     successCallback,
                                     errorCallback,
