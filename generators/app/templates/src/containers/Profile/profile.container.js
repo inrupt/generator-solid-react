@@ -34,9 +34,14 @@ const Profile = ({ toastManager }) => {
     };
 
     const errorCallback = e => {
-        toastManager.add(['Error', t('profile.errorCallback')], {
-            appearance: 'error',
-        });
+        const code = e.code || e.status;
+        const messageError = code
+            ? `profile.errors.${code}`
+            : `profile.errors.default`;
+        if (code && code !== 200)
+            toastManager.add(['Error', t(messageError)], {
+                appearance: 'error',
+            });
     };
 
     return (
@@ -93,7 +98,9 @@ const Profile = ({ toastManager }) => {
                                         resetBtn: t('profile.resetBtn'),
                                         addButtonText: t('profile.addBtn'),
                                         deleteButton: t('profile.deleteBtn'),
-                                        dropdownDefaultText: t('profile.dropdownDefaultText')
+                                        dropdownDefaultText: t(
+                                            'profile.dropdownDefaultText'
+                                        ),
                                     },
                                     successCallback,
                                     errorCallback,

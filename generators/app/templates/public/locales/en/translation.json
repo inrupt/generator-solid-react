@@ -68,7 +68,7 @@
     }
   },
   "profile": {
-    "successCallback": "Form submitted successfully",
+    "successCallback": "Pod updated successfully",
     "errorCallback": "Error submitting form",
     "saveBtn": "Save",
     "resetBtn": "Reset",
@@ -81,6 +81,9 @@
     "updateSuccess": "Profile was updated successfully",
     "nameRequired": "Name is required",
     "errors": {
+      "default":"Something is wrong, please try again...",
+      "406": "Please ensure the form is valid",
+      "500": "An error has occurred in the server",
       "sizeLimit": "File size exceeds the allowable limit ({{limit}})",
       "unsupported": "Unsupported media type",
       "maximumFiles": "Sorry, you have exceeded the maximum number of files allowed per upload"
