@@ -84,9 +84,6 @@
       "default":"Something is wrong, please try again...",
       "406": "Please ensure the form is valid",
       "500": "An error has occurred in the server",
-      "521": "An error has occurred while updating the document",
-      "522": "An error has occurred while deleting an element in the document",
-      "523": "An error has occurred while fetching the document",
       "sizeLimit": "File size exceeds the allowable limit ({{limit}})",
       "unsupported": "Unsupported media type",
       "maximumFiles": "Sorry, you have exceeded the maximum number of files allowed per upload"

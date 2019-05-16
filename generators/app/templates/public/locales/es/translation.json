@@ -84,9 +84,6 @@
       "default":"Algo está mal, intente nuevamente...",
       "406": "Por favor asegúrese de que el formulario sea válido",
       "500": "An error has occured in the server",
-      "521": "Hubo un error al actualizar el documento",
-      "522": "Hubo un error en el servidor al tratar de eliminar",
-      "523": "No se pudo obtener el documento",
       "sizeLimit": "El tamaño del archivo supera el límite permitido ({{limit}})",
       "unsupported": "Formato no soportado",
       "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
