@@ -94,6 +94,9 @@ export const WebId = styled.div`
 export const ShexForm = styled.div`
 border: solid #cacaca 1px;
 background: #f9f9f9;
+    label {
+      clear: both;
+    }
     & .shexForm {
         border: none;
         background: transparent;
