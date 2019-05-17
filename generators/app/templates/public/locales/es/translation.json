@@ -88,6 +88,6 @@
       "unsupported": "Formato no soportado",
       "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
     },
-    "deleteNotification": "Dar click a 'Remove' borraría el elemento asociado inmediatamente. No hay vuelta atrás."
+    "deleteNotification": "Dar click a 'Eliminar' borraría el elemento asociado inmediatamente. No hay vuelta atrás."
   }
 }
