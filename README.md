@@ -11,7 +11,7 @@ Application Generator for [Solid](https://solid.inrupt.com) React applications. 
 * [React Toast Notifications](https://jossmac.github.io/react-toast-notifications/)
 * [Styled Components](https://www.styled-components.com)
 
-## Prerequisites
+## Prerequisites 
 
 ### Administrator Privilege
 You will need administrative privilege on your local computer to install the generator and prerequisites. Depending upon your operating system:
