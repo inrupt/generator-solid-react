@@ -11,7 +11,7 @@ Application Generator for [Solid](https://solid.inrupt.com) React applications. 
 * [React Toast Notifications](https://jossmac.github.io/react-toast-notifications/)
 * [Styled Components](https://www.styled-components.com)
 
-## Prerequisites
+## Prerequisites 
 
 ### Administrator Privilege
 You will need administrative privilege on your local computer to install the generator and prerequisites. Depending upon your operating system:
@@ -155,4 +155,5 @@ Once those two steps are complete then the new language should be compatible wit
 
 Once your application is ready, you can deploy it to a server of your choice.
 
-It is ***highly recommended*** that you ensure your server is utilizing TLS. If not, you may encounter security-related errors in the browser, particular in Google Chrome.
+It is ***highly recommended*** that you ensure your server is utilizing TLS. If not, you may encounter security-related errors in the browser, particularly in Google Chrome.
+
