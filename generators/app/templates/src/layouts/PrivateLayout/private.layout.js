@@ -29,7 +29,7 @@ const PrivateLayout = ({ routes, ...rest }) => {
           <LiveUpdate>
             <AuthNavBar {...matchProps} />
           </LiveUpdate>
-          <Content className={'contentApp'}>
+          <Content>
             <Switch>
               {routes.map(route => (
                 <Route key={route.id} {...route} exact />
