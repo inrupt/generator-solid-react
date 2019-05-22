@@ -58,6 +58,7 @@
     "implementing": "Esta última version se basa en las anteriores, incluye:",
     "version010": "<0><0>Mejores prácticas para la <0>Internacionalización</0>, con selector de lenguaje para la sesión.</0><1>Habilidad para actualizar la imagen de perfil en la página de bienvenida.</1> </0>",
     "version030": "<0><0>La habilidad de ver y editar el <1>Perfil del usuario</1></0><1>Inclusión de un pie de página con el número de versión y enlances a los recursos.</1><2>Se corrigieron varios errores pequeños de acuerdo a la retroalimentación de los usuarios.</2></0>",
+    "version050": "Esta última versión se construye encima de las versiones anteriores e incluye una reconstrucción total de la página del Perfil. El formulario del perfil ahora se crea dinámicamente basado en 'shapes', y provee compatibilidad con el 'Solid Data Browser' al permitir varios correos, direcciones y números de telefono.",
     "upload": "Subir foto",
     "uploadSuccess": "Imagen de perfil actualizada correctamente",
     "uploadingText": "Subiendo",
@@ -68,25 +69,26 @@
     }
   },
   "profile": {
-    "edit": "EDITAR",
-    "cancelBtn": "Cancelar",
+    "successCallback": "Pod actualizado satisfactoriamente",
+    "errorCallback": "Ha ocurrido un error al enviar el formulario",
     "saveBtn": "Guardar",
-    "phone": "Teléfono",
-    "role": "Rol",
-    "email": "Correo",
-    "country": "País",
-    "name": "Nombre",
-    "company": "Compañía",
-    "address": "Dirección",
+    "resetBtn": "Limpiar",
+    "addBtn": "+ Agregar ",
+    "deleteBtn":"Eliminar",
+    "dropdownDefaultText": "- Seleccionar -",
     "upload": "Subir foto",
     "uploadSuccess": "Imagen de perfil actualizada correctamente",
     "uploadingText": "Subiendo",
     "updateSuccess": "Perfil actualizado correctamente",
     "nameRequired": "Nombre es un campo obligatorio",
     "errors": {
+      "default":"Algo está mal, intente nuevamente...",
+      "406": "Por favor asegúrese de que el formulario sea válido",
+      "500": "An error has occured in the server",
       "sizeLimit": "El tamaño del archivo supera el límite permitido ({{limit}})",
       "unsupported": "Formato no soportado",
       "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
-    }
+    },
+    "deleteNotification": "Dar click a 'Eliminar' borraría el elemento asociado inmediatamente. No hay vuelta atrás."
   }
 }
