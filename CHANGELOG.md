@@ -7,9 +7,9 @@
 ##### Updated
 * Major reworking of profile page
   * Profile form is now automatically generated from a ShEx shape
-  * LiveUpdate capabilities are temporarily removed from the profile page
-  * ShEx shape has been created to closely match with the data browser. This means there are a lot of new fields and changed predicates in the profile
-  * Link to [userprofile.shex](https://shexshapes.inrupt.net/public/userprofile.shex) shape added to demonstrate consuming and hosting a shexshape
+  * LiveUpdate capabilities are temporarily removed from the profile page. This functionality is being moved to the ShexFormBuilder component in a future release
+  * ShEx shape has been created to match with the data browser. This means there are a lot of new fields and changed predicates in the profile
+  * Link to [userprofile.shex](https://shexshapes.inrupt.net/public/userprofile.shex) shape added to demonstrate consuming and hosting a ShEx shape
 
 ##### Fixed
 * Fixed npm vulnerabilities ([#165](https://github.com/inrupt/generator-solid-react/issues/165))
