@@ -32,7 +32,8 @@
     "languages": {
       "en": "English (Inglés)",
       "es": "Español (Español)"
-    }
+    },
+    "tictactoe":"Tres en linea"
   },
   "footer": {
     "version": "Versión"

@@ -2,7 +2,15 @@ import React, { Fragment } from 'react';
 import { PrivateLayout, PublicLayout, NotLoggedInLayout } from '@layouts';
 import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 
-import { Login, Register, PageNotFound, Welcome, RegistrationSuccess, Profile } from './containers';
+import {
+  Login,
+  Register,
+  PageNotFound,
+  Welcome,
+  RegistrationSuccess,
+  Profile,
+  TicTacToe
+} from './containers';
 
 const privateRoutes = [
   {
@@ -14,6 +22,11 @@ const privateRoutes = [
     id: 'profile',
     path: '/profile',
     component: Profile
+  },
+  {
+    id: 'tictactoe',
+    path: '/tictactoe',
+    component: TicTacToe
   }
 ];
 
