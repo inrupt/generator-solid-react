@@ -3,6 +3,11 @@ import { GradientBackground } from "@util-components";
 
 export const RegistrationPage = styled(GradientBackground)`
   text-align: center;
+  margin-top: 40px;
+  
+  h1 {
+    color: #ffffff;
+  }
 
   span {
     color: #ffffff;
