@@ -104,3 +104,8 @@ form-group .select-role {
   margin: 10px 0;
 }
 
+.solid-provider-select {
+  text-align: left !important;
+  padding-left: 14px !important;
+}
+
