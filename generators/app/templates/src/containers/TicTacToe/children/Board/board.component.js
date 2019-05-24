@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Field } from '../';
 
@@ -11,11 +11,11 @@ height: 100%;
 width: 100%;
 `
 
-const Board = ({squares}) => {
+const Board = ({squares, onMove}) => {
     return (
         <GameBoard>
             {squares.map((square, i) => (
-                <Field key={i} value={square} />
+                <Field key={i} value={square} onMove={() => onMove(i)} />
             ))}
         </GameBoard>
     );

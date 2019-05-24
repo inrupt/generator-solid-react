@@ -5,46 +5,43 @@ import { AuthNavBar, Footer } from '@components';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  min-height: 100%;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  padding-top: 60px;
-`;
-
-const FooterContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  min-height: 100vh;
 `;
 
 const Content = styled.div`
-  padding-bottom: 60px;
-  height: 100%;
+  padding-top: 60px;
+  flex-grow: 1;
+  display: flex;
+  & > * {
+    flex-grow: 1;
+  }
 `;
 
-const PrivateLayout = ({ routes, ...rest }) => (
-  <Route
-    {...rest}
-    component={matchProps => (
-      <Container>
-        {rest.webId && (
-          <LiveUpdate subscribe={rest.webId}>
+const PrivateLayout = ({ routes, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      component={matchProps => (
+        <Container>
+          <LiveUpdate>
             <AuthNavBar {...matchProps} />
           </LiveUpdate>
-        )}
-        <Content className="contentApp">
-          <Switch>
-            {routes.map(route => (
-              <Route key={route.id} {...route} exact />
-            ))}
-            <Redirect to="/404" />
-          </Switch>
-        </Content>
-        <FooterContainer>
+          <Content className="contentApp">
+            <Switch>
+              {routes.map(route => (
+                <Route key={route.id} {...route} exact />
+              ))}
+              <Redirect to="/404" />
+            </Switch>
+          </Content>
           <Footer />
-        </FooterContainer>
-      </Container>
-    )}
-  />
-);
+        </Container>
+      )}
+    />
+  );
+};
 
 export default withAuthorization(PrivateLayout);

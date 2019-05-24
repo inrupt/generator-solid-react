@@ -3,8 +3,8 @@ import styled  from 'styled-components'
 
 const Square = styled.button``
 
-const Field = ({ value, onClick }) => {
-    return <Square onClick={onClick}>{value}</Square>;
+const Field = ({ value, onMove }) => {
+    return <Square onClick={onMove}>{value}</Square>;
 };
 
 export default Field;

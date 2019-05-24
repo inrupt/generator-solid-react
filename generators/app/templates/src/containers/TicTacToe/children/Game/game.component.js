@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import Board from '../Board';
 
 const GameWrapper = styled.div`
-display: grid;
-grid-template-columns: 1fr;
-grid-template-rows: 50px 100%;
-grid-gap: 16px;
-justify-items: center;
-align-items: center;
-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 30px auto;
+    grid-gap: 16px;
+    justify-items: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    flex: 0 0 75%;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+`;
 
-`
+const Metadata = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 16px;
+`;
 
 const Turn = ({ player }) => {
     return (
@@ -21,15 +32,20 @@ const Turn = ({ player }) => {
     );
 };
 
-const Game = props => {
-    const [squares, setSquares] = useState(new Array(9).fill(null));
-    const [players, setPlayers] = useState({ owner: null, opponent: null });
-    const [nextPlayer, setNextPlayer] = useState("");
-
+const Game = ({ gameData, onMove }) => {
     return (
         <GameWrapper>
-            <Turn player={nextPlayer} />
-            <Board {...{ squares }} />
+            {gameData && (
+                <Fragment>
+                    <Metadata>
+                        <Turn />
+                        <span>Game Status: <b>{gameData.gamestatus}</b></span>
+                    </Metadata>
+                    {gameData.moves && (
+                        <Board {...{ squares: gameData.moves, onMove }} />
+                    )}
+                </Fragment>
+            )}
         </GameWrapper>
     );
 };

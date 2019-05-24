@@ -1,6 +1,7 @@
 import { media } from './styledComponents';
 import { expandedProperty } from './context';
 import { successToaster, errorToaster } from './toaster';
+import * as ldflexHelper from './ldflex-helper';
 
 function* entries(obj) {
   for (const key of Object.keys(obj)) {
@@ -8,4 +9,4 @@ function* entries(obj) {
   }
 }
 
-export { media, expandedProperty, entries, successToaster, errorToaster };
+export { media, expandedProperty, entries, ldflexHelper, successToaster, errorToaster };

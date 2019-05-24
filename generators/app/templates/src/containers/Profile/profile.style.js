@@ -8,7 +8,6 @@ export const ProfileWrapper = styled.section`
   justify-content: center;
   background-image: url('/img/concentric-hex-pattern_2x.png');
   background-repeat: repeat;
-  min-height: 79vh;
   padding: 60px 0;
 `;
 export const ProfileContainer = styled.div`
@@ -16,12 +15,8 @@ export const ProfileContainer = styled.div`
   background-color: white;
   max-width: 900px;
   margin: 0 20px;
-  height: 100%;
   width: 100%;
-  overflow-y: auto;
-  ${media.tablet`
-    height: 90%;
-  `}
+  flex: 1 0 auto;
 `;
 
 export const Header = styled.div`

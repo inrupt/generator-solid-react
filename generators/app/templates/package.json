@@ -116,7 +116,8 @@
             "@layouts": "./src/layouts",
             "@contexts": "./src/contexts/",
             "@hocs": "./src/hocs",
-            "@utils": "./src/utils"
+            "@utils": "./src/utils",
+            "@hooks":"./src/hooks/"
           }
         }
       ]
