@@ -7,8 +7,6 @@ import { useTicTacToe } from '@hooks';
 const documentUri =
     'https://jpablo.solid.community/public/tictactoe/24052019434.ttl';
 
-const opponent = 'https://jprod.solid.community/profile/card#me';
-
 const TicTacToeSection = styled.section`
     flex: 1 0 auto;
     background-image: url('/img/concentric-hex-pattern_2x.png');
@@ -33,7 +31,7 @@ const Options = styled.div`
 
 const TicTacToe = () => {
     const webId = useWebId();
-    const { gameData, createGame, onMove } = useTicTacToe(webId, documentUri,opponent);
+    const { gameData, createGame, onMove } = useTicTacToe(webId, documentUri);
     return (
         <TicTacToeSection>
             <TicTacToeWrapper>
