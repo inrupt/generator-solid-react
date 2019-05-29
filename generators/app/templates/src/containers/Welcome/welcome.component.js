@@ -51,7 +51,7 @@ const WelcomePageContent = props => {
                   }
                 },
                 onComplete: uploadedFiles => {
-                  updatePhoto(uploadedFiles[0].uri, t('welcome.uploadSuccess'));
+                  updatePhoto(uploadedFiles[uploadedFiles.length - 1].uri, t('welcome.uploadSuccess'));
                 },
                 render: props => (
                   <ImageProfile
