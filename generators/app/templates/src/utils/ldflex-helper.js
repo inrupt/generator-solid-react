@@ -28,7 +28,7 @@ export const createNonExistentDocument = async (documentUri, body = '') => {
         const result = await existDocument(documentUri);
         return result.status === 404
             ? createDocument(documentUri, body)
-            : false;
+            : null;
     } catch (e) {
         throw e;
     }

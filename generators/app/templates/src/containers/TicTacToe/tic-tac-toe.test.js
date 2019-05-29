@@ -8,7 +8,7 @@ describe.only('TicTacToe', () => {
 
     const { container } = render(
         <Router>
-            <TicTacToe />
+            <TicTacToe documentUri="adasd" />
         </Router>
     );
 

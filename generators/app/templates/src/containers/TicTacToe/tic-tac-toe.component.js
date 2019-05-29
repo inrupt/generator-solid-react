@@ -1,11 +1,7 @@
-import React from 'react';
-import { useWebId } from '@inrupt/solid-react-components';
-import { Game } from './children';
+import React, { useState } from 'react';
+import { useWebId, LiveUpdate } from '@inrupt/solid-react-components';
+import { Game, GameForm } from './children';
 import styled from 'styled-components';
-import { useTicTacToe } from '@hooks';
-
-const documentUri =
-    'https://jpablo.solid.community/public/tictactoe/24052019434.ttl';
 
 const TicTacToeSection = styled.section`
     flex: 1 0 auto;
@@ -16,28 +12,39 @@ const TicTacToeSection = styled.section`
     justify-content: center;
 `;
 const TicTacToeWrapper = styled.div`
+    & > h1 {
+        margin-top: 0;
+    }
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     width: 80%;
     text-align: center;
+    padding: 20px 0;
 `;
 
-const Options = styled.div`
-    display: flex;
-    width: 100%;
-    padding: 12px;
-`;
-
-const TicTacToe = () => {
+const TicTacToe = ({location}) => {
     const webId = useWebId();
-    const { gameData, createGame, onMove } = useTicTacToe(webId, documentUri);
+    const [formData, setFormData] = useState({});
+
+    const onCreateGame = (documentUri: String, opponent: String) => {
+        setFormData({ documentUri, opponent });
+    };
+
     return (
         <TicTacToeSection>
             <TicTacToeWrapper>
                 <h1>Tic Tac Toe Game</h1>
-                <Game {...{gameData, onMove}}/>
-                <Options><button onClick={createGame}>Create Game</button></Options>
+                <GameForm
+                    {...{
+                        onCreateGame,
+                    }}
+                />
+                {formData && formData.documentUri && (
+                    <LiveUpdate subscribe={formData.documentUri}>
+                        <Game {...{ ...formData, webId }} />
+                    </LiveUpdate>
+                )}
             </TicTacToeWrapper>
         </TicTacToeSection>
     );

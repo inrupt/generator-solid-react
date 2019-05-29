@@ -1,7 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useLiveUpdate } from '@inrupt/solid-react-components';
+import { withToastManager } from 'react-toast-notifications';
 import styled from 'styled-components';
+import { ldflexHelper } from '@utils';
+import moment from 'moment';
 import Board from '../Board';
-import moment from 'moment'
+import tictactoeShape from '@contexts/tictactoe-shape.json';
 
 const GameWrapper = styled.div`
     display: flex;
@@ -10,7 +14,7 @@ const GameWrapper = styled.div`
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
-    flex: 0 0 75%;
+    flex: 1 0 auto;
     background: #fff;
     border-radius: 4px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
@@ -31,8 +35,152 @@ const Turn = ({ player }) => {
     );
 };
 
-const Game = ({ gameData, onMove }) => {
-    const { canPlay } = gameData;
+const Game = ({ webId, documentUri, opponent, toastManager }) => {
+    /** Game Logic */
+    const updates = useLiveUpdate();
+    const { timestamp } = updates;
+    const [gameDocument, setGameDocument] = useState(null);
+    const [gameData, setGameData] = useState({});
+
+    useEffect(() => {
+        getGame(documentUri);
+    }, [documentUri, timestamp]);
+
+    useEffect(() => {
+        checkWinGame();
+    }, [gameData]);
+
+    const getGame = async (documentUri: String) => {
+        try {
+            const game = await ldflexHelper.fetchLdflexDocument(documentUri);
+            setGameDocument(game);
+            let auxData = {};
+            for await (let field of tictactoeShape.shape) {
+                let values = [];
+                for await (let val of game[getPredicate(field)]) {
+                    values = [...values, val.value];
+                }
+                const value = values.length > 1 ? values : values[0];
+                auxData = { ...auxData, [field.predicate]: value };
+            }
+
+            const moves = generateMoves(auxData.moveorder, auxData.firstmove);
+            setGameData({
+                ...auxData,
+                moves,
+                canPlay: canPlay(auxData),
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const onMove = async index => {
+        try {
+            const { moves } = gameData;
+            if (moves[index] === null) {
+                const newMoves = moves.map((move, i) =>
+                    move === null && i === index ? getToken() : move
+                );
+                const gamestatus = `Move ${getSecondToken(getToken())}`;
+                const newData = { ...gameData, moves: newMoves, gamestatus };
+                setGameData(newData);
+                await addMove(index);
+                await changeGameStatus(gamestatus);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const isMyTurn = () => {
+        return true;
+    };
+
+    const canPlay = data => {
+        const { sender, opponent } = data;
+        return (webId === sender || webId === opponent) && isMyTurn();
+    };
+
+    const getPredicate = field => {
+        const prefix = tictactoeShape['@context'][field.prefix];
+        return `${prefix}${field.predicate}`;
+    };
+
+    const addMove = async index => {
+        try {
+            const predicate = 'http://www.w3.org/2000/01/rdf-schema#moveorder';
+            await gameDocument[predicate].add(`${index}`);
+        } catch (e) {
+            throw e;
+        }
+    };
+
+    const changeGameStatus = async gamestatus => {
+        try {
+            const predicate = 'http://www.w3.org/2000/01/rdf-schema#gamestatus';
+            await gameDocument[predicate].delete();
+            await gameDocument[predicate].add(gamestatus);
+        } catch (e) {
+            throw e;
+        }
+    };
+
+    const checkWinGame = async () => {
+        try {
+            const { moves } = gameData;
+            if (moves) {
+                const possibleCombinations = [
+                    [0, 4, 8],
+                    [2, 4, 6],
+                    [0, 1, 2],
+                    [3, 4, 5],
+                    [6, 7, 8],
+                    [0, 3, 6],
+                    [1, 4, 7],
+                    [2, 5, 8],
+                ];
+
+                const win = possibleCombinations.reduce(
+                    (winnerCombination, combination) => {
+                        const [first, second, third] = combination;
+                        const equals =
+                            moves[first] !== null &&
+                            moves[first] === moves[second] &&
+                            moves[first] === moves[third];
+                        return equals ? combination : winnerCombination;
+                    },
+                    []
+                );
+                if (win.length > 0) {
+                    setGameData({ ...gameData, win, gamestatus: 'Completed' });
+                    await changeGameStatus('Completed');
+                    console.log("You've won!!! Congrats");
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const getToken = () => {
+        const { sender, opponent } = gameData;
+        return webId === sender ? 'X' : webId === opponent ? 'O' : '?';
+    };
+
+    const getSecondToken = token => {
+        return token === 'X' ? 'O' : 'X';
+    };
+
+    const generateMoves = (moveorder: Array<String>, firstmove: String) => {
+        const array = Array.isArray(moveorder) ? moveorder : [moveorder];
+        return array.reduce((allSquares, current, i) => {
+            if (i % 2 === 0) allSquares[current] = firstmove;
+            else allSquares[current] = getSecondToken(firstmove);
+            return allSquares;
+        }, new Array(9).fill(null));
+    };
+
     return (
         <GameWrapper>
             {gameData && (
@@ -58,17 +206,28 @@ const Game = ({ gameData, onMove }) => {
                             }}
                         />
                     )}
-                    {
-                        gameData && <Metadata>
-                             <span>Created: <b>{moment(gameData.createddatetime).format('MMM Do, YYYY')}</b></span>
-                             {gameData.win && <span>Winner Combination: <b>{gameData.win.join('-')}</b></span>}
-                            </Metadata>
-                    }
-                    
+                    {gameData && (
+                        <Metadata>
+                            <span>
+                                Created:{' '}
+                                <b>
+                                    {moment(gameData.createddatetime).format(
+                                        'MMM Do, YYYY'
+                                    )}
+                                </b>
+                            </span>
+                            {gameData.win && (
+                                <span>
+                                    Winner Combination:{' '}
+                                    <b>{gameData.win.join('-')}</b>
+                                </span>
+                            )}
+                        </Metadata>
+                    )}
                 </Fragment>
             )}
         </GameWrapper>
     );
 };
 
-export default Game;
+export default withToastManager(Game);

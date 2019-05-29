@@ -13,11 +13,9 @@ const Container = styled.div`
 
 const Content = styled.div`
   padding-top: 60px;
-  flex-grow: 1;
+  flex: 1 0 auto;
   display: flex;
-  & > * {
-    flex-grow: 1;
-  }
+  overflow-y: auto;
 `;
 
 const PrivateLayout = ({ routes, ...rest }) => {
