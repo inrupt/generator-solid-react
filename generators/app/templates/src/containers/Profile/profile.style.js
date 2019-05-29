@@ -147,6 +147,6 @@ background: #f9f9f9;
     }
 `;
 
-export const DeleteNotification = styled.section`
+export const AutoSaveNotification = styled.section`
   margin-bottom:0px !important;
 `;
