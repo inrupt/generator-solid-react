@@ -8,7 +8,7 @@ import {
     ProfileContainer,
     ProfileWrapper,
     ShexForm,
-    DeleteNotification,
+    AutoSaveNotification,
     WebId,
 } from './profile.style';
 import { Image } from './components';
@@ -59,12 +59,12 @@ const Profile = ({ toastManager }) => {
                             />
                         </Header>
 
-                        <DeleteNotification className="banner-wrap--warning banner">
+                        <AutoSaveNotification className="banner-wrap--warning banner">
                             <div className="banner-wrap__content">
                                 <i className="icon fa fa-exclamation-circle" />
-                                {t('profile.deleteNotification')}
+                                {t('profile.autosaveNotification')}
                             </div>
-                        </DeleteNotification>
+                        </AutoSaveNotification>
 
                         <ShexForm>
                             <WebId>
