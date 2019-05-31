@@ -69,10 +69,21 @@ const Game = ({ webId, documentUri, opponent, toastManager }) => {
                 ...auxData,
                 moves,
                 canPlay: canPlay(auxData),
+                nextPlayer: nextPlayer(auxData),
             });
         } catch (e) {
             console.log(e);
         }
+    };
+
+    const whoAmI = data => {
+        const { sender, opponent } = data;
+        return webId === sender ? 'sender' : webId === opponent ? 'opponent' : null;
+    };
+
+    const nextPlayer = data => {
+        const { sender, opponent, firstmove, gamestatus } = data;
+        return isMyTurn(data) && firstmove === getToken(data) ? sender : opponent
     };
 
     const onMove = async index => {
@@ -80,26 +91,27 @@ const Game = ({ webId, documentUri, opponent, toastManager }) => {
             const { moves } = gameData;
             if (moves[index] === null) {
                 const newMoves = moves.map((move, i) =>
-                    move === null && i === index ? getToken() : move
+                    move === null && i === index ? getToken(gameData) : move
                 );
-                const gamestatus = `Move ${getSecondToken(getToken())}`;
+                const gamestatus = `Move ${getSecondToken(getToken(gameData))}`;
                 const newData = { ...gameData, moves: newMoves, gamestatus };
-                setGameData(newData);
-                await addMove(index);
+                setGameData({ ...newData, canPlay: canPlay(newData) });
                 await changeGameStatus(gamestatus);
+                await addMove(index);
             }
         } catch (e) {
             console.log(e);
         }
     };
 
-    const isMyTurn = () => {
-        return true;
+    const isMyTurn = data => {
+        const { gamestatus } = data;
+        return gamestatus && gamestatus.split(' ')[1] === getToken(data);
     };
 
     const canPlay = data => {
         const { sender, opponent } = data;
-        return (webId === sender || webId === opponent) && isMyTurn();
+        return (webId === sender || webId === opponent) && isMyTurn(data);
     };
 
     const getPredicate = field => {
@@ -141,17 +153,20 @@ const Game = ({ webId, documentUri, opponent, toastManager }) => {
                     [2, 5, 8],
                 ];
 
-                const win = possibleCombinations.reduce(
-                    (winnerCombination, combination) => {
-                        const [first, second, third] = combination;
-                        const equals =
-                            moves[first] !== null &&
-                            moves[first] === moves[second] &&
-                            moves[first] === moves[third];
-                        return equals ? combination : winnerCombination;
-                    },
-                    []
-                );
+                let win = [];
+
+                for (let combination of possibleCombinations) {
+                    const [first, second, third] = combination;
+
+                    if (
+                        moves[first] !== null &&
+                        moves[first] === moves[second] &&
+                        moves[first] === moves[third]
+                    ) {
+                        win = combination;
+                        break;
+                    }
+                }
                 if (win.length > 0) {
                     setGameData({ ...gameData, win, gamestatus: 'Completed' });
                     await changeGameStatus('Completed');
@@ -163,9 +178,13 @@ const Game = ({ webId, documentUri, opponent, toastManager }) => {
         }
     };
 
-    const getToken = () => {
-        const { sender, opponent } = gameData;
-        return webId === sender ? 'X' : webId === opponent ? 'O' : '?';
+    const getToken = data => {
+        const { sender, opponent, firstmove } = data;
+        return webId === sender
+            ? firstmove
+            : webId === opponent
+            ? getSecondToken(firstmove)
+            : '?';
     };
 
     const getSecondToken = token => {
@@ -186,7 +205,7 @@ const Game = ({ webId, documentUri, opponent, toastManager }) => {
             {gameData && (
                 <Fragment>
                     <Metadata>
-                        <Turn />
+                        <Turn player={gameData.nextPlayer} />
                         {!canPlay && (
                             <span>
                                 Not your turn, please wait for your opponent to

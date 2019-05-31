@@ -10,8 +10,9 @@ const Square = styled.button`
     &:disabled{
         border-color: red;
 
-        &:hover{
-            border: inherit;
+        &:hover:disabled{
+            border: solid 1px red;
+            cursor: not-allowed;
         }
     }
 `;
