@@ -104,7 +104,7 @@ const Profile = ({ toastManager }) => {
                                     },
                                     successCallback,
                                     errorCallback,
-                                    autoSaveMode : true
+                                    autoSaveMode : false
                                 }}
                             />
                         </ShexForm>

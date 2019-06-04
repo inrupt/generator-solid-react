@@ -26,9 +26,9 @@ const PrivateLayout = ({ routes, ...rest }) => {
       {...rest}
       component={matchProps => (
         <Container>
-          <LiveUpdate>
+          { rest.webId && <LiveUpdate subscribe={rest.webId}>
             <AuthNavBar {...matchProps} />
-          </LiveUpdate>
+          </LiveUpdate>}
           <Content className={'contentApp'}>
             <Switch>
               {routes.map(route => (
