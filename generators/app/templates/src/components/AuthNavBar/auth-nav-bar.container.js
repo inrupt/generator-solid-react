@@ -23,8 +23,7 @@ class AuthNavBarContainer extends Component {
        * for more information please go to: https://github.com/digitalbazaar/jsonld.js
        */
       const userName = await user.name;
-      let userImage = await user.image;
-      userImage = userImage ? userImage : await user.vcard_hasPhoto;
+      const userImage = await user.vcard_hasPhoto;
       const name = userName ? userName.value : "";
       const image = userImage ? userImage.value : "/img/icon/empty-profile.svg";
       this.setState({

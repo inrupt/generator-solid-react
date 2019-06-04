@@ -89,6 +89,11 @@
       "unsupported": "Formato no soportado",
       "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
     },
-    "deleteNotification": "Dar click a 'Eliminar' borraría el elemento asociado inmediatamente. No hay vuelta atrás."
+    "autosaveNotification": "Cambios realizados en el Perfil son guardados automáticamente. No se puede deshacer.",
+    "warningResolution": "El valor del campo se ha actualizado a ",
+    "minMxNumberInclusive": "Error: Mínimo y máximo debería ser ",
+    "minMxNumberExclusive": "Error: Mínimo y máximo debería ser ",
+    "minMaxString": "Error: Mínimo y máximo debería ser ",
+    "defaultError": "Error: Formato incorrecto"
   }
 }

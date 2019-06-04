@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import data from '@solid/query-ldflex';
 import { Uploader, useLiveUpdate } from '@inrupt/solid-react-components';
 import { useTranslation } from 'react-i18next';
-
+import { namedNode } from "@rdfjs/data-model";
 import { ImageProfile } from '@components';
 
 type Props = {
@@ -35,7 +35,7 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
                  * if you want to know more about context please go to:
                  * https://github.com/digitalbazaar/jsonld.js
                  */
-                const image = (await user.image) || (await user.vcard_hasPhoto);
+                const image = await user.vcard_hasPhoto;
 
                 setImage(image && image.value);
             }
@@ -55,7 +55,7 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
         try {
             const { user } = data;
 
-            await user.image.set(uri);
+            await user.vcard_hasPhoto.set(namedNode(uri));
 
             toastManager.add(['', t('profile.uploadSuccess')], {
                 appearance: 'success',

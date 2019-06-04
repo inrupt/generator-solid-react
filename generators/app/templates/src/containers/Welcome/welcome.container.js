@@ -3,7 +3,7 @@ import WelcomePageContent from './welcome.component';
 import { withWebId } from '@inrupt/solid-react-components';
 import data from '@solid/query-ldflex';
 import { withToastManager } from 'react-toast-notifications';
-
+import { namedNode } from "@rdfjs/data-model";
 const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 
 /**
@@ -51,8 +51,7 @@ class WelcomeComponent extends Component<Props> {
 
     const name = nameLd ? nameLd.value : '';
 
-    let imageLd = await user.image;
-    imageLd = imageLd ? imageLd : await user.vcard_hasPhoto;
+    let imageLd = await user.vcard_hasPhoto;
 
     let image;
     if (imageLd && imageLd.value) {
@@ -85,8 +84,8 @@ class WelcomeComponent extends Component<Props> {
     try {
       const { user } = data;
       this.state.hasImage
-        ? await user.image.set(uri)
-        : await user.image.add(uri);
+        ? await user.vcard_hasPhoto.set(namedNode(uri))
+        : await user.vcard_hasPhoto.add(namedNode(uri));
 
       this.props.toastManager.add(['', message], {
         appearance: 'success'

@@ -104,3 +104,12 @@ form-group .select-role {
   margin: 10px 0;
 }
 
+/* Overriding the center-align property from the styleguide */
+.solid-provider-select {
+  text-align: left !important;
+}
+
+.solid-provider-select .option {
+  padding-left: 10px !important;
+}
+
