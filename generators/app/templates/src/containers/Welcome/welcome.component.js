@@ -144,7 +144,28 @@ const WelcomePageContent = props => {
               what's currently planned.
             </p>
           </Trans>
-          <p>{t('welcome.version050')}</p>
+          <p>{t('welcome.implementing')}</p>
+          <Trans i18nKey='welcome.version030'>
+            <ul>
+              <li>
+                Implementing the ability to view and edit your
+                <a
+                  href='https://github.com/Inrupt-inc/solid-react-sdk#user-profile'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  User Profile
+                </a>
+              </li>
+              <li>
+                Including an Application Footer that displays the build number
+                and links to resources
+              </li>
+              <li>
+                Addressing several minor issues based on user feedback.
+              </li>
+            </ul>
+          </Trans>
           <h3>{t('welcome.fairUsageTitle')}</h3>
           <p>{t('welcome.fairUsageText')}</p>
           <Trans i18nKey='welcome.fairUsageExamples'>
