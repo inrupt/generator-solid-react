@@ -58,7 +58,6 @@
     "implementing": "This latest release builds on the prior versions:",
     "version010": "<0><0><0>Internationalization</0> best practices, with application session language selection.</0><0>Ability to update your profile image on the Welcome page.</0> </0>",
     "version030": "<0><0>Implementing the ability to view and edit your <1>User Profile</1></0><1>Including an Application Footer that displays the build number and links to resources.</1><2>Addressing several minor issues based on user feedback.</2></0>",
-    "version050": "This latest release builds on the prior versions and includes a major reworking of the Profile page. The Profile form is now dynamically generated based on a shape and provides compatibility with the Solid Data Browser by allowing multiple addresses, emails, and phone numbers.",
     "upload": "Upload New Photo",
     "uploadSuccess": "Profile Image was updated",
     "uploadingText": "Uploading",
