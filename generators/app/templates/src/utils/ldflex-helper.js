@@ -9,12 +9,35 @@ export const existDocument = async documentUri => {
     });
 };
 
+const createDoc = async (documentUri, options) => {
+    try {
+        return await auth.fetch(documentUri, options);
+    } catch (e) {
+        throw e;
+    }
+};
+
 export const createDocument = async (documentUri, body = '') => {
     try {
-        return await auth.fetch(documentUri, {
+        const options = {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/sparql-update',
+            },
+            body,
+        };
+        return await createDoc(documentUri, options);
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const createDocumentWithTurtle = async (documentUri, body = '') => {
+    try {
+        return await createDoc(documentUri, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'text/turtle',
             },
             body,
         });
@@ -26,9 +49,7 @@ export const createDocument = async (documentUri, body = '') => {
 export const createNonExistentDocument = async (documentUri, body = '') => {
     try {
         const result = await existDocument(documentUri);
-        return result.status === 404
-            ? createDocument(documentUri, body)
-            : null;
+        return result.status === 404 ? createDocument(documentUri, body) : null;
     } catch (e) {
         throw e;
     }

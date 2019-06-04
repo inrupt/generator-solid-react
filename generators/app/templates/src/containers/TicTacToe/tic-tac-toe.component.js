@@ -23,7 +23,7 @@ const TicTacToeWrapper = styled.div`
     padding: 20px 0;
 `;
 
-const TicTacToe = ({location}) => {
+const TicTacToe = ({ location }) => {
     const webId = useWebId();
     const [formData, setFormData] = useState({});
 
@@ -34,12 +34,15 @@ const TicTacToe = ({location}) => {
     return (
         <TicTacToeSection>
             <TicTacToeWrapper>
-                <h1>Tic Tac Toe Game</h1>
-                <GameForm
-                    {...{
-                        onCreateGame,
-                    }}
-                />
+                {webId && (
+                    <GameForm
+                        {...{
+                            webId,
+                            onCreateGame,
+                        }}
+                    />
+                )}
+
                 {formData && formData.documentUri && (
                     <LiveUpdate subscribe={formData.documentUri}>
                         <Game {...{ ...formData, webId }} />
