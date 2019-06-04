@@ -101,6 +101,13 @@ const Profile = ({ toastManager }) => {
                                         dropdownDefaultText: t(
                                             'profile.dropdownDefaultText'
                                         ),
+                                        warningResolution: t('profile.warningResolution'),
+                                        formValidate: {
+                                          minMxNumberInclusive: t('profile.minMxNumberInclusive'),
+                                          minMxNumberExclusive: t('profile.minMxNumberExclusive'),
+                                          minMaxString: t('profile.minMaxString'),
+                                          default: t('profile.defaultError')
+                                        }
                                     },
                                     successCallback,
                                     errorCallback,
