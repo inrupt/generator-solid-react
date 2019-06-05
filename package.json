@@ -1,6 +1,6 @@
 {
   "name": "@inrupt/generator-solid-react",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Solid React Application Generator",
   "homepage": "https://solid.inrupt.com/docs",
   "contributors": [
@@ -22,7 +22,7 @@
     },
     {
       "name": "Arne Hassel",
-      "email": "arneh@inrupt.com"
+      "email": "arneh@inrupt.com" 
     }
   ],
   "files": [

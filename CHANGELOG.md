@@ -1,5 +1,22 @@
 # Solid React Application Generator
 
+## 0.5.1 (June 5, 2019)
+
+#### Solid React Application Base
+
+##### Updated
+* Profile form now autosaves
+* Profile form now liveupdates when the form data changes from another source
+* New error messages (and translations) added for the new profile form
+* Latest version of solid-react-components
+
+##### Fixed
+* Login Provider list is now properly left-aligned instead of center-aligned
+* Registration page title is now the proper color and is no longer underneath the top nav
+* Profile image predicate now matches the Solid data browser profile image predicate
+* Uploading multiple profile images from the welcome page now properly uses the latest uploaded file (previously was only using first uploaded file)
+
+
 ## 0.5.0 (May 22, 2019)
 
 #### Solid React Application Base

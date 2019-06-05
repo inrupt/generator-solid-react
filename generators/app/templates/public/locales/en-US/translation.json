@@ -89,6 +89,11 @@
       "unsupported": "Unsupported media type",
       "maximumFiles": "Sorry, you have exceeded the maximum number of files allowed per upload"
     },
-    "deleteNotification": "Clicking ‘Remove’ will delete the associated element immediately. There is no undo."
+    "autosaveNotification": "Profile changes are saved immediately. There is no undo.",
+    "warningResolution": "Field value has been updated to:",
+    "minMxNumberInclusive": "Error: Min and max should be ",
+    "minMxNumberExclusive": "Error: Min and max value should be ",
+    "minMaxString": "Error: Min and max should be ",
+    "defaultError": "Error: Field value has wrong format"
   }
 }
