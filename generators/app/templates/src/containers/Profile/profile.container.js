@@ -28,7 +28,7 @@ const Profile = ({ toastManager }) => {
     const { t, i18n } = useTranslation();
 
     const successCallback = () => {
-        toastManager.add(['Success', t('profile.successCallback')], {
+        toastManager.add([t('profile.successTitle'), t('profile.successCallback')], {
             appearance: 'success',
         });
     };

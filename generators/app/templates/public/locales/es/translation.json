@@ -70,6 +70,7 @@
   },
   "profile": {
     "successCallback": "Pod actualizado satisfactoriamente",
+    "successTitle": "Éxito",
     "errorCallback": "Ha ocurrido un error al enviar el formulario",
     "saveBtn": "Guardar",
     "resetBtn": "Limpiar",

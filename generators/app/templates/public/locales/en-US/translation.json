@@ -70,6 +70,7 @@
   },
   "profile": {
     "successCallback": "Pod updated successfully",
+    "successTitle":"Success",
     "errorCallback": "Error submitting form",
     "saveBtn": "Save",
     "resetBtn": "Reset",
