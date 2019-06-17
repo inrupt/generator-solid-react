@@ -28,9 +28,12 @@ const Profile = ({ toastManager }) => {
     const { t, i18n } = useTranslation();
 
     const successCallback = () => {
-        toastManager.add([t('profile.successTitle'), t('profile.successCallback')], {
-            appearance: 'success',
-        });
+        toastManager.add(
+            [t('profile.successTitle'), t('profile.successCallback')],
+            {
+                appearance: 'success',
+            }
+        );
     };
 
     const errorCallback = e => {
@@ -41,6 +44,7 @@ const Profile = ({ toastManager }) => {
         if (code && code !== 200)
             toastManager.add(['Error', t(messageError)], {
                 appearance: 'error',
+                autoDismiss: false,
             });
     };
 
@@ -101,17 +105,25 @@ const Profile = ({ toastManager }) => {
                                         dropdownDefaultText: t(
                                             'profile.dropdownDefaultText'
                                         ),
-                                        warningResolution: t('profile.warningResolution'),
+                                        warningResolution: t(
+                                            'profile.warningResolution'
+                                        ),
                                         formValidate: {
-                                          minMxNumberInclusive: t('profile.minMxNumberInclusive'),
-                                          minMxNumberExclusive: t('profile.minMxNumberExclusive'),
-                                          minMaxString: t('profile.minMaxString'),
-                                          default: t('profile.defaultError')
-                                        }
+                                            minMxNumberInclusive: t(
+                                                'profile.minMxNumberInclusive'
+                                            ),
+                                            minMxNumberExclusive: t(
+                                                'profile.minMxNumberExclusive'
+                                            ),
+                                            minMaxString: t(
+                                                'profile.minMaxString'
+                                            ),
+                                            default: t('profile.defaultError'),
+                                        },
                                     },
                                     successCallback,
                                     errorCallback,
-                                    autoSaveMode : true
+                                    autoSaveMode: true,
                                 }}
                             />
                         </ShexForm>

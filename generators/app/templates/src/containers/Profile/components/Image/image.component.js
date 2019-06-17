@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import data from '@solid/query-ldflex';
 import { Uploader, useLiveUpdate } from '@inrupt/solid-react-components';
 import { useTranslation } from 'react-i18next';
-import { namedNode } from "@rdfjs/data-model";
+import { namedNode } from '@rdfjs/data-model';
 import { ImageProfile } from '@components';
 
 type Props = {
@@ -42,6 +42,7 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
         } catch (error) {
             toastManager.add(['Error', error.message], {
                 appearance: 'error',
+                autoDismiss: false,
             });
         }
     };
@@ -63,6 +64,7 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
         } catch (error) {
             toastManager.add(['Error', error.message], {
                 appearance: 'error',
+                autoDismiss: false,
             });
         }
     };
