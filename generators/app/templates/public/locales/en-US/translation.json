@@ -70,12 +70,12 @@
   },
   "profile": {
     "successCallback": "Pod updated successfully",
-    "successTitle":"Success",
+    "successTitle": "Success",
     "errorCallback": "Error submitting form",
     "saveBtn": "Save",
     "resetBtn": "Reset",
     "addBtn": "+ Add new ",
-    "deleteBtn":"Remove",
+    "deleteBtn": "Remove",
     "dropdownDefaultText": "- Select -",
     "upload": "Upload New Photo",
     "uploadSuccess": "Profile Image was updated",
@@ -83,7 +83,7 @@
     "updateSuccess": "Profile was updated successfully",
     "nameRequired": "Name is required",
     "errors": {
-      "default":"Something is wrong, please try again...",
+      "default": "Something is wrong, please try again...",
       "406": "Please ensure the form is valid",
       "500": "An error has occurred in the server",
       "sizeLimit": "File size exceeds the allowable limit ({{limit}})",

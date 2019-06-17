@@ -1,2 +1,2 @@
-import PublicLayout from "./public.layout";
+import PublicLayout from './public.layout';
 export default PublicLayout;

@@ -1,23 +1,23 @@
-import React from "react";
-import { NavBar } from "@components";
+import React from 'react';
+import { NavBar } from '@components';
 
-import { NavBarProfile } from "./children";
-import { LanguageDropdown } from "@util-components";
+import { NavBarProfile } from './children';
+import { LanguageDropdown } from '@util-components';
 
 const AuthNavBar = props => {
   const { t } = props;
   const navigation = [
     {
-      id: "welcome",
-      icon: "img/icon/apps.svg",
-      label: t("navBar.welcome"),
-      to: "/welcome"
+      id: 'welcome',
+      icon: 'img/icon/apps.svg',
+      label: t('navBar.welcome'),
+      to: '/welcome'
     },
     {
-      id: "profile",
-      icon: "img/people.svg",
-      label: t("navBar.profile"),
-      to: "/profile"
+      id: 'profile',
+      icon: 'img/people.svg',
+      label: t('navBar.profile'),
+      to: '/profile'
     }
   ];
   return (
@@ -27,11 +27,13 @@ const AuthNavBar = props => {
       toolbar={[
         {
           component: () => <LanguageDropdown {...props} />,
-          id: "language"
+          id: 'language'
         },
         {
-          component: ({open, customClass}) => <NavBarProfile {...props} open={open} customClass={customClass} />,
-          id: "profile"
+          component: ({ open, customClass }) => (
+            <NavBarProfile {...props} open={open} customClass={customClass} />
+          ),
+          id: 'profile'
         }
       ]}
     />

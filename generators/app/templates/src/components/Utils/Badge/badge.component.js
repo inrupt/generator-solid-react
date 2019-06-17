@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { BadgeWrapper } from "./badge.style";
+import { BadgeWrapper } from './badge.style';
 
 type Props = {
   badge: Number

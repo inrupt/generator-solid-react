@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component } from 'react';
 
 type Props = {
   children: Node,
@@ -6,9 +6,9 @@ type Props = {
 };
 
 /**
-* ErrorBoundary component to catch React component errors
-* You can use you own markup to show Error in your components
-*/
+ * ErrorBoundary component to catch React component errors
+ * You can use you own markup to show Error in your components
+ */
 export default class ErrorBoundary extends Component<Props> {
   constructor(props) {
     super(props);

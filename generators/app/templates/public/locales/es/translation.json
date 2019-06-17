@@ -75,7 +75,7 @@
     "saveBtn": "Guardar",
     "resetBtn": "Limpiar",
     "addBtn": "+ Agregar ",
-    "deleteBtn":"Eliminar",
+    "deleteBtn": "Eliminar",
     "dropdownDefaultText": "- Seleccionar -",
     "upload": "Subir foto",
     "uploadSuccess": "Imagen de perfil actualizada correctamente",
@@ -83,7 +83,7 @@
     "updateSuccess": "Perfil actualizado correctamente",
     "nameRequired": "Nombre es un campo obligatorio",
     "errors": {
-      "default":"Algo está mal, intente nuevamente...",
+      "default": "Algo está mal, intente nuevamente...",
       "406": "Por favor asegúrese de que el formulario sea válido",
       "500": "An error has occured in the server",
       "sizeLimit": "El tamaño del archivo supera el límite permitido ({{limit}})",

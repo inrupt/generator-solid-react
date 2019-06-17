@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { LoaderWrapper, CubeGrid, Cube } from "./loader.style";
+import React, { Component } from 'react';
+import { LoaderWrapper, CubeGrid, Cube } from './loader.style';
 
 type Props = {
   delay: Number

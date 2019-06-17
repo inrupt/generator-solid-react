@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import RegisterComponent from "./register.component";
+import RegisterComponent from './register.component';
 
-import { Provider } from "@services";
+import { Provider } from '@services';
 
 type Props = {};
 

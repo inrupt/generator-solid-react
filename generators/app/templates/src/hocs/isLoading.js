@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Loader } from "@util-components";
+import React, { Component } from 'react';
+import { Loader } from '@util-components';
 
 function isLoading(HOComponent) {
   return class extends Component {

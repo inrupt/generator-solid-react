@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { UpdateContext, withWebId } from "@inrupt/solid-react-components";
-import { withTranslation } from "react-i18next";
-import AuthNavBar from "./auth-nav-bar.component";
-import data from "@solid/query-ldflex";
-import { withToastManager } from "react-toast-notifications";
+import React, { Component } from 'react';
+import { UpdateContext, withWebId } from '@inrupt/solid-react-components';
+import { withTranslation } from 'react-i18next';
+import AuthNavBar from './auth-nav-bar.component';
+import data from '@solid/query-ldflex';
+import { withToastManager } from 'react-toast-notifications';
 
 let beforeContext = {};
 
@@ -24,15 +24,15 @@ class AuthNavBarContainer extends Component {
        */
       const userName = await user.name;
       const userImage = await user.vcard_hasPhoto;
-      const name = userName ? userName.value : "";
-      const image = userImage ? userImage.value : "/img/icon/empty-profile.svg";
+      const name = userName ? userName.value : '';
+      const image = userImage ? userImage.value : '/img/icon/empty-profile.svg';
       this.setState({
         name,
         image
       });
     } catch (error) {
-      this.props.toastManager.add (['Error', error.message], {
-        appearance: 'error',
+      this.props.toastManager.add(['Error', error.message], {
+        appearance: 'error'
       });
     }
   };
@@ -61,6 +61,5 @@ class AuthNavBarContainer extends Component {
   }
 }
 AuthNavBarContainer.contextType = UpdateContext;
-
 
 export default withTranslation()(withToastManager(withWebId(AuthNavBarContainer)));

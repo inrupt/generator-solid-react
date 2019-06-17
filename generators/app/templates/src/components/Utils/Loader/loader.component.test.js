@@ -5,7 +5,7 @@ import { render, cleanup } from 'react-testing-library';
 afterAll(cleanup);
 
 it('renders without crashing', () => {
-    const { container } = render(<Loader />);
+  const { container } = render(<Loader />);
 
-    expect(container).toBeTruthy();
+  expect(container).toBeTruthy();
 });

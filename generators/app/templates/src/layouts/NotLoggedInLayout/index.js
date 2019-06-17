@@ -1,2 +1,2 @@
-import NotLoggedInLayout from "./not-logged-in.layout";
+import NotLoggedInLayout from './not-logged-in.layout';
 export default NotLoggedInLayout;
