@@ -44,6 +44,7 @@ const Profile = ({ toastManager }) => {
         if (code && code !== 200)
             toastManager.add(['Error', t(messageError)], {
                 appearance: 'error',
+                autoDismiss: false,
             });
     };
 
