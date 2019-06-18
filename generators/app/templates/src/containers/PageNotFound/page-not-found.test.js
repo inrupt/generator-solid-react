@@ -1,14 +1,14 @@
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
-import { PageNotFound } from './page-not-found.component';
 import { BrowserRouter as Router } from 'react-router-dom';
+import PageNotFound from './page-not-found.component';
 
 describe('Page Not Found', () => {
   afterAll(cleanup);
 
   const { container } = render(
     <Router>
-      <PageNotFound t={key => key} />
+      <PageNotFound />
     </Router>
   );
 

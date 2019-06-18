@@ -5,7 +5,7 @@ import CenterContainer from './center-container.component';
 afterAll(cleanup);
 
 describe.only('CenterContainer', () => {
-  const { container } = render(<CenterContainer className={'centerContainerWrapper'} />);
+  const { container } = render(<CenterContainer className="centerContainerWrapper" />);
 
   it('renders without crashing', () => {
     expect(container).toBeTruthy();

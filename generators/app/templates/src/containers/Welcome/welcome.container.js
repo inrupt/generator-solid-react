@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import WelcomePageContent from './welcome.component';
 import { withWebId } from '@inrupt/solid-react-components';
 import data from '@solid/query-ldflex';
 import { withToastManager } from 'react-toast-notifications';
 import { namedNode } from '@rdfjs/data-model';
+import WelcomePageContent from './welcome.component';
+
 const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 
 /**
@@ -20,16 +21,15 @@ class WelcomeComponent extends Component<Props> {
       hasImage: false
     };
   }
+
   componentDidMount() {
-    if (this.props.webId) {
-      this.getProfileData();
-    }
+    const { webId } = this.props;
+    if (webId) this.getProfileData();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.webId && this.props.webId !== prevProps.webId) {
-      this.getProfileData();
-    }
+  componentDidUpdate(prevProps) {
+    const { webId } = this.props;
+    if (webId && webId !== prevProps.webId) this.getProfileData();
   }
 
   /**
@@ -40,18 +40,18 @@ class WelcomeComponent extends Component<Props> {
   getProfileData = async () => {
     this.setState({ isLoading: true });
     let hasImage;
-
+    const { webId } = this.props;
     /*
      * This is an example of how to use LDFlex. Here, we're loading the webID link into a user variable. This user object
      * will contain all of the data stored in the webID link, such as profile information. Then, we're grabbing the user.name property
      * from the returned user object.
      */
-    const user = data[this.props.webId];
+    const user = data[webId];
     const nameLd = await user.name;
 
     const name = nameLd ? nameLd.value : '';
 
-    let imageLd = await user.vcard_hasPhoto;
+    const imageLd = await user.vcard_hasPhoto;
 
     let image;
     if (imageLd && imageLd.value) {
@@ -81,17 +81,18 @@ class WelcomeComponent extends Component<Props> {
    * @params{String} uri photo url
    */
   updatePhoto = async (uri: String, message) => {
+    const { hasImage } = this.state;
+    const { toastManager } = this.props;
     try {
       const { user } = data;
-      this.state.hasImage
-        ? await user.vcard_hasPhoto.set(namedNode(uri))
-        : await user.vcard_hasPhoto.add(namedNode(uri));
+      if (hasImage) await user.vcard_hasPhoto.set(namedNode(uri));
+      else await user.vcard_hasPhoto.add(namedNode(uri));
 
-      this.props.toastManager.add(['', message], {
+      toastManager.add(['', message], {
         appearance: 'success'
       });
     } catch (error) {
-      this.props.toastManager.add(['Error', error.message], {
+      toastManager.add(['Error', error.message], {
         appearance: 'error',
         autoDismiss: false
       });
@@ -100,14 +101,9 @@ class WelcomeComponent extends Component<Props> {
 
   render() {
     const { name, image, isLoading } = this.state;
+    const { webId } = this.props;
     return (
-      <WelcomePageContent
-        name={name}
-        image={image}
-        isLoading={isLoading}
-        webId={this.props.webId}
-        updatePhoto={this.updatePhoto}
-      />
+      <WelcomePageContent {...{ name, image, isLoading, webId, updatePhoto: this.updatePhoto }} />
     );
   }
 }

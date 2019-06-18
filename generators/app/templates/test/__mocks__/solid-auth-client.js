@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import EventEmitter from 'events';
 import { act } from 'react-testing-library';
 

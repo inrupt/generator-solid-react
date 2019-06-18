@@ -5,7 +5,7 @@ import Dropdown from './dropdown.component';
 afterAll(cleanup);
 
 describe.only('Dropdown', () => {
-  const { container, getByTestId } = render(<Dropdown className={'dropDownContainer'} />);
+  const { container, getByTestId } = render(<Dropdown className="dropDownContainer" />);
 
   test('renders without crashing', () => {
     expect(container).toBeTruthy();

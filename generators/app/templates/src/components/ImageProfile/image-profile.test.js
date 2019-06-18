@@ -11,12 +11,12 @@ describe('Image Profile', () => {
   });
 
   it('should render Image Loader when file is in progress', () => {
-    rerender(<ImageProfile inProgress={true} />);
+    rerender(<ImageProfile inProgress />);
 
     expect(document.querySelector('.image-profile-loader')).toBeTruthy();
   });
 
-  it("shouldn't render Image Loader when file is not in progress", () => {
+  it('should not render Image Loader when file is not in progress', () => {
     rerender(<ImageProfile inProgress={false} />);
 
     expect(document.querySelector('.image-profile-loader')).toEqual(null);

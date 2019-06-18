@@ -18,17 +18,6 @@ class RegistrationSuccess extends Component<Props, State> {
     };
   }
 
-  countDown = () => {
-    const { timeLeft } = this.state;
-    if (timeLeft === 0) this.redirect();
-    this.setState({ timeLeft: this.state.timeLeft - 1 });
-  };
-
-  redirect = async () => {
-    await clearInterval(this.interval);
-    this.props.history.push('/login');
-  };
-
   componentDidMount() {
     this.interval = setInterval(this.countDown, 1000);
   }
@@ -36,6 +25,18 @@ class RegistrationSuccess extends Component<Props, State> {
   async componentWillUnmount() {
     await clearInterval(this.interval);
   }
+
+  redirect = async () => {
+    const { history } = this.props;
+    await clearInterval(this.interval);
+    history.push('/login');
+  };
+
+  countDown = () => {
+    const { timeLeft } = this.state;
+    if (timeLeft === 0) this.redirect();
+    this.setState(prevState => ({ timeLeft: prevState.timeLeft - 1 }));
+  };
 
   render() {
     const { timeLeft } = this.state;

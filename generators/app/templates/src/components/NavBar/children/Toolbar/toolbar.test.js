@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-for */
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
 import Toolbar from './toolbar.component';

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { UpdateContext, withWebId } from '@inrupt/solid-react-components';
 import { withTranslation } from 'react-i18next';
-import AuthNavBar from './auth-nav-bar.component';
 import data from '@solid/query-ldflex';
 import { withToastManager } from 'react-toast-notifications';
+import AuthNavBar from './auth-nav-bar.component';
 
 let beforeContext = {};
 
@@ -13,10 +13,28 @@ class AuthNavBarContainer extends Component {
     this.state = { image: null };
   }
 
+  componentDidMount() {
+    const { webId } = this.props;
+    if (webId) this.getProfileData();
+  }
+
+  async componentDidUpdate(prevProps) {
+    const { webId } = this.props;
+    const { timestamp } = this.context;
+    if (webId && webId !== prevProps.webId) {
+      this.getProfileData();
+    }
+
+    if (this.context && timestamp !== beforeContext.timestamp) {
+      this.getProfileData();
+      beforeContext = this.context;
+    }
+  }
+
   getProfileData = async () => {
     try {
       // fetching user card from pod. This makes a request and returns the data
-      const user = data.user;
+      const { user } = data;
       /*
        * In the background LDFlex is using JSON-LD. Because of this, we need to
        * make an async call. This will return a JSON-LD expanded object and expose the requested value(name).
@@ -31,29 +49,12 @@ class AuthNavBarContainer extends Component {
         image
       });
     } catch (error) {
-      this.props.toastManager.add(['Error', error.message], {
+      const { toastManager } = this.props;
+      toastManager.add(['Error', error.message], {
         appearance: 'error'
       });
     }
   };
-
-  componentDidMount() {
-    if (this.props.webId) {
-      this.getProfileData();
-    }
-  }
-
-  async componentDidUpdate(prevProps, prevState) {
-    if (this.props.webId && this.props.webId !== prevProps.webId) {
-      this.getProfileData();
-    }
-
-    if (this.context && this.context.timestamp !== beforeContext.timestamp) {
-      this.getProfileData();
-
-      beforeContext = this.context;
-    }
-  }
 
   render() {
     const { image } = this.state;

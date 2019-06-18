@@ -16,39 +16,47 @@ type Props = {
   onClickFile: () => void,
   inProgress: boolean,
   uploadedFiles: Array<Object>,
-  uploadingText: String,
-  text: String
+  uploadingText?: String,
+  text?: String
 };
 
 export const ImageProfile = (props: Props) => {
+  const {
+    uploadedFiles,
+    photo: img,
+    overrideEventDefaults,
+    onDragLeave,
+    onDragEnter,
+    onDrop,
+    onClickFile,
+    text,
+    inProgress,
+    uploadingText
+  } = props;
   const photo =
-    props.uploadedFiles && props.uploadedFiles.length > 0
-      ? props.uploadedFiles[props.uploadedFiles.length - 1].uri
-      : props.photo;
+    uploadedFiles && uploadedFiles.length > 0 ? uploadedFiles[uploadedFiles.length - 1].uri : img;
 
   return (
     <ImageProfileWrapper
       {...{
-        onDragStart: props.overrideEventDefaults,
-        onDragOver: props.overrideEventDefaults,
-        onDragEnd: props.overrideEventDefaults,
-        onDrag: props.overrideEventDefaults,
-        onDragLeave: props.onDragLeave,
-        onDragEnter: props.onDragEnter,
-        onDrop: props.onDrop,
+        onDragStart: overrideEventDefaults,
+        onDragOver: overrideEventDefaults,
+        onDragEnd: overrideEventDefaults,
+        onDrag: overrideEventDefaults,
+        onDragLeave,
+        onDragEnter,
+        onDrop,
         style: photo && photo !== '' && { backgroundImage: `url(${photo})` }
       }}
     >
-      {/*photo && <img alt="Profile User" src={photo} /> */}
-
-      <ButtonStyled onClick={props.onClickFile} className={'button-upload'}>
+      <ButtonStyled onClick={onClickFile} className="button-upload">
         <FontAwesomeIcon icon="upload" className="upload-icon" />
-        {props.text}
+        {text}
       </ButtonStyled>
-      {props.inProgress && (
-        <ImageProfileLoader className={'image-profile-loader'}>
+      {inProgress && (
+        <ImageProfileLoader className="image-profile-loader">
           <FontAwesomeIcon icon="spinner" spin size="2x" />
-          <LoaderText>{props.uploadingText}</LoaderText>
+          <LoaderText>{uploadingText}</LoaderText>
         </ImageProfileLoader>
       )}
     </ImageProfileWrapper>

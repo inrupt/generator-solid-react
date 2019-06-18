@@ -168,7 +168,7 @@ const WelcomePageContent = props => {
           </Trans>
           <p>{t('welcome.fairUsageSummary')}</p>
           <h3>{t('welcome.contactUsTitle')}</h3>
-          <Trans i18nKey={'welcome.contactUsText'}>
+          <Trans i18nKey="welcome.contactUsText">
             <p>
               If you have additional questions about the use of the React SDK for Solid, the
               Application Generator, or inrupt’s brand, please contact

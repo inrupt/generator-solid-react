@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
-import NavBar from './nav-bar.component';
 import { BrowserRouter as Router } from 'react-router-dom';
+import NavBar from './nav-bar.component';
 
 afterAll(cleanup);
 

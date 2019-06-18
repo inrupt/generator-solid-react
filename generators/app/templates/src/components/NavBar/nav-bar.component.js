@@ -1,19 +1,19 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-
 import { Navigation, Toolbar, HamburgerButton, MobileNavigation } from './children';
+
 type Props = {
   t: Function,
   navigation: Array<Object>,
   toolbar: Array<React.Node>,
-  sticky: boolean
+  sticky?: boolean
 };
 
 const NavBar = (props: Props) => {
   const { navigation, toolbar, sticky, t } = props;
   const [isOpenMobile, setOpenMobile] = useState(false);
   const [profileOptions, setProfileOption] = useState([]);
-  let componentElement = React.createRef();
+  const componentElement = React.createRef();
 
   const setNavFixed = () => {
     if (componentElement) {
@@ -36,6 +36,11 @@ const NavBar = (props: Props) => {
     });
   };
 
+  const getUserProfileOptions = () => {
+    const profile = toolbar ? toolbar.filter(bar => bar.id !== 'language') : [];
+    setProfileOption(profile);
+  };
+
   useEffect(() => {
     if (sticky) {
       onComponentResize();
@@ -48,17 +53,8 @@ const NavBar = (props: Props) => {
     setOpenMobile(!isOpenMobile);
   };
 
-  const getUserProfileOptions = () => {
-    const profile = toolbar ? toolbar.filter(bar => bar.id !== 'language') : [];
-    setProfileOption(profile);
-  };
-
   return (
-    <header
-      role="navigation"
-      className="header header__desktop fixed"
-      ref={el => (componentElement = el)}
-    >
+    <header role="navigation" className="header header__desktop fixed" ref={componentElement}>
       <section className="header-wrap">
         <div className="logo-block">
           <Link to="/welcome">
@@ -75,7 +71,7 @@ const NavBar = (props: Props) => {
             t={t}
           >
             <Navigation navigation={navigation} />
-            <Toolbar toolbar={profileOptions} open={true} customClass={'profile-list'} />
+            <Toolbar toolbar={profileOptions} open customClass="profile-list" />
           </MobileNavigation>
         ) : (
           <Fragment>

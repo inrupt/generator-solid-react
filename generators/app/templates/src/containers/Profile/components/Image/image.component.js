@@ -17,9 +17,6 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
 
   const { t } = useTranslation();
 
-  useEffect(() => {
-    fetchPhoto();
-  }, [webId, latestUpdate]);
   /**
    * Fetch profile photo from card
    */
@@ -27,7 +24,7 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
     try {
       if (webId) {
         // We are fetching profile card document
-        const user = data.user;
+        const { user } = data;
         /**
          * We access to document node using a node name
          * hasPhoto is a new context that ldflex doesn't having
@@ -46,6 +43,11 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
       });
     }
   };
+
+  useEffect(() => {
+    fetchPhoto();
+  }, [webId, latestUpdate]);
+
   /**
    * updatedPhoto will update the photo url on vcard file
    * this function will check if user has image or hasPhoto node if not

@@ -12,28 +12,25 @@ type Props = {
 export default class ErrorBoundary extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = this.state = {
+    this.state = {
       hasError: false,
       error: null,
       info: null
     };
   }
+
   // Catch error and update state to render custom error component
   componentDidCatch(error, info) {
     this.setState({
       hasError: true,
-      error: error,
-      info: info
+      error,
+      info
     });
   }
 
   render() {
-    if (this.state.hasError) {
-      return this.props.component(this.state.error, this.state.info);
-    } else {
-      return this.props.children;
-    }
+    const { hasError, error, info } = this.state;
+    const { component, children } = this.props;
+    return hasError ? component(error, info) : children;
   }
-
-  props: Props;
 }

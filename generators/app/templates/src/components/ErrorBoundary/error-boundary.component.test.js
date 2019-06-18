@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
 import ErrorBoundary from './error-boundary.component';
@@ -10,7 +11,7 @@ const ErrorComponent = () => {
 
 // This a hack to avoid error console when we run test
 const shallowErrors = codeRun => {
-  const error = console.error;
+  const { error } = console;
 
   console.error = () => {};
 

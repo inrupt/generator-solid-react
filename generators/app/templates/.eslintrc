@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
-  "extends": ["react-app", "prettier"],
-  "plugins": ["react", "prettier"],
+  "extends": ["react-app", "airbnb", "prettier"],
+  "plugins": ["react", "prettier", "import"],
   "rules": {
     "prettier/prettier": [1],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
@@ -16,10 +16,9 @@
     "import/no-cycle": [0],
     "quotes": [1, "single"],
     "react/no-array-index-key": [1],
-    "react/jsx-one-expression-per-line": [0]
-  },
-  "settings": {
-    "import/resolver": { "babel-module": {} }
+    "react/jsx-one-expression-per-line": [0],
+    "react/no-unescaped-entities": [0],
+    "import/no-named-as-default": [0]
   },
   "parserOptions": {
     "ecmaFeatures": {

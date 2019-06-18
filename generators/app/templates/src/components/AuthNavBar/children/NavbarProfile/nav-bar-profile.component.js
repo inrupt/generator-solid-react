@@ -43,20 +43,24 @@ class NavBarProfile extends Component<Props> {
     imageLoaded: false
   };
 
+  // eslint-disable-next-line react/destructuring-assignment
   profileRedirect = () => this.props.history.push('/profile');
 
   onImageLoaded = async () => this.setState({ imageLoaded: true });
+
   logOut = async () => {
     try {
+      const { history } = this.props;
       await auth.logout();
       // Remove localStorage
       localStorage.removeItem('solid-auth-client');
       // Redirect to login page
-      this.props.history.push('/login');
+      history.push('/login');
     } catch (error) {
       // console.log(`Error: ${error}`);
     }
   };
+
   render() {
     const { t, img, open, customClass } = this.props;
     const { imageLoaded } = this.state;
@@ -78,13 +82,13 @@ class NavBarProfile extends Component<Props> {
       <Dropdown
         actions={profileOpts}
         className={`nav-bar--profile ${customClass}`}
-        hover={true}
         open={open}
+        hover
       >
         <ImageContainer show={imageLoaded}>
           <Img show={imageLoaded} src={img} alt="profile" onLoad={this.onImageLoaded} />
         </ImageContainer>
-        {!imageLoaded && <LoadingImage show={true} />}
+        {!imageLoaded && <LoadingImage show />}
       </Dropdown>
     ) : (
       <div />

@@ -20,32 +20,30 @@ const Content = styled.div`
   height: 100%;
 `;
 
-const PrivateLayout = ({ routes, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      component={matchProps => (
-        <Container>
-          {rest.webId && (
-            <LiveUpdate subscribe={rest.webId}>
-              <AuthNavBar {...matchProps} />
-            </LiveUpdate>
-          )}
-          <Content className={'contentApp'}>
-            <Switch>
-              {routes.map(route => (
-                <Route key={route.id} {...route} exact />
-              ))}
-              <Redirect to="/404" />
-            </Switch>
-          </Content>
-          <FooterContainer>
-            <Footer />
-          </FooterContainer>
-        </Container>
-      )}
-    />
-  );
-};
+const PrivateLayout = ({ routes, ...rest }) => (
+  <Route
+    {...rest}
+    component={matchProps => (
+      <Container>
+        {rest.webId && (
+          <LiveUpdate subscribe={rest.webId}>
+            <AuthNavBar {...matchProps} />
+          </LiveUpdate>
+        )}
+        <Content className="contentApp">
+          <Switch>
+            {routes.map(route => (
+              <Route key={route.id} {...route} exact />
+            ))}
+            <Redirect to="/404" />
+          </Switch>
+        </Content>
+        <FooterContainer>
+          <Footer />
+        </FooterContainer>
+      </Container>
+    )}
+  />
+);
 
 export default withAuthorization(PrivateLayout);

@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Loader } from '@util-components';
 
 function isLoading(HOComponent) {
-  return class extends Component {
-    render() {
-      const { isLoading, ...rest } = this.props;
-      return isLoading ? <Loader /> : <HOComponent {...rest} />;
-    }
+  return props => {
+    const { isLoading, ...rest } = props;
+    return isLoading ? <Loader /> : <HOComponent {...rest} />;
   };
 }
 

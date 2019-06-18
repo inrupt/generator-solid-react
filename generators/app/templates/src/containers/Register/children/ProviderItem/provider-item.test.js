@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
-import ProviderItem from './provider.item.component';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import ProviderItem from './provider.item.component';
 
 import 'jest-dom/extend-expect';
 
@@ -11,7 +11,7 @@ library.add(fas);
 describe('ProviderItem', () => {
   afterAll(cleanup);
 
-  let data = {
+  const data = {
     label: 'Inrupt',
     image: '/img/inrupt.svg',
     value: 'https://inrupt.net/auth',

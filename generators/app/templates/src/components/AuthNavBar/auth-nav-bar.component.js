@@ -28,7 +28,7 @@ const AuthNavBar = (props: Props) => {
   return (
     <NavBar
       navigation={navigation}
-      sticky={true}
+      sticky
       toolbar={[
         {
           component: () => <LanguageDropdown {...props} />,

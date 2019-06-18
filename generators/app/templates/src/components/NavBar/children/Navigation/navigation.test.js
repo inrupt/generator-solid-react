@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
-import Navigation from './navigation.component';
 import { BrowserRouter as Router } from 'react-router-dom';
+import Navigation from './navigation.component';
 
 import 'jest-dom/extend-expect';
 

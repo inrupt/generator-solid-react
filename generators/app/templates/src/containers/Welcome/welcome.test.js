@@ -1,10 +1,9 @@
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { WelcomePageContent } from './welcome.component';
-
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { WelcomePageContent } from './welcome.component';
 
 import '../../i18n';
 

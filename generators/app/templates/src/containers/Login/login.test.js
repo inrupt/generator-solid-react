@@ -1,8 +1,7 @@
 import React from 'react';
 import { render } from 'react-testing-library';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { LoginComponent } from './login.component';
-import '../../i18n';
+import LoginComponent from './login.component';
 
 describe('Login', () => {
   const { container, getByTestId } = render(

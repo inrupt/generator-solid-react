@@ -14,7 +14,7 @@ const MobileNavigation = ({ children, toggleMobileMenu, isOpenMobile, t, i18n })
         <TopNavigation>
           <LanguageDropdown {...{ t, i18n }} />
           <div className="close-panel__toggle">
-            <button onClick={toggleMobileMenu}>
+            <button type="button" onClick={toggleMobileMenu}>
               <FontAwesomeIcon className="icon" icon="times" />
             </button>
           </div>

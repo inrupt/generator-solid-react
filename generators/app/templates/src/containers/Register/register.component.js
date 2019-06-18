@@ -13,7 +13,6 @@ type Register = {
 
 type Props = {
   providers: Array<Provider>,
-  history: Object,
   t: Function,
   className: String
 };
@@ -35,15 +34,13 @@ class RegisterComponent extends Component<Props, State> {
   }
 
   next = () => {
-    const { canContinue } = this.state;
+    const {
+      canContinue,
+      register: { provider }
+    } = this.state;
+    const { protocol, host } = window.location;
     if (canContinue) {
-      window.location =
-        this.state.register.provider +
-        '?returnToUrl=' +
-        window.location.protocol +
-        '//' +
-        window.location.host +
-        '/register/success';
+      window.location = `${provider}?returnToUrl=${protocol}//${host}/register/success`;
     }
   };
 
@@ -57,16 +54,13 @@ class RegisterComponent extends Component<Props, State> {
 
   onSubmit = e => {
     e.preventDefault();
-    const { canContinue } = this.state;
-    console.log('Can Continue', canContinue);
+    const {
+      canContinue,
+      register: { provider }
+    } = this.state;
+    const { protocol, host } = window.location;
     if (canContinue) {
-      window.location =
-        this.state.register.provider +
-        '?returnToUrl=' +
-        window.location.protocol +
-        '//' +
-        window.location.host +
-        '/register/success';
+      window.location = `${provider}?returnToUrl=${protocol}//${host}/register/success`;
     }
   };
 

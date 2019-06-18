@@ -39,6 +39,7 @@ class LanguageDropdown extends Component<Props> {
       language: this.getLanguage()
     });
   };
+
   render() {
     const { t } = this.props;
     const { language } = this.state;
@@ -57,7 +58,7 @@ class LanguageDropdown extends Component<Props> {
       }
     ];
     return (
-      <Dropdown actions={profileOpts} hover={true}>
+      <Dropdown actions={profileOpts} hover>
         <div
           className={`flag-icon flag-icon-${
             language && languages[language] ? languages[language].icon : 'us'

@@ -1,18 +1,18 @@
 /* eslint-disable constructor-super */
 import React from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { PageNotFoundWrapper, PageNotFoundContent } from './page-not-found.style';
 
 type Props = {
-  t: Function,
   className: String
 };
 /**
  * A React component page that is displayed when there's no valid route. Users can click the button
  * to get back to the home/welcome page.
  */
-const PageNotFound = ({ t, className }: Props) => {
+const PageNotFound = ({ className }: Props) => {
+  const { t } = useTranslation();
   return (
     <PageNotFoundWrapper className={className}>
       <PageNotFoundContent>
@@ -29,5 +29,4 @@ const PageNotFound = ({ t, className }: Props) => {
   );
 };
 
-export { PageNotFound };
-export default withTranslation()(PageNotFound);
+export default PageNotFound;
