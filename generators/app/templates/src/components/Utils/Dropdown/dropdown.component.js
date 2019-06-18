@@ -6,7 +6,8 @@ type Props = {
   actions: Array<Object>,
   children: React.Node,
   className: String,
-  open: boolean
+  open: boolean,
+  hover: Boolean
 };
 
 type State = { open: Boolean };
@@ -49,6 +50,7 @@ class Dropdown extends Component<Props, State> {
           <DropdownItemContainer className={'dropdownItem'}>
             <ul data-testid="list">
               {actions.map((action, i) => (
+                // eslint-disable-next-line react/no-array-index-key
                 <Item key={i} className="item">
                   <button onClick={action.onClick}>
                     {action.icon && this.renderIcon(action)}

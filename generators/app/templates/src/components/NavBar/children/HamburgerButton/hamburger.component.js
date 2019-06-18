@@ -1,6 +1,10 @@
 import React from 'react';
 
-const HamburgerButton = ({ toggleMobileMenu }) => {
+type Props = {
+  toggleMobileMenu: Function
+};
+
+const HamburgerButton = ({ toggleMobileMenu }: Props) => {
   return (
     <div className="mobile-navigation__toggle">
       <button onClick={toggleMobileMenu}>

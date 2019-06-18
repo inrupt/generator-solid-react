@@ -17,7 +17,13 @@ const languages = {
   }
 };
 
-class LanguageDropdown extends Component {
+type Props = {
+  i18n: Object,
+  toastManager: Object,
+  t: Function
+};
+
+class LanguageDropdown extends Component<Props> {
   constructor() {
     super();
     this.state = { language: this.getLanguage() };

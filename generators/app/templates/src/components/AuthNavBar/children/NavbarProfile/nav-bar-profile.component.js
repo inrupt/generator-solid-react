@@ -30,7 +30,15 @@ export const UserName = styled.span`
   margin-left: 10px;
 `;
 
-class NavBarProfile extends Component {
+type Props = {
+  history: Object,
+  t: Function,
+  img: String,
+  open: Boolean,
+  customClass: String
+};
+
+class NavBarProfile extends Component<Props> {
   state = {
     imageLoaded: false
   };

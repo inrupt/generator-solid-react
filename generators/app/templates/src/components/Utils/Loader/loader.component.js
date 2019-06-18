@@ -24,6 +24,7 @@ class Loader extends Component<Props> {
         <LoaderWrapper>
           <CubeGrid>
             {cubes.map((delay, i) => (
+              // eslint-disable-next-line react/no-array-index-key
               <Cube key={i} delay={delay} />
             ))}
           </CubeGrid>

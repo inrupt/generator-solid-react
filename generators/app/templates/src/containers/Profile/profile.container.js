@@ -35,7 +35,7 @@ const Profile = ({ toastManager }) => {
 
   const errorCallback = e => {
     const code = e.code || e.status;
-    const messageError = code ? `profile.errors.${code}` : `profile.errors.default`;
+    const messageError = code ? `profile.errors.${code}` : 'profile.errors.default';
     if (code && code !== 200)
       toastManager.add(['Error', t(messageError)], {
         appearance: 'error',

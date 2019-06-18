@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { Navigation, Toolbar, HamburgerButton, MobileNavigation } from './children';
 type Props = {
+  t: Function,
   navigation: Array<Object>,
   toolbar: Array<React.Node>,
   sticky: boolean

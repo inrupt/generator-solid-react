@@ -1,10 +1,15 @@
+/* eslint-disable no-unused-expressions */
 import React from 'react';
 import { NavBar } from '@components';
 
 import { NavBarProfile } from './children';
 import { LanguageDropdown } from '@util-components';
 
-const AuthNavBar = props => {
+type Props = {
+  t: Function
+};
+
+const AuthNavBar = (props: Props) => {
   const { t } = props;
   const navigation = [
     {

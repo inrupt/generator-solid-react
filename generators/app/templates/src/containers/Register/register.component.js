@@ -14,7 +14,8 @@ type Register = {
 type Props = {
   providers: Array<Provider>,
   history: Object,
-  t: Function
+  t: Function,
+  className: String
 };
 
 type State = {
@@ -103,6 +104,7 @@ class RegisterComponent extends Component<Props, State> {
                       {providers.map((providerData, i) => (
                         <ProviderItem
                           data={providerData}
+                          // eslint-disable-next-line react/no-array-index-key
                           key={i}
                           onSelect={this.selectProvider}
                           radioName="providerRadio"

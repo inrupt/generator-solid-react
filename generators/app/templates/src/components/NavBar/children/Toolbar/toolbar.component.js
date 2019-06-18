@@ -2,7 +2,9 @@ import React from 'react';
 
 type Props = {
   toolbar: Array<Object>,
-  t: Function
+  t: Function,
+  open: Boolean,
+  customClass: String
 };
 
 const Toolbar = ({ toolbar, open, customClass }: Props) => {
@@ -11,6 +13,7 @@ const Toolbar = ({ toolbar, open, customClass }: Props) => {
       <ul>
         {toolbar &&
           toolbar.map(({ component: Component, props }, i) => (
+            // eslint-disable-next-line react/no-array-index-key
             <li key={i} data-testid="item">
               <Component {...props} open={open} customClass={customClass} />
             </li>

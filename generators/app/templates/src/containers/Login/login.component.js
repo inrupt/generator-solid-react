@@ -6,7 +6,12 @@ import { ProviderLogin } from '@inrupt/solid-react-components';
 import { LoginWrapper, LoginPanel, PanelBody, LoginTitle } from './login.style.js';
 import { CenterContainer } from '@util-components';
 
-const LoginComponent = props => {
+type Props = {
+  t: Function,
+  className: String
+};
+
+const LoginComponent = (props: Props) => {
   const { t, className } = props;
   return (
     <LoginWrapper data-testid="login-wrapper" className={className}>
