@@ -85,8 +85,9 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
                 },
                 onError: error => {
                     if (error && error.statusText) {
-                        toastManager.add(['', error.statusText], {
+                        toastManager.add(['Error', error.statusText], {
                             appearance: 'error',
+                            autoDismiss: false,
                         });
                     }
                 },
