@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { UpdateContext, withWebId } from '@inrupt/solid-react-components';
 import { withTranslation } from 'react-i18next';
 import data from '@solid/query-ldflex';
-import { withToastManager } from 'react-toast-notifications';
 import AuthNavBar from './auth-nav-bar.component';
+import { errorToaster } from '@utils';
 
 let beforeContext = {};
 
@@ -46,11 +46,7 @@ class AuthNavBarContainer extends Component {
         image
       });
     } catch (error) {
-      const { toastManager } = this.props;
-      toastManager.add(['Error', error.message], {
-        appearance: 'error',
-        autoDismiss: false
-      });
+      errorToaster(error.message, 'Error');
     }
   };
 
@@ -61,4 +57,4 @@ class AuthNavBarContainer extends Component {
 }
 AuthNavBarContainer.contextType = UpdateContext;
 
-export default withTranslation()(withToastManager(withWebId(AuthNavBarContainer)));
+export default withTranslation()(withWebId(AuthNavBarContainer));

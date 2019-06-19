@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { withToastManager } from 'react-toast-notifications';
 import { useWebId, ShexFormBuilder } from '@inrupt/solid-react-components';
+import { successToaster, errorToaster } from '@utils';
 import {
   Header,
   ProfileContainer,
@@ -23,24 +23,20 @@ const defaultProfilePhoto = '/img/icon/empty-profile.svg';
  * for more information please go to: https://github.com/solid/query-ldflex
  */
 
-const Profile = ({ toastManager }) => {
+const Profile = () => {
   const webId = useWebId();
   const { t, i18n } = useTranslation();
 
   const successCallback = () => {
-    toastManager.add([t('profile.successTitle'), t('profile.successCallback')], {
-      appearance: 'success'
-    });
+    successToaster(t('profile.successCallback'), t('profile.successTitle'));
   };
 
   const errorCallback = e => {
     const code = e.code || e.status;
     const messageError = code ? `profile.errors.${code}` : 'profile.errors.default';
-    if (code && code !== 200)
-      toastManager.add(['Error', t(messageError)], {
-        appearance: 'error',
-        autoDismiss: false
-      });
+    if (code && code !== 200) {
+      errorToaster(t(messageError), 'Error');
+    }
   };
 
   return (
@@ -52,8 +48,7 @@ const Profile = ({ toastManager }) => {
               <Image
                 {...{
                   webId,
-                  defaultProfilePhoto,
-                  toastManager
+                  defaultProfilePhoto
                 }}
               />
             </Header>
@@ -112,4 +107,4 @@ const Profile = ({ toastManager }) => {
   );
 };
 
-export default withToastManager(Profile);
+export default Profile;

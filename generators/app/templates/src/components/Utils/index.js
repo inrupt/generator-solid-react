@@ -8,6 +8,7 @@ import Loader from './Loader';
 import ToasterNotification from './ToasterNotification';
 import Input from './Input';
 import LanguageDropdown from './LanguageDropdown';
+import Toaster from './ToasterNotification/toaster.component';
 
 export {
   GradientBackground,
@@ -19,5 +20,6 @@ export {
   Badge,
   Loader,
   Input,
-  LanguageDropdown
+  LanguageDropdown,
+  Toaster
 };

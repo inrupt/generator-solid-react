@@ -7,6 +7,7 @@ import styled from 'styled-components';
 const Container = styled.div`
   min-height: 100%;
   position: relative;
+  padding-top: 60px;
 `;
 
 const FooterContainer = styled.div`

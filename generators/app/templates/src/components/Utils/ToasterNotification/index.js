@@ -1,3 +1,3 @@
-import ToasterNotification from './toaster-notification.component';
+import Toaster from './toaster.component';
 
-export default ToasterNotification;
+export default Toaster;
