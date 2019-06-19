@@ -1,5 +1,16 @@
 # Solid React Application Generator
 
+## 0.5.2 (June 19, 2019)
+
+#### Solid React Application Base
+
+##### Updated
+* Latest version of solid-react-components
+* Error toast messages must now be manually dismissed
+
+##### Fixed
+* Fixed some missing error translations
+
 ## 0.5.1 (June 5, 2019)
 
 #### Solid React Application Base

@@ -1,99 +1,100 @@
 {
-  "login": {
-    "title": "Hola! Bienvenido a Solid.",
-    "loginTitle": "Iniciar sesión",
-    "register": "Registrarse por una identidad Solid",
-    "solidHelp": "Qué es una identidad Solid?",
-    "providerPlaceholder": "Proveedor de ID",
-    "selectPlaceholder": "Seleccione su Proveedor",
-    "inputPlaholder": "WebID",
-    "formButtonText": "Iniciar sesión",
-    "btnTxtWebId": "Iniciar sesión con WebID",
-    "btnTxtProvider": "Iniciar sesión con Proveedor",
-    "errors": {
-      "unknown": "Algo ha salido mal, por favor inténtelo de nuevo. Si el problema persiste, inténtelo más tarde....",
-      "webIdNotValid": "El WebId no es válido",
-      "emptyProvider": "El proveedor de Solid es requerido",
-      "emptyWebId": "Un WebId válido es requerido"
-    }
-  },
-  "register": {
-    "title": "Hola! Bienvenido a Solid.",
-    "step1Title": "Selecciona tu Proveedor",
-    "whatIsAProvider": "Qué es un Proveedor, cómo escoger uno?",
-    "alreadySolid": "Ya tengo una identidad Solid",
-    "next": "Siguiente"
-  },
-  "navBar": {
-    "welcome": "Bienvenida",
-    "logOut": "Cerrar Sesión",
-    "profile": "Perfil",
-    "changeLanguage": "Cambiar Lenguaje",
-    "languages": {
-      "en": "English (Inglés)",
-      "es": "Español (Español)"
-    }
-  },
-  "footer": {
-    "version": "Versión"
-  },
-  "notFound": {
-    "title": "Página no encontrada",
-    "content": "Puede existir un problema con la dirección buscada. Por favor verifiquela e intente de nuevo. O la página que buscaste ha sido movida o eliminada",
-    "redirectButton": "Llevarme a la página principal"
-  },
-  "welcome": {
-    "welcome": "Bienvenido",
-    "doneMessage": "¿Terminaste?",
-    "title": "<0>Esta aplicacion fue generada con <1>Solid React SDK by inrupt.</1></0>",
-    "description": "<0>El <1>Solid React SDK by inrupt</1>  es una combinación de librerias, componentes, documentación, buenas prácticas y un generador de aplicaciones diseñada para acelerar el desarrollo de aplicaciones Solid de alta calidad:</0>",
-    "libraryList": "<0><0><0> Componentes reutilizables </0>que puedes utilizar en tus propias aplicaciones.</0><1><0>Generador de aplicaciones</0>, incorpora todos los componentes y las buenas practicas en una misma aplicacion para el desarrollador. Nota: La aplicaciones Solid React, muestra el uso de los componentes instalados por el generador. No debe ser considerado como un servicio que Inrupt provee, y está sujeto a cambios.</0><0>Patrones de buenas prácticas que puedes referenciar como ejemplos para lograr resolver diferentes situaciones.</1></0>",
-    "fairUsageTitle": "Condiciones de uso",
-    "fairUsageText": "Los logos de Solid y Inrupt incluidos en este SDK son exclusivamente para ejemplo. Esperamos que los desarrolladores que utilicen nuestro SDK para propósitos comerciales los actualicen con sus propios logos.",
-    "fairUsageExamples": "<0><0>Si su aplicación es combatible con Solid, usted puede utilizarlo para indicarlo, de lo contrario no usarlo.</0><1>No utilice el nombre de Inrupt como parte del nombre de su empresa, sitio web, dominio,  servicio o nombre de la aplicación. No modifique o utilice nuestros logos como suyos.</1><2>Si lo desea, puede usar el logotipo de Inrupt para indicar que su aplicación funciona con el SDK de Inrupt, pero asegúrese de que el contexto sea claro para el usuario. Por ejemplo su propio logotipo siempre debe ser más grande que el logotipo de Inrupt.</2></0>",
-    "fairUsageSummary": "En general, aplique sentido común y honestidad a su uso de los logotipos de Solid o Inrupt. No utilice para implicar una asociación o respaldo oficial donde no exista.",
-    "contactUsTitle": "Contáctenos",
-    "contactUsText": "<0>\nSi tiene preguntas adicionales sobre el uso de nuestro Solid React SDK by inrupt, el Generador de aplicaciones o la marca de Inrupt, contáctese con <1>support@inrupt.com<1>.</0>",
-    "evolvingMessage": "<0>El SDK se encuentra en constante evolución. Revisa el <1>Calendario de Desarrollo</1>  para lo que está planeado.</0>",
-    "implementing": "Esta última version se basa en las anteriores, incluye:",
-    "version010": "<0><0>Mejores prácticas para la <0>Internacionalización</0>, con selector de lenguaje para la sesión.</0><1>Habilidad para actualizar la imagen de perfil en la página de bienvenida.</1> </0>",
-    "version030": "<0><0>La habilidad de ver y editar el <1>Perfil del usuario</1></0><1>Inclusión de un pie de página con el número de versión y enlances a los recursos.</1><2>Se corrigieron varios errores pequeños de acuerdo a la retroalimentación de los usuarios.</2></0>",
-    "version050": "Esta última versión se construye encima de las versiones anteriores e incluye una reconstrucción total de la página del Perfil. El formulario del perfil ahora se crea dinámicamente basado en 'shapes', y provee compatibilidad con el 'Solid Data Browser' al permitir varios correos, direcciones y números de telefono.",
-    "upload": "Subir foto",
-    "uploadSuccess": "Imagen de perfil actualizada correctamente",
-    "uploadingText": "Subiendo",
-    "errors": {
-      "sizeLimit": "El tamaño del archivo supera el límite permitido ({{limit}})",
-      "unsupported": "Formato no soportado",
-      "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
-    }
-  },
-  "profile": {
-    "successCallback": "Pod actualizado satisfactoriamente",
-    "errorCallback": "Ha ocurrido un error al enviar el formulario",
-    "saveBtn": "Guardar",
-    "resetBtn": "Limpiar",
-    "addBtn": "+ Agregar ",
-    "deleteBtn":"Eliminar",
-    "dropdownDefaultText": "- Seleccionar -",
-    "upload": "Subir foto",
-    "uploadSuccess": "Imagen de perfil actualizada correctamente",
-    "uploadingText": "Subiendo",
-    "updateSuccess": "Perfil actualizado correctamente",
-    "nameRequired": "Nombre es un campo obligatorio",
-    "errors": {
-      "default":"Algo está mal, intente nuevamente...",
-      "406": "Por favor asegúrese de que el formulario sea válido",
-      "500": "An error has occured in the server",
-      "sizeLimit": "El tamaño del archivo supera el límite permitido ({{limit}})",
-      "unsupported": "Formato no soportado",
-      "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
+    "login": {
+        "title": "Hola! Bienvenido a Solid.",
+        "loginTitle": "Iniciar sesión",
+        "register": "Registrarse por una identidad Solid",
+        "solidHelp": "Qué es una identidad Solid?",
+        "providerPlaceholder": "Proveedor de ID",
+        "selectPlaceholder": "Seleccione su Proveedor",
+        "inputPlaholder": "WebID",
+        "formButtonText": "Iniciar sesión",
+        "btnTxtWebId": "Iniciar sesión con WebID",
+        "btnTxtProvider": "Iniciar sesión con Proveedor",
+        "errors": {
+            "unknown": "Algo ha salido mal, por favor inténtelo de nuevo. Si el problema persiste, inténtelo más tarde....",
+            "webIdNotValid": "El WebId no es válido",
+            "emptyProvider": "El proveedor de Solid es requerido",
+            "emptyWebId": "Un WebId válido es requerido"
+        }
     },
-    "autosaveNotification": "Cambios realizados en el Perfil son guardados automáticamente. No se puede deshacer.",
-    "warningResolution": "El valor del campo se ha actualizado a ",
-    "minMxNumberInclusive": "Error: Mínimo y máximo debería ser ",
-    "minMxNumberExclusive": "Error: Mínimo y máximo debería ser ",
-    "minMaxString": "Error: Mínimo y máximo debería ser ",
-    "defaultError": "Error: Formato incorrecto"
-  }
+    "register": {
+        "title": "Hola! Bienvenido a Solid.",
+        "step1Title": "Selecciona tu Proveedor",
+        "whatIsAProvider": "Qué es un Proveedor, cómo escoger uno?",
+        "alreadySolid": "Ya tengo una identidad Solid",
+        "next": "Siguiente"
+    },
+    "navBar": {
+        "welcome": "Bienvenida",
+        "logOut": "Cerrar Sesión",
+        "profile": "Perfil",
+        "changeLanguage": "Cambiar Lenguaje",
+        "languages": {
+            "en": "English (Inglés)",
+            "es": "Español (Español)"
+        }
+    },
+    "footer": {
+        "version": "Versión"
+    },
+    "notFound": {
+        "title": "Página no encontrada",
+        "content": "Puede existir un problema con la dirección buscada. Por favor verifiquela e intente de nuevo. O la página que buscaste ha sido movida o eliminada",
+        "redirectButton": "Llevarme a la página principal"
+    },
+    "welcome": {
+        "welcome": "Bienvenido",
+        "doneMessage": "¿Terminaste?",
+        "title": "<0>Esta aplicacion fue generada con <1>Solid React SDK by inrupt.</1></0>",
+        "description": "<0>El <1>Solid React SDK by inrupt</1>  es una combinación de librerias, componentes, documentación, buenas prácticas y un generador de aplicaciones diseñada para acelerar el desarrollo de aplicaciones Solid de alta calidad:</0>",
+        "libraryList": "<0><0><0> Componentes reutilizables </0>que puedes utilizar en tus propias aplicaciones.</0><1><0>Generador de aplicaciones</0>, incorpora todos los componentes y las buenas practicas en una misma aplicacion para el desarrollador. Nota: La aplicaciones Solid React, muestra el uso de los componentes instalados por el generador. No debe ser considerado como un servicio que Inrupt provee, y está sujeto a cambios.</0><0>Patrones de buenas prácticas que puedes referenciar como ejemplos para lograr resolver diferentes situaciones.</1></0>",
+        "fairUsageTitle": "Condiciones de uso",
+        "fairUsageText": "Los logos de Solid y Inrupt incluidos en este SDK son exclusivamente para ejemplo. Esperamos que los desarrolladores que utilicen nuestro SDK para propósitos comerciales los actualicen con sus propios logos.",
+        "fairUsageExamples": "<0><0>Si su aplicación es combatible con Solid, usted puede utilizarlo para indicarlo, de lo contrario no usarlo.</0><1>No utilice el nombre de Inrupt como parte del nombre de su empresa, sitio web, dominio,  servicio o nombre de la aplicación. No modifique o utilice nuestros logos como suyos.</1><2>Si lo desea, puede usar el logotipo de Inrupt para indicar que su aplicación funciona con el SDK de Inrupt, pero asegúrese de que el contexto sea claro para el usuario. Por ejemplo su propio logotipo siempre debe ser más grande que el logotipo de Inrupt.</2></0>",
+        "fairUsageSummary": "En general, aplique sentido común y honestidad a su uso de los logotipos de Solid o Inrupt. No utilice para implicar una asociación o respaldo oficial donde no exista.",
+        "contactUsTitle": "Contáctenos",
+        "contactUsText": "<0>\nSi tiene preguntas adicionales sobre el uso de nuestro Solid React SDK by inrupt, el Generador de aplicaciones o la marca de Inrupt, contáctese con <1>support@inrupt.com<1>.</0>",
+        "evolvingMessage": "<0>El SDK se encuentra en constante evolución. Revisa el <1>Calendario de Desarrollo</1>  para lo que está planeado.</0>",
+        "implementing": "Esta última version se basa en las anteriores, incluye:",
+        "version010": "<0><0>Mejores prácticas para la <0>Internacionalización</0>, con selector de lenguaje para la sesión.</0><1>Habilidad para actualizar la imagen de perfil en la página de bienvenida.</1> </0>",
+        "version030": "<0><0>La habilidad de ver y editar el <1>Perfil del usuario</1></0><1>Inclusión de un pie de página con el número de versión y enlances a los recursos.</1><2>Se corrigieron varios errores pequeños de acuerdo a la retroalimentación de los usuarios.</2></0>",
+        "version050": "Esta última versión se construye encima de las versiones anteriores e incluye una reconstrucción total de la página del Perfil. El formulario del perfil ahora se crea dinámicamente basado en 'shapes', y provee compatibilidad con el 'Solid Data Browser' al permitir varios correos, direcciones y números de telefono.",
+        "upload": "Subir foto",
+        "uploadSuccess": "Imagen de perfil actualizada correctamente",
+        "uploadingText": "Subiendo",
+        "errors": {
+            "sizeLimit": "El tamaño del archivo supera el límite permitido ({{limit}})",
+            "unsupported": "Formato no soportado",
+            "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
+        }
+    },
+    "profile": {
+        "successCallback": "Pod actualizado satisfactoriamente",
+        "successTitle": "Éxito",
+        "errorCallback": "Ha ocurrido un error al enviar el formulario",
+        "saveBtn": "Guardar",
+        "resetBtn": "Limpiar",
+        "addBtn": "+ Agregar ",
+        "deleteBtn": "Eliminar",
+        "dropdownDefaultText": "- Seleccionar -",
+        "upload": "Subir foto",
+        "uploadSuccess": "Imagen de perfil actualizada correctamente",
+        "uploadingText": "Subiendo",
+        "updateSuccess": "Perfil actualizado correctamente",
+        "nameRequired": "Nombre es un campo obligatorio",
+        "errors": {
+            "default": "Algo está mal, intente nuevamente...",
+            "406": "Por favor asegúrese de que el formulario sea válido",
+            "500": "Ha ocurrido un error en el servidor",
+            "sizeLimit": "El tamaño del archivo supera el límite permitido ({{limit}})",
+            "unsupported": "Formato no soportado",
+            "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
+        },
+        "autosaveNotification": "Cambios realizados en el Perfil son guardados automáticamente. No se puede deshacer.",
+        "warningResolution": "El valor del campo se ha actualizado a ",
+        "minMxNumberInclusive": "Error: Mínimo y máximo debería ser ",
+        "minMxNumberExclusive": "Error: Mínimo y máximo debería ser ",
+        "minMaxString": "Error: Mínimo y máximo debería ser ",
+        "defaultError": "Error: Formato incorrecto"
+    }
 }
