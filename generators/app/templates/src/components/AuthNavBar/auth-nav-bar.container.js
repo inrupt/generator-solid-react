@@ -21,10 +21,7 @@ class AuthNavBarContainer extends Component {
   async componentDidUpdate(prevProps) {
     const { webId } = this.props;
     const { timestamp } = this.context;
-    if (webId && webId !== prevProps.webId) {
-      this.getProfileData();
-    }
-
+    if (webId && webId !== prevProps.webId) this.getProfileData();
     if (this.context && timestamp !== beforeContext.timestamp) {
       this.getProfileData();
       beforeContext = this.context;
@@ -51,7 +48,8 @@ class AuthNavBarContainer extends Component {
     } catch (error) {
       const { toastManager } = this.props;
       toastManager.add(['Error', error.message], {
-        appearance: 'error'
+        appearance: 'error',
+        autoDismiss: false
       });
     }
   };

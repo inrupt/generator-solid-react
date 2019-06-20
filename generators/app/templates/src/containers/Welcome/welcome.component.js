@@ -39,14 +39,17 @@ const WelcomePageContent = props => {
                 limitSize: limit,
                 accept: 'jpg,jpeg,png',
                 errorsText: {
-                  sizeLimit: t('welcome.errors.sizeLimit', { limit: `${limit / 1000000}Mbs` }),
+                  sizeLimit: t('welcome.errors.sizeLimit', {
+                    limit: `${limit / 1000000}Mbs`
+                  }),
                   unsupported: t('welcome.errors.unsupported'),
                   maximumFiles: t('welcome.errors.maximumFiles')
                 },
                 onError: error => {
                   if (error && error.statusText) {
                     toastManager.add(['', error.statusText], {
-                      appearance: 'error'
+                      appearance: 'error',
+                      autoDismiss: false
                     });
                   }
                 },

@@ -46,6 +46,11 @@ const LoginComponent = ({ className }: Props) => {
                 emptyProvider: t('login.errors.emptyProvider'),
                 emptyWebId: t('login.errors.emptyWebId')
               }}
+              theme={{
+                buttonLogin: 'ids-link',
+                inputLogin: '',
+                linkButton: ''
+              }}
             />
           </PanelBody>
         </LoginPanel>
