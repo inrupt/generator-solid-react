@@ -37,7 +37,7 @@ export const Image = ({ webId, defaultProfilePhoto }: Props) => {
         setImage(image && image.value);
       }
     } catch (error) {
-      errorToaster(error.message, `Error 500`);
+      errorToaster(error.message, 'Error 500');
     }
   };
 
