@@ -4,13 +4,13 @@ import { Uploader, useLiveUpdate } from '@inrupt/solid-react-components';
 import { useTranslation } from 'react-i18next';
 import { namedNode } from '@rdfjs/data-model';
 import { ImageProfile } from '@components';
+import { successToaster, errorToaster } from '@utils';
 
 type Props = {
-  webId: String,
-  toastManager: String
+  webId: String
 };
 
-export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
+export const Image = ({ webId, defaultProfilePhoto }: Props) => {
   const [image, setImage] = useState('');
 
   const latestUpdate = useLiveUpdate();
@@ -37,10 +37,7 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
         setImage(image && image.value);
       }
     } catch (error) {
-      toastManager.add(['Error', error.message], {
-        appearance: 'error',
-        autoDismiss: false
-      });
+      errorToaster(error.message, 'Error 500');
     }
   };
 
@@ -57,17 +54,10 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
   const updatePhoto = async (uri: String) => {
     try {
       const { user } = data;
-
       await user.vcard_hasPhoto.set(namedNode(uri));
-
-      toastManager.add(['', t('profile.uploadSuccess')], {
-        appearance: 'success'
-      });
+      successToaster(t('profile.uploadSuccess'));
     } catch (error) {
-      toastManager.add(['Error', error.message], {
-        appearance: 'error',
-        autoDismiss: false
-      });
+      errorToaster(error.message, 'Error');
     }
   };
   const limit = 2100000;
@@ -87,10 +77,7 @@ export const Image = ({ webId, toastManager, defaultProfilePhoto }: Props) => {
         },
         onError: error => {
           if (error && error.statusText) {
-            toastManager.add(['Error', error.statusText], {
-              appearance: 'error',
-              autoDismiss: false
-            });
+            errorToaster(error.statusText);
           }
         },
         onComplete: uploadedFiles => {

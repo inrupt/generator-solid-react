@@ -1,5 +1,6 @@
 import { media } from './styledComponents';
 import { expandedProperty } from './context';
+import { successToaster, errorToaster } from './toaster';
 
 function* entries(obj) {
   for (const key of Object.keys(obj)) {
@@ -7,4 +8,4 @@ function* entries(obj) {
   }
 }
 
-export { media, expandedProperty, entries };
+export { media, expandedProperty, entries, successToaster, errorToaster };

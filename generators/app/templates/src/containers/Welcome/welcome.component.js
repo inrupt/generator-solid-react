@@ -10,8 +10,8 @@ import {
   WelcomeDetail,
   ImageWrapper
 } from './welcome.style';
-import { withToastManager } from 'react-toast-notifications';
 import { ImageProfile } from '@components';
+import { errorToaster } from '@utils';
 
 /**
  * Welcome Page UI component, containing the styled components for the Welcome Page
@@ -19,7 +19,7 @@ import { ImageProfile } from '@components';
  * @param props
  */
 const WelcomePageContent = props => {
-  const { webId, image, updatePhoto, toastManager, name, t } = props;
+  const { webId, image, updatePhoto, name, t } = props;
   const limit = 2100000;
   return (
     <WelcomeWrapper data-testid="welcome-wrapper">
@@ -47,10 +47,7 @@ const WelcomePageContent = props => {
                 },
                 onError: error => {
                   if (error && error.statusText) {
-                    toastManager.add(['', error.statusText], {
-                      appearance: 'error',
-                      autoDismiss: false
-                    });
+                    errorToaster(error.statusText);
                   }
                 },
                 onComplete: uploadedFiles => {
@@ -185,4 +182,4 @@ const WelcomePageContent = props => {
 };
 
 export { WelcomePageContent };
-export default withTranslation()(isLoading(withToastManager(WelcomePageContent)));
+export default withTranslation()(isLoading(WelcomePageContent));

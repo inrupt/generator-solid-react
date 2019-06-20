@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { withWebId } from '@inrupt/solid-react-components';
 import data from '@solid/query-ldflex';
-import { withToastManager } from 'react-toast-notifications';
 import { namedNode } from '@rdfjs/data-model';
 import WelcomePageContent from './welcome.component';
+import { successToaster, errorToaster } from '@utils';
 
 const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 
@@ -82,20 +82,13 @@ class WelcomeComponent extends Component<Props> {
    */
   updatePhoto = async (uri: String, message) => {
     const { hasImage } = this.state;
-    const { toastManager } = this.props;
     try {
       const { user } = data;
       if (hasImage) await user.vcard_hasPhoto.set(namedNode(uri));
       else await user.vcard_hasPhoto.add(namedNode(uri));
-
-      toastManager.add(['', message], {
-        appearance: 'success'
-      });
+      successToaster(message);
     } catch (error) {
-      toastManager.add(['Error', error.message], {
-        appearance: 'error',
-        autoDismiss: false
-      });
+      errorToaster(error.message, 'Error');
     }
   };
 
@@ -108,4 +101,4 @@ class WelcomeComponent extends Component<Props> {
   }
 }
 
-export default withWebId(withToastManager(WelcomeComponent));
+export default withWebId(WelcomeComponent);
