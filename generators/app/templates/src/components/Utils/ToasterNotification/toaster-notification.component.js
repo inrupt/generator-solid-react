@@ -1,7 +1,7 @@
-import React from "react";
-import { ToastConsumer } from "react-toast-notifications";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ToasterWrapper } from "./toaster-notification.style";
+import React from 'react';
+import { ToastConsumer } from 'react-toast-notifications';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ToasterWrapper } from './toaster-notification.style';
 
 type Props = {
   appearance: String,
@@ -17,15 +17,13 @@ const ToasterNotification = (props: Props) => {
   return (
     <ToasterWrapper className={`toaster-wrap--primary toaster ${appearance}`}>
       <div className="toaster-wrap__content">
-        { title && <p className="content__title">{title}</p> }
-        { content && <p className="content__message">{content}</p> }
+        {title && <p className="content__title">{title}</p>}
+        {content && <p className="content__message">{content}</p>}
       </div>
       <div className="toaster-wrap__dismiss">
-      <ToastConsumer>
-        {() => (
-          <FontAwesomeIcon icon="times" className="fa fa-times" onClick={onDismiss} />
-        )}
-      </ToastConsumer>
+        <ToastConsumer>
+          {() => <FontAwesomeIcon icon="times" className="fa fa-times" onClick={onDismiss} />}
+        </ToastConsumer>
       </div>
     </ToasterWrapper>
   );

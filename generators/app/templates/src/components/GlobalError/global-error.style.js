@@ -13,12 +13,12 @@ export const GlobalErrorWrapper = styled.section`
 `;
 
 export const ErrorTitle = styled.h1`
-  color: #9C79D5;
+  color: #9c79d5;
   margin: 0;
 `;
 
 export const ErrorInfo = styled.h2`
-  color: #5567F9;
+  color: #5567f9;
   text-transform: uppercase;
   margin: 0;
   ${media.tablet`font-size: 2.8rem;`}
@@ -32,7 +32,7 @@ export const ErrorDetail = styled.p`
     font-size: 1.1rem;
     &:after {
       display: block;
-      content: "";
+      content: '';
       height: 1px;
       width: 50%;
       margin: 20px 0 30px;

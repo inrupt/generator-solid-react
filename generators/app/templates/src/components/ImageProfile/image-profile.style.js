@@ -47,7 +47,7 @@ export const ButtonStyled = styled.button`
 `;
 
 export const ImageProfileLoader = styled.div`
-  background: rgba(23,20,34,0.73);
+  background: rgba(23, 20, 34, 0.73);
   border-radius: 360px;
   position: absolute;
   padding: 20px;

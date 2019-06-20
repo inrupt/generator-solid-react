@@ -1,15 +1,14 @@
-import React from "react";
+import React from 'react';
 
-//import './styles.scss';
-import { Gradient } from "./gradient-background.style";
+import { Gradient } from './gradient-background.style';
 
 type Props = {
-  children?: React.Node,
+  children: React.Node,
   className: String
 };
 
-const GradientBackground = ({ children, className }: Props) => {
-  return <Gradient className={className}>{children}</Gradient>;
-};
+const GradientBackground = ({ children, className }: Props) => (
+  <Gradient className={className}>{children}</Gradient>
+);
 
 export default GradientBackground;

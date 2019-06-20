@@ -1,14 +1,16 @@
-import React, { Component } from "react";
-import { LoaderWrapper, CubeGrid, Cube } from "./loader.style";
+import React, { Component } from 'react';
+import { LoaderWrapper, CubeGrid, Cube } from './loader.style';
 
 type Props = {
-  delay: Number
+  delay?: Number
 };
 
 class Loader extends Component<Props> {
   state = { show: false };
+
   componentDidMount() {
-    this.delayTimer = setTimeout(this.show, this.props.delay);
+    const { delay } = this.props;
+    this.delayTimer = setTimeout(this.show, delay);
   }
 
   componentWillUnmount() {
@@ -16,15 +18,26 @@ class Loader extends Component<Props> {
   }
 
   show = () => this.setState({ show: true });
+
   render() {
-    const cubes = [0.2, 0.3, 0.4, 0.1, 0.2, 0.3, 0, 0.1, 0.2];
+    const cubes = [
+      { id: '0', value: 0.2 },
+      { id: '1', value: 0.3 },
+      { id: '2', value: 0.4 },
+      { id: '3', value: 0.1 },
+      { id: '4', value: 0.2 },
+      { id: '5', value: 0.3 },
+      { id: '6', value: 0 },
+      { id: '7', value: 0.1 },
+      { id: '8', value: 0.2 }
+    ];
     const { show } = this.state;
     return (
       show && (
         <LoaderWrapper>
           <CubeGrid>
-            {cubes.map((delay, i) => (
-              <Cube key={i} delay={delay} />
+            {cubes.map(({ id, value }) => (
+              <Cube key={id} delay={value} />
             ))}
           </CubeGrid>
         </LoaderWrapper>

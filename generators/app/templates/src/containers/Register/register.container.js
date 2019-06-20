@@ -1,8 +1,6 @@
-import React, { Component } from "react";
-
-import RegisterComponent from "./register.component";
-
-import { Provider } from "@services";
+import React, { Component } from 'react';
+import RegisterComponent from './register.component';
+import { Provider } from '@services';
 
 type Props = {};
 
@@ -20,6 +18,7 @@ class RegisterContainer extends Component<Props, State> {
     const providers = await Provider.getIdentityProviders();
     this.setState({ providers });
   }
+
   render() {
     const { providers } = this.state;
     return <RegisterComponent providers={providers} {...this.props} />;

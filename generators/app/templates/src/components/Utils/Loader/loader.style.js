@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
 const cubeGridScaleDelay = keyframes`
 	0%,
@@ -37,5 +37,5 @@ export const CubeGrid = styled.div`
 export const Cube = styled.span`
   background-color: #7c4dff;
   animation: ${cubeGridScaleDelay} 1.3s infinite ease-in-out;
-  animation-delay: ${({ delay }) => (delay ? delay : 0)}s;
+  animation-delay: ${({ delay }) => delay || 0}s;
 `;

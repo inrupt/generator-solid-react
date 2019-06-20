@@ -1,23 +1,21 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import { withTranslation } from "react-i18next";
-import { NavBar, Footer } from "@components";
-import { withWebId } from "@inrupt/solid-react-components";
-import { LanguageDropdown } from "@util-components";
-import styled from "styled-components";
-
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
+import { NavBar, Footer } from '@components';
+import { withWebId } from '@inrupt/solid-react-components';
+import { LanguageDropdown } from '@util-components';
+import styled from 'styled-components';
 
 const Container = styled.div`
-height: 100%;
-position: relative;
+  height: 100%;
+  position: relative;
 `;
 
 const FooterContainer = styled.div`
-position:absolute;
-bottom:0;
-width: 100%;
-`
-
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+`;
 
 const NotLoggedInLayout = props => {
   const { component: Component, webId, ...rest } = props;
@@ -36,11 +34,11 @@ const NotLoggedInLayout = props => {
             toolbar={[
               {
                 component: () => <LanguageDropdown {...props} />,
-                id: "language"
+                id: 'language'
               }
             ]}
           />
-          <ComponentWrapper {...matchProps}  />
+          <ComponentWrapper {...matchProps} />
           <FooterContainer>
             <Footer />
           </FooterContainer>
