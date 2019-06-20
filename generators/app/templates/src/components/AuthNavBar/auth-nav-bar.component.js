@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-expressions */
 import React from 'react';
 import { NavBar } from '@components';
-
 import { NavBarProfile } from './children';
 import { LanguageDropdown } from '@util-components';
 

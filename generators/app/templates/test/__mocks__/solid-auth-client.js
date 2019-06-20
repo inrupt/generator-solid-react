@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import EventEmitter from 'events';
 import { act } from 'react-testing-library';
 
@@ -8,11 +7,11 @@ class SolidAuthClient extends EventEmitter {
     this.session = undefined;
   }
 
-  fetch() {}
+  fetch = () => {};
 
-  popupLogin() {}
+  popupLogin = () => {};
 
-  logout() {}
+  logout = () => {};
 
   trackSession(callback) {
     if (this.session !== undefined) callback(this.session);

@@ -95,14 +95,13 @@ class RegisterComponent extends Component<Props, State> {
                       {t('register.alreadySolid')}
                     </Link>
                     <ul>
-                      {providers.map((providerData, i) => (
+                      {providers.map(providerData => (
                         <ProviderItem
                           data={providerData}
-                          // eslint-disable-next-line react/no-array-index-key
-                          key={i}
+                          key={providerData.id}
                           onSelect={this.selectProvider}
                           radioName="providerRadio"
-                          id={`radio-${i}`}
+                          id={`radio-${providerData.id}`}
                           checked={providerData.registerLink === provider}
                         />
                       ))}
