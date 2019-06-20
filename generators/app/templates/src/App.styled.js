@@ -9,7 +9,7 @@ export const Toaster = styled(ToastContainer)`
     padding: 0;
     & .toaster-error {
       color: #fff;
-      background: rgba(175, 40, 40, 0.9);
+      background: rgba(213, 0, 0, 0.9);
     }
 
     & .toaster-success {
