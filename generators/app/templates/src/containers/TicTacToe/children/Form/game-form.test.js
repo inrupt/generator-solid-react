@@ -3,11 +3,11 @@ import { render, cleanup } from 'react-testing-library';
 import GameForm from './game-form.component';
 
 describe.only('Game Form', () => {
-    afterAll(cleanup);
+  afterAll(cleanup);
 
-    const { container } = render(<GameForm webId="" />);
+  const { container } = render(<GameForm webId="" />);
 
-    test('renders without crashing', () => {
-        expect(container).toBeTruthy();
-    });
+  test('renders without crashing', () => {
+    expect(container).toBeTruthy();
+  });
 });

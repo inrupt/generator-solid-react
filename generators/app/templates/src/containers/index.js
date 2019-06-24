@@ -5,12 +5,4 @@ import Welcome from './Welcome';
 import Profile from './Profile';
 import TicTacToe from './TicTacToe';
 
-export {
-    Login,
-    Register,
-    RegistrationSuccess,
-    PageNotFound,
-    Welcome,
-    Profile,
-    TicTacToe,
-};
+export { Login, Register, RegistrationSuccess, PageNotFound, Welcome, Profile, TicTacToe };

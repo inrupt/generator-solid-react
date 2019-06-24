@@ -3,11 +3,11 @@ import { render, cleanup } from 'react-testing-library';
 import Field from './field.component';
 
 describe.only('TicTacToe', () => {
-    afterAll(cleanup);
+  afterAll(cleanup);
 
-    const { container } = render(<Field />);
+  const { container } = render(<Field />);
 
-    test('renders without crashing', () => {
-        expect(container).toBeTruthy();
-    });
+  test('renders without crashing', () => {
+    expect(container).toBeTruthy();
+  });
 });

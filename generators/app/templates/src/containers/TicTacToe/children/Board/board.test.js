@@ -3,11 +3,11 @@ import { render, cleanup } from 'react-testing-library';
 import Board from './board.component';
 
 describe.only('TicTacToe', () => {
-    afterAll(cleanup);
+  afterAll(cleanup);
 
-    const { container } = render(<Board squares={[]} />);
+  const { container } = render(<Board squares={[]} />);
 
-    test('renders without crashing', () => {
-        expect(container).toBeTruthy();
-    });
+  test('renders without crashing', () => {
+    expect(container).toBeTruthy();
+  });
 });

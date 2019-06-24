@@ -18,28 +18,26 @@ const Content = styled.div`
   overflow-y: auto;
 `;
 
-const PrivateLayout = ({ routes, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      component={matchProps => (
-        <Container>
-          <LiveUpdate>
-            <AuthNavBar {...matchProps} />
-          </LiveUpdate>
-          <Content className="contentApp">
-            <Switch>
-              {routes.map(route => (
-                <Route key={route.id} {...route} exact />
-              ))}
-              <Redirect to="/404" />
-            </Switch>
-          </Content>
-          <Footer />
-        </Container>
-      )}
-    />
-  );
-};
+const PrivateLayout = ({ routes, ...rest }) => (
+  <Route
+    {...rest}
+    component={matchProps => (
+      <Container>
+        <LiveUpdate>
+          <AuthNavBar {...matchProps} />
+        </LiveUpdate>
+        <Content className="contentApp">
+          <Switch>
+            {routes.map(route => (
+              <Route key={route.id} {...route} exact />
+            ))}
+            <Redirect to="/404" />
+          </Switch>
+        </Content>
+        <Footer />
+      </Container>
+    )}
+  />
+);
 
 export default withAuthorization(PrivateLayout);
