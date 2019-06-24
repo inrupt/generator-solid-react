@@ -4,7 +4,7 @@ import moment from 'moment';
 import { namedNode } from '@rdfjs/data-model';
 import N3 from 'n3';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
-import { ldflexHelper } from '@utils';
+import { ldflexHelper, errorToaster, successToaster } from '@utils';
 
 const GameFormWrapper = styled.div`
   padding: 16px;
@@ -47,7 +47,7 @@ const GameForm = ({ onCreateGame, webId }: Props) => {
   };
 
   const initialGame = opponent => ({
-    gamestatus: 'Created',
+    gamestatus: 'Move X',
     createddatetime: moment().format(),
     updateddatetime: moment().format(),
     sender: namedNode(webId),
@@ -69,8 +69,7 @@ const GameForm = ({ onCreateGame, webId }: Props) => {
         }
       }
     } catch (e) {
-      console.error('Error while creating game');
-      throw e;
+      throw new Error('Error while creating game');
     }
   };
 
@@ -78,8 +77,7 @@ const GameForm = ({ onCreateGame, webId }: Props) => {
     try {
       ldflexHelper.createDocumentWithTurtle(documentUri, body);
     } catch (e) {
-      console.error('Error while creating ACL');
-      throw e;
+      throw new Error('Error while creating ACL');
     }
   };
 
@@ -108,25 +106,47 @@ const GameForm = ({ onCreateGame, webId }: Props) => {
   };
 
   const aclTurtle = async (documentUri, opponent) => {
-    const aclDocument = `${documentUri}.acl`;
-    const { DataFactory } = N3;
-    const { namedNode, quad } = DataFactory;
-    const prefixes = {
-      acl: 'http://www.w3.org/ns/auth/acl#',
-      foaf: 'http://xmlns.com/foaf/0.1/',
-      n: 'http://www.w3.org/2006/vcard/ns#',
-      '': `${aclDocument}#`,
-      a: 'http://www.w3.org/ns/auth/acl#type'
-    };
+    try {
+      const aclDocument = `${documentUri}.acl`;
+      const { DataFactory } = N3;
+      const { namedNode, quad } = DataFactory;
+      const prefixes = {
+        acl: 'http://www.w3.org/ns/auth/acl#',
+        foaf: 'http://xmlns.com/foaf/0.1/',
+        n: 'http://www.w3.org/2006/vcard/ns#',
+        '': `${aclDocument}#`,
+        a: 'http://www.w3.org/ns/auth/acl#type'
+      };
+      const owner = `${aclDocument}#owner`;
+      const publicSubject = `${aclDocument}#public`;
+      const opponentSubject = `${aclDocument}#opponent`;
 
-    const initialGame = opponent => ({
-      gamestatus: 'Created',
-      createddatetime: moment().format(),
-      updateddatetime: moment().format(),
-      sender: namedNode(webId),
-      opponent: namedNode(opponent),
-      firstmove: 'X'
-    });
+      const writer = new N3.Writer({ prefixes });
+      const ownerQuads = createDefaultQuads(['Control', 'Read', 'Write'], webId, owner, prefixes);
+
+      const opponentQuads = createDefaultQuads(
+        ['Read', 'Write'],
+        opponent,
+        opponentSubject,
+        prefixes
+      );
+
+      const publicQuads = createDefaultQuads(['Read'], null, publicSubject, prefixes);
+
+      const quads = [...ownerQuads, ...opponentQuads, ...publicQuads];
+      const testQuads = quads.map(quadItem => {
+        const { subject, predicate, object } = quadItem;
+        return quad(namedNode(subject), namedNode(predicate), object);
+      });
+      testQuads.forEach(quad => writer.addQuad(quad));
+      writer.end(async (error, result) => {
+        if (!error) {
+          await createACLFile(aclDocument, result);
+        }
+      });
+    } catch (e) {
+      throw e;
+    }
   };
 
   const onSubmit = async e => {
@@ -135,8 +155,9 @@ const GameForm = ({ onCreateGame, webId }: Props) => {
       await createGame(documentUri, opponent);
       await aclTurtle(documentUri, opponent);
       onCreateGame(documentUri, opponent);
+      successToaster('Game created successfully', 'Success');
     } catch (e) {
-      console.error(e);
+      errorToaster(e.message);
     }
   };
 
