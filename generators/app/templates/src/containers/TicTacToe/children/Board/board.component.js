@@ -8,7 +8,8 @@ const GameBoard = styled.div`
   grid-template-rows: repeat(3, 1fr);
   grid-gap: 0;
   width: 100%;
-  flex: 1 0 auto;
+  min-height: 200px;
+  flex: 1 1 auto;
 `;
 
 type Props = { squares: Array, onMove: Funtion, canPlay: Boolean };

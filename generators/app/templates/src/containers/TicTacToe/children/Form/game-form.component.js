@@ -36,7 +36,6 @@ const BtnDiv = styled.div`
 type Props = { onCreateGame: Function, webId: String };
 
 const GameForm = ({ onCreateGame, webId }: Props) => {
-  console.log('WebId', webId);
   const pod = webId.split('/profile')[0];
   const uniqueIdentifier = Date.now();
   const [documentUri, setDocumentUri] = useState(`${pod}/public/tictactoe/${uniqueIdentifier}.ttl`);
@@ -58,7 +57,6 @@ const GameForm = ({ onCreateGame, webId }: Props) => {
 
   const createGame = async (documentUri: String, opponent: String) => {
     try {
-      console.log('Creating game');
       const newDocument = await ldflexHelper.createNonExistentDocument(documentUri);
       if (newDocument) {
         const document = await ldflexHelper.fetchLdflexDocument(documentUri);
@@ -70,7 +68,6 @@ const GameForm = ({ onCreateGame, webId }: Props) => {
             await document[predicate].add(setupObj[field.predicate]);
         }
       }
-      console.log('Game Created');
     } catch (e) {
       console.error('Error while creating game');
       throw e;
@@ -79,9 +76,7 @@ const GameForm = ({ onCreateGame, webId }: Props) => {
 
   const createACLFile = async (documentUri, body) => {
     try {
-      console.log('Creating ACL');
       ldflexHelper.createDocumentWithTurtle(documentUri, body);
-      console.log('ACL created');
     } catch (e) {
       console.error('Error while creating ACL');
       throw e;
@@ -131,12 +126,6 @@ const GameForm = ({ onCreateGame, webId }: Props) => {
       sender: namedNode(webId),
       opponent: namedNode(opponent),
       firstmove: 'X'
-    });
-
-    const createQuad = (subject, predicate, object) => ({
-      subject,
-      predicate,
-      object
     });
   };
 
