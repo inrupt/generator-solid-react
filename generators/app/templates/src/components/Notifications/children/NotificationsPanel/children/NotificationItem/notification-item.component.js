@@ -17,13 +17,13 @@ const NotificationItem = ({ notification, markAsRead, children }: Props) => {
   };
   return (
     <Item read={notification.read} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <img src="img/empty-profile.svg" alt="Creator" />
+      <img src="img/icon/empty-profile.svg" alt="Creator" />
       <Body>
         <Message>
           <strong>{notification.sender}</strong> {notification.message}
         </Message>
         <Meta>
-          <span className="moment">{moment(notification.created).fromNow()}</span>
+          <span className="moment">{moment(notification.sent).fromNow()}</span>
           {children}
         </Meta>
       </Body>

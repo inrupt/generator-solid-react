@@ -1,61 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
+import moment from 'moment';
 
 const testNotifications = [
   {
     id: '2343243-23432',
     title: 'Test',
     message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, temporibus.',
-    sent: '20190520T12:34:54',
-    recipients: ['https://recipient.provider.com/profile/card#me'],
-    image: 'https://app.com/thing/image.jpg',
-    link: 'https://app.com/thing/12',
-    read: false
-  },
-  {
-    id: '2343243-23433',
-    title: 'Test',
-    message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, temporibus.',
-    sent: '20190520T12:34:54',
-    recipients: ['https://recipient.provider.com/profile/card#me'],
-    image: 'https://app.com/thing/image.jpg',
-    link: 'https://app.com/thing/12',
-    read: true
-  },
-  {
-    id: '2343243-23434',
-    title: 'Test',
-    message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, temporibus.',
-    sent: '20190520T12:34:54',
-    recipients: ['https://recipient.provider.com/profile/card#me'],
-    image: 'https://app.com/thing/image.jpg',
-    link: 'https://app.com/thing/12',
-    read: false
-  },
-  {
-    id: '2343243-23435',
-    title: 'Test',
-    message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, temporibus.',
-    sent: '20190520T12:34:54',
-    recipients: ['https://recipient.provider.com/profile/card#me'],
-    image: 'https://app.com/thing/image.jpg',
-    link: 'https://app.com/thing/12',
-    read: true
-  },
-  {
-    id: '2343243-23436',
-    title: 'Test',
-    message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, temporibus.',
-    sent: '20190520T12:34:54',
-    recipients: ['https://recipient.provider.com/profile/card#me'],
-    image: 'https://app.com/thing/image.jpg',
-    link: 'https://app.com/thing/12',
-    read: false
-  },
-  {
-    id: '2343243-23437',
-    title: 'Test',
-    message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, temporibus.',
-    sent: '20190520T12:34:54',
+    sent: '2019-05-20T12:34:54',
     recipients: ['https://recipient.provider.com/profile/card#me'],
     image: 'https://app.com/thing/image.jpg',
     link: 'https://app.com/thing/12',
@@ -65,7 +16,7 @@ const testNotifications = [
     id: '2343243-23438',
     title: 'Test',
     message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, temporibus.',
-    sent: '20190520T12:34:54',
+    sent: '2019-06-20T12:34:54',
     recipients: ['https://recipient.provider.com/profile/card#me'],
     image: 'https://app.com/thing/image.jpg',
     link: 'https://app.com/thing/12',
@@ -78,7 +29,8 @@ const useNotification = () => {
   const [unread, setUnread] = useState(4);
 
   useEffect(() => {
-    setNotifications(testNotifications);
+    const newNotifications = testNotifications.sort((a, b) => moment(b.sent) - moment(a.sent));
+    setNotifications(newNotifications);
     const unreadNotifications = testNotifications.filter(notification => !notification.read).length;
     setUnread(unreadNotifications);
   }, []);

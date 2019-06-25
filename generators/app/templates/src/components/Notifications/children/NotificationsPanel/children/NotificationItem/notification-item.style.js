@@ -9,6 +9,11 @@ export const Item = styled.li`
   align-items: center;
   background: ${({ read }) => (read ? '#FFF' : 'rgb(245, 249, 254)')};
   position: relative;
+
+  & > img {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 export const Body = styled.div`
