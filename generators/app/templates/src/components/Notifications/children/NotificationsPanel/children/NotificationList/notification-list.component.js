@@ -1,0 +1,30 @@
+import React, { Fragment } from 'react';
+import NotificationItem from '../NotificationItem';
+import { List, NoNotifications } from './notification-list.style';
+
+type Props = {
+  notifications: Array,
+  markAsRead: Function,
+  deleteNotification: Function
+};
+
+const NotificationList = ({ notifications, markAsRead, deleteNotification }: Props) => (
+  <Fragment>
+    {notifications.length > 0 ? (
+      <List>
+        {notifications.map(notification => (
+          <NotificationItem
+            key={notification.id}
+            notification={notification}
+            markAsRead={markAsRead}
+            deleteNotification={deleteNotification}
+          />
+        ))}
+      </List>
+    ) : (
+      <NoNotifications className="empty-list">No notifications to show</NoNotifications>
+    )}
+  </Fragment>
+);
+
+export default NotificationList;

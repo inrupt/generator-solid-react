@@ -1,3 +1,3 @@
-import { useNotifications } from './useNotifications';
+import useOnClickOutside from './useOnClickOutside';
 
-export { useNotifications };
+export { useOnClickOutside };

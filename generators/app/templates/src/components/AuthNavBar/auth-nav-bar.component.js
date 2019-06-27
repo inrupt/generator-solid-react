@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavBar } from '@components';
+import { NavBar, Notifications } from '@components';
 import { NavBarProfile } from './children';
 import { LanguageDropdown } from '@util-components';
 
@@ -37,6 +37,10 @@ const AuthNavBar = (props: Props) => {
         {
           component: () => <LanguageDropdown {...props} />,
           id: 'language'
+        },
+        {
+          component: () => <Notifications />,
+          id: 'notifications'
         },
         {
           component: ({ open, customClass }) => (
