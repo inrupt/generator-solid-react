@@ -1,11 +1,10 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useLiveUpdate } from '@inrupt/solid-react-components';
-import { withToastManager } from 'react-toast-notifications';
 import styled from 'styled-components';
-import { ldflexHelper } from '@utils';
 import moment from 'moment';
-import Board from '../Board';
+import { ldflexHelper } from '@utils';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
+import Board from '../Board';
 
 const GameWrapper = styled.div`
   display: flex;
@@ -27,37 +26,70 @@ const Metadata = styled.div`
   padding: 4px 16px 12px 16px;
 `;
 
-const Turn = ({ player }) => {
-  return (
-    <span>
-      Next player: <b>{player}</b>
-    </span>
-  );
-};
+type TurnProps = { player: String };
 
-const Game = ({ webId, documentUri, opponent, toastManager }) => {
+const Turn = ({ player }: TurnProps) => (
+  <span>
+    Next player: <b>{player}</b>
+  </span>
+);
+
+const Game = ({ webId, documentUri }) => {
   /** Game Logic */
   const updates = useLiveUpdate();
   const { timestamp } = updates;
   const [gameDocument, setGameDocument] = useState(null);
   const [gameData, setGameData] = useState({});
 
-  useEffect(() => {
-    getGame(documentUri);
-  }, [documentUri, timestamp]);
+  const getSecondToken = token => (token === 'X' ? 'O' : 'X');
 
-  useEffect(() => {
-    checkWinGame();
-  }, [gameData]);
+  const getToken = data => {
+    const { sender, opponent, firstmove } = data;
+    if (webId === sender) return firstmove;
+    return webId === opponent ? getSecondToken(firstmove) : '?';
+  };
+
+  const generateMoves = (moveorder: Array<String>, firstmove: String) => {
+    const array = Array.isArray(moveorder) ? moveorder : [moveorder];
+    return array.reduce((allSquares, current, i) => {
+      const squares = allSquares;
+      let move;
+      if (i % 2 === 0) move = firstmove;
+      else move = getSecondToken(firstmove);
+      squares[current] = move;
+      return squares;
+    }, new Array(9).fill(null));
+  };
+
+  const getPredicate = field => {
+    const prefix = tictactoeShape['@context'][field.prefix];
+    return `${prefix}${field.predicate}`;
+  };
+
+  const isMyTurn = data => {
+    const { gamestatus } = data;
+    return gamestatus && gamestatus.split(' ')[1] === getToken(data);
+  };
+
+  const canPlay = data => {
+    const { sender, opponent } = data;
+    return (webId === sender || webId === opponent) && isMyTurn(data);
+  };
+
+  const nextPlayer = data => {
+    const { sender, opponent, firstmove } = data;
+    return isMyTurn(data) && firstmove === getToken(data) ? sender : opponent;
+  };
 
   const getGame = async (documentUri: String) => {
     try {
       const game = await ldflexHelper.fetchLdflexDocument(documentUri);
+      console.log('game', game);
       setGameDocument(game);
       let auxData = {};
-      for await (let field of tictactoeShape.shape) {
+      for await (const field of tictactoeShape.shape) {
         let values = [];
-        for await (let val of game[getPredicate(field)]) {
+        for await (const val of game[getPredicate(field)]) {
           values = [...values, val.value];
         }
         const value = values.length > 1 ? values : values[0];
@@ -73,58 +105,6 @@ const Game = ({ webId, documentUri, opponent, toastManager }) => {
       });
     } catch (e) {
       console.log(e);
-    }
-  };
-
-  const whoAmI = data => {
-    const { sender, opponent } = data;
-    return webId === sender ? 'sender' : webId === opponent ? 'opponent' : null;
-  };
-
-  const nextPlayer = data => {
-    const { sender, opponent, firstmove, gamestatus } = data;
-    return isMyTurn(data) && firstmove === getToken(data) ? sender : opponent;
-  };
-
-  const onMove = async index => {
-    try {
-      const { moves } = gameData;
-      if (moves[index] === null) {
-        const newMoves = moves.map((move, i) =>
-          move === null && i === index ? getToken(gameData) : move
-        );
-        const gamestatus = `Move ${getSecondToken(getToken(gameData))}`;
-        const newData = { ...gameData, moves: newMoves, gamestatus };
-        setGameData({ ...newData, canPlay: canPlay(newData) });
-        await changeGameStatus(gamestatus);
-        await addMove(index);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const isMyTurn = data => {
-    const { gamestatus } = data;
-    return gamestatus && gamestatus.split(' ')[1] === getToken(data);
-  };
-
-  const canPlay = data => {
-    const { sender, opponent } = data;
-    return (webId === sender || webId === opponent) && isMyTurn(data);
-  };
-
-  const getPredicate = field => {
-    const prefix = tictactoeShape['@context'][field.prefix];
-    return `${prefix}${field.predicate}`;
-  };
-
-  const addMove = async index => {
-    try {
-      const predicate = 'http://www.w3.org/2000/01/rdf-schema#moveorder';
-      await gameDocument[predicate].add(`${index}`);
-    } catch (e) {
-      throw e;
     }
   };
 
@@ -155,7 +135,7 @@ const Game = ({ webId, documentUri, opponent, toastManager }) => {
 
         let win = [];
 
-        for (let combination of possibleCombinations) {
+        for (const combination of possibleCombinations) {
           const [first, second, third] = combination;
 
           if (
@@ -170,7 +150,7 @@ const Game = ({ webId, documentUri, opponent, toastManager }) => {
         if (win.length > 0) {
           setGameData({ ...gameData, win, gamestatus: 'Completed' });
           await changeGameStatus('Completed');
-          console.log("You've won!!! Congrats");
+          console.log('You have won!!! Congrats');
         }
       }
     } catch (e) {
@@ -178,23 +158,40 @@ const Game = ({ webId, documentUri, opponent, toastManager }) => {
     }
   };
 
-  const getToken = data => {
-    const { sender, opponent, firstmove } = data;
-    return webId === sender ? firstmove : webId === opponent ? getSecondToken(firstmove) : '?';
+  const addMove = async index => {
+    try {
+      const predicate = 'http://www.w3.org/2000/01/rdf-schema#moveorder';
+      await gameDocument[predicate].add(`${index}`);
+    } catch (e) {
+      throw e;
+    }
   };
 
-  const getSecondToken = token => {
-    return token === 'X' ? 'O' : 'X';
+  const onMove = async index => {
+    try {
+      const { moves } = gameData;
+      if (moves[index] === null) {
+        const newMoves = moves.map((move, i) =>
+          move === null && i === index ? getToken(gameData) : move
+        );
+        const gamestatus = `Move ${getSecondToken(getToken(gameData))}`;
+        const newData = { ...gameData, moves: newMoves, gamestatus };
+        setGameData({ ...newData, canPlay: canPlay(newData) });
+        await changeGameStatus(gamestatus);
+        await addMove(index);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  const generateMoves = (moveorder: Array<String>, firstmove: String) => {
-    const array = Array.isArray(moveorder) ? moveorder : [moveorder];
-    return array.reduce((allSquares, current, i) => {
-      if (i % 2 === 0) allSquares[current] = firstmove;
-      else allSquares[current] = getSecondToken(firstmove);
-      return allSquares;
-    }, new Array(9).fill(null));
-  };
+  useEffect(() => {
+    getGame(documentUri);
+  }, [documentUri, timestamp]);
+
+  useEffect(() => {
+    checkWinGame();
+  }, [gameData]);
 
   return (
     <GameWrapper>
@@ -234,4 +231,4 @@ const Game = ({ webId, documentUri, opponent, toastManager }) => {
   );
 };
 
-export default withToastManager(Game);
+export default Game;

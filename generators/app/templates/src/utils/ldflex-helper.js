@@ -1,13 +1,12 @@
 import auth from 'solid-auth-client';
 import ldflex from '@solid/query-ldflex';
 
-export const existDocument = async documentUri => {
-  return await auth.fetch(documentUri, {
+export const existDocument = async documentUri =>
+  auth.fetch(documentUri, {
     headers: {
       'Content-Type': 'application/json'
     }
   });
-};
 
 const createDoc = async (documentUri, options) => {
   try {

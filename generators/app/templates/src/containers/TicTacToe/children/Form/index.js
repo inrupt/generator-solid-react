@@ -1,2 +1,3 @@
-import GameForm from './game-form.component'
+import GameForm from './game-form.component';
+
 export default GameForm;
