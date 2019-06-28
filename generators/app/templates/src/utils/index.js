@@ -9,4 +9,12 @@ function* entries(obj) {
   }
 }
 
-export { media, expandedProperty, entries, ldflexHelper, successToaster, errorToaster };
+function buildPathFromWebId(webid, path) {
+  if (!webid) return false;
+
+  const domain = new URL(webid).origin;
+  return `${domain}/${path}`;
+}
+
+
+export { media, expandedProperty, entries, ldflexHelper, successToaster, errorToaster, buildPathFromWebId };

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useWebId, LiveUpdate } from '@inrupt/solid-react-components';
+import React, { useState, useEffect } from 'react';
+import { useWebId, LiveUpdate, useNotification } from '@inrupt/solid-react-components';
 import styled from 'styled-components';
+import { ldflexHelper } from '@utils';
 import { Game, GameForm } from './children';
 
 const TicTacToeSection = styled.section`
@@ -26,10 +27,17 @@ const TicTacToeWrapper = styled.div`
 const TicTacToe = () => {
   const webId = useWebId();
   const [formData, setFormData] = useState({});
+  const { createNotification } = useNotification(process.env.REACT_APP_TICTAC_INBOX, webId);
+
+  useEffect(() => {
+    ldflexHelper.createContainer(process.env.REACT_APP_TICTAC_PATH);
+  }, []);
 
   const onCreateGame = (documentUri: String, opponent: String) => {
     setFormData({ documentUri, opponent });
   };
+
+  console.log(formData.documentUri);
 
   return (
     <TicTacToeSection>
@@ -38,7 +46,8 @@ const TicTacToe = () => {
           <GameForm
             {...{
               webId,
-              onCreateGame
+              onCreateGame,
+              createNotification
             }}
           />
         )}

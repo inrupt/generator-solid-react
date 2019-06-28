@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import { namedNode } from '@rdfjs/data-model';
 import N3 from 'n3';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
-import { ldflexHelper, errorToaster, successToaster } from '@utils';
+import { ldflexHelper, errorToaster, successToaster, buildPathFromWebId } from '@utils';
 
 const GameFormWrapper = styled.div`
   padding: 16px;
@@ -35,11 +35,11 @@ const BtnDiv = styled.div`
 
 type Props = { onCreateGame: Function, webId: String };
 
-const GameForm = ({ onCreateGame, webId }: Props) => {
+const GameForm = ({ onCreateGame, webId, createNotification }: Props) => {
   const pod = webId.split('/profile')[0];
   const uniqueIdentifier = Date.now();
-  const [documentUri, setDocumentUri] = useState(`${pod}/public/tictactoe/${uniqueIdentifier}.ttl`);
-  const [opponent, setOpponent] = useState('https://jprod.solid.community/profile/card#me');
+  const [documentUri, setDocumentUri] = useState(`${uniqueIdentifier}.ttl`);
+  const [opponent, setOpponent] = useState('https://jairo88.inrupt.net/profile/card#me');
 
   const reset = () => {
     setDocumentUri('');
@@ -55,18 +55,54 @@ const GameForm = ({ onCreateGame, webId }: Props) => {
     firstmove: 'X'
   });
 
+  const sendNotification = useCallback(async content => {
+    try {
+      /**
+       * Opponent app inbox
+       */
+      const opponentAppInbox = buildPathFromWebId(opponent, process.env.REACT_APP_TICTAC_INBOX);
+      /**
+       * Check if app inbox exist to send notification if doesn't exist
+       * send try to send to global inbox.
+       */
+      if (ldflexHelper.existFolder(opponentAppInbox)) {
+        return createNotification(content, opponentAppInbox);
+      }
+
+      const globalOpponentInbox = ldflexHelper.discoveryInbox(opponentAppInbox);
+      if (globalOpponentInbox) {
+        return createNotification(content, opponentAppInbox);
+      }
+
+      /**
+       * If the opponent doesn't has inbox we show an error
+       */
+      console.log('Error the opponent does not has inbox to send notification');
+    } catch (error) {
+      console.log(error, 'error to create notification');
+    }
+  }, []);
+
   const createGame = async (documentUri: String, opponent: String) => {
     try {
       const newDocument = await ldflexHelper.createNonExistentDocument(documentUri);
       if (newDocument) {
         const document = await ldflexHelper.fetchLdflexDocument(documentUri);
         const setupObj = initialGame(opponent);
+        console.log(tictactoeShape);
         for await (const field of tictactoeShape.shape) {
           const prefix = tictactoeShape['@context'][field.prefix];
           const predicate = `${prefix}${field.predicate}`;
           if (field.predicate !== 'moveorder')
             await document[predicate].add(setupObj[field.predicate]);
         }
+
+        await sendNotification({
+          title: 'Ticktacktoe invitation',
+          summary: `${webId} invite you to play a game`
+        });
+        // eslint-disable-next-line no-console
+
       }
     } catch (e) {
       throw new Error('Error while creating game');
@@ -152,9 +188,14 @@ const GameForm = ({ onCreateGame, webId }: Props) => {
   const onSubmit = async e => {
     try {
       e.preventDefault();
-      await createGame(documentUri, opponent);
-      await aclTurtle(documentUri, opponent);
-      onCreateGame(documentUri, opponent);
+      const documentPath = buildPathFromWebId(
+        webId,
+        `${process.env.REACT_APP_TICTAC_PATH}${documentUri}`
+      );
+
+      await createGame(documentPath, opponent);
+      await aclTurtle(documentPath, opponent);
+      onCreateGame(documentPath, opponent);
       successToaster('Game created successfully', 'Success');
     } catch (e) {
       errorToaster(e.message);

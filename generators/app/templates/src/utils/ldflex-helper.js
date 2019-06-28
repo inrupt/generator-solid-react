@@ -48,6 +48,7 @@ export const createDocumentWithTurtle = async (documentUri, body = '') => {
 export const createNonExistentDocument = async (documentUri, body = '') => {
   try {
     const result = await existDocument(documentUri);
+
     return result.status === 404 ? createDocument(documentUri, body) : null;
   } catch (e) {
     throw e;
@@ -62,5 +63,36 @@ export const fetchLdflexDocument = async documentUri => {
     return document;
   } catch (e) {
     throw e;
+  }
+};
+
+export const existFolder = async folderPath => {
+  const result = await auth.fetch(folderPath);
+
+  return result.ok;
+};
+
+export const discoveryInbox = async webId => {
+  try {
+    const user = await ldflex[webId];
+    const inbox = await user['ldp:inbox'];
+
+    return inbox && inbox.value;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createContainer = async folderPath => {
+  try {
+    const existConatiner = await existFolder(folderPath);
+    const dummyPath = `${folderPath}.dummy`;
+
+    if (existConatiner) return;
+    await createDoc(dummyPath);
+
+    await createDoc(dummyPath, { method: 'DELETE' });
+  } catch (error) {
+    throw new Error(error);
   }
 };
