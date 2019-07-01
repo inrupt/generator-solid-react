@@ -87,7 +87,6 @@ export const createContainer = async folderPath => {
   try {
     const existConatiner = await existFolder(folderPath);
     const dummyPath = `${folderPath}.dummy`;
-    console.log(existConatiner, 'container');
     if (existConatiner) return;
 
     await createDoc(dummyPath);

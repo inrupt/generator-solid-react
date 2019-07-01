@@ -6,21 +6,26 @@ import { Bell, NotificationsPanel } from './children';
 import { useOnClickOutside } from '@hooks';
 import { buildPathFromWebId } from '@utils';
 
-
 const Notifications = () => {
   const [isOpen, setIsOpen] = useState(false);
   const webId = useWebId();
   const ref = useRef();
   const toggleNotifications = () => setIsOpen(!isOpen);
   const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
-  const { notifications, unread, markAsRead, deleteNotification, fetchNotification } = useNotification(inboxUrl, webId);
+  const {
+    notifications,
+    unread,
+    markAsRead,
+    deleteNotification,
+    fetchNotification
+  } = useNotification(inboxUrl, webId);
   useOnClickOutside(ref, () => setIsOpen(false));
 
   useEffect(() => {
-    if (webId) {
+    if (webId && inboxUrl) {
       fetchNotification();
     }
-  }, [webId]);
+  }, [webId, inboxUrl]);
 
   return (
     <NotificationsWrapper ref={ref}>

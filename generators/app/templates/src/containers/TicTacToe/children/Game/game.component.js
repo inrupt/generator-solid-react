@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useLiveUpdate } from '@inrupt/solid-react-components';
 import styled from 'styled-components';
 import moment from 'moment';
-import { ldflexHelper } from '@utils';
+import { ldflexHelper, errorToaster, successToaster } from '@utils';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
 import Board from '../Board';
 
@@ -84,7 +84,6 @@ const Game = ({ webId, documentUri, sendNotification }) => {
   const getGame = async (documentUri: String) => {
     try {
       const game = await ldflexHelper.fetchLdflexDocument(documentUri);
-      console.log('game', game);
       setGameDocument(game);
       let auxData = {};
       for await (const field of tictactoeShape.shape) {
@@ -104,7 +103,7 @@ const Game = ({ webId, documentUri, sendNotification }) => {
         nextPlayer: nextPlayer(auxData)
       });
     } catch (e) {
-      console.log(e);
+      errorToaster(e.message, 'Error');
     }
   };
 
@@ -150,11 +149,11 @@ const Game = ({ webId, documentUri, sendNotification }) => {
         if (win.length > 0) {
           setGameData({ ...gameData, win, gamestatus: 'Completed' });
           await changeGameStatus('Completed');
-          console.log('You have won!!! Congrats');
+          successToaster('You have won!!! Congrats', 'Winner');
         }
       }
     } catch (e) {
-      console.log(e);
+      errorToaster(e.message, 'Error');
     }
   };
 
@@ -186,7 +185,7 @@ const Game = ({ webId, documentUri, sendNotification }) => {
         });
       }
     } catch (e) {
-      console.log(e);
+      errorToaster(e.message, 'Error');
     }
   };
 

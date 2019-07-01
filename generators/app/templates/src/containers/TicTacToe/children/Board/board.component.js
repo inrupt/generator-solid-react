@@ -14,10 +14,12 @@ const GameBoard = styled.div`
 
 type Props = { squares: Array, onMove: Funtion, canPlay: Boolean };
 
+const unique = seed => Date.now() + seed;
+
 const Board = ({ squares, onMove, canPlay }: Props) => (
   <GameBoard>
     {squares.map((square, i) => (
-      <Field key={i} value={square} onMove={() => onMove(i)} canPlay={canPlay} />
+      <Field key={unique(i)} value={square} onMove={() => onMove(i)} canPlay={canPlay} />
     ))}
   </GameBoard>
 );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useWebId, LiveUpdate, useNotification } from '@inrupt/solid-react-components';
 import styled from 'styled-components';
-import { ldflexHelper, buildPathFromWebId } from '@utils';
+import { ldflexHelper, buildPathFromWebId, errorToaster } from '@utils';
 import { Game, GameForm } from './children';
 
 const TicTacToeSection = styled.section`
@@ -28,10 +28,8 @@ const TicTacToe = () => {
   const webId = useWebId();
   const [formData, setFormData] = useState({});
   const [opponent, setOpponent] = useState('https://jairo88.inrupt.net/profile/card#me');
-  const { createNotification, createInbox } = useNotification(
-    process.env.REACT_APP_TICTAC_INBOX,
-    webId
-  );
+  const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
+  const { createNotification, createInbox } = useNotification(inboxUrl, webId);
 
   const sendNotification = useCallback(async content => {
     try {
@@ -55,9 +53,9 @@ const TicTacToe = () => {
       /**
        * If the opponent doesn't has inbox we show an error
        */
-      console.log('Error the opponent does not has inbox to send notification');
+      errorToaster('Error the opponent does not has inbox to send notification', 'Warning');
     } catch (error) {
-      console.log(error, 'error to create notification');
+      errorToaster(error.message, 'Error');
     }
   }, []);
 
@@ -66,7 +64,9 @@ const TicTacToe = () => {
   }, []);
 
   useEffect(() => {
-    createInbox();
+    if (webId) {
+      createInbox();
+    }
   }, [webId]);
 
   const onCreateGame = (documentUri: String, opponent: String) => {

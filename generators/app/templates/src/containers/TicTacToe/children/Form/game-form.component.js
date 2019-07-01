@@ -33,10 +33,15 @@ const BtnDiv = styled.div`
   }
 `;
 
-type Props = { onCreateGame: Function, webId: String };
+type Props = {
+  onCreateGame: Function,
+  webId: String,
+  sendNotification: () => void,
+  opponent: string,
+  setOpponent: () => void
+};
 
 const GameForm = ({ onCreateGame, webId, sendNotification, opponent, setOpponent }: Props) => {
-  const pod = webId.split('/profile')[0];
   const uniqueIdentifier = Date.now();
   const [documentUri, setDocumentUri] = useState(`${uniqueIdentifier}.ttl`);
 
