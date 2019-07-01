@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { useNotification, useWebId } from '@inrupt/solid-react-components';
+import { useNotification, useWebId, useLiveUpdate } from '@inrupt/solid-react-components';
 import { NotificationsWrapper } from './notifications.style';
 import { Bell, NotificationsPanel } from './children';
 import { useOnClickOutside } from '@hooks';
@@ -12,24 +12,21 @@ const Notifications = () => {
   const ref = useRef();
   const toggleNotifications = () => setIsOpen(!isOpen);
   const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
-  const {
-    notifications,
-    unread,
-    markAsRead,
-    deleteNotification,
-    fetchNotification
-  } = useNotification(inboxUrl, webId);
-  useOnClickOutside(ref, () => setIsOpen(false));
+  const { notifications, markAsRead, deleteNotification, fetchNotification } = useNotification(
+    inboxUrl,
+    webId
+  );
 
+  const { timestamp } = useLiveUpdate(inboxUrl);
+  useOnClickOutside(ref, () => setIsOpen(false));
   useEffect(() => {
     if (webId && inboxUrl) {
       fetchNotification();
     }
-  }, [webId, inboxUrl]);
-
+  }, [webId, inboxUrl, timestamp]);
   return (
     <NotificationsWrapper ref={ref}>
-      <Bell unread={unread} onClick={toggleNotifications} active={isOpen} />
+      <Bell unread={notifications.unread || 0} onClick={toggleNotifications} active={isOpen} />
       <CSSTransition
         in={isOpen}
         timeout={300}
@@ -37,7 +34,9 @@ const Notifications = () => {
         unmountOnExit
         mountOnEnter
       >
-        <NotificationsPanel {...{ notifications, markAsRead, deleteNotification }} />
+        <NotificationsPanel
+          {...{ notifications: notifications.notifications, markAsRead, deleteNotification }}
+        />
       </CSSTransition>
     </NotificationsWrapper>
   );
