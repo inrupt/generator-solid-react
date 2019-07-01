@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { useNotification, useWebId } from '@inrupt/solid-react-components';
 import { NotificationsWrapper } from './notifications.style';
@@ -13,8 +13,14 @@ const Notifications = () => {
   const ref = useRef();
   const toggleNotifications = () => setIsOpen(!isOpen);
   const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
-  const { notifications, unread, markAsRead, deleteNotification } = useNotification(inboxUrl, webId);
+  const { notifications, unread, markAsRead, deleteNotification, fetchNotification } = useNotification(inboxUrl, webId);
   useOnClickOutside(ref, () => setIsOpen(false));
+
+  useEffect(() => {
+    if (webId) {
+      fetchNotification();
+    }
+  }, [webId]);
 
   return (
     <NotificationsWrapper ref={ref}>

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useWebId, LiveUpdate, useNotification } from '@inrupt/solid-react-components';
 import styled from 'styled-components';
-import { ldflexHelper } from '@utils';
+import { ldflexHelper, buildPathFromWebId } from '@utils';
 import { Game, GameForm } from './children';
 
 const TicTacToeSection = styled.section`
@@ -27,17 +27,51 @@ const TicTacToeWrapper = styled.div`
 const TicTacToe = () => {
   const webId = useWebId();
   const [formData, setFormData] = useState({});
-  const { createNotification } = useNotification(process.env.REACT_APP_TICTAC_INBOX, webId);
+  const [opponent, setOpponent] = useState('https://jairo88.inrupt.net/profile/card#me');
+  const { createNotification, createInbox } = useNotification(
+    process.env.REACT_APP_TICTAC_INBOX,
+    webId
+  );
+
+  const sendNotification = useCallback(async content => {
+    try {
+      /**
+       * Opponent app inbox
+       */
+      const opponentAppInbox = buildPathFromWebId(opponent, process.env.REACT_APP_TICTAC_INBOX);
+      /**
+       * Check if app inbox exist to send notification if doesn't exist
+       * send try to send to global inbox.
+       */
+      const appInbox = await ldflexHelper.existFolder(opponentAppInbox);
+      if (appInbox) {
+        return createNotification(content, opponentAppInbox);
+      }
+      const globalOpponentInbox = await ldflexHelper.discoveryInbox(opponent);
+      if (globalOpponentInbox) {
+        return createNotification(content, `${globalOpponentInbox}/`);
+      }
+
+      /**
+       * If the opponent doesn't has inbox we show an error
+       */
+      console.log('Error the opponent does not has inbox to send notification');
+    } catch (error) {
+      console.log(error, 'error to create notification');
+    }
+  }, []);
 
   useEffect(() => {
     ldflexHelper.createContainer(process.env.REACT_APP_TICTAC_PATH);
   }, []);
 
+  useEffect(() => {
+    createInbox();
+  }, [webId]);
+
   const onCreateGame = (documentUri: String, opponent: String) => {
     setFormData({ documentUri, opponent });
   };
-
-  console.log(formData.documentUri);
 
   return (
     <TicTacToeSection>
@@ -47,14 +81,16 @@ const TicTacToe = () => {
             {...{
               webId,
               onCreateGame,
-              createNotification
+              sendNotification,
+              setOpponent,
+              opponent
             }}
           />
         )}
 
         {formData && formData.documentUri && (
           <LiveUpdate subscribe={formData.documentUri}>
-            <Game {...{ ...formData, webId }} />
+            <Game {...{ ...formData, webId, sendNotification }} />
           </LiveUpdate>
         )}
       </TicTacToeWrapper>

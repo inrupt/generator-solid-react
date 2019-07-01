@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import { namedNode } from '@rdfjs/data-model';
@@ -35,11 +35,10 @@ const BtnDiv = styled.div`
 
 type Props = { onCreateGame: Function, webId: String };
 
-const GameForm = ({ onCreateGame, webId, createNotification }: Props) => {
+const GameForm = ({ onCreateGame, webId, sendNotification, opponent, setOpponent }: Props) => {
   const pod = webId.split('/profile')[0];
   const uniqueIdentifier = Date.now();
   const [documentUri, setDocumentUri] = useState(`${uniqueIdentifier}.ttl`);
-  const [opponent, setOpponent] = useState('https://jairo88.inrupt.net/profile/card#me');
 
   const reset = () => {
     setDocumentUri('');
@@ -55,41 +54,12 @@ const GameForm = ({ onCreateGame, webId, createNotification }: Props) => {
     firstmove: 'X'
   });
 
-  const sendNotification = useCallback(async content => {
-    try {
-      /**
-       * Opponent app inbox
-       */
-      const opponentAppInbox = buildPathFromWebId(opponent, process.env.REACT_APP_TICTAC_INBOX);
-      /**
-       * Check if app inbox exist to send notification if doesn't exist
-       * send try to send to global inbox.
-       */
-      if (ldflexHelper.existFolder(opponentAppInbox)) {
-        return createNotification(content, opponentAppInbox);
-      }
-
-      const globalOpponentInbox = ldflexHelper.discoveryInbox(opponentAppInbox);
-      if (globalOpponentInbox) {
-        return createNotification(content, opponentAppInbox);
-      }
-
-      /**
-       * If the opponent doesn't has inbox we show an error
-       */
-      console.log('Error the opponent does not has inbox to send notification');
-    } catch (error) {
-      console.log(error, 'error to create notification');
-    }
-  }, []);
-
   const createGame = async (documentUri: String, opponent: String) => {
     try {
       const newDocument = await ldflexHelper.createNonExistentDocument(documentUri);
       if (newDocument) {
         const document = await ldflexHelper.fetchLdflexDocument(documentUri);
         const setupObj = initialGame(opponent);
-        console.log(tictactoeShape);
         for await (const field of tictactoeShape.shape) {
           const prefix = tictactoeShape['@context'][field.prefix];
           const predicate = `${prefix}${field.predicate}`;
@@ -101,11 +71,9 @@ const GameForm = ({ onCreateGame, webId, createNotification }: Props) => {
           title: 'Ticktacktoe invitation',
           summary: `${webId} invite you to play a game`
         });
-        // eslint-disable-next-line no-console
-
       }
     } catch (e) {
-      throw new Error('Error while creating game');
+      throw new Error(e);
     }
   };
 

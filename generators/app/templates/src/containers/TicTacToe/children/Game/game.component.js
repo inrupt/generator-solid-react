@@ -34,7 +34,7 @@ const Turn = ({ player }: TurnProps) => (
   </span>
 );
 
-const Game = ({ webId, documentUri }) => {
+const Game = ({ webId, documentUri, sendNotification }) => {
   /** Game Logic */
   const updates = useLiveUpdate();
   const { timestamp } = updates;
@@ -179,6 +179,11 @@ const Game = ({ webId, documentUri }) => {
         setGameData({ ...newData, canPlay: canPlay(newData) });
         await changeGameStatus(gamestatus);
         await addMove(index);
+
+        await sendNotification({
+          title: 'Ticktacktoe move',
+          summary: `${webId} made a move`
+        });
       }
     } catch (e) {
       console.log(e);

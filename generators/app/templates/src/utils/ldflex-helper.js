@@ -21,7 +21,7 @@ export const createDocument = async (documentUri, body = '') => {
     const options = {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/sparql-update'
+        'Content-Type': 'text/turtle'
       },
       body
     };
@@ -87,8 +87,9 @@ export const createContainer = async folderPath => {
   try {
     const existConatiner = await existFolder(folderPath);
     const dummyPath = `${folderPath}.dummy`;
-
+    console.log(existConatiner, 'container');
     if (existConatiner) return;
+
     await createDoc(dummyPath);
 
     await createDoc(dummyPath, { method: 'DELETE' });

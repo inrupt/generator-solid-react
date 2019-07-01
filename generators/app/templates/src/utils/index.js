@@ -16,5 +16,12 @@ function buildPathFromWebId(webid, path) {
   return `${domain}/${path}`;
 }
 
-
-export { media, expandedProperty, entries, ldflexHelper, successToaster, errorToaster, buildPathFromWebId };
+export {
+  media,
+  expandedProperty,
+  entries,
+  ldflexHelper,
+  successToaster,
+  errorToaster,
+  buildPathFromWebId
+};
