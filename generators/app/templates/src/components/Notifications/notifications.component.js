@@ -6,6 +6,8 @@ import { Bell, NotificationsPanel } from './children';
 import { useOnClickOutside } from '@hooks';
 import { buildPathFromWebId } from '@utils';
 
+let oldTimestamp;
+
 const Notifications = () => {
   const [isOpen, setIsOpen] = useState(false);
   const webId = useWebId();
@@ -17,11 +19,22 @@ const Notifications = () => {
     webId
   );
 
-  const { timestamp } = useLiveUpdate(inboxUrl);
+  let { timestamp } = useLiveUpdate(inboxUrl);
+  /**
+   * pass date to string to compare time updates
+   * @type {*|string}
+   */
+  timestamp = timestamp && timestamp.toString();
   useOnClickOutside(ref, () => setIsOpen(false));
   useEffect(() => {
     if (webId && inboxUrl) {
-      fetchNotification();
+      /**
+       * Render only when timestamps from live update are different
+       */
+      if (timestamp && oldTimestamp !== timestamp) {
+        fetchNotification();
+        oldTimestamp = timestamp;
+      }
     }
   }, [webId, inboxUrl, timestamp]);
   return (
