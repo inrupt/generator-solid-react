@@ -14,6 +14,6 @@ export const List = styled.ul`
 
 export const NoNotifications = styled.span`
   display: inherit;
-  margin-top: 20px;
+  margin: 20px;
   text-align: center;
 `;

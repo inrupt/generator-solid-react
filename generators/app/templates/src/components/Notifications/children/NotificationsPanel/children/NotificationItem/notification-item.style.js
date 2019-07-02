@@ -17,7 +17,7 @@ export const Item = styled.li`
 `;
 
 export const Body = styled.div`
-  padding: 0 8px;
+  padding: 0 14px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -54,7 +54,7 @@ export const MarkAsRead = styled.button`
   border: none;
   position: absolute;
   right: 6px;
-  top: 50%;
+  top: 54%;
   transform: translateY(-50%);
   &:active {
     outline: none;
