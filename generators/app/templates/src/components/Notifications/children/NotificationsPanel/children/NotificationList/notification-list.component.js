@@ -10,7 +10,7 @@ type Props = {
 
 const NotificationList = ({ notifications, markAsRead, deleteNotification }: Props) => (
   <Fragment>
-    {notifications.length > 0 ? (
+    {notifications && notifications.length > 0 ? (
       <List>
         {notifications.map(notification => (
           <NotificationItem

@@ -8,6 +8,7 @@ type Props = { notification: Object, markAsRead: Function, children: React.React
 const NotificationItem = ({ notification, markAsRead, children }: Props) => {
   const [hover, setHover] = useState(false);
   const { read } = notification;
+  const currentRead = JSON.parse(read);
   const onMouseEnter = () => {
     setHover(true);
   };
@@ -15,8 +16,9 @@ const NotificationItem = ({ notification, markAsRead, children }: Props) => {
   const onMouseLeave = () => {
     setHover(false);
   };
+
   return (
-    <Item read={notification.read} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <Item read={currentRead} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <img src="img/icon/empty-profile.svg" alt="Creator" />
       <Body>
         <Message>
@@ -27,8 +29,12 @@ const NotificationItem = ({ notification, markAsRead, children }: Props) => {
           {children}
         </Meta>
       </Body>
-      {hover && !read && (
-        <MarkAsRead type="button" className="delete" onClick={() => markAsRead(notification)}>
+      {!currentRead && (
+        <MarkAsRead
+          type="button"
+          className="delete"
+          onClick={() => markAsRead(notification.path, notification.id)}
+        >
           <FontAwesomeIcon icon="eye" />
         </MarkAsRead>
       )}

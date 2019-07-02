@@ -11,10 +11,13 @@ const Notifications = ({ webId, inboxUrl }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
   const toggleNotifications = () => setIsOpen(!isOpen);
-  const { notifications, markAsRead, deleteNotification, fetchNotification } = useNotification(
-    inboxUrl,
-    webId
-  );
+  const {
+    notifications,
+    markAsReadNotification: markAsRead,
+    deleteNotification,
+    fetchNotification
+  } = useNotification(inboxUrl, webId);
+
   const { timestamp } = useLiveUpdate();
   /**
    * pass date to string to compare time updates
