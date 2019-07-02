@@ -16,7 +16,6 @@ export const Panel = styled.div`
   border: solid 1px #cfdce6;
 
   ${media.tablet`
-
     right: 0;
   `}
 `;

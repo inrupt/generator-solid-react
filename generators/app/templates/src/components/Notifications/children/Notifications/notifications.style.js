@@ -24,7 +24,7 @@ export const NotificationsWrapper = styled.div`
     transform: scale(0.8);
     transition: opacity 300ms, transform 300ms;
   }
-  ${media.tablet`
+  ${media.desktopSm`
     position: relative;
     width: 60px;
     height: 100%;
