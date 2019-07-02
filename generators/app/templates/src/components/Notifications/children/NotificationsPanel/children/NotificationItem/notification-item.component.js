@@ -22,7 +22,7 @@ const NotificationItem = ({ notification, markAsRead, children }: Props) => {
       <img src="img/icon/empty-profile.svg" alt="Creator" />
       <Body>
         <Message>
-          <strong>{notification.sender}</strong> {notification.message}
+          <strong>{notification.sender}</strong> {notification.summary}
         </Message>
         <Meta>
           <span className="moment">{moment(notification.sent).fromNow()}</span>
