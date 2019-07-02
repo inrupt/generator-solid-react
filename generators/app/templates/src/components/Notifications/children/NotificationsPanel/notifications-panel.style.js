@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from '@utils';
 
 export const Panel = styled.div`
   position: absolute;
@@ -10,9 +11,14 @@ export const Panel = styled.div`
   box-sizing: border-box;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.3);
   top: calc(100% + 2px);
-  right: 0;
+  right: -210px;
   z-index: 99999;
   border: solid 1px #cfdce6;
+
+  ${media.tablet`
+
+    right: 0;
+  `}
 `;
 
 export const Title = styled.h2`

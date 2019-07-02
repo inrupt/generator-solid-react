@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+import { media } from '@utils';
 
 export const NotificationsWrapper = styled.div`
-  position: relative;
-  width: 60px;
-  height: 100%;
+  position: fixed;
+  z-index: 3;
+  top: 17px;
+  left: 47px;
 
   & .notifications-enter {
     opacity: 0;
@@ -22,4 +24,11 @@ export const NotificationsWrapper = styled.div`
     transform: scale(0.8);
     transition: opacity 300ms, transform 300ms;
   }
+  ${media.tablet`
+    position: relative;
+    width: 60px;
+    height: 100%;
+    left: inherit;
+    top: inherit;
+  `}
 `;
