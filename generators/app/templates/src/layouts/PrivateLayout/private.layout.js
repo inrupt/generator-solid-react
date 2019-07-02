@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { withAuthorization, LiveUpdate } from '@inrupt/solid-react-components';
+import { withAuthorization } from '@inrupt/solid-react-components';
 import { AuthNavBar, Footer } from '@components';
 import styled from 'styled-components';
 
@@ -23,9 +23,8 @@ const PrivateLayout = ({ routes, ...rest }) => (
     {...rest}
     component={matchProps => (
       <Container>
-        <LiveUpdate>
-          <AuthNavBar {...matchProps} />
-        </LiveUpdate>
+        <AuthNavBar {...matchProps} />
+
         <Content className="contentApp">
           <Switch>
             {routes.map(route => (

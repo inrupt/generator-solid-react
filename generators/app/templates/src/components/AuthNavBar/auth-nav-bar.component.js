@@ -1,10 +1,11 @@
 import React from 'react';
 import { NavBar, Notifications } from '@components';
-import { NavBarProfile } from './children';
+import { NavBarContainer } from './children';
 import { LanguageDropdown } from '@util-components';
 
 type Props = {
-  t: Function
+  t: Function,
+  webId: string
 };
 
 const AuthNavBar = (props: Props) => {
@@ -29,6 +30,7 @@ const AuthNavBar = (props: Props) => {
       to: '/tictactoe'
     }
   ];
+  const { webId } = props;
   return (
     <NavBar
       navigation={navigation}
@@ -44,7 +46,7 @@ const AuthNavBar = (props: Props) => {
         },
         {
           component: ({ open, customClass }) => (
-            <NavBarProfile {...props} open={open} customClass={customClass} />
+            <NavBarContainer {...props} open={open} webId={webId} customClass={customClass} />
           ),
           id: 'profile'
         }
