@@ -34,14 +34,13 @@ const BtnDiv = styled.div`
 `;
 
 type Props = {
-  onCreateGame: Function,
   webId: String,
   sendNotification: () => void,
   opponent: string,
   setOpponent: () => void
 };
 
-const GameForm = ({ onCreateGame, webId, sendNotification, opponent, setOpponent }: Props) => {
+const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => {
   const uniqueIdentifier = Date.now();
   const [documentUri, setDocumentUri] = useState(`${uniqueIdentifier}.ttl`);
 
@@ -72,9 +71,13 @@ const GameForm = ({ onCreateGame, webId, sendNotification, opponent, setOpponent
             await document[predicate].add(setupObj[field.predicate]);
         }
 
+        const target = `${window.location.href}/${btoa(documentUri)}`;
         await sendNotification({
-          title: 'Ticktacktoe invitation',
-          summary: `${webId} invite you to play a game`
+          title: 'Tictactoe invitation',
+          summary: 'Invite you to play a game',
+          sender: webId,
+          object: documentUri,
+          target
         });
       }
     } catch (e) {
@@ -168,7 +171,6 @@ const GameForm = ({ onCreateGame, webId, sendNotification, opponent, setOpponent
 
       await createGame(documentPath, opponent);
       await aclTurtle(documentPath, opponent);
-      onCreateGame(documentPath, opponent);
       successToaster('Game created successfully', 'Success');
     } catch (e) {
       errorToaster(e.message);
@@ -180,10 +182,10 @@ const GameForm = ({ onCreateGame, webId, sendNotification, opponent, setOpponent
       <h1>Tic Tac Toe</h1>
       <hr />
       <form>
-        <span>Enter an Opponent and POD Game Path</span>
+        <span>Enter an Opponent and a Game id</span>
         <div className="input-wrap">
           <label htmlFor="documentUriInput">
-            Document URI
+            Game Id
             <input
               id="documentUriInput"
               type="text"

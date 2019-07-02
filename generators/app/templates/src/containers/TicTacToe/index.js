@@ -1,3 +1,4 @@
-import TicTacToe from './tic-tac-toe.component';
+import GameList from './GameListPage';
+import GamePage from './GamePage';
 
-export default TicTacToe;
+export { GameList, GamePage };

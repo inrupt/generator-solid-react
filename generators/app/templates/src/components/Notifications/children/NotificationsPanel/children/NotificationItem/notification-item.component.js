@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Item, Body, Message, Meta, MarkAsRead } from './notification-item.style';
@@ -6,19 +6,11 @@ import { Item, Body, Message, Meta, MarkAsRead } from './notification-item.style
 type Props = { notification: Object, markAsRead: Function, children: React.ReactNode };
 
 const NotificationItem = ({ notification, markAsRead, children }: Props) => {
-  const [hover, setHover] = useState(false);
   const { read } = notification;
   const currentRead = JSON.parse(read);
-  const onMouseEnter = () => {
-    setHover(true);
-  };
-
-  const onMouseLeave = () => {
-    setHover(false);
-  };
 
   return (
-    <Item read={currentRead} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <Item read={currentRead}>
       <img src="img/icon/empty-profile.svg" alt="Creator" />
       <Body>
         <Message>

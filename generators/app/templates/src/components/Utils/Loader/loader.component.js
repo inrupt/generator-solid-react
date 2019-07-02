@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { LoaderWrapper, CubeGrid, Cube } from './loader.style';
 
 type Props = {
-  delay?: Number
+  delay?: Number,
+  absolute?: Boolean
 };
 
 class Loader extends Component<Props> {
@@ -32,9 +33,10 @@ class Loader extends Component<Props> {
       { id: '8', value: 0.2 }
     ];
     const { show } = this.state;
+    const { absolute } = this.props;
     return (
       show && (
-        <LoaderWrapper>
+        <LoaderWrapper absolute={absolute}>
           <CubeGrid>
             {cubes.map(({ id, value }) => (
               <Cube key={id} delay={value} />
@@ -47,7 +49,8 @@ class Loader extends Component<Props> {
 }
 
 Loader.defaultProps = {
-  delay: 300
+  delay: 300,
+  absolute: false
 };
 
 export default Loader;

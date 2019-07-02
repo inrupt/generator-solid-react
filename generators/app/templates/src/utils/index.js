@@ -2,6 +2,7 @@ import { media } from './styledComponents';
 import { expandedProperty } from './context';
 import { successToaster, errorToaster } from './toaster';
 import * as ldflexHelper from './ldflex-helper';
+import * as notification from './notification';
 
 function* entries(obj) {
   for (const key of Object.keys(obj)) {
@@ -23,5 +24,6 @@ export {
   ldflexHelper,
   successToaster,
   errorToaster,
-  buildPathFromWebId
+  buildPathFromWebId,
+  notification
 };

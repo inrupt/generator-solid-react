@@ -1,55 +1,48 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { useLiveUpdate } from '@inrupt/solid-react-components';
-import styled from 'styled-components';
+import React, { Fragment, useEffect, useState, useCallback } from 'react';
+import { useLiveUpdate, useNotification } from '@inrupt/solid-react-components';
 import moment from 'moment';
-import { ldflexHelper, errorToaster, successToaster } from '@utils';
+import {
+  ldflexHelper,
+  errorToaster,
+  successToaster,
+  buildPathFromWebId,
+  notification
+} from '@utils';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
 import Board from '../Board';
+import { GameWrapper, Metadata } from './game.style';
 
-const GameWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-items: flex-start;
-  align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
-  flex: 1 0 auto;
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-`;
+type Props = { webId: String, gameURL: String };
 
-const Metadata = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 4px 16px 12px 16px;
-`;
-
-type TurnProps = { player: String };
-
-const Turn = ({ player }: TurnProps) => (
-  <span>
-    Next player: <b>{player}</b>
-  </span>
-);
-
-const Game = ({ webId, documentUri, sendNotification }) => {
+const Game = ({ webId, gameURL }: Props) => {
   /** Game Logic */
   const updates = useLiveUpdate();
   const { timestamp } = updates;
   const [gameDocument, setGameDocument] = useState(null);
   const [gameData, setGameData] = useState({});
+  const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
+  const { createNotification } = useNotification(inboxUrl, webId);
 
-  const getSecondToken = token => (token === 'X' ? 'O' : 'X');
+  const sendNotification = useCallback(
+    async (opponent, content) => {
+      try {
+        notification.sendNotification(opponent, content, createNotification);
+      } catch (error) {
+        errorToaster(error.message, 'Error');
+      }
+    },
+    [gameData]
+  );
 
-  const getToken = data => {
+  const getSecondToken = useCallback(token => (token === 'X' ? 'O' : 'X'));
+
+  const getToken = useCallback(data => {
     const { sender, opponent, firstmove } = data;
     if (webId === sender) return firstmove;
     return webId === opponent ? getSecondToken(firstmove) : '?';
-  };
+  });
 
-  const generateMoves = (moveorder: Array<String>, firstmove: String) => {
+  const generateMoves = useCallback((moveorder: Array<String>, firstmove: String) => {
     const array = Array.isArray(moveorder) ? moveorder : [moveorder];
     return array.reduce((allSquares, current, i) => {
       const squares = allSquares;
@@ -59,31 +52,31 @@ const Game = ({ webId, documentUri, sendNotification }) => {
       squares[current] = move;
       return squares;
     }, new Array(9).fill(null));
-  };
+  });
 
-  const getPredicate = field => {
+  const getPredicate = useCallback(field => {
     const prefix = tictactoeShape['@context'][field.prefix];
     return `${prefix}${field.predicate}`;
-  };
+  });
 
-  const isMyTurn = data => {
+  const isMyTurn = useCallback(data => {
     const { gamestatus } = data;
     return gamestatus && gamestatus.split(' ')[1] === getToken(data);
-  };
+  });
 
-  const canPlay = data => {
+  const canPlay = useCallback(data => {
     const { sender, opponent } = data;
     return (webId === sender || webId === opponent) && isMyTurn(data);
-  };
+  });
 
-  const nextPlayer = data => {
+  const nextPlayer = useCallback(data => {
     const { sender, opponent, firstmove } = data;
     return isMyTurn(data) && firstmove === getToken(data) ? sender : opponent;
-  };
+  });
 
-  const getGame = async (documentUri: String) => {
+  const getGame = useCallback(async (gameURL: String) => {
     try {
-      const game = await ldflexHelper.fetchLdflexDocument(documentUri);
+      const game = await ldflexHelper.fetchLdflexDocument(gameURL);
       setGameDocument(game);
       let auxData = {};
       for await (const field of tictactoeShape.shape) {
@@ -105,9 +98,9 @@ const Game = ({ webId, documentUri, sendNotification }) => {
     } catch (e) {
       errorToaster(e.message, 'Error');
     }
-  };
+  });
 
-  const changeGameStatus = async gamestatus => {
+  const changeGameStatus = useCallback(async gamestatus => {
     try {
       const predicate = 'http://www.w3.org/2000/01/rdf-schema#gamestatus';
       await gameDocument[predicate].delete();
@@ -115,9 +108,9 @@ const Game = ({ webId, documentUri, sendNotification }) => {
     } catch (e) {
       throw e;
     }
-  };
+  });
 
-  const checkWinGame = async () => {
+  const checkWinGame = useCallback(async () => {
     try {
       const { moves } = gameData;
       if (moves) {
@@ -155,20 +148,20 @@ const Game = ({ webId, documentUri, sendNotification }) => {
     } catch (e) {
       errorToaster(e.message, 'Error');
     }
-  };
+  });
 
-  const addMove = async index => {
+  const addMove = useCallback(async index => {
     try {
       const predicate = 'http://www.w3.org/2000/01/rdf-schema#moveorder';
       await gameDocument[predicate].add(`${index}`);
     } catch (e) {
       throw e;
     }
-  };
+  });
 
-  const onMove = async index => {
+  const onMove = useCallback(async index => {
     try {
-      const { moves } = gameData;
+      const { moves, opponent, target } = gameData;
       if (moves[index] === null) {
         const newMoves = moves.map((move, i) =>
           move === null && i === index ? getToken(gameData) : move
@@ -178,20 +171,22 @@ const Game = ({ webId, documentUri, sendNotification }) => {
         setGameData({ ...newData, canPlay: canPlay(newData) });
         await changeGameStatus(gamestatus);
         await addMove(index);
-
-        await sendNotification({
-          title: 'Ticktacktoe move',
-          summary: `${webId} made a move`
+        await sendNotification(opponent, {
+          title: 'Tictactoe move',
+          summary: 'Made a move',
+          sender: webId,
+          object: gameURL,
+          target
         });
       }
     } catch (e) {
       errorToaster(e.message, 'Error');
     }
-  };
+  });
 
   useEffect(() => {
-    getGame(documentUri);
-  }, [documentUri, timestamp]);
+    getGame(gameURL);
+  }, [gameURL, timestamp]);
 
   useEffect(() => {
     checkWinGame();
@@ -202,7 +197,9 @@ const Game = ({ webId, documentUri, sendNotification }) => {
       {gameData && (
         <Fragment>
           <Metadata>
-            <Turn player={gameData.nextPlayer} />
+            <span>
+              Next player: <b>{gameData.nextPlayer}</b>
+            </span>
             {!canPlay && <span>Not your turn, please wait for your opponent to play </span>}
             <span>
               Game Status: <b>{gameData.gamestatus}</b>
