@@ -38,6 +38,11 @@ const Notifications = ({ webId, inboxUrl }) => {
     }
   }, [timestamp]);
 
+  const notificationsOrder = notifications.notifications.sort((a, b) =>
+    // eslint-disable-next-line no-nested-ternary
+    a.sent < b.sent ? 1 : a.sent > b.sent ? -1 : 0
+  );
+
   return (
     <NotificationsWrapper ref={ref}>
       <Bell unread={notifications.unread || 0} onClick={toggleNotifications} active={isOpen} />
@@ -49,7 +54,7 @@ const Notifications = ({ webId, inboxUrl }) => {
         mountOnEnter
       >
         <NotificationsPanel
-          {...{ notifications: notifications.notifications, markAsRead, deleteNotification }}
+          {...{ notifications: notificationsOrder, markAsRead, deleteNotification }}
         />
       </CSSTransition>
     </NotificationsWrapper>
