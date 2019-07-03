@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLiveUpdate } from '@inrupt/solid-react-components';
 import { Loader } from '@util-components';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
-import { buildPathFromWebId, ldflexHelper } from '@utils';
+import { ldflexHelper, errorToaster } from '@utils';
 import GameItem from './children';
 import { Wrapper, ListWrapper } from './list.style';
 
-type Props = { webId: String };
+let oldTimestamp;
+type Props = { gamePath: String };
 
-const List = ({ webId }: Props) => {
+const List = ({ gamePath }: Props) => {
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const updates = useLiveUpdate();
@@ -19,46 +20,54 @@ const List = ({ webId }: Props) => {
     return `${prefix}${field.predicate}`;
   };
 
-  const getGames = async () => {
-    const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
-    const document = await ldflexHelper.fetchLdflexDocument(url);
-    let gameList = [];
-    for await (const item of document['ldp:contains']) {
-      const { value } = item;
-      if (value.includes('.ttl')) gameList = [...gameList, value];
-    }
-    let games = [];
-    for await (const item of gameList) {
-      const game = await ldflexHelper.fetchLdflexDocument(item);
-      let gameData = { url: item };
-      for await (const field of tictactoeShape.shape) {
-        let values = [];
-        for await (const val of game[getPredicate(field)]) {
-          values = [...values, val.value];
+  const getGames = useCallback(async () => {
+    try {
+      const document = await ldflexHelper.fetchLdflexDocument(gamePath);
+      let gameList = [];
+      for await (const item of document['ldp:contains']) {
+        const { value } = item;
+        if (value.includes('.ttl')) gameList = [...gameList, value];
+      }
+      let games = [];
+      for await (const item of gameList) {
+        const game = await ldflexHelper.fetchLdflexDocument(item);
+        let gameData = { url: item };
+        for await (const field of tictactoeShape.shape) {
+          let values = [];
+          for await (const val of game[getPredicate(field)]) {
+            values = [...values, val.value];
+          }
+          const value = values.length > 1 ? values : values[0];
+          gameData = { ...gameData, [field.predicate]: value };
         }
-        const value = values.length > 1 ? values : values[0];
-        gameData = { ...gameData, [field.predicate]: value };
+
+        games = [...games, gameData];
       }
 
-      games = [...games, gameData];
+      setList(games);
+    } catch (e) {
+      errorToaster('Error while getting games');
     }
+  }, [gamePath]);
 
-    setList(games);
-  };
-
-  const init = async () => {
+  const init = useCallback(async () => {
     setIsLoading(true);
     await getGames();
     setIsLoading(false);
-  };
+  });
 
   useEffect(() => {
     init();
   }, []);
 
   useEffect(() => {
-    if (timestamp) getGames();
+    const currentTimestamp = timestamp && timestamp.toString();
+    if (timestamp && currentTimestamp !== oldTimestamp) {
+      getGames();
+      oldTimestamp = currentTimestamp;
+    }
   }, [timestamp]);
+
   return (
     <Wrapper>
       {!isLoading ? (

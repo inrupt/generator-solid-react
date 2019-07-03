@@ -4,7 +4,7 @@ import ldflex from '@solid/query-ldflex';
 export const existDocument = async documentUri =>
   auth.fetch(documentUri, {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'text/turtle'
     }
   });
 
@@ -33,7 +33,7 @@ export const createDocument = async (documentUri, body = '') => {
 
 export const createDocumentWithTurtle = async (documentUri, body = '') => {
   try {
-    return await createDoc(documentUri, {
+    return createDoc(documentUri, {
       method: 'PUT',
       headers: {
         'Content-Type': 'text/turtle'
@@ -58,7 +58,7 @@ export const createNonExistentDocument = async (documentUri, body = '') => {
 export const fetchLdflexDocument = async documentUri => {
   try {
     const result = await existDocument(documentUri);
-    if (result.status === 404) throw new Error('404: Document not found');
+    if (result.status === 404) return null;
     const document = await ldflex[documentUri];
     return document;
   } catch (e) {
@@ -85,13 +85,13 @@ export const discoveryInbox = async webId => {
 
 export const createContainer = async folderPath => {
   try {
-    const existConatiner = await existFolder(folderPath);
+    const existContainer = await existFolder(folderPath);
     const dummyPath = `${folderPath}.dummy`;
-    if (existConatiner) return;
-
+    if (existContainer) return folderPath;
     await createDoc(dummyPath);
-
     await createDoc(dummyPath, { method: 'DELETE' });
+
+    return folderPath;
   } catch (error) {
     throw new Error(error);
   }

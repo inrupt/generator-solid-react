@@ -24,9 +24,9 @@ const Game = ({ webId, gameURL }: Props) => {
   const { createNotification } = useNotification(inboxUrl, webId);
 
   const sendNotification = useCallback(
-    async (opponent, content) => {
+    async (player, content) => {
       try {
-        notification.sendNotification(opponent, content, createNotification);
+        notification.sendNotification(player, content, createNotification);
       } catch (error) {
         errorToaster(error.message, 'Error');
       }
@@ -161,7 +161,7 @@ const Game = ({ webId, gameURL }: Props) => {
 
   const onMove = useCallback(async index => {
     try {
-      const { moves, opponent, target } = gameData;
+      const { moves, opponent, target, sender } = gameData;
       if (moves[index] === null) {
         const newMoves = moves.map((move, i) =>
           move === null && i === index ? getToken(gameData) : move
@@ -171,7 +171,8 @@ const Game = ({ webId, gameURL }: Props) => {
         setGameData({ ...newData, canPlay: canPlay(newData) });
         await changeGameStatus(gamestatus);
         await addMove(index);
-        await sendNotification(opponent, {
+        const otherPlayer = webId === sender ? opponent : sender;
+        await sendNotification(otherPlayer, {
           title: 'Tictactoe move',
           summary: 'Made a move',
           sender: webId,
