@@ -13,19 +13,19 @@ const AuthNavBar = (props: Props) => {
   const navigation = [
     {
       id: 'welcome',
-      icon: 'img/icon/apps.svg',
+      icon: '/img/icon/apps.svg',
       label: t('navBar.welcome'),
       to: '/welcome'
     },
     {
       id: 'profile',
-      icon: 'img/people.svg',
+      icon: '/img/people.svg',
       label: t('navBar.profile'),
       to: '/profile'
     },
     {
       id: 'tictactoe',
-      icon: 'img/people.svg',
+      icon: '/img/people.svg',
       label: t('navBar.tictactoe'),
       to: '/tictactoe'
     }
