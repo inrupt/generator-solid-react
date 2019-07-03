@@ -18,7 +18,7 @@ const NotificationItem = ({ notification, markAsRead, children }: Props) => {
   return (
     <Item read={currentRead}>
       <a href={notification.sender}>
-        <img src="img/icon/empty-profile.svg" alt="Creator" />
+        <img src="/img/icon/empty-profile.svg" alt="Creator" />
       </a>
       <Body>
         <Message onClick={redirectTo}>
