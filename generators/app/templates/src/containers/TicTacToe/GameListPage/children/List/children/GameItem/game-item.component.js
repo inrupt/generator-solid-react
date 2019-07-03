@@ -6,7 +6,7 @@ import { Item, Info, GameStatus, Actions } from './game-item.style';
 type Props = { game: Object };
 
 const GameItem = ({ game }: Props) => {
-  const status = game.gamestatus.toLowerCase().replace(' ', '');
+  const status = game.gamestatus && game.gamestatus.toLowerCase().replace(' ', '');
   const { gamestatus, url, createddatetime, opponent } = game;
   return (
     <Item>

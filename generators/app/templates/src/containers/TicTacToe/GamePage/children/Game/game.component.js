@@ -42,17 +42,21 @@ const Game = ({ webId, gameURL }: Props) => {
     return webId === opponent ? getSecondToken(firstmove) : '?';
   });
 
-  const generateMoves = useCallback((moveorder: Array<String>, firstmove: String) => {
-    const array = Array.isArray(moveorder) ? moveorder : [moveorder];
-    return array.reduce((allSquares, current, i) => {
+  const getPlayer = token => {
+    const { firstmove, sender, opponent } = gameData;
+    return token === firstmove ? sender : opponent;
+  };
+
+  const generateMoves = useCallback((moveorder: Array<String>, firstmove: String) =>
+    moveorder.reduce((allSquares, current, i) => {
       const squares = allSquares;
       let move;
       if (i % 2 === 0) move = firstmove;
       else move = getSecondToken(firstmove);
       squares[current] = move;
       return squares;
-    }, new Array(9).fill(null));
-  });
+    }, new Array(9).fill(null))
+  );
 
   const getPredicate = useCallback(field => {
     const prefix = tictactoeShape['@context'][field.prefix];
@@ -87,7 +91,8 @@ const Game = ({ webId, gameURL }: Props) => {
         const value = values.length > 1 ? values : values[0];
         auxData = { ...auxData, [field.predicate]: value };
       }
-
+      const moveorder = auxData.moveorder ? auxData.moveorder.split('-') : [];
+      auxData = { ...auxData, moveorder };
       const moves = generateMoves(auxData.moveorder, auxData.firstmove);
       setGameData({
         ...auxData,
@@ -103,16 +108,16 @@ const Game = ({ webId, gameURL }: Props) => {
   const changeGameStatus = useCallback(async gamestatus => {
     try {
       const predicate = 'http://www.w3.org/2000/01/rdf-schema#gamestatus';
-      await gameDocument[predicate].delete();
-      await gameDocument[predicate].add(gamestatus);
+      const data = await gameDocument[predicate];
+      await gameDocument[predicate].replace(data.value, gamestatus);
     } catch (e) {
       throw e;
     }
   });
 
-  const checkWinGame = useCallback(async () => {
+  const checkWin = useCallback(async () => {
     try {
-      const { moves } = gameData;
+      const { moves, gamestatus } = gameData;
       if (moves) {
         const possibleCombinations = [
           [0, 4, 8],
@@ -125,8 +130,7 @@ const Game = ({ webId, gameURL }: Props) => {
           [2, 5, 8]
         ];
 
-        let win = [];
-
+        let winnerObject = {};
         for (const combination of possibleCombinations) {
           const [first, second, third] = combination;
 
@@ -135,14 +139,16 @@ const Game = ({ webId, gameURL }: Props) => {
             moves[first] === moves[second] &&
             moves[first] === moves[third]
           ) {
-            win = combination;
+            winnerObject = { combination, token: moves[first] };
             break;
           }
         }
-        if (win.length > 0) {
-          setGameData({ ...gameData, win, gamestatus: 'Completed' });
-          await changeGameStatus('Completed');
-          successToaster('You have won!!! Congrats', 'Winner');
+        if (winnerObject.token) {
+          setGameData({ ...gameData, winnerObject, gamestatus: 'Finished' });
+          if (gamestatus !== 'Finished') await changeGameStatus('Finished');
+          if (getPlayer(winnerObject.token) === webId)
+            successToaster('You have won!!! Congrats', 'Winner');
+          else successToaster('Better luck next time!!');
         }
       }
     } catch (e) {
@@ -150,10 +156,12 @@ const Game = ({ webId, gameURL }: Props) => {
     }
   });
 
-  const addMove = useCallback(async index => {
+  const addMoves = useCallback(async array => {
     try {
+      const moves = array.join('-');
       const predicate = 'http://www.w3.org/2000/01/rdf-schema#moveorder';
-      await gameDocument[predicate].add(`${index}`);
+      await gameDocument[predicate].delete();
+      await gameDocument[predicate].add(moves);
     } catch (e) {
       throw e;
     }
@@ -161,16 +169,17 @@ const Game = ({ webId, gameURL }: Props) => {
 
   const onMove = useCallback(async index => {
     try {
-      const { moves, opponent, target, sender } = gameData;
+      const { moves, opponent, target, sender, moveorder } = gameData;
       if (moves[index] === null) {
         const newMoves = moves.map((move, i) =>
           move === null && i === index ? getToken(gameData) : move
         );
+        const newOrder = [...moveorder, index];
         const gamestatus = `Move ${getSecondToken(getToken(gameData))}`;
         const newData = { ...gameData, moves: newMoves, gamestatus };
         setGameData({ ...newData, canPlay: canPlay(newData) });
+        await addMoves(newOrder);
         await changeGameStatus(gamestatus);
-        await addMove(index);
         const otherPlayer = webId === sender ? opponent : sender;
         await sendNotification(otherPlayer, {
           title: 'Tictactoe move',
@@ -186,12 +195,11 @@ const Game = ({ webId, gameURL }: Props) => {
   });
 
   useEffect(() => {
-    getGame(gameURL);
+    if (gameURL || timestamp) {
+      getGame(gameURL);
+      checkWin();
+    }
   }, [gameURL, timestamp]);
-
-  useEffect(() => {
-    checkWinGame();
-  }, [gameData]);
 
   return (
     <GameWrapper>
@@ -220,9 +228,9 @@ const Game = ({ webId, gameURL }: Props) => {
               <span>
                 Created: <b>{moment(gameData.createddatetime).format('MMM Do, YYYY')}</b>
               </span>
-              {gameData.win && (
+              {gameData.winnerObject && (
                 <span>
-                  Winner Combination: <b>{gameData.win.join('-')}</b>
+                  Winner Combination: <b>{gameData.winnerObject.combination.join('-')}</b>
                 </span>
               )}
             </Metadata>

@@ -55,7 +55,8 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
     updateddatetime: moment().format(),
     sender: namedNode(webId),
     opponent: namedNode(opponent),
-    firstmove: 'X'
+    firstmove: 'X',
+    moveorder: ''
   });
 
   const createGame = async (documentUri: String, opponent: String) => {
