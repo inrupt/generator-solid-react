@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Item, Body, Message, Meta, MarkAsRead } from './notification-item.style';
@@ -9,8 +9,14 @@ const NotificationItem = ({ notification, markAsRead, children }: Props) => {
   const { read } = notification;
   const currentRead = JSON.parse(read);
 
+  const redirectTo = useCallback(() => {
+    if (notification.target) {
+      window.location = notification.target;
+    }
+  }, [notification]);
+
   return (
-    <Item read={currentRead}>
+    <Item read={currentRead} onClick={redirectTo}>
       <img src="img/icon/empty-profile.svg" alt="Creator" />
       <Body>
         <Message>
