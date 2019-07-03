@@ -1,11 +1,16 @@
 import React, { useCallback } from 'react';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Item, Body, Message, Meta, MarkAsRead } from './notification-item.style';
+import { Item, Body, Message, Meta, MarkAsRead, Delete } from './notification-item.style';
 
-type Props = { notification: Object, markAsRead: Function, children: React.ReactNode };
+type Props = {
+  notification: Object,
+  markAsRead: Function,
+  children: React.ReactNode,
+  deleteNotification: (fileName: string) => void
+};
 
-const NotificationItem = ({ notification, markAsRead, children }: Props) => {
+const NotificationItem = ({ notification, markAsRead, children, deleteNotification }: Props) => {
   const { read } = notification;
   const currentRead = JSON.parse(read);
 
@@ -38,6 +43,13 @@ const NotificationItem = ({ notification, markAsRead, children }: Props) => {
           <FontAwesomeIcon icon="eye" />
         </MarkAsRead>
       )}
+      <Delete
+        type="button"
+        className="delete"
+        onClick={() => deleteNotification(notification.path)}
+      >
+        <FontAwesomeIcon icon="times-circle" />
+      </Delete>
     </Item>
   );
 };

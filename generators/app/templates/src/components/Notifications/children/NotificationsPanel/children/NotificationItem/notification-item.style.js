@@ -14,6 +14,15 @@ export const Item = styled.li`
     width: 40px;
     height: 40px;
   }
+
+  .delete {
+    display: none;
+  }
+  &:hover {
+    .delete {
+      display: block;
+    }
+  }
 `;
 
 export const Body = styled.div`
@@ -59,4 +68,14 @@ export const MarkAsRead = styled.button`
   &:active {
     outline: none;
   }
+`;
+
+export const Delete = styled.button`
+  position: absolute;
+  top: 3px;
+  right: 0;
+  border: 0;
+  padding: 0;
+  margin: 5px 7px;
+  color: #ffa600;
 `;
