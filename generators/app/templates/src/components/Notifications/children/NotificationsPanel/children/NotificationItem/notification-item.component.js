@@ -16,10 +16,12 @@ const NotificationItem = ({ notification, markAsRead, children }: Props) => {
   }, [notification]);
 
   return (
-    <Item read={currentRead} onClick={redirectTo}>
-      <img src="img/icon/empty-profile.svg" alt="Creator" />
+    <Item read={currentRead}>
+      <a href={notification.sender}>
+        <img src="img/icon/empty-profile.svg" alt="Creator" />
+      </a>
       <Body>
-        <Message>
+        <Message onClick={redirectTo}>
           <strong>{notification.sender}</strong> {notification.summary}
         </Message>
         <Meta>
