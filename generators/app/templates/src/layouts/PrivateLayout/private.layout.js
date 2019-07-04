@@ -27,9 +27,18 @@ const PrivateLayout = ({ routes, webId, location, ...rest }) => (
         component={() => (
           <Content className="contentApp">
             <Switch>
-              {routes.map(route => (
-                <Route key={route.id} {...route} exact />
-              ))}
+              {routes.map(route => {
+                const { component: RouteComponent } = route;
+                return (
+                  <Route
+                    key={route.id}
+                    path={route.path}
+                    render={routerProps => <RouteComponent {...routerProps} webId={webId} />}
+                    webId={webId}
+                    exact
+                  />
+                );
+              })}
               <Redirect to="/404" />
             </Switch>
           </Content>

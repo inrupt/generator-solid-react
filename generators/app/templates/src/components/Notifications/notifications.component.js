@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWebId, LiveUpdate } from '@inrupt/solid-react-components';
+import { LiveUpdate } from '@inrupt/solid-react-components';
 import { buildPathFromWebId } from '@utils';
 import { Notifications } from './children';
 

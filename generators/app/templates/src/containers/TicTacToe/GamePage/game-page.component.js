@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react';
-import { useWebId, LiveUpdate } from '@inrupt/solid-react-components';
+import { LiveUpdate } from '@inrupt/solid-react-components';
 import { Game } from './children';
 import { Section, Wrapper } from '../tic-tac-toe.style';
 
-const GamePage = ({ match }) => {
-  const webId = useWebId();
+const GamePage = ({ match, webId }) => {
   const { gameId } = match.params;
   const gameURL = atob(gameId);
 

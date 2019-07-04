@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useWebId, ShexFormBuilder } from '@inrupt/solid-react-components';
+import { ShexFormBuilder } from '@inrupt/solid-react-components';
 import { successToaster, errorToaster } from '@utils';
 import {
   Header,
@@ -22,9 +22,9 @@ const defaultProfilePhoto = '/img/icon/empty-profile.svg';
  * this means the result will have a better format to read on Javascript.
  * for more information please go to: https://github.com/solid/query-ldflex
  */
+type Props = { webId: String };
 
-const Profile = () => {
-  const webId = useWebId();
+const Profile = ({ webId }: Props) => {
   const { t, i18n } = useTranslation();
 
   const successCallback = () => {

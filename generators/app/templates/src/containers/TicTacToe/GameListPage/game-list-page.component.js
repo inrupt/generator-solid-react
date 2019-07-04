@@ -1,11 +1,10 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
-import { useWebId, LiveUpdate, useNotification } from '@inrupt/solid-react-components';
+import { LiveUpdate, useNotification } from '@inrupt/solid-react-components';
 import { ldflexHelper, buildPathFromWebId, errorToaster, notification } from '@utils';
 import { Form, List } from './children';
 import { Section, Wrapper } from '../tic-tac-toe.style';
 
-const GameListPage = props => {
-  const webId = useWebId();
+const GameListPage = ({ webId }) => {
   const [opponent, setOpponent] = useState('https://jairo88.inrupt.net/profile/card#me');
   const [gamePath, setGamePath] = useState(null);
   const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
@@ -45,13 +44,12 @@ const GameListPage = props => {
                 webId,
                 sendNotification,
                 setOpponent,
-                opponent,
-                ...props
+                opponent
               }}
             />
             {gamePath && (
               <LiveUpdate subscribe={buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH)}>
-                <List {...{ webId, ...props, gamePath }} />
+                <List {...{ webId, gamePath }} />
               </LiveUpdate>
             )}
           </Fragment>

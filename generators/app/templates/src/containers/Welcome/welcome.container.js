@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withWebId } from '@inrupt/solid-react-components';
 import data from '@solid/query-ldflex';
 import { namedNode } from '@rdfjs/data-model';
 import WelcomePageContent from './welcome.component';
@@ -101,4 +100,4 @@ class WelcomeComponent extends Component<Props> {
   }
 }
 
-export default withWebId(WelcomeComponent);
+export default WelcomeComponent;
