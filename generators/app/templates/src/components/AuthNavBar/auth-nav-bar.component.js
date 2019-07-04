@@ -1,15 +1,15 @@
 import React from 'react';
 import { NavBar, Notifications } from '@components';
+import { useTranslation } from 'react-i18next';
 import { NavBarContainer } from './children';
 import { LanguageDropdown } from '@util-components';
 
 type Props = {
-  t: Function,
   webId: string
 };
 
 const AuthNavBar = (props: Props) => {
-  const { t } = props;
+  const { t, i18n } = useTranslation();
   const navigation = [
     {
       id: 'welcome',
@@ -37,7 +37,7 @@ const AuthNavBar = (props: Props) => {
       sticky
       toolbar={[
         {
-          component: () => <LanguageDropdown {...props} />,
+          component: () => <LanguageDropdown {...{ t, i18n }} />,
           id: 'language'
         },
         {
@@ -46,7 +46,7 @@ const AuthNavBar = (props: Props) => {
         },
         {
           component: ({ open, customClass }) => (
-            <NavBarContainer {...props} open={open} webId={webId} customClass={customClass} />
+            <NavBarContainer {...{ t, i18n }} open={open} webId={webId} customClass={customClass} />
           ),
           id: 'profile'
         }

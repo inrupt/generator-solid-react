@@ -28,13 +28,13 @@ const PublicLayout = props => {
   return (
     <Route
       {...rest}
-      component={matchProps => (
+      component={({ history, location, match }) => (
         <Container>
           {webId ? (
-            <AuthNavBar {...matchProps} />
+            <AuthNavBar {...{ history, location, match }} />
           ) : (
             <NavBar
-              {...matchProps}
+              {...{ history, location, match }}
               toolbar={[
                 {
                   component: () => <LanguageDropdown {...props} />,
@@ -48,7 +48,7 @@ const PublicLayout = props => {
               ]}
             />
           )}
-          <ComponentWrapper {...matchProps} />
+          <ComponentWrapper {...{ history, location, match }} />
           <FooterContainer>
             <Footer />
           </FooterContainer>
