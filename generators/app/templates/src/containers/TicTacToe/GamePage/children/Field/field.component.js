@@ -7,6 +7,7 @@ const Square = styled.button`
   font-size: 4rem;
   font-weight: 700;
   padding: 0;
+  color: ${({ winner }) => (winner ? 'green' : '#000')};
   &:disabled {
     border-color: red;
 
@@ -19,10 +20,13 @@ const Square = styled.button`
 
 type Props = { value: String, onMove: Function, canPlay: Boolean };
 
-const Field = ({ value, onMove, canPlay }: Props) => (
-  <Square onClick={onMove} disabled={!canPlay}>
-    {value}
-  </Square>
-);
+const Field = ({ value, onMove, canPlay, winner, index }: Props) => {
+  const winnerField = winner ? winner.combination.includes(index) : false;
+  return (
+    <Square onClick={onMove} disabled={!canPlay} winner={winnerField}>
+      {value}
+    </Square>
+  );
+};
 
 export default Field;

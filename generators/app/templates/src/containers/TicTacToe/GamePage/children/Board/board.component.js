@@ -16,10 +16,17 @@ type Props = { squares: Array, onMove: Funtion, canPlay: Boolean };
 
 const unique = seed => Date.now() + seed;
 
-const Board = ({ squares, onMove, canPlay }: Props) => (
+const Board = ({ squares, onMove, canPlay, winner }: Props) => (
   <GameBoard>
     {squares.map((square, i) => (
-      <Field key={unique(i)} value={square} onMove={() => onMove(i)} canPlay={canPlay} />
+      <Field
+        key={unique(i)}
+        value={square}
+        onMove={() => onMove(i)}
+        canPlay={canPlay}
+        winner={winner}
+        index={i}
+      />
     ))}
   </GameBoard>
 );
