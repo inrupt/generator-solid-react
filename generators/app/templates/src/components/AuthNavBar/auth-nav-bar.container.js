@@ -1,14 +1,12 @@
 import React from 'react';
-import { withTranslation } from 'react-i18next';
 import AuthNavBar from './auth-nav-bar.component';
 
 type Props = {
-  history: Object,
   location: Object,
-  match: Object
+  webId: String
 };
 
-const AuthNavBarContainer = React.memo(({ history, location, match }: Props) => (
-  <AuthNavBar {...{ history, location, match }} />
+const AuthNavBarContainer = React.memo(({ location, webId }: Props) => (
+  <AuthNavBar {...{ location, webId }} />
 ));
-export default withTranslation()(AuthNavBarContainer);
+export default AuthNavBarContainer;

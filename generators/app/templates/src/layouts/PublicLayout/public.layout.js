@@ -1,10 +1,9 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
-import { withTranslation } from 'react-i18next';
-import { NavBar, AuthNavBar, Footer } from '@components';
-import { withWebId } from '@inrupt/solid-react-components';
-import { LanguageDropdown } from '@util-components';
+import { useWebId } from '@inrupt/solid-react-components';
 import styled from 'styled-components';
+import { NavBar, AuthNavBar, Footer } from '@components';
+import { LanguageDropdown } from '@util-components';
 
 const Container = styled.div`
   min-height: 100%;
@@ -18,20 +17,20 @@ const FooterContainer = styled.div`
 `;
 
 const PublicLayout = props => {
-  const { component: Component, webId, i18n, ...rest } = props;
+  const webId = useWebId();
+  const { component: Component, ...rest } = props;
   const ComponentWrapper = styled(Component)`
     padding-bottom: 60px;
     height: 100%;
     padding-top: 60px;
   `;
-
   return (
     <Route
       {...rest}
       component={({ history, location, match }) => (
         <Container>
           {webId ? (
-            <AuthNavBar {...{ history, location, match }} />
+            <AuthNavBar {...{ history, location, match, webId }} />
           ) : (
             <NavBar
               {...{ history, location, match }}
@@ -58,4 +57,4 @@ const PublicLayout = props => {
   );
 };
 
-export default withTranslation()(withWebId(PublicLayout));
+export default PublicLayout;

@@ -40,7 +40,7 @@ const Notifications = ({ webId, inboxUrl }) => {
 
   const notificationsOrder = notifications.notifications.sort((a, b) =>
     // eslint-disable-next-line no-nested-ternary
-    a.sent < b.sent ? 1 : a.sent > b.sent ? -1 : 0
+    a.sent < b.sent ? 1 : a.sent < b.sent ? -1 : 0
   );
 
   return (
