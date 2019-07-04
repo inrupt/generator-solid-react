@@ -14,12 +14,16 @@ import { GameWrapper, Metadata } from './game.style';
 
 type Props = { webId: String, gameURL: String };
 
+let oldTimestamp;
+
 const Game = ({ webId, gameURL }: Props) => {
   /** Game Logic */
   const updates = useLiveUpdate();
   const { timestamp } = updates;
   const [gameDocument, setGameDocument] = useState(null);
   const [gameData, setGameData] = useState({});
+  const [winner, setWinner] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
   const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
   const { createNotification } = useNotification(inboxUrl, webId);
 
@@ -78,18 +82,66 @@ const Game = ({ webId, gameURL }: Props) => {
     return isMyTurn(data) && firstmove === getToken(data) ? sender : opponent;
   });
 
+  const changeGameStatus = useCallback(async gamestatus => {
+    try {
+      const predicate = 'http://www.w3.org/2000/01/rdf-schema#gamestatus';
+      const data = await gameDocument[predicate];
+      console.log('Changing status', data.value, gamestatus);
+      await gameDocument[predicate].replace(data.value, gamestatus);
+    } catch (e) {
+      throw e;
+    }
+  });
+
+  const checkWinner = useCallback(async () => {
+    try {
+      const { moves, gamestatus } = gameData;
+      if (!moves) return;
+      const possibleCombinations = [
+        [0, 4, 8],
+        [2, 4, 6],
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8]
+      ];
+
+      let winnerObject = {};
+      for (const combination of possibleCombinations) {
+        const [first, second, third] = combination;
+        if (
+          moves[first] !== null &&
+          moves[first] === moves[second] &&
+          moves[first] === moves[third]
+        ) {
+          winnerObject = { combination, token: moves[first] };
+          break;
+        }
+      }
+      if (winnerObject.token) {
+        if (gamestatus !== 'Finished') {
+          await changeGameStatus('Finished');
+          if (getPlayer(winnerObject.token) === webId)
+            successToaster('You have won!!! Congrats', 'Winner');
+          else successToaster('Better luck next time!!');
+        }
+        setWinner(winnerObject);
+      }
+    } catch (e) {
+      errorToaster(e.message, 'Error');
+    }
+  });
+
   const getGame = useCallback(async (gameURL: String) => {
     try {
       const game = await ldflexHelper.fetchLdflexDocument(gameURL);
       setGameDocument(game);
       let auxData = {};
       for await (const field of tictactoeShape.shape) {
-        let values = [];
-        for await (const val of game[getPredicate(field)]) {
-          values = [...values, val.value];
-        }
-        const value = values.length > 1 ? values : values[0];
-        auxData = { ...auxData, [field.predicate]: value };
+        const fieldData = await game[getPredicate(field)];
+        auxData = { ...auxData, [field.predicate]: fieldData.value };
       }
       const moveorder = auxData.moveorder ? auxData.moveorder.split('-') : [];
       auxData = { ...auxData, moveorder };
@@ -100,57 +152,6 @@ const Game = ({ webId, gameURL }: Props) => {
         canPlay: canPlay(auxData),
         nextPlayer: nextPlayer(auxData)
       });
-    } catch (e) {
-      errorToaster(e.message, 'Error');
-    }
-  });
-
-  const changeGameStatus = useCallback(async gamestatus => {
-    try {
-      const predicate = 'http://www.w3.org/2000/01/rdf-schema#gamestatus';
-      const data = await gameDocument[predicate];
-      await gameDocument[predicate].replace(data.value, gamestatus);
-    } catch (e) {
-      throw e;
-    }
-  });
-
-  const checkWin = useCallback(async () => {
-    try {
-      const { moves, gamestatus } = gameData;
-      if (moves) {
-        const possibleCombinations = [
-          [0, 4, 8],
-          [2, 4, 6],
-          [0, 1, 2],
-          [3, 4, 5],
-          [6, 7, 8],
-          [0, 3, 6],
-          [1, 4, 7],
-          [2, 5, 8]
-        ];
-
-        let winnerObject = {};
-        for (const combination of possibleCombinations) {
-          const [first, second, third] = combination;
-
-          if (
-            moves[first] !== null &&
-            moves[first] === moves[second] &&
-            moves[first] === moves[third]
-          ) {
-            winnerObject = { combination, token: moves[first] };
-            break;
-          }
-        }
-        if (winnerObject.token) {
-          setGameData({ ...gameData, winnerObject, gamestatus: 'Finished' });
-          if (gamestatus !== 'Finished') await changeGameStatus('Finished');
-          if (getPlayer(winnerObject.token) === webId)
-            successToaster('You have won!!! Congrats', 'Winner');
-          else successToaster('Better luck next time!!');
-        }
-      }
     } catch (e) {
       errorToaster(e.message, 'Error');
     }
@@ -169,6 +170,7 @@ const Game = ({ webId, gameURL }: Props) => {
 
   const onMove = useCallback(async index => {
     try {
+      setIsProcessing(true);
       const { moves, opponent, target, sender, moveorder } = gameData;
       if (moves[index] === null) {
         const newMoves = moves.map((move, i) =>
@@ -188,18 +190,21 @@ const Game = ({ webId, gameURL }: Props) => {
           object: gameURL,
           target
         });
+        setIsProcessing(false);
       }
     } catch (e) {
+      setIsProcessing(false);
       errorToaster(e.message, 'Error');
     }
   });
 
   useEffect(() => {
-    if (gameURL || timestamp) {
-      getGame(gameURL);
-      checkWin();
-    }
+    if ((gameURL || timestamp) && !isProcessing) getGame(gameURL);
   }, [gameURL, timestamp]);
+
+  useEffect(() => {
+    if (gameData && Object.keys(gameData).length > 0) checkWinner();
+  }, [gameData]);
 
   return (
     <GameWrapper>
@@ -219,7 +224,8 @@ const Game = ({ webId, gameURL }: Props) => {
               {...{
                 squares: gameData.moves,
                 onMove,
-                canPlay: gameData.canPlay
+                canPlay: gameData.canPlay,
+                winner
               }}
             />
           )}
@@ -228,10 +234,13 @@ const Game = ({ webId, gameURL }: Props) => {
               <span>
                 Created: <b>{moment(gameData.createddatetime).format('MMM Do, YYYY')}</b>
               </span>
-              {gameData.winnerObject && (
-                <span>
-                  Winner Combination: <b>{gameData.winnerObject.combination.join('-')}</b>
-                </span>
+              {winner && (
+                <Fragment>
+                  <span>
+                    Winner: <strong>{winner.token}</strong> with{' '}
+                    <b>{winner.combination.join('-')}</b>
+                  </span>
+                </Fragment>
               )}
             </Metadata>
           )}

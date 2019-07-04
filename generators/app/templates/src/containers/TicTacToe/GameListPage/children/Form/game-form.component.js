@@ -68,8 +68,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         for await (const field of tictactoeShape.shape) {
           const prefix = tictactoeShape['@context'][field.prefix];
           const predicate = `${prefix}${field.predicate}`;
-          if (field.predicate !== 'moveorder')
-            await document[predicate].add(setupObj[field.predicate]);
+          await document[predicate].add(setupObj[field.predicate]);
         }
 
         const target = `${window.location.href}/${btoa(documentUri)}`;
