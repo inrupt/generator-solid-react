@@ -12,7 +12,7 @@ const GameBoard = styled.div`
   flex: 1 1 auto;
 `;
 
-type Props = { squares: Array, onMove: Funtion, canPlay: Boolean };
+type Props = { squares: Array, onMove: Funtion, canPlay: Boolean, winner: Object };
 
 const unique = seed => Date.now() + seed;
 

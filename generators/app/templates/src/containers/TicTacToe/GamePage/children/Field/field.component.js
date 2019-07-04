@@ -18,7 +18,7 @@ const Square = styled.button`
   }
 `;
 
-type Props = { value: String, onMove: Function, canPlay: Boolean };
+type Props = { value: String, onMove: Function, canPlay: Boolean, winner: Object, index: Number };
 
 const Field = ({ value, onMove, canPlay, winner, index }: Props) => {
   const winnerField = winner ? winner.combination.includes(index) : false;

@@ -14,8 +14,6 @@ import { GameWrapper, Metadata } from './game.style';
 
 type Props = { webId: String, gameURL: String };
 
-let oldTimestamp;
-
 const Game = ({ webId, gameURL }: Props) => {
   /** Game Logic */
   const updates = useLiveUpdate();
@@ -86,7 +84,6 @@ const Game = ({ webId, gameURL }: Props) => {
     try {
       const predicate = 'http://www.w3.org/2000/01/rdf-schema#gamestatus';
       const data = await gameDocument[predicate];
-      console.log('Changing status', data.value, gamestatus);
       await gameDocument[predicate].replace(data.value, gamestatus);
     } catch (e) {
       throw e;
@@ -171,7 +168,7 @@ const Game = ({ webId, gameURL }: Props) => {
   const onMove = useCallback(async index => {
     try {
       setIsProcessing(true);
-      const { moves, opponent, target, sender, moveorder } = gameData;
+      const { moves, opponent, sender, moveorder } = gameData;
       if (moves[index] === null) {
         const newMoves = moves.map((move, i) =>
           move === null && i === index ? getToken(gameData) : move
@@ -183,6 +180,7 @@ const Game = ({ webId, gameURL }: Props) => {
         await addMoves(newOrder);
         await changeGameStatus(gamestatus);
         const otherPlayer = webId === sender ? opponent : sender;
+        const target = `${window.location.href}/${btoa(gameURL)}`;
         await sendNotification(otherPlayer, {
           title: 'Tictactoe move',
           summary: 'Made a move',
