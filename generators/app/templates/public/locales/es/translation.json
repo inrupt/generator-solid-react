@@ -60,6 +60,7 @@
     "version030": "<0><0>La habilidad de ver y editar el <1>Perfil del usuario</1></0><1>Inclusión de un pie de página con el número de versión y enlances a los recursos.</1><2>Se corrigieron varios errores pequeños de acuerdo a la retroalimentación de los usuarios.</2></0>",
     "version050": "Esta última versión se construye encima de las versiones anteriores e incluye una reconstrucción total de la página del Perfil. El formulario del perfil ahora se crea dinámicamente basado en 'shapes', y provee compatibilidad con el 'Solid Data Browser' al permitir varios correos, direcciones y números de telefono.",
     "upload": "Subir foto",
+    "successTitle": "Éxito",
     "uploadSuccess": "Imagen de perfil actualizada correctamente",
     "uploadingText": "Subiendo",
     "errors": {

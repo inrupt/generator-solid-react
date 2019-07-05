@@ -55,7 +55,7 @@ export const Image = ({ webId, defaultProfilePhoto }: Props) => {
     try {
       const { user } = data;
       await user.vcard_hasPhoto.set(namedNode(uri));
-      successToaster(t('profile.uploadSuccess'));
+      successToaster(t('profile.uploadSuccess'), t('profile.successTitle'));
     } catch (error) {
       errorToaster(error.message, 'Error');
     }
@@ -77,7 +77,7 @@ export const Image = ({ webId, defaultProfilePhoto }: Props) => {
         },
         onError: error => {
           if (error && error.statusText) {
-            errorToaster(error.statusText);
+            errorToaster(error.statusText, 'Error');
           }
         },
         onComplete: uploadedFiles => {

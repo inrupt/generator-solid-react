@@ -47,13 +47,14 @@ const WelcomePageContent = props => {
                 },
                 onError: error => {
                   if (error && error.statusText) {
-                    errorToaster(error.statusText);
+                    errorToaster(error.statusText, 'Error');
                   }
                 },
                 onComplete: uploadedFiles => {
                   updatePhoto(
                     uploadedFiles[uploadedFiles.length - 1].uri,
-                    t('welcome.uploadSuccess')
+                    t('welcome.uploadSuccess'),
+                    t('welcome.successTitle')
                   );
                 },
                 render: props => (
