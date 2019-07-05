@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import moment from 'moment';
 import { useNotification, useLiveUpdate } from '@inrupt/solid-react-components';
 import { NotificationsWrapper } from './notifications.style';
 import { Bell, NotificationsPanel } from '../index';
@@ -38,9 +39,10 @@ const Notifications = ({ webId, inboxUrl }) => {
     }
   }, [timestamp]);
 
-  const notificationsOrder = notifications.notifications.sort((a, b) =>
-    // eslint-disable-next-line no-nested-ternary
-    a.sent < b.sent ? 1 : a.sent < b.sent ? -1 : 0
+  const notificationsOrder = notifications.notifications.sort(
+    (a, b) =>
+      // eslint-disable-next-line no-nested-ternary
+      moment(b.sent).format('YYYYMMDD') - moment(a.sent).format('YYYYMMDD')
   );
 
   return (
