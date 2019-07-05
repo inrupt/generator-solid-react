@@ -25,6 +25,14 @@ export const GameStatus = styled.span`
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
+
+  & a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    font-size: 1.2em;
+  }
 `;
 
 export const Actions = styled.div`

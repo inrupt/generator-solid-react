@@ -7,23 +7,35 @@ const Square = styled.button`
   font-size: 4rem;
   font-weight: 700;
   padding: 0;
+  border: none;
+  ${({ borders }) => borders && borders.map(border => `border-${border}: solid 4px;`)}
   color: ${({ winner }) => (winner ? 'green' : '#000')};
+  transition: border 500ms ease-out;
+  &:hover {
+    border-color: black;
+  }
   &:disabled {
     border-color: red;
-
     &:hover:disabled {
-      border: solid 1px red;
+      border-color: red;
       cursor: not-allowed;
     }
   }
 `;
 
-type Props = { value: String, onMove: Function, canPlay: Boolean, winner: Object, index: Number };
+type Props = {
+  value: String,
+  onMove: Function,
+  canPlay: Boolean,
+  winner: Object,
+  index: Number,
+  borders: Array<String>
+};
 
-const Field = ({ value, onMove, canPlay, winner, index }: Props) => {
+const Field = ({ value, onMove, canPlay, winner, index, borders }: Props) => {
   const winnerField = winner ? winner.combination.includes(index) : false;
   return (
-    <Square onClick={onMove} disabled={!canPlay} winner={winnerField}>
+    <Square onClick={onMove} disabled={!canPlay} winner={winnerField} borders={borders}>
       {value}
     </Square>
   );

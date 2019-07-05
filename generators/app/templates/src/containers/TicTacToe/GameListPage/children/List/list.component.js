@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLiveUpdate } from '@inrupt/solid-react-components';
+import ldflex from '@solid/query-ldflex';
 import { Loader } from '@util-components';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
 import { ldflexHelper, errorToaster } from '@utils';
@@ -19,6 +20,16 @@ const List = ({ gamePath }: Props) => {
     const prefix = tictactoeShape['@context'][field.prefix];
     return `${prefix}${field.predicate}`;
   };
+
+  const getOpponentInfo = useCallback(async webId => {
+    try {
+      const name = await ldflex[webId]['vcard:fn'];
+      const image = await ldflex[webId]['vcard:hasPhoto'];
+      return { name: name.value, image: image.value, webId };
+    } catch (e) {
+      throw e;
+    }
+  });
 
   const getGames = useCallback(async () => {
     try {
@@ -40,7 +51,8 @@ const List = ({ gamePath }: Props) => {
           const value = values.length > 1 ? values : values[0];
           gameData = { ...gameData, [field.predicate]: value };
         }
-
+        const opponent = await getOpponentInfo(gameData.opponent);
+        gameData = { ...gameData, opponent };
         games = [...games, gameData];
       }
 

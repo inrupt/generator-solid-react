@@ -16,6 +16,18 @@ type Props = { squares: Array, onMove: Funtion, canPlay: Boolean, winner: Object
 
 const unique = seed => Date.now() + seed;
 
+const borders = {
+  0: ['bottom', 'right'],
+  1: ['bottom'],
+  2: ['bottom', 'left'],
+  3: ['bottom', 'right'],
+  4: ['bottom'],
+  5: ['left', 'bottom'],
+  6: ['right'],
+  7: [],
+  8: ['left']
+};
+
 const Board = ({ squares, onMove, canPlay, winner }: Props) => (
   <GameBoard>
     {squares.map((square, i) => (
@@ -26,6 +38,7 @@ const Board = ({ squares, onMove, canPlay, winner }: Props) => (
         canPlay={canPlay}
         winner={winner}
         index={i}
+        borders={borders[i]}
       />
     ))}
   </GameBoard>

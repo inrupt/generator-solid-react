@@ -18,4 +18,8 @@ export const Metadata = styled.div`
   justify-content: space-between;
   width: 100%;
   padding: 4px 16px 12px 16px;
+  & a {
+    text-decoration: none;
+    padding: 0 4px;
+  }
 `;

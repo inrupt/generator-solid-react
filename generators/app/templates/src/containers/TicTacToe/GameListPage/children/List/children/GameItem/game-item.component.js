@@ -11,7 +11,7 @@ const GameItem = ({ game }: Props) => {
   return (
     <Item>
       <Info>
-        {opponent}
+        {opponent && <a href={opponent.webId}>{opponent.name}</a>}
         <GameStatus status={status}>{gamestatus}</GameStatus>
       </Info>
       <Actions>

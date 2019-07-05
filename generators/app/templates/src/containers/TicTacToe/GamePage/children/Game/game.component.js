@@ -8,6 +8,7 @@ import {
   buildPathFromWebId,
   notification
 } from '@utils';
+import ldflex from '@solid/query-ldflex';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
 import Board from '../Board';
 import { GameWrapper, Metadata } from './game.style';
@@ -24,6 +25,7 @@ const Game = ({ webId, gameURL }: Props) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
   const { createNotification } = useNotification(inboxUrl, webId);
+  const [opponentPlayer, setOpponentPlayer] = useState(null);
 
   const sendNotification = useCallback(
     async (player, content) => {
@@ -131,6 +133,16 @@ const Game = ({ webId, gameURL }: Props) => {
     }
   });
 
+  const getPlayerInfo = async webId => {
+    try {
+      const name = await ldflex[webId]['vcard:fn'];
+      const image = await ldflex[webId]['vcard:hasPhoto'];
+      return { name: name.value, image: image.value, webId };
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const getGame = useCallback(async (gameURL: String) => {
     try {
       const game = await ldflexHelper.fetchLdflexDocument(gameURL);
@@ -143,11 +155,19 @@ const Game = ({ webId, gameURL }: Props) => {
       const moveorder = auxData.moveorder ? auxData.moveorder.split('-') : [];
       auxData = { ...auxData, moveorder };
       const moves = generateMoves(auxData.moveorder, auxData.firstmove);
+
+      const playingAgainst = nextPlayer(auxData);
+      const opponent = await getPlayerInfo(auxData.opponent);
+      const sender = await getPlayerInfo(auxData.sender);
+
+      const opponentPlayer = playingAgainst === auxData.opponent ? opponent : sender;
+      setOpponentPlayer(opponentPlayer);
       setGameData({
         ...auxData,
         moves,
         canPlay: canPlay(auxData),
-        nextPlayer: nextPlayer(auxData)
+        opponent,
+        sender
       });
     } catch (e) {
       errorToaster(e.message, 'Error');
@@ -209,9 +229,17 @@ const Game = ({ webId, gameURL }: Props) => {
       {gameData && (
         <Fragment>
           <Metadata>
-            <span>
-              Next player: <b>{gameData.nextPlayer}</b>
-            </span>
+            {
+              <div>
+                Playing against:
+                {opponentPlayer && (
+                  <a href={opponentPlayer.webId}>
+                    <strong>{opponentPlayer.name}</strong>
+                  </a>
+                )}
+              </div>
+            }
+
             {!canPlay && <span>Not your turn, please wait for your opponent to play </span>}
             <span>
               Game Status: <b>{gameData.gamestatus}</b>
