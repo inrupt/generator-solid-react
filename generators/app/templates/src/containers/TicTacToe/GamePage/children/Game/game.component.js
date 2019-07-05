@@ -180,7 +180,7 @@ const Game = ({ webId, gameURL }: Props) => {
         await addMoves(newOrder);
         await changeGameStatus(gamestatus);
         const otherPlayer = webId === sender ? opponent : sender;
-        const target = `${window.location.href}/${btoa(gameURL)}`;
+        const target = window.location.href;
         await sendNotification(otherPlayer, {
           title: 'Tictactoe move',
           summary: 'Made a move',

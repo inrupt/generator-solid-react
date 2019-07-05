@@ -46,7 +46,7 @@ const List = ({ gamePath }: Props) => {
 
       setList(games);
     } catch (e) {
-      errorToaster('Error while getting games');
+      errorToaster('Error while getting games', 'Error');
     }
   }, [gamePath]);
 
