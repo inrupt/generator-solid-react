@@ -17,8 +17,7 @@ const Notifications = ({ webId, inboxUrl }) => {
     markAsReadNotification: markAsRead,
     deleteNotification,
     fetchNotification
-  } = useNotification(inboxUrl, webId);
-
+  } = useNotification(webId);
   const { timestamp } = useLiveUpdate();
   /**
    * pass date to string to compare time updates
@@ -27,14 +26,14 @@ const Notifications = ({ webId, inboxUrl }) => {
   const currenTimestamp = timestamp && timestamp.toString();
   useOnClickOutside(ref, () => setIsOpen(false));
   useEffect(() => {
-    if (webId) {
-      fetchNotification();
+    if (webId && notifications) {
+      fetchNotification(inboxUrl);
     }
-  }, [webId, inboxUrl]);
+  }, [webId, inboxUrl, notifications.notify]);
 
   useEffect(() => {
     if (oldTimestamp !== currenTimestamp) {
-      fetchNotification();
+      fetchNotification(inboxUrl);
       oldTimestamp = currenTimestamp;
     }
   }, [timestamp]);

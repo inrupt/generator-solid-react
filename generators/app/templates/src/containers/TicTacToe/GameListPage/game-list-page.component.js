@@ -8,7 +8,7 @@ const GameListPage = ({ webId }) => {
   const [opponent, setOpponent] = useState('https://jairo88.inrupt.net/profile/card#me');
   const [gamePath, setGamePath] = useState(null);
   const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
-  const { createNotification, createInbox } = useNotification(inboxUrl, webId);
+  const { createNotification, createInbox, notifications } = useNotification(webId);
 
   const sendNotification = useCallback(
     async content => {
@@ -18,21 +18,21 @@ const GameListPage = ({ webId }) => {
         errorToaster(error.message, 'Error');
       }
     },
-    [opponent]
+    [opponent, notifications]
   );
 
   const init = async () => {
     const gamePath = await ldflexHelper.createContainer(process.env.REACT_APP_TICTAC_PATH);
     if (gamePath) {
       const url = buildPathFromWebId(webId, gamePath);
-      await createInbox();
+      await createInbox(inboxUrl);
       setGamePath(url);
     }
   };
 
   useEffect(() => {
-    if (webId) init();
-  }, [webId]);
+    if (notifications && notifications.notify) init();
+  }, [notifications]);
 
   return (
     <Section>
