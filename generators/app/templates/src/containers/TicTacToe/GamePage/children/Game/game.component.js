@@ -11,6 +11,7 @@ import {
 import ldflex from '@solid/query-ldflex';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
 import Board from '../Board';
+import GameAccept from '../GameAccept';
 import { GameWrapper, Metadata } from './game.style';
 
 type Props = { webId: String, gameURL: String };
@@ -155,19 +156,20 @@ const Game = ({ webId, gameURL }: Props) => {
       const moveorder = auxData.moveorder ? auxData.moveorder.split('-') : [];
       auxData = { ...auxData, moveorder };
       const moves = generateMoves(auxData.moveorder, auxData.firstmove);
-
       const playingAgainst = nextPlayer(auxData);
       const opponent = await getPlayerInfo(auxData.opponent);
       const sender = await getPlayerInfo(auxData.sender);
-
       const opponentPlayer = playingAgainst === auxData.opponent ? opponent : sender;
+      const amISender = auxData.sender === webId;
+
       setOpponentPlayer(opponentPlayer);
       setGameData({
         ...auxData,
         moves,
         canPlay: canPlay(auxData),
         opponent,
-        sender
+        sender,
+        amISender
       });
     } catch (e) {
       errorToaster(e.message, 'Error');
@@ -228,6 +230,9 @@ const Game = ({ webId, gameURL }: Props) => {
     <GameWrapper>
       {gameData && (
         <Fragment>
+          {!gameData.amISender && gameData.gamestatus === 'awaiting' && (
+            <GameAccept {...{ ...gameData }} />
+          )}
           <Metadata>
             {
               <div>

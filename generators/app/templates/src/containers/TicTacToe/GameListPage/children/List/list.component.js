@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import { useLiveUpdate } from '@inrupt/solid-react-components';
 import ldflex from '@solid/query-ldflex';
 import { Loader } from '@util-components';
@@ -83,7 +83,7 @@ const List = ({ gamePath }: Props) => {
   return (
     <Wrapper>
       {!isLoading ? (
-        <div>
+        <Fragment>
           <h2>Your games:</h2>
           {list.length > 0 ? (
             <ListWrapper>
@@ -94,7 +94,7 @@ const List = ({ gamePath }: Props) => {
           ) : (
             <span>No games found</span>
           )}
-        </div>
+        </Fragment>
       ) : (
         <Loader absolute />
       )}
