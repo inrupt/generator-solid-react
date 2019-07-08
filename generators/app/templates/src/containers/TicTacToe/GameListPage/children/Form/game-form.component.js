@@ -74,7 +74,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         const target = `${window.location.href}/${btoa(documentUri)}`;
         await sendNotification({
           title: 'Tictactoe invitation',
-          summary: 'Invite you to play a game',
+          summary: 'You have been invited to play Tic-Tac-Toe.',
           sender: webId,
           object: documentUri,
           target

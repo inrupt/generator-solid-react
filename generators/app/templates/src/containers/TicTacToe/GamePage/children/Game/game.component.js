@@ -203,7 +203,7 @@ const Game = ({ webId, gameURL }: Props) => {
         const target = window.location.href;
         await sendNotification(otherPlayer, {
           title: 'Tictactoe move',
-          summary: 'Made a move',
+          summary: 'A move has been made in your Tic-Tac-Toe game.',
           sender: webId,
           object: gameURL,
           target
