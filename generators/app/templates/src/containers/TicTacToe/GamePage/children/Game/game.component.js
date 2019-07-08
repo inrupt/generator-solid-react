@@ -24,7 +24,7 @@ const Game = ({ webId, gameURL }: Props) => {
   const [winner, setWinner] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
-  const { createNotification } = useNotification(inboxUrl, webId);
+  const { createNotification } = useNotification(webId);
   const [opponentPlayer, setOpponentPlayer] = useState(null);
 
   const sendNotification = useCallback(
@@ -35,7 +35,7 @@ const Game = ({ webId, gameURL }: Props) => {
         errorToaster(error.message, 'Error');
       }
     },
-    [gameData]
+    [gameData, inboxUrl]
   );
 
   const getSecondToken = useCallback(token => (token === 'X' ? 'O' : 'X'));

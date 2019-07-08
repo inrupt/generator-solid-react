@@ -12,8 +12,7 @@ function* entries(obj) {
 
 function buildPathFromWebId(webid, path) {
   if (!webid) return false;
-
-  const domain = new URL(webid).origin;
+  const domain = new URL(typeof webid === 'object' ? webid.webId : webid).origin;
   return `${domain}/${path}`;
 }
 
