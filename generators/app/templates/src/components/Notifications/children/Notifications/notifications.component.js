@@ -18,7 +18,6 @@ const Notifications = ({ webId, inboxUrl }) => {
     deleteNotification,
     fetchNotification
   } = useNotification(webId);
-
   const { timestamp } = useLiveUpdate();
   /**
    * pass date to string to compare time updates
@@ -30,7 +29,7 @@ const Notifications = ({ webId, inboxUrl }) => {
     if (webId && notifications) {
       fetchNotification(inboxUrl);
     }
-  }, [webId, inboxUrl, notifications]);
+  }, [webId, inboxUrl, notifications.notify]);
 
   useEffect(() => {
     if (oldTimestamp !== currenTimestamp) {
