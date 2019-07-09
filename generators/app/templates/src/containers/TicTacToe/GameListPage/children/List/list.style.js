@@ -10,8 +10,9 @@ export const Wrapper = styled.div`
   text-align: left;
   min-height: 200px;
   transition: height 1s ease-in-out; 
-  & > h1 {
+  & > h2 {
     margin: 0;
+    padding: 0 0 12px 0;
   }
   & > form {
     & .input-wrap > label {
@@ -27,4 +28,9 @@ export const Wrapper = styled.div`
 export const ListWrapper = styled.ul`
   overflow-y: auto;
   max-height: 350px;
+`;
+
+export const GameListContainers = styled.div`
+  display: flex;
+  justify-content: space-evenly;
 `;

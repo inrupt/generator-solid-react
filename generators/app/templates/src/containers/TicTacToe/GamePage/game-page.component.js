@@ -17,7 +17,7 @@ const GamePage = ({ match, webId }) => {
   }, [webId]);
 
   return (
-    <Section>
+    <Section id="gamepage">
       <Wrapper>
         {isGameUrlValid() && webId && (
           <LiveUpdate subscribe={gameURL}>

@@ -20,6 +20,29 @@ export const Section = styled.section`
   box-sizing: border-box;
   display: flex;
   justify-content: center;
+  position: relative;
+
+  & .modal-overlay {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.25);
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & .modal-content {
+    position: relative;
+    border: 1px solid rgb(204, 204, 204);
+    background: rgb(255, 255, 255);
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
+  }
 `;
 
 export const Wrapper = styled.div`
