@@ -25,9 +25,9 @@ const GameListPage = ({ webId }) => {
     const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
     const gamePath = await ldflexHelper.createContainer(url);
     if (gamePath) {
-      await createInbox(`${url}inbox/`, gamePath);
-      setGamePath(url);
+      await createInbox(`${gamePath}inbox/`, gamePath);
     }
+    setGamePath(url);
   };
 
   useEffect(() => {
