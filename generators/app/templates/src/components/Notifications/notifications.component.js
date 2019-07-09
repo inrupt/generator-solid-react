@@ -1,17 +1,17 @@
 import React from 'react';
 import { LiveUpdate } from '@inrupt/solid-react-components';
-import { buildPathFromWebId } from '@utils';
 import { Notifications } from './children';
 
 type Props = {
-  webId: string
+  webId: string,
+  inboxes: Array<string>
 };
 
-const Notification = React.memo(({ webId }: Props) => {
-  const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
+const Notification = React.memo(({ webId, inbox }: Props) => {
+  const inboxUrl = inbox.map(item => item.path);
   return webId ? (
     <LiveUpdate subscribe={inboxUrl}>
-      <Notifications {...{ webId, inboxUrl }} />
+      <Notifications {...{ webId, inbox }} />
     </LiveUpdate>
   ) : null;
 });

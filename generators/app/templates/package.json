@@ -4,7 +4,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.8.0",
     "@fortawesome/free-solid-svg-icons": "^5.6.3",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "@inrupt/solid-react-components": "^0.6.7",
+    "@inrupt/solid-react-components": "^0.6.18",
     "@inrupt/solid-style-guide": "^0.1.34",
     "@rdfjs/data-model": "^1.1.1",
     "@solid/query-ldflex": "^2.4.0",
@@ -43,11 +43,6 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "jest && eslint --ignore-path .gitignore ."
-    }
   },
   "eslintConfig": {
     "extends": "react-app"

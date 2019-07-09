@@ -1,4 +1,5 @@
 import NotificationItem from './NotificationItem';
 import NotificationList from './NotificationList';
+import Tabs from './Tabs';
 
-export { NotificationItem, NotificationList };
+export { NotificationItem, NotificationList, Tabs };

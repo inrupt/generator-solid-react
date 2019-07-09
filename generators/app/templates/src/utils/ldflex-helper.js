@@ -10,6 +10,7 @@ export const existDocument = async documentUri =>
 
 const createDoc = async (documentUri, options) => {
   try {
+    console.log(documentUri);
     return await auth.fetch(documentUri, options);
   } catch (e) {
     throw e;
@@ -68,7 +69,7 @@ export const fetchLdflexDocument = async documentUri => {
 
 export const existFolder = async folderPath => {
   const result = await auth.fetch(folderPath);
-
+  console.log('result', result);
   return result.ok;
 };
 
@@ -86,9 +87,10 @@ export const discoveryInbox = async webId => {
 export const createContainer = async folderPath => {
   try {
     const existContainer = await existFolder(folderPath);
+    console.log('exist ', existContainer, folderPath);
     const dummyPath = `${folderPath}.dummy`;
     if (existContainer) return folderPath;
-    await createDoc(dummyPath);
+    await createDoc(dummyPath, { method: 'PUT'});
     await createDoc(dummyPath, { method: 'DELETE' });
 
     return folderPath;

@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { NavBar, Notification } from '@components';
 import { useTranslation } from 'react-i18next';
 import { NavBarContainer } from './children';
 import { LanguageDropdown } from '@util-components';
+import { buildPathFromWebId, ldflexHelper } from '@utils';
 
 type Props = {
   webId: string
 };
 
 const AuthNavBar = React.memo((props: Props) => {
+  const [inboxes, setInbox] = useState([]);
   const { t, i18n } = useTranslation();
   const navigation = [
     {
@@ -31,27 +33,46 @@ const AuthNavBar = React.memo((props: Props) => {
     }
   ];
   const { webId } = props;
+  const discoveryAppInbox = useCallback(async () => {
+    const globalInbox = await ldflexHelper.discoveryInbox(webId);
+    const inbox = `${process.env.REACT_APP_TICTAC_PATH}inbox/`;
+    // console.log(buildPathFromWebId(webId, inbox), 'inbox 1');
+    // const appInbox = await ldflexHelper.discoveryInbox(buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH));
+
+    setInbox([
+      { path: globalInbox, inboxName: 'Global' },
+      { path: buildPathFromWebId(webId, inbox), inboxName: 'TicTactoe Game' }
+    ]);
+  }, [webId]);
+
+  useEffect(() => {
+    if (webId) {
+      discoveryAppInbox();
+    }
+  }, [webId]);
   return (
-    <NavBar
-      navigation={navigation}
-      sticky
-      toolbar={[
-        {
-          component: () => <LanguageDropdown {...{ t, i18n }} />,
-          id: 'language'
-        },
-        {
-          component: () => <Notification {...{ webId }} />,
-          id: 'notifications'
-        },
-        {
-          component: ({ open, customClass }) => (
-            <NavBarContainer {...{ t, i18n, open, webId, customClass }} />
-          ),
-          id: 'profile'
-        }
-      ]}
-    />
+    inboxes.length > 0 && (
+      <NavBar
+        navigation={navigation}
+        sticky
+        toolbar={[
+          {
+            component: () => <LanguageDropdown {...{ t, i18n }} />,
+            id: 'language'
+          },
+          {
+            component: () => <Notification {...{ webId, inbox: inboxes }} />,
+            id: 'notifications'
+          },
+          {
+            component: ({ open, customClass }) => (
+              <NavBarContainer {...{ t, i18n, open, webId, customClass }} />
+            ),
+            id: 'profile'
+          }
+        ]}
+      />
+    )
   );
 });
 

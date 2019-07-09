@@ -17,6 +17,7 @@ export const Panel = styled.div`
 
   ${media.tablet`
     right: 0;
+    min-width: 351px;
   `}
 `;
 
@@ -29,7 +30,6 @@ export const Title = styled.h2`
   font-size: 14px;
   letter-spacing: 1.2px;
   line-height: 14px;
-  border-bottom: 1px solid #cfdce6;
   flex: 0 0 50px;
   box-sizing: border-box;
 `;

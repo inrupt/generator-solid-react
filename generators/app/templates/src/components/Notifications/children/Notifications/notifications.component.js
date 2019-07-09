@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import moment from 'moment';
 import { useNotification, useLiveUpdate } from '@inrupt/solid-react-components';
 import { NotificationsWrapper } from './notifications.style';
 import { Bell, NotificationsPanel } from '../index';
@@ -8,45 +7,51 @@ import { useOnClickOutside } from '@hooks';
 
 let oldTimestamp;
 
-const Notifications = ({ webId, inboxUrl }) => {
+const Notifications = ({ webId, inbox }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const ref = useRef();
   const toggleNotifications = () => setIsOpen(!isOpen);
   const {
-    notifications,
+    notification,
     markAsReadNotification: markAsRead,
     deleteNotification,
-    fetchNotification
+    fetchNotification,
+    filterNotification
   } = useNotification(webId);
+
   const { timestamp } = useLiveUpdate();
+  const { notifications, unread, notify } = notification;
+
   /**
    * pass date to string to compare time updates
    * @type {*|string}
    */
   const currenTimestamp = timestamp && timestamp.toString();
   useOnClickOutside(ref, () => setIsOpen(false));
-  useEffect(() => {
-    if (webId && notifications) {
-      fetchNotification(inboxUrl);
-    }
-  }, [webId, inboxUrl, notifications.notify]);
+
+  const initNotifications = async () => {
+    setIsLoading(true);
+    console.log('hello');
+    await fetchNotification(inbox);
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    if (oldTimestamp !== currenTimestamp) {
-      fetchNotification(inboxUrl);
+    if (webId && notify) {
+      initNotifications();
+    }
+  }, [inbox, notify]);
+
+  useEffect(() => {
+    if (currenTimestamp && oldTimestamp !== currenTimestamp) {
+      initNotifications();
       oldTimestamp = currenTimestamp;
     }
   }, [timestamp]);
-
-  const notificationsOrder = notifications.notifications.sort(
-    (a, b) =>
-      // eslint-disable-next-line no-nested-ternary
-      moment(b.sent).format('YYYYMMDD') - moment(a.sent).format('YYYYMMDD')
-  );
-
   return (
     <NotificationsWrapper ref={ref}>
-      <Bell unread={notifications.unread || 0} onClick={toggleNotifications} active={isOpen} />
+      <Bell unread={unread || 0} onClick={toggleNotifications} active={isOpen} />
       <CSSTransition
         in={isOpen}
         timeout={300}
@@ -55,7 +60,14 @@ const Notifications = ({ webId, inboxUrl }) => {
         mountOnEnter
       >
         <NotificationsPanel
-          {...{ notifications: notificationsOrder, markAsRead, deleteNotification }}
+          {...{
+            notifications,
+            markAsRead,
+            deleteNotification,
+            tabs: inbox,
+            filterNotification,
+            isLoading
+          }}
         />
       </CSSTransition>
     </NotificationsWrapper>
