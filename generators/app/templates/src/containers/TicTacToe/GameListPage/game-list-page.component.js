@@ -22,10 +22,10 @@ const GameListPage = ({ webId }) => {
   );
 
   const init = async () => {
-    const gamePath = await ldflexHelper.createContainer(process.env.REACT_APP_TICTAC_PATH);
+    const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
+    const gamePath = await ldflexHelper.createContainer(url);
     if (gamePath) {
-      const url = buildPathFromWebId(webId, gamePath);
-      await createInbox(inboxUrl);
+      // await createInbox(inboxUrl);
       setGamePath(url);
     }
   };

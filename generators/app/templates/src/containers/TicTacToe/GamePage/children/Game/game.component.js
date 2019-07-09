@@ -9,6 +9,7 @@ import {
   notification
 } from '@utils';
 import ldflex from '@solid/query-ldflex';
+import { namedNode } from '@rdfjs/data-model';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
 import Board from '../Board';
 import GameAccept from '../GameAccept';
@@ -144,6 +145,33 @@ const Game = ({ webId, gameURL }: Props) => {
     }
   };
 
+  const addGameToList = async () => {
+    const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
+    await ldflex[`${url}/othergames.ttl`]['ldp:contains'].add(namedNode(gameURL));
+  };
+
+  const onAccept = async cb => {
+    try {
+      setIsProcessing(true);
+      await changeGameStatus('Move X');
+      await addGameToList();
+      cb();
+      setIsProcessing(false);
+    } catch (e) {
+      setIsProcessing(false);
+      errorToaster(e.message, 'Error');
+    }
+  };
+
+  const onDecline = async cb => {
+    try {
+      await changeGameStatus('Declined');
+      cb();
+    } catch (e) {
+      errorToaster(e.message, 'Error');
+    }
+  };
+
   const getGame = useCallback(async (gameURL: String) => {
     try {
       const game = await ldflexHelper.fetchLdflexDocument(gameURL);
@@ -219,6 +247,7 @@ const Game = ({ webId, gameURL }: Props) => {
   });
 
   useEffect(() => {
+    console.log('Getting game');
     if ((gameURL || timestamp) && !isProcessing) getGame(gameURL);
   }, [gameURL, timestamp]);
 
@@ -230,8 +259,8 @@ const Game = ({ webId, gameURL }: Props) => {
     <GameWrapper>
       {gameData && (
         <Fragment>
-          {!gameData.amISender && gameData.gamestatus === 'awaiting' && (
-            <GameAccept {...{ ...gameData }} />
+          {!gameData.amISender && gameData.gamestatus === 'Awaiting' && (
+            <GameAccept {...{ ...gameData, onAccept, onDecline }} />
           )}
           <Metadata>
             {

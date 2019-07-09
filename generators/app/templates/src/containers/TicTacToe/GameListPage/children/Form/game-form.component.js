@@ -50,7 +50,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
   };
 
   const initialGame = opponent => ({
-    gamestatus: 'Move X',
+    gamestatus: 'Awaiting',
     createddatetime: moment().format(),
     updateddatetime: moment().format(),
     sender: namedNode(webId),

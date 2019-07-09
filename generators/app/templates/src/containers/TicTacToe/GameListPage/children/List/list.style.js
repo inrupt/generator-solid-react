@@ -29,3 +29,8 @@ export const ListWrapper = styled.ul`
   overflow-y: auto;
   max-height: 350px;
 `;
+
+export const GameListContainers = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;

@@ -1,26 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import { Wrapper } from './game-accept.style';
+import styled from 'styled-components';
+import ReactModal from 'react-modal';
 
-const GameAccept = ({ sender }) => {
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  & > div#modal-actions {
+    align-self: flex-end;
+    padding: 16px 0 0 0;
+    & button {
+      margin-left: 8px;
+    }
+  }
+`;
+
+ReactModal.setAppElement('#root');
+
+const GameAccept = ({ sender, onAccept, onDecline }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     setIsOpen(true);
   }, []);
 
-  const Accept = () => {
-    console.log('Will accept game');
-    setIsOpen(false);
-  };
+  const Accept = () => onAccept(() => setIsOpen(false));
+
+  const Decline = () => onDecline(() => setIsOpen(false));
+
+  const getParent = () => document.querySelector('#gamepage');
 
   return (
-    <Wrapper>
-      {sender} has invited you to play a game of TicTacToe. Would you like to play?
-      <button type="button" onClick={Accept}>
-        Accept
-      </button>
-      <button type="button">Decline</button>
-    </Wrapper>
+    <ReactModal
+      isOpen={isOpen}
+      ariaHideApp={false}
+      parentSelector={getParent}
+      overlayClassName="modal-overlay"
+      className="modal-content"
+    >
+      <Content>
+        <span>
+          <b>{sender.name}</b> has invited you to play a game of TicTacToe. Would you like to play?
+        </span>
+        <div id="modal-actions">
+          <button type="button" onClick={Accept}>
+            Accept
+          </button>
+          <button type="button" onClick={Decline}>
+            Decline
+          </button>
+        </div>
+      </Content>
+    </ReactModal>
   );
 };
 

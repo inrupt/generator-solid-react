@@ -3,15 +3,31 @@ import { useLiveUpdate } from '@inrupt/solid-react-components';
 import ldflex from '@solid/query-ldflex';
 import { Loader } from '@util-components';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
-import { ldflexHelper, errorToaster } from '@utils';
+import { ldflexHelper, errorToaster, buildPathFromWebId } from '@utils';
 import GameItem from './children';
-import { Wrapper, ListWrapper } from './list.style';
+import { Wrapper, ListWrapper, GameListContainers } from './list.style';
 
 let oldTimestamp;
 type Props = { gamePath: String };
 
-const List = ({ gamePath }: Props) => {
+const GameList = ({ title, games }) => (
+  <div>
+    <h2>{title}</h2>
+    {games.length > 0 ? (
+      <ListWrapper>
+        {games.map(game => (
+          <GameItem {...{ game }} key={game.url} />
+        ))}
+      </ListWrapper>
+    ) : (
+      <span>No games found</span>
+    )}
+  </div>
+);
+
+const List = ({ webId, gamePath }: Props) => {
   const [list, setList] = useState([]);
+  const [otherList, setOtherList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const updates = useLiveUpdate();
   const { timestamp } = updates;
@@ -31,40 +47,48 @@ const List = ({ gamePath }: Props) => {
     }
   });
 
-  const getGames = useCallback(async () => {
-    try {
-      const document = await ldflexHelper.fetchLdflexDocument(gamePath);
-      let gameList = [];
-      for await (const item of document['ldp:contains']) {
-        const { value } = item;
-        if (value.includes('.ttl')) gameList = [...gameList, value];
-      }
-      let games = [];
-      for await (const item of gameList) {
-        const game = await ldflexHelper.fetchLdflexDocument(item);
-        let gameData = { url: item };
-        for await (const field of tictactoeShape.shape) {
-          let values = [];
-          for await (const val of game[getPredicate(field)]) {
-            values = [...values, val.value];
-          }
-          const value = values.length > 1 ? values : values[0];
-          gameData = { ...gameData, [field.predicate]: value };
+  const getGames = useCallback(
+    async url => {
+      try {
+        const document = await ldflexHelper.fetchLdflexDocument(url);
+        let gameList = [];
+        for await (const item of document['ldp:contains']) {
+          const { value } = item;
+          if (value.includes('.ttl') && !value.includes('othergames.ttl'))
+            gameList = [...gameList, value];
         }
-        const opponent = await getOpponentInfo(gameData.opponent);
-        gameData = { ...gameData, opponent };
-        games = [...games, gameData];
+        let games = [];
+        for await (const item of gameList) {
+          const game = await ldflexHelper.fetchLdflexDocument(item);
+          let gameData = { url: item };
+          for await (const field of tictactoeShape.shape) {
+            let values = [];
+            for await (const val of game[getPredicate(field)]) {
+              values = [...values, val.value];
+            }
+            const value = values.length > 1 ? values : values[0];
+            gameData = { ...gameData, [field.predicate]: value };
+          }
+          const opponent = await getOpponentInfo(gameData.opponent);
+          gameData = { ...gameData, opponent };
+          games = [...games, gameData];
+        }
+        return games;
+      } catch (e) {
+        errorToaster('Error while getting games', 'Error');
       }
-
-      setList(games);
-    } catch (e) {
-      errorToaster('Error while getting games', 'Error');
-    }
-  }, [gamePath]);
+    },
+    [gamePath]
+  );
 
   const init = useCallback(async () => {
     setIsLoading(true);
-    await getGames();
+    const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
+    const otherGamesUrl = `${url}index.ttl`;
+    const games = await getGames(gamePath);
+    const otherGames = await getGames(otherGamesUrl);
+    setList(games);
+    setOtherList(otherGames);
     setIsLoading(false);
   });
 
@@ -83,18 +107,10 @@ const List = ({ gamePath }: Props) => {
   return (
     <Wrapper>
       {!isLoading ? (
-        <Fragment>
-          <h2>Your games:</h2>
-          {list.length > 0 ? (
-            <ListWrapper>
-              {list.map(game => (
-                <GameItem {...{ game }} key={game.url} />
-              ))}
-            </ListWrapper>
-          ) : (
-            <span>No games found</span>
-          )}
-        </Fragment>
+        <GameListContainers>
+          {list && <GameList title="Your games" games={list} />}
+          {otherList && <GameList title="Other games" games={otherList} />}
+        </GameListContainers>
       ) : (
         <Loader absolute />
       )}

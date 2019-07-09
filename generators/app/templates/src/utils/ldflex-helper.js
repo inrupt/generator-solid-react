@@ -85,10 +85,11 @@ export const discoveryInbox = async webId => {
 
 export const createContainer = async folderPath => {
   try {
+    console.log('Folder Path', folderPath);
     const existContainer = await existFolder(folderPath);
     const dummyPath = `${folderPath}.dummy`;
     if (existContainer) return folderPath;
-    await createDoc(dummyPath);
+    await createDoc(dummyPath, { method: 'PUT' });
     await createDoc(dummyPath, { method: 'DELETE' });
 
     return folderPath;
