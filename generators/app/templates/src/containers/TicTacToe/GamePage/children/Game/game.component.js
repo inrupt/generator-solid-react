@@ -27,12 +27,13 @@ const Game = ({ webId, gameURL }: Props) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
   const { createNotification } = useNotification(webId);
-  const [opponentPlayer, setOpponentPlayer] = useState(null);
+  const [rival, setRival] = useState(null);
 
   const sendNotification = useCallback(
     async (player, content) => {
       try {
-        notification.sendNotification(player, content, createNotification);
+        const url = buildPathFromWebId(player, process.env.REACT_APP_TICTAC_PATH);
+        notification.sendNotification(player, content, createNotification, `${url}inbox/`);
       } catch (error) {
         errorToaster(error.message, 'Error');
       }
@@ -41,12 +42,6 @@ const Game = ({ webId, gameURL }: Props) => {
   );
 
   const getSecondToken = useCallback(token => (token === 'X' ? 'O' : 'X'));
-
-  const getToken = useCallback(data => {
-    const { sender, opponent, firstmove } = data;
-    if (webId === sender) return firstmove;
-    return webId === opponent ? getSecondToken(firstmove) : '?';
-  });
 
   const getPlayer = token => {
     const { firstmove, sender, opponent } = gameData;
@@ -69,19 +64,9 @@ const Game = ({ webId, gameURL }: Props) => {
     return `${prefix}${field.predicate}`;
   });
 
-  const isMyTurn = useCallback(data => {
-    const { gamestatus } = data;
-    return gamestatus && gamestatus.split(' ')[1] === getToken(data);
-  });
-
-  const canPlay = useCallback(data => {
-    const { sender, opponent } = data;
-    return (webId === sender || webId === opponent) && isMyTurn(data);
-  });
-
-  const nextPlayer = useCallback(data => {
-    const { sender, opponent, firstmove } = data;
-    return isMyTurn(data) && firstmove === getToken(data) ? sender : opponent;
+  const canPlay = useCallback(({ gamestatus, token }) => {
+    const isStatusValid = gamestatus && gamestatus.includes('Move');
+    return isStatusValid ? gamestatus.includes(token) : false;
   });
 
   const changeGameStatus = useCallback(async gamestatus => {
@@ -147,7 +132,7 @@ const Game = ({ webId, gameURL }: Props) => {
 
   const addGameToList = async () => {
     const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
-    await ldflex[`${url}/othergames.ttl`]['ldp:contains'].add(namedNode(gameURL));
+    await ldflex[`${url}/data.ttl`]['ldp:contains'].add(namedNode(gameURL));
   };
 
   const onAccept = async cb => {
@@ -172,33 +157,43 @@ const Game = ({ webId, gameURL }: Props) => {
     }
   };
 
+  const getRival = ({ sender, opponent, owner }) => (owner ? opponent : sender);
+
   const getGame = useCallback(async (gameURL: String) => {
     try {
       const game = await ldflexHelper.fetchLdflexDocument(gameURL);
       setGameDocument(game);
-      let auxData = {};
+      let gameDocData = {};
       for await (const field of tictactoeShape.shape) {
         const fieldData = await game[getPredicate(field)];
-        auxData = { ...auxData, [field.predicate]: fieldData.value };
+        gameDocData = { ...gameDocData, [field.predicate]: fieldData.value };
       }
-      const moveorder = auxData.moveorder ? auxData.moveorder.split('-') : [];
-      auxData = { ...auxData, moveorder };
-      const moves = generateMoves(auxData.moveorder, auxData.firstmove);
-      const playingAgainst = nextPlayer(auxData);
-      const opponent = await getPlayerInfo(auxData.opponent);
-      const sender = await getPlayerInfo(auxData.sender);
-      const opponentPlayer = playingAgainst === auxData.opponent ? opponent : sender;
-      const amISender = auxData.sender === webId;
-
-      setOpponentPlayer(opponentPlayer);
-      setGameData({
-        ...auxData,
+      const sender = await getPlayerInfo(gameDocData.sender);
+      const opponent = await getPlayerInfo(gameDocData.opponent);
+      const owner = webId === sender.webId;
+      const rival = getRival({ sender, opponent, owner });
+      const token = owner ? gameDocData.firstmove : getSecondToken(gameDocData.firstmove);
+      const moveorder = gameDocData.moveorder ? gameDocData.moveorder.split('-') : [];
+      const moves = generateMoves(moveorder, gameDocData.firstmove);
+      const myTurn = canPlay({
+        gamestatus: gameDocData.gamestatus,
         moves,
-        canPlay: canPlay(auxData),
-        opponent,
-        sender,
-        amISender
+        token
       });
+
+      gameDocData = {
+        ...gameDocData,
+        sender,
+        opponent,
+        moveorder,
+        moves,
+        owner,
+        rival,
+        token,
+        canPlay: myTurn
+      };
+      setRival(rival);
+      setGameData(gameDocData);
     } catch (e) {
       errorToaster(e.message, 'Error');
     }
@@ -218,25 +213,28 @@ const Game = ({ webId, gameURL }: Props) => {
   const onMove = useCallback(async index => {
     try {
       setIsProcessing(true);
-      const { moves, opponent, sender, moveorder } = gameData;
+      const { moves, moveorder, token, rival } = gameData;
       if (moves[index] === null) {
-        const newMoves = moves.map((move, i) =>
-          move === null && i === index ? getToken(gameData) : move
-        );
+        const newMoves = moves;
+        newMoves[index] = token;
         const newOrder = [...moveorder, index];
-        const gamestatus = `Move ${getSecondToken(getToken(gameData))}`;
-        const newData = { ...gameData, moves: newMoves, gamestatus };
-        setGameData({ ...newData, canPlay: canPlay(newData) });
+        const gamestatus = `Move ${getSecondToken(token)}`;
+        const newData = {
+          ...gameData,
+          moveorder: newOrder,
+          moves: newMoves,
+          gamestatus,
+          canPlay: canPlay({ gamestatus, lastmove: token, token })
+        };
+        setGameData(newData);
         await addMoves(newOrder);
         await changeGameStatus(gamestatus);
-        const otherPlayer = webId === sender ? opponent : sender;
-        const target = window.location.href;
-        await sendNotification(otherPlayer, {
+        await sendNotification(rival.webId, {
           title: 'Tictactoe move',
           summary: 'A move has been made in your Tic-Tac-Toe game.',
           sender: webId,
           object: gameURL,
-          target
+          target: window.location.href
         });
         setIsProcessing(false);
       }
@@ -247,7 +245,6 @@ const Game = ({ webId, gameURL }: Props) => {
   });
 
   useEffect(() => {
-    console.log('Getting game');
     if ((gameURL || timestamp) && !isProcessing) getGame(gameURL);
   }, [gameURL, timestamp]);
 
@@ -259,22 +256,24 @@ const Game = ({ webId, gameURL }: Props) => {
     <GameWrapper>
       {gameData && (
         <Fragment>
-          {!gameData.amISender && gameData.gamestatus === 'Awaiting' && (
+          {!gameData.owner && gameData.gamestatus === 'Awaiting' && (
             <GameAccept {...{ ...gameData, onAccept, onDecline }} />
           )}
           <Metadata>
             {
               <div>
                 Playing against:
-                {opponentPlayer && (
-                  <a href={opponentPlayer.webId}>
-                    <strong>{opponentPlayer.name}</strong>
+                {rival && (
+                  <a href={rival.webId}>
+                    <strong>{rival.name}</strong>
                   </a>
                 )}
               </div>
             }
 
-            {!canPlay && <span>Not your turn, please wait for your opponent to play </span>}
+            {!gameData.canPlay && (
+              <span>Not your turn, please wait for your opponent to play </span>
+            )}
             <span>
               Game Status: <b>{gameData.gamestatus}</b>
             </span>

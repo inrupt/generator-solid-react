@@ -32,7 +32,6 @@ const Notifications = ({ webId, inbox }) => {
 
   const initNotifications = async () => {
     setIsLoading(true);
-    console.log('hello');
     await fetchNotification(inbox);
     setIsLoading(false);
   };
