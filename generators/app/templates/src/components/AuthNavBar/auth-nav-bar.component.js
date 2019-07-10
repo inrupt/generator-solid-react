@@ -40,8 +40,8 @@ const AuthNavBar = React.memo((props: Props) => {
     // const appInbox = await ldflexHelper.discoveryInbox(buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH));
 
     setInbox([
-      { path: globalInbox, inboxName: 'Global' },
-      { path: buildPathFromWebId(webId, inbox), inboxName: 'TicTactoe Game' }
+      { path: globalInbox, inboxName: 'Global', shape: 'default' },
+      { path: buildPathFromWebId(webId, inbox), inboxName: 'TicTactoe Game', shape: 'default' }
     ]);
   }, [webId]);
 

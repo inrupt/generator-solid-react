@@ -1,22 +1,22 @@
-import { ldflexHelper } from './index';
+import { ldflexHelper, buildPathFromWebId } from './index';
 
-export const sendNotification = async (opponent, content, createNotification, inbox) => {
+export const sendNotification = async (opponent, content, createNotification) => {
   try {
     /**
      * Opponent app inbox
      */
-    const opponentAppInbox = inbox;
+    const inbox = buildPathFromWebId(opponent, `${process.env.REACT_APP_TICTAC_PATH}inbox/`);
     /**
      * Check if app inbox exist to send notification if doesn't exist
      * send try to send to global inbox.
      */
-    const appInbox = await ldflexHelper.existFolder(opponentAppInbox);
+    const appInbox = await ldflexHelper.existFolder(inbox);
     if (appInbox) {
-      return createNotification(content, opponentAppInbox);
+      return createNotification(content, inbox);
     }
     const globalOpponentInbox = await ldflexHelper.discoveryInbox(opponent);
     if (globalOpponentInbox) {
-      return createNotification(content, `${globalOpponentInbox}/`);
+      return createNotification(content, globalOpponentInbox);
     }
 
     /**

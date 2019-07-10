@@ -32,8 +32,7 @@ const Game = ({ webId, gameURL }: Props) => {
   const sendNotification = useCallback(
     async (player, content) => {
       try {
-        const url = buildPathFromWebId(player, process.env.REACT_APP_TICTAC_PATH);
-        notification.sendNotification(player, content, createNotification, `${url}inbox/`);
+        notification.sendNotification(player, content, createNotification);
       } catch (error) {
         errorToaster(error.message, 'Error');
       }

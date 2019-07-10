@@ -22,7 +22,6 @@ const Notifications = ({ webId, inbox }) => {
 
   const { timestamp } = useLiveUpdate();
   const { notifications, unread, notify } = notification;
-
   /**
    * pass date to string to compare time updates
    * @type {*|string}

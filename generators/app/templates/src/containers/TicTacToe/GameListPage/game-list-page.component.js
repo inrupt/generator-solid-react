@@ -17,8 +17,7 @@ const GameListPage = ({ webId }) => {
   const sendNotification = useCallback(
     async content => {
       try {
-        const url = buildPathFromWebId(opponent, process.env.REACT_APP_TICTAC_PATH);
-        helperNotification.sendNotification(opponent, content, createNotification, `${url}inbox/`);
+        helperNotification.sendNotification(opponent, content, createNotification);
       } catch (error) {
         errorToaster(error.message, 'Error');
       }
