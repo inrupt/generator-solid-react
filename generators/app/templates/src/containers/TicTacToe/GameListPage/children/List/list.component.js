@@ -104,7 +104,7 @@ const List = ({ webId, gamePath }: Props) => {
   useEffect(() => {
     const currentTimestamp = timestamp && timestamp.toString();
     if (timestamp && currentTimestamp !== oldTimestamp) {
-      getGames(gamePath);
+      init();
       oldTimestamp = currentTimestamp;
     }
   }, [timestamp]);
