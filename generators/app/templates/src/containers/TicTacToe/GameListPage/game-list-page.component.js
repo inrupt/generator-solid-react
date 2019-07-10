@@ -30,10 +30,9 @@ const GameListPage = ({ webId }) => {
     try {
       const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
       const gamePath = await ldflexHelper.createContainer(url);
-      console.log(gamePath, 'path');
       if (gamePath) {
-        setGamePath(gamePath);
         await createInbox(`${gamePath}inbox/`, gamePath);
+        setGamePath(gamePath);
       }
     } catch (e) {
       errorToaster(e.message);
@@ -43,7 +42,6 @@ const GameListPage = ({ webId }) => {
   useEffect(() => {
     if (webId && notification.notify) init();
   }, [webId, notification.notify]);
-
   return (
     <Section>
       <Wrapper>

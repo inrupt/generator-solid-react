@@ -85,11 +85,16 @@ export const discoveryInbox = async webId => {
 export const createContainer = async folderPath => {
   try {
     const existContainer = await existFolder(folderPath);
-    const dummyPath = `${folderPath}.dummy`;
+    const data = `${folderPath}data.ttl`;
     if (existContainer) return folderPath;
 
-    await createDoc(dummyPath, { method: 'PUT' });
-    await createDoc(dummyPath, { method: 'DELETE' });
+    await createDoc(data, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'text/turtle'
+      }
+    });
+    // await createDoc(dummyPath, { method: 'DELETE' });
 
     return folderPath;
   } catch (error) {

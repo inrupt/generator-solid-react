@@ -31,9 +31,13 @@ const Notifications = ({ webId, inbox }) => {
   useOnClickOutside(ref, () => setIsOpen(false));
 
   const initNotifications = async () => {
-    setIsLoading(true);
-    await fetchNotification(inbox);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      await fetchNotification(inbox);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {

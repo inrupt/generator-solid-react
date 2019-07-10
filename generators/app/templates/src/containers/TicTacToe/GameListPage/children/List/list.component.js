@@ -55,7 +55,11 @@ const List = ({ webId, gamePath }: Props) => {
         if (!document) return gameList;
         for await (const item of document['ldp:contains']) {
           const { value } = item;
-          if (value.includes('.ttl') && !value.includes('index.ttl'))
+          if (
+            value.includes('.ttl') &&
+            !value.includes('data.ttl') &&
+            !value.includes('settings.ttl')
+          )
             gameList = [...gameList, value];
         }
         let games = [];
@@ -85,7 +89,7 @@ const List = ({ webId, gamePath }: Props) => {
   const init = useCallback(async () => {
     setIsLoading(true);
     const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
-    const otherGamesUrl = `${url}index.ttl`;
+    const otherGamesUrl = `${url}data.ttl`;
     const games = await getGames(gamePath);
     const otherGames = await getGames(otherGamesUrl);
     setList(games);
@@ -94,13 +98,13 @@ const List = ({ webId, gamePath }: Props) => {
   });
 
   useEffect(() => {
-    init();
-  }, []);
+    if (gamePath) init();
+  }, [gamePath]);
 
   useEffect(() => {
     const currentTimestamp = timestamp && timestamp.toString();
     if (timestamp && currentTimestamp !== oldTimestamp) {
-      getGames();
+      getGames(gamePath);
       oldTimestamp = currentTimestamp;
     }
   }, [timestamp]);
