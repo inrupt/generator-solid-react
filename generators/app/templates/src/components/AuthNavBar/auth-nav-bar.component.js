@@ -27,7 +27,7 @@ const AuthNavBar = React.memo((props: Props) => {
     },
     {
       id: 'tictactoe',
-      icon: '/img/people.svg',
+      icon: '/img/icon/tictactoe.svg',
       label: t('navBar.tictactoe'),
       to: '/tictactoe'
     }
