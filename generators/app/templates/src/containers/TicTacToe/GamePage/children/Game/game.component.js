@@ -26,7 +26,7 @@ const Game = ({ webId, gameURL }: Props) => {
   const [winner, setWinner] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
-  const { createNotification } = useNotification(webId);
+  const { createNotification, createInbox } = useNotification(webId);
   const [rival, setRival] = useState(null);
 
   const sendNotification = useCallback(
@@ -130,7 +130,7 @@ const Game = ({ webId, gameURL }: Props) => {
       const imageData = await ldflex[webId]['vcard:hasPhoto'];
       const name = nameData ? nameData.value : webId;
       const image = imageData ? imageData.value : '/img/icon/empty-profile.svg';
-      return { name, image };
+      return { name, image, webId };
     } catch (e) {
       throw e;
     }
@@ -249,6 +249,11 @@ const Game = ({ webId, gameURL }: Props) => {
       errorToaster(e.message, 'Error');
     }
   });
+
+  useEffect(() => {
+    const gamePath = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
+    if (gameURL) createInbox(`${gamePath}inbox/`, gamePath);
+  }, []);
 
   useEffect(() => {
     if ((gameURL || timestamp) && !isProcessing) getGame(gameURL);
