@@ -51,6 +51,7 @@ const Notifications = ({ webId, inbox }) => {
       oldTimestamp = currenTimestamp;
     }
   }, [timestamp]);
+
   return (
     <NotificationsWrapper ref={ref}>
       <Bell unread={unread || 0} onClick={toggleNotifications} active={isOpen} />
