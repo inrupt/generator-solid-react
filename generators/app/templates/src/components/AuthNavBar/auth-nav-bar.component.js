@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import ldflex from '@solid/query-ldflex';
 import { NavBar, Notification } from '@components';
 import { useTranslation } from 'react-i18next';
 import { NavBarContainer } from './children';
@@ -37,7 +36,7 @@ const AuthNavBar = React.memo((props: Props) => {
   const discoveryAppInbox = useCallback(async () => {
     const globalInbox = await ldflexHelper.discoveryInbox(webId);
     const appPath = buildPathFromWebId(webId, `${process.env.REACT_APP_TICTAC_PATH}`);
-    const settingsDoc = await ldflex[`${appPath}settings.ttl`]['ldp:inbox'];
+    const settingsDoc = `${appPath}inbox/`;
     const inbox = await settingsDoc.value;
 
     setInbox([
@@ -52,28 +51,26 @@ const AuthNavBar = React.memo((props: Props) => {
     }
   }, [webId]);
   return (
-    inboxes.length > 0 && (
-      <NavBar
-        navigation={navigation}
-        sticky
-        toolbar={[
-          {
-            component: () => <LanguageDropdown {...{ t, i18n }} />,
-            id: 'language'
-          },
-          {
-            component: () => <Notification {...{ webId, inbox: inboxes }} />,
-            id: 'notifications'
-          },
-          {
-            component: ({ open, customClass }) => (
-              <NavBarContainer {...{ t, i18n, open, webId, customClass }} />
-            ),
-            id: 'profile'
-          }
-        ]}
-      />
-    )
+    <NavBar
+      navigation={navigation}
+      sticky
+      toolbar={[
+        {
+          component: () => <LanguageDropdown {...{ t, i18n }} />,
+          id: 'language'
+        },
+        {
+          component: () => <Notification {...{ webId, inbox: inboxes }} />,
+          id: 'notifications'
+        },
+        {
+          component: ({ open, customClass }) => (
+            <NavBarContainer {...{ t, i18n, open, webId, customClass }} />
+          ),
+          id: 'profile'
+        }
+      ]}
+    />
   );
 });
 
