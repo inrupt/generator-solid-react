@@ -1,4 +1,4 @@
-import { ldflexHelper, buildPathFromWebId } from './index';
+import { ldflexHelper } from './index';
 
 export const sendNotification = async (opponent, content, createNotification, inbox) => {
   try {

@@ -1,6 +1,11 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import { LiveUpdate, useNotification } from '@inrupt/solid-react-components';
-import { ldflexHelper, buildPathFromWebId, errorToaster, notification as helperNotification } from '@utils';
+import {
+  ldflexHelper,
+  buildPathFromWebId,
+  errorToaster,
+  notification as helperNotification
+} from '@utils';
 import { Form, List } from './children';
 import { Section, Wrapper } from '../tic-tac-toe.style';
 
@@ -12,7 +17,7 @@ const GameListPage = ({ webId }) => {
   const sendNotification = useCallback(
     async content => {
       try {
-        const url = buildPathFromWebId(opponent, process.env.REACT_APP_TICTAC_PATH)
+        const url = buildPathFromWebId(opponent, process.env.REACT_APP_TICTAC_PATH);
         helperNotification.sendNotification(opponent, content, createNotification, `${url}inbox/`);
       } catch (error) {
         errorToaster(error.message, 'Error');
@@ -22,12 +27,16 @@ const GameListPage = ({ webId }) => {
   );
 
   const init = async () => {
-    const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
-    const gamePath = await ldflexHelper.createContainer(url);
-    if (gamePath) {
-      await createInbox(`${gamePath}inbox/`, gamePath);
+    try {
+      const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
+      const gamePath = await ldflexHelper.createContainer(url);
+      if (gamePath) {
+        setGamePath(gamePath);
+        await createInbox(`${gamePath}inbox/`, gamePath);
+      }
+    } catch (e) {
+      errorToaster(e.message);
     }
-    setGamePath(url);
   };
 
   useEffect(() => {

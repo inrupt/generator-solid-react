@@ -69,7 +69,6 @@ export const fetchLdflexDocument = async documentUri => {
 
 export const existFolder = async folderPath => {
   const result = await auth.fetch(folderPath);
-  console.log('result', result);
   return result.ok;
 };
 
@@ -89,6 +88,7 @@ export const createContainer = async folderPath => {
     const existContainer = await existFolder(folderPath);
     const dummyPath = `${folderPath}.dummy`;
     if (existContainer) return folderPath;
+
     await createDoc(dummyPath, { method: 'PUT' });
     await createDoc(dummyPath, { method: 'DELETE' });
 

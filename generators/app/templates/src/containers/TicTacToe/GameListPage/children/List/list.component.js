@@ -52,9 +52,10 @@ const List = ({ webId, gamePath }: Props) => {
       try {
         const document = await ldflexHelper.fetchLdflexDocument(url);
         let gameList = [];
+        if (!document) return gameList;
         for await (const item of document['ldp:contains']) {
           const { value } = item;
-          if (value.includes('.ttl') && !value.includes('othergames.ttl'))
+          if (value.includes('.ttl') && !value.includes('index.ttl'))
             gameList = [...gameList, value];
         }
         let games = [];
@@ -75,7 +76,7 @@ const List = ({ webId, gamePath }: Props) => {
         }
         return games;
       } catch (e) {
-        errorToaster('Error while getting games', 'Error');
+        errorToaster(e.message, 'Error');
       }
     },
     [gamePath]
