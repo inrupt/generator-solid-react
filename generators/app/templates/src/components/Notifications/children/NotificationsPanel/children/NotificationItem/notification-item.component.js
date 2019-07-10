@@ -13,7 +13,7 @@ type Props = {
 const NotificationItem = ({ notification, markAsRead, children, deleteNotification }: Props) => {
   const { read } = notification;
   const currentRead = JSON.parse(read);
-
+  const { sender } = notification;
   const redirectTo = useCallback(async () => {
     if (notification.target) {
       await markAsRead(notification.path, notification.id);
@@ -28,7 +28,7 @@ const NotificationItem = ({ notification, markAsRead, children, deleteNotificati
       </a>
       <Body>
         <Message onClick={redirectTo}>
-          <strong>{notification.sender}</strong> {notification.summary}
+          <strong>{sender.name}</strong> {notification.summary}
         </Message>
         <Meta>
           <span className="moment">{moment(notification.sent).fromNow()}</span>
