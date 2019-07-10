@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, Fragment } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLiveUpdate } from '@inrupt/solid-react-components';
 import ldflex from '@solid/query-ldflex';
 import { Loader } from '@util-components';
@@ -8,9 +8,9 @@ import GameItem from './children';
 import { Wrapper, ListWrapper, GameListContainers } from './list.style';
 
 let oldTimestamp;
-type Props = { gamePath: String };
-
-const GameList = ({ title, games }) => (
+type Props = { webId: String, gamePath: String };
+type GameListProps = { title: String, games: Array };
+const GameList = ({ title, games }: GameListProps) => (
   <div>
     <h2>{title}</h2>
     {games.length > 0 ? (

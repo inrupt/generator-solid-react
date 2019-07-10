@@ -17,7 +17,9 @@ const Content = styled.div`
 
 ReactModal.setAppElement('#root');
 
-const GameAccept = ({ sender, onAccept, onDecline }) => {
+type Props = { sender: Object, onAccept: Function, onDecline: Function };
+
+const GameAccept = ({ sender, onAccept, onDecline }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {

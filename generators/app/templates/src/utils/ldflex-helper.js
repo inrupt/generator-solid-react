@@ -10,7 +10,6 @@ export const existDocument = async documentUri =>
 
 const createDoc = async (documentUri, options) => {
   try {
-    console.log(documentUri);
     return await auth.fetch(documentUri, options);
   } catch (e) {
     throw e;
