@@ -37,11 +37,10 @@ const AuthNavBar = React.memo((props: Props) => {
     const globalInbox = await ldflexHelper.discoveryInbox(webId);
     const appPath = buildPathFromWebId(webId, `${process.env.REACT_APP_TICTAC_PATH}`);
     const settingsDoc = `${appPath}inbox/`;
-    const inbox = await settingsDoc.value;
 
     setInbox([
       { path: globalInbox, inboxName: 'Global', shape: 'default' },
-      { path: inbox, inboxName: 'TicTactoe Game', shape: 'default' }
+      { path: settingsDoc, inboxName: 'TicTactoe Game', shape: 'default' }
     ]);
   }, [webId]);
 
@@ -51,26 +50,28 @@ const AuthNavBar = React.memo((props: Props) => {
     }
   }, [webId]);
   return (
-    <NavBar
-      navigation={navigation}
-      sticky
-      toolbar={[
-        {
-          component: () => <LanguageDropdown {...{ t, i18n }} />,
-          id: 'language'
-        },
-        {
-          component: () => <Notification {...{ webId, inbox: inboxes }} />,
-          id: 'notifications'
-        },
-        {
-          component: ({ open, customClass }) => (
-            <NavBarContainer {...{ t, i18n, open, webId, customClass }} />
-          ),
-          id: 'profile'
-        }
-      ]}
-    />
+    inboxes.length > 0 && (
+      <NavBar
+        navigation={navigation}
+        sticky
+        toolbar={[
+          {
+            component: () => <LanguageDropdown {...{ t, i18n }} />,
+            id: 'language'
+          },
+          {
+            component: () => <Notification {...{ webId, inbox: inboxes }} />,
+            id: 'notifications'
+          },
+          {
+            component: ({ open, customClass }) => (
+              <NavBarContainer {...{ t, i18n, open, webId, customClass }} />
+            ),
+            id: 'profile'
+          }
+        ]}
+      />
+    )
   );
 });
 
