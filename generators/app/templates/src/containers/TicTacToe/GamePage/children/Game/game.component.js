@@ -42,11 +42,6 @@ const Game = ({ webId, gameURL }: Props) => {
 
   const getSecondToken = useCallback(token => (token === 'X' ? 'O' : 'X'));
 
-  const getPlayer = token => {
-    const { firstmove, sender, opponent } = gameData;
-    return token === firstmove ? sender : opponent;
-  };
-
   const generateMoves = useCallback((moveorder: Array<String>, firstmove: String) =>
     moveorder.reduce((allSquares, current, i) => {
       const squares = allSquares;
@@ -92,6 +87,7 @@ const Game = ({ webId, gameURL }: Props) => {
         [1, 4, 7],
         [2, 5, 8]
       ];
+      const isMovesFull = moves.filter(move => move === null).length === 0;
 
       let winnerObject = {};
       for (const combination of possibleCombinations) {
@@ -105,10 +101,19 @@ const Game = ({ webId, gameURL }: Props) => {
           break;
         }
       }
+
+      if (isMovesFull && !winnerObject) {
+        if (gamestatus !== 'Finished') {
+          await changeGameStatus('Finished');
+          if (winnerObject.token === gameData.token) successToaster('It is a tie', 'TIE');
+          else successToaster('It is a tie', 'TIE');
+        }
+      }
+
       if (winnerObject.token) {
         if (gamestatus !== 'Finished') {
           await changeGameStatus('Finished');
-          if (getPlayer(winnerObject.token) === webId)
+          if (winnerObject.token === gameData.token)
             successToaster('You have won!!! Congrats', 'Winner');
           else successToaster('Better luck next time!!');
         }
@@ -270,8 +275,13 @@ const Game = ({ webId, gameURL }: Props) => {
               </div>
             }
 
-            {!gameData.canPlay && (
+            {!gameData.canPlay && !winner && (
               <span>Not your turn, please wait for your opponent to play </span>
+            )}
+            {winner && winner.token === gameData.token ? (
+              <span>You are the winner</span>
+            ) : (
+              winner && <span>Better luck next time!!</span>
             )}
             <span>
               Game Status: <b>{gameData.gamestatus}</b>
