@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import ldflex from '@solid/query-ldflex';
 import { NavBar, Notification } from '@components';
 import { useTranslation } from 'react-i18next';
 import { NavBarContainer } from './children';
@@ -35,13 +36,13 @@ const AuthNavBar = React.memo((props: Props) => {
   const { webId } = props;
   const discoveryAppInbox = useCallback(async () => {
     const globalInbox = await ldflexHelper.discoveryInbox(webId);
-    const inbox = `${process.env.REACT_APP_TICTAC_PATH}inbox/`;
-    // console.log(buildPathFromWebId(webId, inbox), 'inbox 1');
-    // const appInbox = await ldflexHelper.discoveryInbox(buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH));
+    const appPath = buildPathFromWebId(webId, `${process.env.REACT_APP_TICTAC_PATH}`);
+    const settingsDoc = await ldflex[`${appPath}settings.ttl`]['ldp:inbox'];
+    const inbox = await settingsDoc.value;
 
     setInbox([
       { path: globalInbox, inboxName: 'Global', shape: 'default' },
-      { path: buildPathFromWebId(webId, inbox), inboxName: 'TicTactoe Game', shape: 'default' }
+      { path: inbox, inboxName: 'TicTactoe Game', shape: 'default' }
     ]);
   }, [webId]);
 

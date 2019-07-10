@@ -10,7 +10,6 @@ export const sendNotification = async (opponent, content, createNotification) =>
 
     const settingsDoc = await ldflex[`${appPath}settings.ttl`]['ldp:inbox'];
     const inbox = await settingsDoc.value;
-
     /**
      * Check if app inbox exist to send notification if doesn't exist
      * send try to send to global inbox.
