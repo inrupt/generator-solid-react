@@ -126,9 +126,11 @@ const Game = ({ webId, gameURL }: Props) => {
 
   const getPlayerInfo = async webId => {
     try {
-      const name = await ldflex[webId]['vcard:fn'];
-      const image = await ldflex[webId]['vcard:hasPhoto'];
-      return { name: name.value, image: image.value, webId };
+      const nameData = await ldflex[webId]['vcard:fn'];
+      const imageData = await ldflex[webId]['vcard:hasPhoto'];
+      const name = nameData ? nameData.value : webId;
+      const image = imageData ? imageData.value : '/img/icon/empty-profile.svg';
+      return { name, image };
     } catch (e) {
       throw e;
     }

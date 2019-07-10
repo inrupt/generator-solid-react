@@ -79,6 +79,8 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
           object: documentUri,
           target
         });
+
+        setDocumentUri(`${Date.now()}.ttl`);
       }
     } catch (e) {
       throw new Error(e);
