@@ -27,13 +27,13 @@ type Props = {
   value: String,
   onMove: Function,
   canPlay: Boolean,
-  winner: Object,
+  result: Object,
   index: Number,
   borders: Array<String>
 };
 
-const Field = ({ value, onMove, canPlay, winner, index, borders }: Props) => {
-  const winnerField = winner ? winner.combination.includes(index) : false;
+const Field = ({ value, onMove, canPlay, result, index, borders }: Props) => {
+  const winnerField = result && result.win ? result.combination.includes(index) : false;
   return (
     <Square onClick={onMove} disabled={!canPlay} winner={winnerField} borders={borders}>
       {value}

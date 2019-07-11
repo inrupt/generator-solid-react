@@ -1,13 +1,7 @@
 import React, { Fragment, useEffect, useState, useCallback } from 'react';
 import { useLiveUpdate, useNotification } from '@inrupt/solid-react-components';
 import moment from 'moment';
-import {
-  ldflexHelper,
-  errorToaster,
-  successToaster,
-  buildPathFromWebId,
-  notification
-} from '@utils';
+import { ldflexHelper, errorToaster, buildPathFromWebId, notification } from '@utils';
 import ldflex from '@solid/query-ldflex';
 import { namedNode } from '@rdfjs/data-model';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
@@ -33,7 +27,7 @@ const Game = ({ webId, gameURL }: Props) => {
   const { timestamp } = updates;
   const [gameDocument, setGameDocument] = useState(null);
   const [gameData, setGameData] = useState({});
-  const [winner, setWinner] = useState(null);
+  const [result, setResult] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
   const { createNotification, createInbox } = useNotification(webId);
@@ -104,11 +98,9 @@ const Game = ({ webId, gameURL }: Props) => {
 
   const onAccept = async cb => {
     try {
-      setIsProcessing(true);
       await changeGameStatus('Move X');
       await addGameToList();
       cb();
-      setIsProcessing(false);
     } catch (e) {
       setIsProcessing(false);
       errorToaster(e.message, 'Error');
@@ -148,21 +140,20 @@ const Game = ({ webId, gameURL }: Props) => {
         moves[first] === moves[second] &&
         moves[first] === moves[third]
       ) {
-        gameResult = { result: 'win', combination, token: moves[first] };
+        gameResult = { win: true, combination, token: moves[first], finished: true };
         break;
       }
     }
-    if (gameResult.result === 'win') setWinner(gameResult);
-    if (!gameResult.result && isMovesFull) gameResult = { result: 'tie' };
-
+    if (!gameResult.result && isMovesFull) gameResult = { win: false, finished: true };
+    setResult(gameResult);
     return gameResult;
   };
 
   const checkWinnerOrNextPlayer = useCallback(
     async data => {
       const { moves } = data;
-      const winner = await checkForWinnerOrTie(moves);
-      const gamestatus = winner.result ? 'Finished' : data.gamestatus;
+      const result = await checkForWinnerOrTie(moves);
+      const gamestatus = result.finished ? 'Finished' : data.gamestatus;
       await changeGameStatus(gamestatus);
     },
     [gameData]
@@ -286,7 +277,7 @@ const Game = ({ webId, gameURL }: Props) => {
 
   return (
     <GameWrapper>
-      {gameData && (
+      {Object.keys(gameData).length > 0 && (
         <Fragment>
           {!gameData.owner && gameData.gamestatus === 'Awaiting' && (
             <GameAccept {...{ ...gameData, onAccept, onDecline }} />
@@ -303,13 +294,19 @@ const Game = ({ webId, gameURL }: Props) => {
               </div>
             }
 
-            {!gameData.canPlay && !winner && (
+            {!result && !gameData.canPlay && (
               <span>Not your turn, please wait for your opponent to play </span>
             )}
-            {winner && winner.token === gameData.token ? (
-              <span>You are the winner</span>
-            ) : (
-              winner && <span>Better luck next time!!</span>
+            {result && (
+              <div>
+                {result.win &&
+                  (result.token === gameData.token ? (
+                    <span>You are the winner!!</span>
+                  ) : (
+                    <span>Better luck next time!!</span>
+                  ))}
+                {!result.win && <span>It's a tie!!</span>}
+              </div>
             )}
             <span>
               Game Status: <b>{gameData.gamestatus}</b>
@@ -321,7 +318,7 @@ const Game = ({ webId, gameURL }: Props) => {
                 squares: gameData.moves,
                 onMove,
                 canPlay: gameData.canPlay,
-                winner
+                result
               }}
             />
           )}
@@ -330,11 +327,11 @@ const Game = ({ webId, gameURL }: Props) => {
               <span>
                 Created: <b>{moment(gameData.createddatetime).format('MMM Do, YYYY')}</b>
               </span>
-              {winner && (
+              {result && result.win && (
                 <Fragment>
                   <span>
-                    Winner: <strong>{winner.token}</strong> with{' '}
-                    <b>{winner.combination.join('-')}</b>
+                    Winner: <strong>{result.token}</strong> with{' '}
+                    <b>{result.combination.join('-')}</b>
                   </span>
                 </Fragment>
               )}

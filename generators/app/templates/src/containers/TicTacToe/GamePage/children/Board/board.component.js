@@ -12,7 +12,7 @@ const GameBoard = styled.div`
   flex: 1 1 auto;
 `;
 
-type Props = { squares: Array, onMove: Funtion, canPlay: Boolean, winner: Object };
+type Props = { squares: Array, onMove: Funtion, canPlay: Boolean, result: Object };
 
 const unique = seed => Date.now() + seed;
 
@@ -28,7 +28,7 @@ const borders = {
   8: ['left']
 };
 
-const Board = ({ squares, onMove, canPlay, winner }: Props) => (
+const Board = ({ squares, onMove, canPlay, result }: Props) => (
   <GameBoard>
     {squares.map((square, i) => (
       <Field
@@ -36,7 +36,7 @@ const Board = ({ squares, onMove, canPlay, winner }: Props) => (
         value={square}
         onMove={() => onMove(i)}
         canPlay={canPlay}
-        winner={winner}
+        result={result}
         index={i}
         borders={borders[i]}
       />

@@ -1,31 +1,31 @@
 {
-    "@context": {
-        "thing": "https://schema.org/Thing#",
-        "schema": "https://schema.org/",
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+  "@context": {
+    "thing": "https://schema.org/Thing#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+  },
+  "shape": [
+    {
+      "prefix": "rdfs",
+      "predicate": "gamestatus"
     },
-    "shape": [
-        {
-            "prefix": "rdfs",
-            "predicate": "gamestatus"
-        },
-        {
-            "prefix": "rdfs",
-            "predicate": "createddatetime"
-        },
-        {
-            "prefix": "schema",
-            "predicate": "sender"
-        },
-        {
-            "prefix": "schema",
-            "predicate": "opponent"
-        },
-        { "prefix": "rdfs", "predicate": "firstmove" },
-        {
-            "prefix": "rdfs",
-            "predicate": "moveorder"
-        }
-    ]
+    {
+      "prefix": "rdfs",
+      "predicate": "createddatetime"
+    },
+    {
+      "prefix": "schema",
+      "predicate": "sender"
+    },
+    {
+      "prefix": "schema",
+      "predicate": "opponent"
+    },
+    { "prefix": "rdfs", "predicate": "firstmove" },
+    {
+      "prefix": "rdfs",
+      "predicate": "moveorder"
+    }
+  ]
 }
