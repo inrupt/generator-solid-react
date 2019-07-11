@@ -76,12 +76,13 @@ class NavBarProfile extends Component<Props> {
 
   logOut = async () => {
     try {
-      const { history } = this.props;
+      // const { history } = this.props;
       await auth.logout();
       // Remove localStorage
       localStorage.removeItem('solid-auth-client');
       // Redirect to login page
-      history.push('/login');
+      window.location = '/login';
+      // history.push('/login');
     } catch (error) {
       errorToaster(error.message, 'Error');
     }
