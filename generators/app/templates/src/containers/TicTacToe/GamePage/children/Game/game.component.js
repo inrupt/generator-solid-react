@@ -130,7 +130,7 @@ const Game = ({ webId, gameURL }: Props) => {
   };
 
   const checkForWinnerOrTie = moves => {
-    if (!moves) return {};
+    if (!moves) return null;
     const isMovesFull = moves.filter(move => move === null).length === 0;
     let gameResult = {};
     for (const combination of possibleCombinations) {
@@ -144,7 +144,7 @@ const Game = ({ webId, gameURL }: Props) => {
         break;
       }
     }
-    if (!gameResult.result && isMovesFull) gameResult = { win: false, finished: true };
+    if (!gameResult.win && isMovesFull) gameResult = { win: false, finished: true };
     setResult(gameResult);
     return gameResult;
   };
@@ -297,7 +297,7 @@ const Game = ({ webId, gameURL }: Props) => {
             {!result && !gameData.canPlay && (
               <span>Not your turn, please wait for your opponent to play </span>
             )}
-            {result && (
+            {result && result.finished && (
               <div>
                 {result.win &&
                   (result.token === gameData.token ? (
