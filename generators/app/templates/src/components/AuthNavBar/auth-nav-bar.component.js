@@ -50,28 +50,26 @@ const AuthNavBar = React.memo((props: Props) => {
     }
   }, [webId]);
   return (
-    inboxes.length > 0 && (
-      <NavBar
-        navigation={navigation}
-        sticky
-        toolbar={[
-          {
-            component: () => <LanguageDropdown {...{ t, i18n }} />,
-            id: 'language'
-          },
-          {
-            component: () => <Notification {...{ webId, inbox: inboxes }} />,
-            id: 'notifications'
-          },
-          {
-            component: ({ open, customClass }) => (
-              <NavBarContainer {...{ t, i18n, open, webId, customClass }} />
-            ),
-            id: 'profile'
-          }
-        ]}
-      />
-    )
+    <NavBar
+      navigation={navigation}
+      sticky
+      toolbar={[
+        {
+          component: () => <LanguageDropdown {...{ t, i18n }} />,
+          id: 'language'
+        },
+        {
+          component: () => <Notification {...{ webId, inbox: inboxes }} />,
+          id: 'notifications'
+        },
+        {
+          component: ({ open, customClass }) => (
+            <NavBarContainer {...{ t, i18n, open, webId, customClass }} />
+          ),
+          id: 'profile'
+        }
+      ]}
+    />
   );
 });
 

@@ -7,7 +7,10 @@ type Props = {
 };
 
 const areEqual = (prevProps, nextProps) => {
-  if (prevProps.profileOptions !== nextProps.profileOptions) {
+  const prevInbox = prevProps.toolbar[1].component().props.inbox;
+  const nextInbox = nextProps.toolbar[1].component().props.inbox;
+
+  if (prevInbox.length !== nextInbox.length) {
     return false;
   }
 
