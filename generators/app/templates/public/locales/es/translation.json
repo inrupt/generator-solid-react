@@ -33,6 +33,10 @@
       "en": "English (Inglés)",
       "es": "Español (Español)"
     },
+    "notifications": {
+      "global": "Global",
+      "tictactoe": "Juego el Gato"
+    },
     "tictactoe":"Juego"
   },
   "footer": {

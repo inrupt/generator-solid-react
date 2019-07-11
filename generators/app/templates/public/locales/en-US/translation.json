@@ -33,7 +33,11 @@
       "en": "English (English)",
       "es": "Español (Spanish)"
     },
-    "tictactoe":"Game"
+    "tictactoe":"Game",
+    "notifications": {
+      "global": "Global",
+      "tictactoe": "TicTactoe Game"
+    }
   },
   "footer": {
     "version": "Version"

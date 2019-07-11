@@ -39,8 +39,8 @@ const AuthNavBar = React.memo((props: Props) => {
     const settingsDoc = `${appPath}inbox/`;
 
     setInbox([
-      { path: globalInbox, inboxName: 'Global', shape: 'default' },
-      { path: settingsDoc, inboxName: 'TicTactoe Game', shape: 'default' }
+      { path: globalInbox, inboxName: t('navBar.notifications.global'), shape: 'default' },
+      { path: settingsDoc, inboxName: t('navBar.notifications.tictactoe'), shape: 'default' }
     ]);
   }, [webId]);
 
