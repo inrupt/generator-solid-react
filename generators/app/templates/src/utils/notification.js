@@ -1,4 +1,3 @@
-import ldflex from '@solid/query-ldflex';
 import { ldflexHelper, buildPathFromWebId } from './index';
 
 export const sendNotification = async (opponent, content, createNotification) => {
@@ -8,15 +7,13 @@ export const sendNotification = async (opponent, content, createNotification) =>
      */
     const appPath = buildPathFromWebId(opponent, `${process.env.REACT_APP_TICTAC_PATH}`);
 
-    const settingsDoc = await ldflex[`${appPath}settings.ttl`]['ldp:inbox'];
-    const inbox = await settingsDoc.value;
+    const appInbox = await ldflexHelper.discoveryInbox(`${appPath}settings.ttl`);
     /**
      * Check if app inbox exist to send notification if doesn't exist
      * send try to send to global inbox.
      */
-    const appInbox = await ldflexHelper.existFolder(inbox);
     if (appInbox) {
-      return createNotification(content, inbox);
+      return createNotification(content, appInbox);
     }
     const globalOpponentInbox = await ldflexHelper.discoveryInbox(opponent);
     if (globalOpponentInbox) {
