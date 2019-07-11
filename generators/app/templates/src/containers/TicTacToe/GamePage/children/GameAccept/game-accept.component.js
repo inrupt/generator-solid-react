@@ -42,7 +42,8 @@ const GameAccept = ({ sender, onAccept, onDecline }: Props) => {
     >
       <Content>
         <span>
-          <b>{sender.name}</b> has invited you to play a game of TicTacToe. Would you like to play?
+          <b>{sender && sender.name}</b> has invited you to play a game of TicTacToe. Would you like
+          to play?
         </span>
         <div id="modal-actions">
           <button type="button" onClick={Accept}>

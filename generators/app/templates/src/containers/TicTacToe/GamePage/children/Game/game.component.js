@@ -15,6 +15,16 @@ import Board from '../Board';
 import GameAccept from '../GameAccept';
 import { GameWrapper, Metadata } from './game.style';
 
+const possibleCombinations = [
+  [0, 4, 8],
+  [2, 4, 6],
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8]
+];
 type Props = { webId: String, gameURL: String };
 
 const Game = ({ webId, gameURL }: Props) => {
@@ -63,66 +73,17 @@ const Game = ({ webId, gameURL }: Props) => {
     return isStatusValid ? gamestatus.includes(token) : false;
   });
 
-  const changeGameStatus = useCallback(async gamestatus => {
-    try {
-      const predicate = 'http://www.w3.org/2000/01/rdf-schema#gamestatus';
-      const data = await gameDocument[predicate];
-      await gameDocument[predicate].replace(data.value, gamestatus);
-    } catch (e) {
-      throw e;
-    }
-  });
-
-  const checkWinner = useCallback(async () => {
-    try {
-      const { moves, gamestatus } = gameData;
-      if (!moves) return;
-      const possibleCombinations = [
-        [0, 4, 8],
-        [2, 4, 6],
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8]
-      ];
-      const isMovesFull = moves.filter(move => move === null).length === 0;
-
-      let winnerObject = {};
-      for (const combination of possibleCombinations) {
-        const [first, second, third] = combination;
-        if (
-          moves[first] !== null &&
-          moves[first] === moves[second] &&
-          moves[first] === moves[third]
-        ) {
-          winnerObject = { combination, token: moves[first] };
-          break;
-        }
+  const changeGameStatus = useCallback(
+    async gamestatus => {
+      try {
+        const predicate = 'http://www.w3.org/2000/01/rdf-schema#gamestatus';
+        await gameDocument[predicate].set(gamestatus);
+      } catch (e) {
+        throw e;
       }
-
-      if (isMovesFull && !winnerObject) {
-        if (gamestatus !== 'Finished') {
-          await changeGameStatus('Finished');
-          if (winnerObject.token === gameData.token) successToaster('It is a tie', 'TIE');
-          else successToaster('It is a tie', 'TIE');
-        }
-      }
-
-      if (winnerObject.token) {
-        if (gamestatus !== 'Finished') {
-          await changeGameStatus('Finished');
-          if (winnerObject.token === gameData.token)
-            successToaster('You have won!!! Congrats', 'Winner');
-          else successToaster('Better luck next time!!');
-        }
-        setWinner(winnerObject);
-      }
-    } catch (e) {
-      errorToaster(e.message, 'Error');
-    }
-  });
+    },
+    [gameDocument]
+  );
 
   const getPlayerInfo = async webId => {
     try {
@@ -165,15 +126,51 @@ const Game = ({ webId, gameURL }: Props) => {
 
   const getRival = ({ sender, opponent, owner }) => (owner ? opponent : sender);
 
-  const getGame = useCallback(async (gameURL: String) => {
-    try {
-      const game = await ldflexHelper.fetchLdflexDocument(gameURL);
-      setGameDocument(game);
-      let gameDocData = {};
-      for await (const field of tictactoeShape.shape) {
-        const fieldData = await game[getPredicate(field)];
-        gameDocData = { ...gameDocData, [field.predicate]: fieldData.value };
+  const fetchRawData = async () => {
+    const game = await ldflexHelper.fetchLdflexDocument(gameURL);
+    setGameDocument(game);
+    let data = {};
+    for await (const field of tictactoeShape.shape) {
+      const fieldData = await game[getPredicate(field)];
+      data = { ...data, [field.predicate]: fieldData.value };
+    }
+    return data;
+  };
+
+  const checkForWinnerOrTie = moves => {
+    if (!moves) return {};
+    const isMovesFull = moves.filter(move => move === null).length === 0;
+    let gameResult = {};
+    for (const combination of possibleCombinations) {
+      const [first, second, third] = combination;
+      if (
+        moves[first] !== null &&
+        moves[first] === moves[second] &&
+        moves[first] === moves[third]
+      ) {
+        gameResult = { result: 'win', combination, token: moves[first] };
+        break;
       }
+    }
+    if (gameResult.result === 'win') setWinner(gameResult);
+    if (!gameResult.result && isMovesFull) gameResult = { result: 'tie' };
+
+    return gameResult;
+  };
+
+  const checkWinnerOrNextPlayer = useCallback(
+    async data => {
+      const { moves } = data;
+      const winner = await checkForWinnerOrTie(moves);
+      const gamestatus = winner.result ? 'Finished' : data.gamestatus;
+      await changeGameStatus(gamestatus);
+    },
+    [gameData]
+  );
+
+  const getInitialGame = useCallback(async () => {
+    try {
+      const gameDocData = await fetchRawData();
       const sender = await getPlayerInfo(gameDocData.sender);
       const opponent = await getPlayerInfo(gameDocData.opponent);
       const owner = webId === sender.webId;
@@ -186,8 +183,7 @@ const Game = ({ webId, gameURL }: Props) => {
         moves,
         token
       });
-
-      gameDocData = {
+      const newData = {
         ...gameDocData,
         sender,
         opponent,
@@ -199,11 +195,34 @@ const Game = ({ webId, gameURL }: Props) => {
         canPlay: myTurn
       };
       setRival(rival);
-      setGameData(gameDocData);
+      setGameData(newData);
+      if (gameDocData.gamestatus === 'Finished') checkForWinnerOrTie(moves);
+    } catch (e) {
+      errorToaster(e.message);
+    }
+  });
+
+  const getGame = useCallback(async () => {
+    try {
+      const gameDocData = await fetchRawData();
+      if (gameDocData.gamestatus === gameData.gamestatus) {
+        return;
+      }
+      const moveorder = gameDocData.moveorder ? gameDocData.moveorder.split('-') : [];
+      const { gamestatus } = gameDocData;
+      const moves = generateMoves(moveorder, gameDocData.firstmove);
+      const myTurn = canPlay({
+        gamestatus: gameDocData.gamestatus,
+        moves,
+        token: gameData.token
+      });
+      const newData = { ...gameData, moveorder, moves, canPlay: myTurn, gamestatus };
+      setGameData(newData);
+      if (gamestatus === 'Finished') checkForWinnerOrTie(moves);
     } catch (e) {
       errorToaster(e.message, 'Error');
     }
-  });
+  }, [gameURL, gameData]);
 
   const addMoves = useCallback(async array => {
     try {
@@ -216,52 +235,54 @@ const Game = ({ webId, gameURL }: Props) => {
     }
   });
 
-  const onMove = useCallback(async index => {
-    try {
-      setIsProcessing(true);
-      const { moves, moveorder, token, rival } = gameData;
-      if (moves[index] === null) {
-        const newMoves = moves;
-        newMoves[index] = token;
-        const newOrder = [...moveorder, index];
-        const gamestatus = `Move ${getSecondToken(token)}`;
-        const newData = {
-          ...gameData,
-          moveorder: newOrder,
-          moves: newMoves,
-          gamestatus,
-          canPlay: canPlay({ gamestatus, lastmove: token, token })
-        };
-        setGameData(newData);
-        await addMoves(newOrder);
-        await changeGameStatus(gamestatus);
-        await sendNotification(rival.webId, {
-          title: 'Tictactoe move',
-          summary: 'A move has been made in your Tic-Tac-Toe game.',
-          sender: webId,
-          object: gameURL,
-          target: window.location.href
-        });
+  const onMove = useCallback(
+    async index => {
+      try {
+        setIsProcessing(true);
+        const { moves, moveorder, token, rival } = gameData;
+        if (moves[index] === null) {
+          const newMoves = moves;
+          newMoves[index] = token;
+          const newOrder = [...moveorder, index];
+          const gamestatus = `Move ${getSecondToken(token)}`;
+          const newData = {
+            ...gameData,
+            moveorder: newOrder,
+            moves: newMoves,
+            gamestatus,
+            canPlay: canPlay({ gamestatus, lastmove: token, token })
+          };
+          setGameData(newData);
+          await addMoves(newOrder);
+          await checkWinnerOrNextPlayer(newData);
+          await sendNotification(rival.webId, {
+            title: 'Tictactoe move',
+            summary: 'A move has been made in your Tic-Tac-Toe game.',
+            sender: webId,
+            object: gameURL,
+            target: window.location.href
+          });
+          setIsProcessing(false);
+        }
+      } catch (e) {
         setIsProcessing(false);
+        errorToaster(e.message, 'Error');
       }
-    } catch (e) {
-      setIsProcessing(false);
-      errorToaster(e.message, 'Error');
-    }
-  });
+    },
+    [gameData]
+  );
 
   useEffect(() => {
     const gamePath = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
-    if (gameURL) createInbox(`${gamePath}inbox/`, gamePath);
+    if (gameURL) {
+      createInbox(`${gamePath}inbox/`, gamePath);
+      getInitialGame();
+    }
   }, []);
 
   useEffect(() => {
-    if ((gameURL || timestamp) && !isProcessing) getGame(gameURL);
+    if ((gameURL || timestamp) && !isProcessing && gameData.sender) getGame();
   }, [gameURL, timestamp]);
-
-  useEffect(() => {
-    if (gameData && Object.keys(gameData).length > 0) checkWinner();
-  }, [gameData]);
 
   return (
     <GameWrapper>
