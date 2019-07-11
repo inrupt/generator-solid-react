@@ -35,7 +35,9 @@
     },
     "notifications": {
       "global": "Global",
-      "tictactoe": "TicTactoe Game"
+      "tictactoe": "TicTactoe Game",
+      "noinbox": "You do not have a inbox, please go to your POD and create one.",
+      "fetchingError": "Error fetching notifications from POD"
     },
     "tictactoe":"Game"
   },

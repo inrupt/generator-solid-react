@@ -3,7 +3,7 @@ import { NavBar, Notification } from '@components';
 import { useTranslation } from 'react-i18next';
 import { NavBarContainer } from './children';
 import { LanguageDropdown } from '@util-components';
-import { buildPathFromWebId, ldflexHelper } from '@utils';
+import { buildPathFromWebId, ldflexHelper, errorToaster } from '@utils';
 
 type Props = {
   webId: string
@@ -33,20 +33,37 @@ const AuthNavBar = React.memo((props: Props) => {
     }
   ];
   const { webId } = props;
-  const discoveryAppInbox = useCallback(async () => {
-    const globalInbox = await ldflexHelper.discoveryInbox(webId);
-    const appPath = buildPathFromWebId(webId, `${process.env.REACT_APP_TICTAC_PATH}`);
-    const settingsDoc = `${appPath}inbox/`;
+  const discoveryInbox = useCallback(async () => {
+    try {
+      let inboxes = [];
+      const globalInbox = await ldflexHelper.discoveryInbox(webId);
 
-    setInbox([
-      { path: globalInbox, inboxName: t('navBar.notifications.global'), shape: 'default' },
-      { path: settingsDoc, inboxName: t('navBar.notifications.tictactoe'), shape: 'default' }
-    ]);
-  }, [webId]);
+      if (globalInbox) {
+        inboxes = [
+          ...inboxes,
+          { path: globalInbox, inboxName: t('navBar.notifications.global'), shape: 'default' }
+        ];
+      }
+      const appInbox = await ldflexHelper.discoveryInbox(
+        buildPathFromWebId(webId, `${process.env.REACT_APP_TICTAC_PATH}settings.ttl`)
+      );
+
+      if (appInbox) {
+        inboxes = [
+          ...inboxes,
+          { path: appInbox, inboxName: t('navBar.notifications.tictactoe'), shape: 'default' }
+        ];
+      }
+      if (inboxes.length === 0) throw new Error(t('navBar.notifications.noinbox'));
+      setInbox(inboxes);
+    } catch (error) {
+      errorToaster(error.message, t('navBar.notifications.fetchingError'));
+    }
+  }, [webId, inboxes]);
 
   useEffect(() => {
     if (webId) {
-      discoveryAppInbox();
+      discoveryInbox();
     }
   }, [webId]);
   return (

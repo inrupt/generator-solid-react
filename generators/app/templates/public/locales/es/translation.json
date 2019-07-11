@@ -35,7 +35,9 @@
     },
     "notifications": {
       "global": "Global",
-      "tictactoe": "Juego el Gato"
+      "tictactoe": "Gato",
+      "noinbox": "No se encontró ningún inbox en su POD, debes tener al menos uno para jugar.",
+      "fetchingError": "Error en las notificaciones"
     },
     "tictactoe":"Juego"
   },

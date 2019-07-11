@@ -71,12 +71,14 @@ export const existFolder = async folderPath => {
   return result.ok;
 };
 
-export const discoveryInbox = async webId => {
+export const discoveryInbox = async document => {
   try {
-    const user = await ldflex[webId];
-    const inbox = await user['ldp:inbox'];
+    const existDocument = await existFolder(document);
+    if (!existDocument) return false;
 
-    return inbox && inbox.value;
+    const inboxDocument = await ldflex[document]['ldp:inbox'];
+    const inbox = inboxDocument ? await inboxDocument.value : false;
+    return inbox;
   } catch (error) {
     throw error;
   }
