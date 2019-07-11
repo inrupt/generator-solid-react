@@ -5,7 +5,7 @@ export const Item = styled.li`
   cursor: pointer;
   position: relative;
   display: flex;
-  padding: 8px 12px;
+  padding: 12px;
   align-items: center;
   background: ${({ read }) => (read ? '#FFF' : 'rgb(245, 249, 254)')};
   position: relative;

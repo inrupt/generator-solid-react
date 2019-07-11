@@ -12,7 +12,7 @@ type Props = {
 
 const NotificationItem = ({ notification, markAsRead, children, deleteNotification }: Props) => {
   const { read } = notification;
-  const currentRead = JSON.parse(read);
+  const currentRead = read ? JSON.parse(read) : false;
   const { sender } = notification;
   const redirectTo = useCallback(async () => {
     if (notification.target) {
