@@ -80,9 +80,7 @@ const AuthNavBar = React.memo((props: Props) => {
           id: 'notifications'
         },
         {
-          component: ({ open, customClass }) => (
-            <NavBarContainer {...{ t, i18n, open, webId, customClass }} />
-          ),
+          component: props => <NavBarContainer {...{ t, i18n, webId, ...props }} />,
           id: 'profile'
         }
       ]}

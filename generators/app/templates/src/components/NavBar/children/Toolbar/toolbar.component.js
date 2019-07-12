@@ -12,7 +12,11 @@ const areEqual = (prevProps, nextProps) => {
   const nextInbox =
     nextProps && nextProps.toolbar.length > 1 && nextProps.toolbar[1].component().props.inbox;
 
-  if (prevInbox.length !== nextInbox.length) {
+  if (prevInbox && prevInbox.length !== nextInbox && nextInbox.length) {
+    return false;
+  }
+
+  if (prevProps.open !== nextProps.open) {
     return false;
   }
 
