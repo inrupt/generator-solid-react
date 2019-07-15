@@ -116,7 +116,7 @@ const Game = ({ webId, gameURL }: Props) => {
     }
   };
 
-  const getRival = ({ sender, opponent, owner }) => (owner ? opponent : sender);
+  const getRival = ({ actor, opponent, owner }) => (owner ? opponent : actor);
 
   const fetchRawData = async () => {
     const game = await ldflexHelper.fetchLdflexDocument(gameURL);
@@ -162,10 +162,10 @@ const Game = ({ webId, gameURL }: Props) => {
   const getInitialGame = useCallback(async () => {
     try {
       const gameDocData = await fetchRawData();
-      const sender = await getPlayerInfo(gameDocData.sender);
+      const actor = await getPlayerInfo(gameDocData.actor);
       const opponent = await getPlayerInfo(gameDocData.opponent);
-      const owner = webId === sender.webId;
-      const rival = getRival({ sender, opponent, owner });
+      const owner = webId === actor.webId;
+      const rival = getRival({ actor, opponent, owner });
       const token = owner ? gameDocData.firstmove : getSecondToken(gameDocData.firstmove);
       const moveorder = gameDocData.moveorder ? gameDocData.moveorder.split('-') : [];
       const moves = generateMoves(moveorder, gameDocData.firstmove);
@@ -176,7 +176,7 @@ const Game = ({ webId, gameURL }: Props) => {
       });
       const newData = {
         ...gameDocData,
-        sender,
+        actor,
         opponent,
         moveorder,
         moves,
@@ -249,7 +249,7 @@ const Game = ({ webId, gameURL }: Props) => {
           await sendNotification(rival.webId, {
             title: 'Tictactoe move',
             summary: 'A move has been made in your Tic-Tac-Toe game.',
-            sender: webId,
+            actor: webId,
             object: gameURL,
             target: window.location.href
           });
@@ -272,7 +272,7 @@ const Game = ({ webId, gameURL }: Props) => {
   }, []);
 
   useEffect(() => {
-    if ((gameURL || timestamp) && !isProcessing && gameData.sender) getGame();
+    if ((gameURL || timestamp) && !isProcessing && gameData.actor) getGame();
   }, [gameURL, timestamp]);
 
   return (

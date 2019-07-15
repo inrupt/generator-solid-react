@@ -3,7 +3,8 @@
     "thing": "https://schema.org/Thing#",
     "schema": "https://schema.org/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "as": "https://www.w3.org/ns/activitystreams#"
   },
   "shape": [
     {
@@ -15,8 +16,8 @@
       "predicate": "createddatetime"
     },
     {
-      "prefix": "schema",
-      "predicate": "sender"
+      "prefix": "as",
+      "predicate": "actor"
     },
     {
       "prefix": "schema",

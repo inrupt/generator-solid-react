@@ -13,7 +13,7 @@ type Props = {
 const NotificationItem = ({ notification, markAsRead, children, deleteNotification }: Props) => {
   const { read } = notification;
   const currentRead = read ? JSON.parse(read) : false;
-  const { sender } = notification;
+  const { actor } = notification;
   const redirectTo = useCallback(async () => {
     if (notification.target) {
       await markAsRead(notification.path, notification.id);
@@ -23,12 +23,12 @@ const NotificationItem = ({ notification, markAsRead, children, deleteNotificati
 
   return (
     <Item read={currentRead}>
-      <a href={notification.sender}>
+      <a href={notification.actor}>
         <img src="/img/icon/empty-profile.svg" alt="Creator" />
       </a>
       <Body>
         <Message onClick={redirectTo}>
-          <strong>{sender.name}</strong> {notification.summary}
+          <strong>{actor.name}</strong> {notification.summary}
         </Message>
         <Meta>
           <span className="moment">{moment(notification.sent).fromNow()}</span>

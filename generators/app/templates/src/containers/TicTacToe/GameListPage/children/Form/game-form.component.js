@@ -53,7 +53,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
     gamestatus: 'Awaiting',
     createddatetime: moment().format(),
     updateddatetime: moment().format(),
-    sender: namedNode(webId),
+    actor: namedNode(webId),
     opponent: namedNode(opponent),
     firstmove: 'X',
     moveorder: ''
@@ -75,7 +75,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         await sendNotification({
           title: 'Tictactoe invitation',
           summary: 'has invited you to play Tic-Tac-Toe.',
-          sender: webId,
+          actor: webId,
           object: documentUri,
           target
         });
