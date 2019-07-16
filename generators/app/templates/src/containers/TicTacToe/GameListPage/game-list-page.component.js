@@ -22,7 +22,7 @@ const GameListPage = ({ webId }) => {
         errorToaster(error.message, 'Error');
       }
     },
-    [opponent, notifications]
+    [opponent, notifications, notification]
   );
 
   const init = async () => {

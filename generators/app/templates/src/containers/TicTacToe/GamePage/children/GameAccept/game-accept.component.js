@@ -17,9 +17,9 @@ const Content = styled.div`
 
 ReactModal.setAppElement('#root');
 
-type Props = { sender: Object, onAccept: Function, onDecline: Function };
+type Props = { actor: Object, onAccept: Function, onDecline: Function };
 
-const GameAccept = ({ sender, onAccept, onDecline }: Props) => {
+const GameAccept = ({ actor, onAccept, onDecline }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const GameAccept = ({ sender, onAccept, onDecline }: Props) => {
     >
       <Content>
         <span>
-          <b>{sender && sender.name}</b> has invited you to play a game of TicTacToe. Would you like
+          <b>{actor && actor.name}</b> has invited you to play a game of TicTacToe. Would you like
           to play?
         </span>
         <div id="modal-actions">
