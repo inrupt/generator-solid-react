@@ -20,6 +20,11 @@ const NotificationItem = ({ notification, markAsRead, children, deleteNotificati
       window.location = notification.target;
     }
   }, [notification]);
+  /**
+   * @TODO: send boolean to pod like boolean and not string
+   */
+
+  const opCurrentRead = !currentRead;
 
   return (
     <Item read={currentRead}>
@@ -35,15 +40,15 @@ const NotificationItem = ({ notification, markAsRead, children, deleteNotificati
           {children}
         </Meta>
       </Body>
-      {!currentRead && (
-        <MarkAsRead
-          type="button"
-          className="delete"
-          onClick={() => markAsRead(notification.path, notification.id)}
-        >
-          <FontAwesomeIcon icon="eye" />
-        </MarkAsRead>
-      )}
+      <MarkAsRead
+        type="button"
+        className="delete"
+        onClick={() =>
+          markAsRead(notification.path, notification.id, opCurrentRead ? 'true' : 'false')
+        }
+      >
+        <FontAwesomeIcon icon={currentRead ? 'eye-slash' : 'eye'} />
+      </MarkAsRead>
       <Delete
         type="button"
         className="delete"
