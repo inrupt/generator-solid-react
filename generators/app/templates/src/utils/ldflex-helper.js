@@ -68,7 +68,7 @@ export const fetchLdflexDocument = async documentUri => {
 
 export const existFolder = async folderPath => {
   const result = await auth.fetch(folderPath);
-  return result.ok;
+  return result.status === 403 || result.status === 200;
 };
 
 export const discoveryInbox = async document => {

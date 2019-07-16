@@ -100,6 +100,13 @@ const Game = ({ webId, gameURL }: Props) => {
     try {
       await changeGameStatus('Move X');
       await addGameToList();
+      await sendNotification(rival.webId, {
+        title: 'Tictactoe game accepted',
+        summary: 'has accepted your invitation to play a game of TicTacToe.',
+        actor: webId,
+        object: gameURL,
+        target: window.location.href
+      });
       cb();
     } catch (e) {
       setIsProcessing(false);
@@ -110,6 +117,13 @@ const Game = ({ webId, gameURL }: Props) => {
   const onDecline = async cb => {
     try {
       await changeGameStatus('Declined');
+      await sendNotification(rival.webId, {
+        title: 'Tictactoe game declined',
+        summary: 'has declined your invitation to play a game of TicTacToe.',
+        actor: webId,
+        object: gameURL,
+        target: window.location.href
+      });
       cb();
     } catch (e) {
       errorToaster(e.message, 'Error');
@@ -166,7 +180,7 @@ const Game = ({ webId, gameURL }: Props) => {
       const opponent = await getPlayerInfo(gameDocData.opponent);
       const owner = webId === actor.webId;
       const rival = getRival({ actor, opponent, owner });
-      const token = owner ? gameDocData.firstmove : getSecondToken(gameDocData.firstmove);
+      const token = owner ? getSecondToken(gameDocData.firstmove) : gameDocData.firstmove;
       const moveorder = gameDocData.moveorder ? gameDocData.moveorder.split('-') : [];
       const moves = generateMoves(moveorder, gameDocData.firstmove);
       const myTurn = canPlay({
@@ -327,13 +341,17 @@ const Game = ({ webId, gameURL }: Props) => {
               <span>
                 Created: <b>{moment(gameData.createddatetime).format('MMM Do, YYYY')}</b>
               </span>
-              {result && result.win && (
+              {result && result.win ? (
                 <Fragment>
                   <span>
                     Winner: <strong>{result.token}</strong> with{' '}
                     <b>{result.combination.join('-')}</b>
                   </span>
                 </Fragment>
+              ) : (
+                <span>
+                  Your token: <strong>{gameData.token}</strong>
+                </span>
               )}
             </Metadata>
           )}
