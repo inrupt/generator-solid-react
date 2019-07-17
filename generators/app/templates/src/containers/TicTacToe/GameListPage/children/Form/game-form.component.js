@@ -4,7 +4,13 @@ import moment from 'moment';
 import { namedNode } from '@rdfjs/data-model';
 import N3 from 'n3';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
-import { ldflexHelper, errorToaster, successToaster, buildPathFromWebId } from '@utils';
+import {
+  ldflexHelper,
+  errorToaster,
+  successToaster,
+  buildPathFromWebId,
+  notification as helperNotification
+} from '@utils';
 
 const GameFormWrapper = styled.div`
   padding: 16px;
@@ -61,26 +67,56 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
 
   const createGame = async (documentUri: String, opponent: String) => {
     try {
-      const newDocument = await ldflexHelper.createNonExistentDocument(documentUri);
-      if (newDocument) {
-        const document = await ldflexHelper.fetchLdflexDocument(documentUri);
-        const setupObj = initialGame(opponent);
-        for await (const field of tictactoeShape.shape) {
-          const prefix = tictactoeShape['@context'][field.prefix];
-          const predicate = `${prefix}${field.predicate}`;
-          await document[predicate].add(setupObj[field.predicate]);
+      /**
+       * Get full opponent game path
+       */
+      const gameSettings = buildPathFromWebId(
+        opponent,
+        `${process.env.REACT_APP_TICTAC_PATH}/settings.ttl`
+      );
+      /**
+       * Find opponent inboxes from a document link
+       */
+      const inboxes = await helperNotification.findUserInboxes([
+        { path: opponent, name: 'Global' },
+        { path: gameSettings, name: 'Game' }
+      ]);
+      /**
+       * If opponent has at least one inbox will create a game and send notification
+       * if not will show an error.
+       */
+      if (inboxes.length > 0) {
+        const newDocument = await ldflexHelper.createNonExistentDocument(documentUri);
+        if (newDocument) {
+          const document = await ldflexHelper.fetchLdflexDocument(documentUri);
+          const setupObj = initialGame(opponent);
+
+          for await (const field of tictactoeShape.shape) {
+            const prefix = tictactoeShape['@context'][field.prefix];
+            const predicate = `${prefix}${field.predicate}`;
+            await document[predicate].add(setupObj[field.predicate]);
+          }
+          /**
+           * Find opponent game inbox if doesn't exist get global
+           * @to: Opponent inbox path
+           */
+          const to = helperNotification.getDefaultInbox(inboxes, 'Game', 'Global');
+          const target = `${window.location.href}/${btoa(documentUri)}`;
+          await sendNotification(
+            {
+              title: 'Tictactoe invitation',
+              summary: 'has invited you to play Tic-Tac-Toe.',
+              actor: webId,
+              object: documentUri,
+              target
+            },
+            to.path
+          );
+
+          setDocumentUri(`${Date.now()}.ttl`);
         }
-
-        const target = `${window.location.href}/${btoa(documentUri)}`;
-        await sendNotification({
-          title: 'Tictactoe invitation',
-          summary: 'has invited you to play Tic-Tac-Toe.',
-          actor: webId,
-          object: documentUri,
-          target
-        });
-
-        setDocumentUri(`${Date.now()}.ttl`);
+      } else {
+        throw new Error(`${opponent} does not have inbox to send invitation.`);
       }
     } catch (e) {
       throw new Error(e);

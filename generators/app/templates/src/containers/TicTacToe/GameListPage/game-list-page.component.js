@@ -15,9 +15,9 @@ const GameListPage = ({ webId }) => {
   const { createNotification, createInbox, notifications, notification } = useNotification(webId);
 
   const sendNotification = useCallback(
-    async content => {
+    async (content, to) => {
       try {
-        helperNotification.sendNotification(opponent, content, createNotification);
+        helperNotification.sendNotification(opponent, content, createNotification, to);
       } catch (error) {
         errorToaster(error.message, 'Error');
       }
@@ -34,7 +34,7 @@ const GameListPage = ({ webId }) => {
         setGamePath(gamePath);
       }
     } catch (e) {
-      if (e.code !== 303) errorToaster(e.message);
+      errorToaster(e.message);
     }
   };
 

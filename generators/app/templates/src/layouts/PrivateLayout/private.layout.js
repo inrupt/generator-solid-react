@@ -18,14 +18,14 @@ const Content = styled.div`
   overflow-y: auto;
 `;
 
-const PrivateLayout = ({ routes, webId, location, ...rest }) => (
+const PrivateLayout = ({ routes, webId, location, history, ...rest }) => (
   <React.Fragment>
     <Container>
-      <AuthNavBar {...{ location, webId }} />
       <Route
         {...rest}
-        component={() => (
+        component={({ history }) => (
           <Content className="contentApp">
+            <AuthNavBar {...{ location, webId, history }} />
             <Switch>
               {routes.map(route => {
                 const { component: RouteComponent } = route;
