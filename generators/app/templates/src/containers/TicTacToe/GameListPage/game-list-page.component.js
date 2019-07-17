@@ -34,7 +34,7 @@ const GameListPage = ({ webId }) => {
         setGamePath(gamePath);
       }
     } catch (e) {
-      errorToaster(e.message);
+      if (e.code !== 303) errorToaster(e.message);
     }
   };
 
