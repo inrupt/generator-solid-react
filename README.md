@@ -126,7 +126,7 @@ In the event you want more specific errors in a given component, you can call Er
 <ErrorBoundary
   component={(error, info) => <GlobalError error={error} info={info} />} >
   <App />
-</ErrorBoundary>
+</ErrorBoundary> 
   ```
   
 ## Internationalization
