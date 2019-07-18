@@ -66,6 +66,7 @@ const AuthNavBar = React.memo((props: Props) => {
       discoveryInbox();
     }
   }, [webId]);
+  const { history } = props;
   return (
     <NavBar
       navigation={navigation}
@@ -80,7 +81,7 @@ const AuthNavBar = React.memo((props: Props) => {
           id: 'notifications'
         },
         {
-          component: props => <NavBarContainer {...{ t, i18n, webId, ...props }} />,
+          component: props => <NavBarContainer {...{ t, i18n, webId, history, ...props }} />,
           id: 'profile'
         }
       ]}

@@ -1,30 +1,37 @@
-import { ldflexHelper, buildPathFromWebId } from './index';
+import { ldflexHelper } from './index';
 
-export const sendNotification = async (opponent, content, createNotification) => {
+export const sendNotification = async (opponent, content, createNotification, to) => {
   try {
-    /**
-     * Opponent app inbox from app settings.ttl
-     */
-    const appPath = buildPathFromWebId(opponent, `${process.env.REACT_APP_TICTAC_PATH}`);
-
-    const appInbox = await ldflexHelper.discoveryInbox(`${appPath}settings.ttl`);
-    /**
-     * Check if app inbox exist to send notification if doesn't exist
-     * send try to send to global inbox.
-     */
-    if (appInbox) {
-      return createNotification(content, appInbox);
+    if (to) {
+      return createNotification(content, to);
     }
-    const globalOpponentInbox = await ldflexHelper.discoveryInbox(opponent);
-    if (globalOpponentInbox) {
-      return createNotification(content, globalOpponentInbox);
-    }
-
     /**
      * If the opponent doesn't has inbox we show an error
      */
     throw new Error('Error the opponent does not has inbox to send notification');
   } catch (error) {
-    throw error;
+    throw new Error(error);
   }
 };
+
+export const findUserInboxes = async paths => {
+  try {
+    let inboxes = [];
+
+    for await (const path of paths) {
+      const { path: currentPath } = path;
+      const inbox = await ldflexHelper.discoveryInbox(currentPath);
+
+      if (inbox) {
+        inboxes = [...inboxes, { ...path, path: inbox }];
+      }
+    }
+
+    return inboxes;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const getDefaultInbox = (inboxes, inbox1, inbox2) =>
+  inboxes.find(inbox => inbox.name === inbox1) || inboxes.find(inbox => inbox.name === inbox2);

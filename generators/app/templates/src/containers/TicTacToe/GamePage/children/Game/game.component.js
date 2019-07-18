@@ -36,7 +36,32 @@ const Game = ({ webId, gameURL }: Props) => {
   const sendNotification = useCallback(
     async (player, content) => {
       try {
-        notification.sendNotification(player, content, createNotification);
+        /**
+         * Get full opponent game path
+         */
+        const gameSettings = buildPathFromWebId(
+          player,
+          `${process.env.REACT_APP_TICTAC_PATH}settings.ttl`
+        );
+
+        /**
+         * Find opponent inboxes from a document link
+         */
+        const inboxes = await notification.findUserInboxes([
+          { path: player, name: 'Global' },
+          { path: gameSettings, name: 'Game' }
+        ]);
+        /**
+         * Find opponent game inbox if doesn't exist get global
+         * @to: Opponent inbox path
+         */
+        const to = notification.getDefaultInbox(inboxes, 'Game', 'Global');
+        /**
+         * Send notification
+         */
+        if (to) {
+          await createNotification(content, to.path);
+        }
       } catch (error) {
         errorToaster(error.message, 'Error');
       }
@@ -260,6 +285,7 @@ const Game = ({ webId, gameURL }: Props) => {
           setGameData(newData);
           await addMoves(newOrder);
           await checkWinnerOrNextPlayer(newData);
+
           await sendNotification(rival.webId, {
             title: 'Tictactoe move',
             summary: 'A move has been made in your Tic-Tac-Toe game.',
@@ -288,7 +314,6 @@ const Game = ({ webId, gameURL }: Props) => {
   useEffect(() => {
     if ((gameURL || timestamp) && !isProcessing && gameData.actor) getGame();
   }, [gameURL, timestamp]);
-
   return (
     <GameWrapper>
       {Object.keys(gameData).length > 0 && (

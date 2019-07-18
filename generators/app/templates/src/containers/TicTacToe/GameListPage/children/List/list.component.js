@@ -39,11 +39,11 @@ const List = ({ webId, gamePath }: Props) => {
 
   const getOpponentInfo = useCallback(async webId => {
     try {
-      const name = await ldflex[webId]['vcard:fn'];
+      const name = await ldflex[webId]['foaf:name'];
       const image = await ldflex[webId]['vcard:hasPhoto'];
       return { name: name.value, image: image.value, webId };
     } catch (e) {
-      throw e;
+      return { name: 'unknown user', image: 'img/people.svg', webId };
     }
   });
 
