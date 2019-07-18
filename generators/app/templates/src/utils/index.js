@@ -16,6 +16,15 @@ function buildPathFromWebId(webid, path) {
   return `${domain}/${path}`;
 }
 
+function getUserNameByUrl(webId) {
+  if (!webId || webId === '') return false;
+  const url = new URL(webId);
+  const parts = url.hostname.split('.');
+  if (parts.length > 1) return parts[0];
+
+  return 'unknown';
+}
+
 export {
   media,
   expandedProperty,
@@ -24,5 +33,6 @@ export {
   successToaster,
   errorToaster,
   buildPathFromWebId,
+  getUserNameByUrl,
   notification
 };

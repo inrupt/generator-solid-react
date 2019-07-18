@@ -54,9 +54,22 @@ const AuthNavBar = React.memo((props: Props) => {
           { path: appInbox, inboxName: t('navBar.notifications.tictactoe'), shape: 'default' }
         ];
       }
-      if (inboxes.length === 0) throw new Error(t('navBar.notifications.noinbox'));
+      /**
+       * If user doesn't has inbox in his pod will show an error and link to
+       * know how fix it.
+       */
+      if (inboxes.length === 0)
+        errorToaster(t('navBar.notifications.noinbox'), 'Error', {
+          label: 'Learn More',
+          href: `https://solidsdk.inrupt.net/public/General/${
+            i18n.language
+          }/missing-global-inbox.html`
+        });
       setInbox(inboxes);
     } catch (error) {
+      /**
+       * Show general errors
+       */
       errorToaster(error.message, t('navBar.notifications.fetchingError'));
     }
   }, [webId, inboxes]);

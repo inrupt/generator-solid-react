@@ -37,6 +37,7 @@
       "global": "Global",
       "tictactoe": "TicTactoe Game",
       "noinbox": "You do not have a inbox, please go to your POD and create one.",
+      "noInboxOpponent": "Your opponent does not has inbox in his pod",
       "fetchingError": "Error fetching notifications from POD"
     },
     "tictactoe":"Game"
@@ -103,5 +104,8 @@
     "minMxNumberExclusive": "Error: Min and max value should be ",
     "minMaxString": "Error: Min and max should be ",
     "defaultError": "Error: Field value has wrong format"
+  },
+  "game": {
+    "dataError": "You do not have data.ttl file to save opponents games"
   }
 }

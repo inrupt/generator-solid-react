@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { namedNode } from '@rdfjs/data-model';
 import N3 from 'n3';
@@ -49,6 +50,7 @@ type Props = {
 const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => {
   const uniqueIdentifier = Date.now();
   const [documentUri, setDocumentUri] = useState(`${uniqueIdentifier}.ttl`);
+  const { t, i18n } = useTranslation();
 
   const reset = () => {
     setDocumentUri('');
@@ -116,7 +118,12 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
           setDocumentUri(`${Date.now()}.ttl`);
         }
       } else {
-        throw new Error(`${opponent} does not have inbox to send invitation.`);
+        throw new Error(`${opponent} ${t('notifications.noInboxOpponent')}`, 'Error', {
+          href: `https://solidsdk.inrupt.net/public/General/${
+            i18n.language
+          }/global-inbox-is-not-found-for-recipient`,
+          label: 'Learn More'
+        });
       }
     } catch (e) {
       throw new Error(e);

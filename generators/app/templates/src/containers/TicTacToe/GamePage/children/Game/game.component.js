@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLiveUpdate, useNotification } from '@inrupt/solid-react-components';
 import moment from 'moment';
 import { ldflexHelper, errorToaster, buildPathFromWebId, notification } from '@utils';
@@ -32,6 +33,7 @@ const Game = ({ webId, gameURL }: Props) => {
   const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
   const { createNotification, createInbox } = useNotification(webId);
   const [rival, setRival] = useState(null);
+  const { t, i18n } = useTranslation();
 
   const sendNotification = useCallback(
     async (player, content) => {
@@ -51,6 +53,18 @@ const Game = ({ webId, gameURL }: Props) => {
           { path: player, name: 'Global' },
           { path: gameSettings, name: 'Game' }
         ]);
+
+        /**
+         * If receiver doesn't has inbox will show an error and show users how
+         * to fix it.
+         */
+        if (inboxes.length === 0)
+          errorToaster(t('notifications.noInboxOpponent'), 'Error', {
+            label: 'Learn More',
+            href: `https://solidsdk.inrupt.net/public/General/${
+              i18n.language
+            }/global-inbox-is-not-found-for-recipient`
+          });
         /**
          * Find opponent game inbox if doesn't exist get global
          * @to: Opponent inbox path
@@ -304,10 +318,26 @@ const Game = ({ webId, gameURL }: Props) => {
   );
 
   useEffect(() => {
-    const gamePath = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
-    if (gameURL) {
-      createInbox(`${gamePath}inbox/`, gamePath);
-      getInitialGame();
+    try {
+      const gamePath = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
+      if (gameURL) {
+        createInbox(`${gamePath}inbox/`, gamePath);
+        getInitialGame();
+      }
+    } catch (e) {
+      /**
+       * Check if something fails when we try to create a inbox
+       * and show user a possible solution
+       */
+      if (e.name === 'Inbox Error') {
+        return errorToaster(e.message, 'Error', {
+          label: 'Learn More',
+          href: `https://solidsdk.inrupt.net/public/General/${
+            i18n.language
+          }/app-inbox-cannot-be-created`
+        });
+      }
+      errorToaster(e.message, 'Error');
     }
   }, []);
 

@@ -1,11 +1,7 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import { LiveUpdate, useNotification } from '@inrupt/solid-react-components';
-import {
-  ldflexHelper,
-  buildPathFromWebId,
-  errorToaster,
-  notification as helperNotification
-} from '@utils';
+import { useTranslation } from 'react-i18next';
+import { ldflexHelper, buildPathFromWebId, errorToaster } from '@utils';
 import { Form, List } from './children';
 import { Section, Wrapper } from '../tic-tac-toe.style';
 
@@ -13,11 +9,12 @@ const GameListPage = ({ webId }) => {
   const [opponent, setOpponent] = useState('https://jprod.solid.community/profile/card#me');
   const [gamePath, setGamePath] = useState(null);
   const { createNotification, createInbox, notifications, notification } = useNotification(webId);
+  const { i18n } = useTranslation();
 
   const sendNotification = useCallback(
     async (content, to) => {
       try {
-        helperNotification.sendNotification(opponent, content, createNotification, to);
+        await createNotification(content, to);
       } catch (error) {
         errorToaster(error.message, 'Error');
       }
@@ -34,7 +31,20 @@ const GameListPage = ({ webId }) => {
         setGamePath(gamePath);
       }
     } catch (e) {
-      errorToaster(e.message);
+      /**
+       * Check if something fails when we try to create a inbox
+       * and show user a possible solution
+       */
+      if (e.name === 'Inbox Error') {
+        return errorToaster(e.message, 'Error', {
+          label: 'Learn More',
+          href: `https://solidsdk.inrupt.net/public/General/${
+            i18n.language
+          }/app-inbox-cannot-be-created`
+        });
+      }
+
+      errorToaster(e.message, 'Error');
     }
   };
 

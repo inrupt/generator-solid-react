@@ -4,6 +4,7 @@ import Game from './game.component';
 
 describe.only('TicTacToe', () => {
   afterAll(cleanup);
+  document.querySelectorAll = () => ["node"];
 
   const { container } = render(<Game gameData={{}} />);
 

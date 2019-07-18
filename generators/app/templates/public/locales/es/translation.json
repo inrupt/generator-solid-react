@@ -37,6 +37,7 @@
       "global": "Global",
       "tictactoe": "Gato",
       "noinbox": "No se encontró ningún inbox en su POD, debes tener al menos uno para jugar.",
+      "noInboxOpponent": "No se encontró ningún inbox en el pod de su oponente",
       "fetchingError": "Error en las notificaciones"
     },
     "tictactoe":"Juego"
@@ -103,5 +104,8 @@
     "minMxNumberExclusive": "Error: Mínimo y máximo debería ser ",
     "minMaxString": "Error: Mínimo y máximo debería ser ",
     "defaultError": "Error: Formato incorrecto"
+  },
+  "game": {
+    "dataError": "No se encontró el archivo data.ttl"
   }
 }

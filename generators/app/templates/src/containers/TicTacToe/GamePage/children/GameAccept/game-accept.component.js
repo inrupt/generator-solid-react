@@ -14,8 +14,10 @@ const Content = styled.div`
     }
   }
 `;
-
-ReactModal.setAppElement('#root');
+/**
+ * Check if we are running test to avoid issue with React Modal
+ */
+if (process.env.NODE_ENV !== 'test') ReactModal.setAppElement('#root');
 
 type Props = { actor: Object, onAccept: Function, onDecline: Function };
 

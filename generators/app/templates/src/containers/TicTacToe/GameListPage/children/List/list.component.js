@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLiveUpdate } from '@inrupt/solid-react-components';
+import { useTranslation } from 'react-i18next';
 import ldflex from '@solid/query-ldflex';
 import { Loader } from '@util-components';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
-import { ldflexHelper, errorToaster, buildPathFromWebId } from '@utils';
+import { ldflexHelper, errorToaster, buildPathFromWebId, getUserNameByUrl } from '@utils';
 import GameItem from './children';
 import { Wrapper, ListWrapper, GameListContainers } from './list.style';
 
@@ -29,6 +30,7 @@ const List = ({ webId, gamePath }: Props) => {
   const [list, setList] = useState([]);
   const [otherList, setOtherList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation();
   const updates = useLiveUpdate();
   const { timestamp } = updates;
 
@@ -43,7 +45,8 @@ const List = ({ webId, gamePath }: Props) => {
       const image = await ldflex[webId]['vcard:hasPhoto'];
       return { name: name.value, image: image.value, webId };
     } catch (e) {
-      return { name: 'unknown user', image: 'img/people.svg', webId };
+      const url = new URL(webId);
+      return { name: getUserNameByUrl(url), image: 'img/people.svg', webId };
     }
   });
 
@@ -90,6 +93,18 @@ const List = ({ webId, gamePath }: Props) => {
     setIsLoading(true);
     const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
     const otherGamesUrl = `${url}data.ttl`;
+    /**
+     * Check if user pod has data.ttl file where will live
+     * opponent games if not show error message
+     */
+    const hasData = await ldflexHelper.existFolder(otherGamesUrl);
+
+    if (!hasData)
+      errorToaster(t('game.dataError'), 'Error', {
+        label: 'Learn More',
+        href: 'https://solidsdk.inrupt.net/public/React/'
+      });
+
     const games = await getGames(gamePath);
     const otherGames = await getGames(otherGamesUrl);
     setList(games);
