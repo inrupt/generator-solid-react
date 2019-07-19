@@ -110,7 +110,7 @@
       "message": "No se encontró el archivo data.ttl",
       "link": {
         "label": "Learn More",
-        "href": "https://solidsdk.inrupt.net/public/general/en/missing-profile-data.html"
+        "href": "https://solidsdk.inrupt.net/public/general/es/missing-profile-data.html"
       }
     }
   },
@@ -125,13 +125,13 @@
     "message": "You do not have a inbox, please go to your POD and create one.",
     "link": {
       "label": "Conozca más",
-      "href": "https://solidsdk.inrupt.net/public/general/en/missing-global-inbox.html"
+      "href": "https://solidsdk.inrupt.net/public/general/es/missing-global-inbox.html"
     }
   },
   "errorCreateInbox": {
     "link": {
       "label": "Conozca más",
-      "href": "https://solidsdk.inrupt.net/public/general/en/app-inbox-cannot-be-created.html"
+      "href": "https://solidsdk.inrupt.net/public/general/es/app-inbox-cannot-be-created.html"
     }
   }
 }
