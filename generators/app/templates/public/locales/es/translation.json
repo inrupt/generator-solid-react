@@ -37,7 +37,6 @@
       "global": "Global",
       "tictactoe": "Gato",
       "noinbox": "No se encontró ningún inbox en su POD, debes tener al menos uno para jugar.",
-      "noInboxOpponent": "No se encontró ningún inbox en el pod de su oponente",
       "fetchingError": "Error en las notificaciones"
     },
     "tictactoe":"Juego"
@@ -106,7 +105,33 @@
     "defaultError": "Error: Formato incorrecto"
   },
   "game": {
-    "dataError": "No se encontró el archivo data.ttl",
-    "createFolder": "Error no se pudo crear la carpeta principal del juego"
+    "createFolder": "Error no se pudo crear la carpeta principal del juego",
+    "dataError": {
+      "message": "No se encontró el archivo data.ttl",
+      "link": {
+        "label": "Learn More",
+        "href": "https://solidsdk.inrupt.net/public/general/en/missing-profile-data.html"
+      }
+    }
+  },
+  "noInboxOpponent": {
+    "message": "No se encontró un inbox para su oponente",
+    "link": {
+      "label": "Conozca más",
+      "href": "https://solidsdk.inrupt.net/public/general/es/missing-global-inbox.html"
+    }
+  },
+  "noInboxUser": {
+    "message": "You do not have a inbox, please go to your POD and create one.",
+    "link": {
+      "label": "Conozca más",
+      "href": "https://solidsdk.inrupt.net/public/general/en/missing-global-inbox.html"
+    }
+  },
+  "errorCreateInbox": {
+    "link": {
+      "label": "Conozca más",
+      "href": "https://solidsdk.inrupt.net/public/general/en/app-inbox-cannot-be-created.html"
+    }
   }
 }

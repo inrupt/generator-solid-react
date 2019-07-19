@@ -23,7 +23,7 @@ type Props = {
 const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => {
   const uniqueIdentifier = Date.now();
   const [documentUri, setDocumentUri] = useState(`${uniqueIdentifier}.ttl`);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const reset = () => {
     setDocumentUri('');
@@ -90,19 +90,12 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
 
           setDocumentUri(`${Date.now()}.ttl`);
         } else {
-          throw new Error(`${opponent} ${t('game.createFolder')}`, 'Error', {
-            href: `https://solidsdk.inrupt.net/public/General/${
-              i18n.language
-            }/global-inbox-is-not-found-for-recipient`,
-            label: 'Learn More'
-          });
+          errorToaster(`${opponent} ${t('game.createFolder')}`, 'Error');
         }
       } else {
-        throw new Error(`${opponent} ${t('notifications.noInboxOpponent')}`, 'Error', {
-          href: `https://solidsdk.inrupt.net/public/General/${
-            i18n.language
-          }/global-inbox-is-not-found-for-recipient`,
-          label: 'Learn More'
+        errorToaster(`${opponent} ${t('noInboxOpponent.message')}`, 'Error', {
+          label: t('noInboxOpponent.link.label'),
+          href: t('noInboxOpponent.link.href')
         });
       }
     } catch (e) {

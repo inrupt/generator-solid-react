@@ -33,7 +33,7 @@ const Game = ({ webId, gameURL }: Props) => {
   const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
   const { createNotification, createInbox } = useNotification(webId);
   const [rival, setRival] = useState(null);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const sendNotification = useCallback(
     async (player, content) => {
@@ -59,11 +59,9 @@ const Game = ({ webId, gameURL }: Props) => {
          * to fix it.
          */
         if (inboxes.length === 0)
-          errorToaster(t('notifications.noInboxOpponent'), 'Error', {
-            label: 'Learn More',
-            href: `https://solidsdk.inrupt.net/public/General/${
-              i18n.language
-            }/global-inbox-is-not-found-for-recipient`
+          errorToaster(`${player} ${t('noInboxOpponent.message')}`, 'Error', {
+            label: t('noInboxOpponent.link.label'),
+            href: t('noInboxOpponent.link.href')
           });
         /**
          * Find opponent game inbox if doesn't exist get global
@@ -331,10 +329,8 @@ const Game = ({ webId, gameURL }: Props) => {
        */
       if (e.name === 'Inbox Error') {
         return errorToaster(e.message, 'Error', {
-          label: 'Learn More',
-          href: `https://solidsdk.inrupt.net/public/General/${
-            i18n.language
-          }/app-inbox-cannot-be-created`
+          label: t('errorCreateInbox.link.label'),
+          href: t('errorCreateInbox.link.href')
         });
       }
       errorToaster(e.message, 'Error');

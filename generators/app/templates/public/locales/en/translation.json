@@ -36,8 +36,6 @@
     "notifications": {
       "global": "Global",
       "tictactoe": "TicTactoe Game",
-      "noinbox": "You do not have a inbox, please go to your POD and create one.",
-      "noInboxOpponent": "Your opponent does not has inbox in his pod",
       "fetchingError": "Error fetching notifications from POD"
     },
     "tictactoe":"Game"
@@ -106,7 +104,39 @@
     "defaultError": "Error: Field value has wrong format"
   },
   "game": {
-    "dataError": "You do not have data.ttl file to save opponents games",
-    "createFolder": "Error game folder fail."
+    "dataError": {
+      "message": "You do not have data.ttl file to save opponents games",
+      "link": {
+        "label": "Learn More",
+        "href": "https://solidsdk.inrupt.net/public/general/en/missing-profile-data.html"
+      }
+    },
+    "createFolder": {
+      "message": "Error game folder fail.",
+      "link": {
+        "label": "Learn More",
+        "href": "link url"
+      }
+    }
+  },
+  "noInboxOpponent": {
+    "message": "Your opponent does not has inbox in his pod",
+    "link": {
+      "label": "Learn More",
+      "href": "https://solidsdk.inrupt.net/public/general/en/missing-global-inbox.html"
+    }
+  },
+  "noInboxUser": {
+    "message": "You do not have a inbox, please go to your POD and create one.",
+    "link": {
+      "label": "Learn more",
+      "href": "https://solidsdk.inrupt.net/public/general/en/missing-global-inbox.html"
+    }
+  },
+  "errorCreateInbox": {
+    "link": {
+      "label": "Learn more",
+      "href": "https://solidsdk.inrupt.net/public/general/en/app-inbox-cannot-be-created.html"
+    }
   }
 }

@@ -101,8 +101,8 @@ const List = ({ webId, gamePath }: Props) => {
 
     if (!hasData)
       errorToaster(t('game.dataError'), 'Error', {
-        label: 'Learn More',
-        href: 'https://solidsdk.inrupt.net/public/React/'
+        label: t('game.dataError.link.label'),
+        href: t('game.dataError.link.href')
       });
 
     const games = await getGames(gamePath);

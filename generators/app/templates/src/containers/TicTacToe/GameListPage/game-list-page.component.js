@@ -9,7 +9,7 @@ const GameListPage = ({ webId }) => {
   const [opponent, setOpponent] = useState('https://jprod.solid.community/profile/card#me');
   const [gamePath, setGamePath] = useState(null);
   const { createNotification, createInbox, notifications, notification } = useNotification(webId);
-  const { i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const sendNotification = useCallback(
     async (content, to) => {
@@ -37,10 +37,8 @@ const GameListPage = ({ webId }) => {
        */
       if (e.name === 'Inbox Error') {
         return errorToaster(e.message, 'Error', {
-          label: 'Learn More',
-          href: `https://solidsdk.inrupt.net/public/General/${
-            i18n.language
-          }/app-inbox-cannot-be-created`
+          label: t('errorCreateInbox.link.label'),
+          href: t('errorCreateInbox.link.href')
         });
       }
 
@@ -51,6 +49,7 @@ const GameListPage = ({ webId }) => {
   useEffect(() => {
     if (webId && notification.notify) init();
   }, [webId, notification.notify]);
+
   return (
     <Section>
       <Wrapper>

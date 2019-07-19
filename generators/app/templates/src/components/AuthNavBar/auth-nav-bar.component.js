@@ -59,11 +59,9 @@ const AuthNavBar = React.memo((props: Props) => {
        * know how fix it.
        */
       if (inboxes.length === 0)
-        errorToaster(t('navBar.notifications.noinbox'), 'Error', {
-          label: 'Learn More',
-          href: `https://solidsdk.inrupt.net/public/General/${
-            i18n.language
-          }/missing-global-inbox.html`
+        errorToaster(t('noInboxUser.message'), 'Error', {
+          label: t('noInboxUser.link.label'),
+          href: t('noInboxUser.link.href')
         });
       setInbox(inboxes);
     } catch (error) {
@@ -80,6 +78,7 @@ const AuthNavBar = React.memo((props: Props) => {
     }
   }, [webId]);
   const { history } = props;
+
   return (
     <NavBar
       navigation={navigation}
