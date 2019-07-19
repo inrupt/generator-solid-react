@@ -106,6 +106,7 @@
     "defaultError": "Error: Field value has wrong format"
   },
   "game": {
-    "dataError": "You do not have data.ttl file to save opponents games"
+    "dataError": "You do not have data.ttl file to save opponents games",
+    "createFolder": "Error game folder fail."
   }
 }

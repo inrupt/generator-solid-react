@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { namedNode } from '@rdfjs/data-model';
@@ -12,33 +11,7 @@ import {
   buildPathFromWebId,
   notification as helperNotification
 } from '@utils';
-
-const GameFormWrapper = styled.div`
-  padding: 16px;
-  margin-bottom: 12px;
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-  text-align: left;
-  & > h1 {
-    margin: 0;
-  }
-  & > form {
-    & .input-wrap > label {
-      width: 100%;
-      font-size: 0.9em;
-    }
-    & > span {
-      font-weight: 700;
-    }
-`;
-
-const BtnDiv = styled.div`
-  display: flex;
-  & > button {
-    margin: 0 12px 0 0;
-  }
-`;
+import { GameFormWrapper, BtnDiv } from './game-form.styles';
 
 type Props = {
   webId: String,
@@ -116,6 +89,13 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
           );
 
           setDocumentUri(`${Date.now()}.ttl`);
+        } else {
+          throw new Error(`${opponent} ${t('game.createFolder')}`, 'Error', {
+            href: `https://solidsdk.inrupt.net/public/General/${
+              i18n.language
+            }/global-inbox-is-not-found-for-recipient`,
+            label: 'Learn More'
+          });
         }
       } else {
         throw new Error(`${opponent} ${t('notifications.noInboxOpponent')}`, 'Error', {

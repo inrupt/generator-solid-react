@@ -106,6 +106,7 @@
     "defaultError": "Error: Formato incorrecto"
   },
   "game": {
-    "dataError": "No se encontró el archivo data.ttl"
+    "dataError": "No se encontró el archivo data.ttl",
+    "createFolder": "Error no se pudo crear la carpeta principal del juego"
   }
 }
