@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitForElement, cleanup } from 'react-testing-library';
+import { render, cleanup } from 'react-testing-library';
 import Gamepage from './game-page.component';
 
 const webId = 'https://example.com/#me';
