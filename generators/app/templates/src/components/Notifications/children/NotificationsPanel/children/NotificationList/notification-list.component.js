@@ -7,7 +7,14 @@ type Props = {
   markAsRead: Function,
   deleteNotification: Function
 };
-
+/**
+ * Show notification list
+ * @param notifications
+ * @param markAsRead
+ * @param deleteNotification
+ * @returns {*}
+ * @constructor
+ */
 const NotificationList = ({ notifications, markAsRead, deleteNotification }: Props) => (
   <Fragment>
     {notifications && notifications.length > 0 ? (

@@ -14,6 +14,10 @@ const NotificationItem = ({ notification, markAsRead, children, deleteNotificati
   const { read } = notification;
   const currentRead = read ? JSON.parse(read) : false;
   const { actor } = notification;
+  /**
+   * Redirect notification if it's coming with target
+   * @type {Function}
+   */
   const redirectTo = useCallback(async () => {
     if (notification.target) {
       await markAsRead(notification.path, notification.id);

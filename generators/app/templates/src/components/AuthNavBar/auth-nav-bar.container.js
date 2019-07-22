@@ -7,6 +7,10 @@ type Props = {
   webId: String
 };
 
+/**
+ * AuthBar container
+ * @type {{compare, $$typeof, type}}
+ */
 const AuthNavBarContainer = React.memo(({ location, webId, history }: Props) => (
   <AuthNavBar {...{ location, webId, history }} />
 ));
