@@ -6,10 +6,21 @@ type Props = {
   list: Array<Object>,
   click: () => void
 };
-
+/**
+ * Filter notificatons by inbox name (Global, Game)
+ * @param list
+ * @param click
+ * @param activeName
+ * @returns {*}
+ * @constructor
+ */
 export const Tabs = ({ list, click, activeName }: Props) => {
   const [active, setActive] = useState(null);
 
+  /**
+   * Filter notification by inbox name
+   * @type {Function}
+   */
   const filterByName = useCallback(
     async name => {
       const currentName = active === name ? '' : name;
@@ -20,6 +31,9 @@ export const Tabs = ({ list, click, activeName }: Props) => {
     [list, active]
   );
 
+  /**
+   * Set active inbox name on component mount
+   */
   useEffect(() => {
     setActive(activeName);
   }, []);

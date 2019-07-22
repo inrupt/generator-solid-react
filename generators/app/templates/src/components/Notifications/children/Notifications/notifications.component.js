@@ -12,6 +12,9 @@ const Notifications = ({ webId, inbox }) => {
   const [isLoading, setIsLoading] = useState(false);
   const ref = useRef();
   const toggleNotifications = () => setIsOpen(!isOpen);
+  /**
+   * Notification hook from solid-react-components
+   */
   const {
     notification,
     markAsReadNotification: markAsRead,
@@ -29,6 +32,10 @@ const Notifications = ({ webId, inbox }) => {
   const currenTimestamp = timestamp && timestamp.toString();
   useOnClickOutside(ref, () => setIsOpen(false));
 
+  /**
+   * Fetch notifications from inbox
+   * @returns {Promise<void>}
+   */
   const initNotifications = async () => {
     try {
       setIsLoading(true);
@@ -40,11 +47,17 @@ const Notifications = ({ webId, inbox }) => {
   };
 
   useEffect(() => {
+    /**
+     * If webId and notify instance exist we will init notifications
+     */
     if (webId && notify) {
       initNotifications();
     }
   }, [inbox, notify]);
 
+  /**
+   * Fetch new notifications when liveUpdate time change
+   */
   useEffect(() => {
     if (currenTimestamp && oldTimestamp !== currenTimestamp) {
       initNotifications();

@@ -36,6 +36,9 @@ const AuthNavBar = React.memo((props: Props) => {
   const discoveryInbox = useCallback(async () => {
     try {
       let inboxes = [];
+      /**
+       * Get user's global inbox path from pod.
+       */
       const globalInbox = await ldflexHelper.discoveryInbox(webId);
 
       if (globalInbox) {
@@ -44,10 +47,16 @@ const AuthNavBar = React.memo((props: Props) => {
           { path: globalInbox, inboxName: t('navBar.notifications.global'), shape: 'default' }
         ];
       }
+      /**
+       * Get user's game inbox path from pod.
+       */
       const appInbox = await ldflexHelper.discoveryInbox(
         buildPathFromWebId(webId, `${process.env.REACT_APP_TICTAC_PATH}settings.ttl`)
       );
 
+      /**
+       * create an inbox object to send over notification component
+       */
       if (appInbox) {
         inboxes = [
           ...inboxes,
