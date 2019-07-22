@@ -226,7 +226,9 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
           </label>
         </div>
         <BtnDiv>
-          <button type="submit" data-testid="form-submit">Create Game</button>
+          <button type="submit" data-testid="form-submit">
+            Create Game
+          </button>
           <button type="button" onClick={reset}>
             Reset
           </button>
