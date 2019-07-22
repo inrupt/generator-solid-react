@@ -60,7 +60,7 @@ const GameListPage = ({ webId }) => {
                 webId,
                 sendNotification,
                 setOpponent,
-                opponent
+                opponent,
               }}
             />
             {gamePath && (

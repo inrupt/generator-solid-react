@@ -341,7 +341,7 @@ const Game = ({ webId, gameURL }: Props) => {
     if ((gameURL || timestamp) && !isProcessing && gameData.actor) getGame();
   }, [gameURL, timestamp]);
   return (
-    <GameWrapper>
+    <GameWrapper data-testid="game">
       {Object.keys(gameData).length > 0 && (
         <Fragment>
           {!gameData.owner && gameData.gamestatus === 'Awaiting' && (

@@ -125,7 +125,7 @@ const List = ({ webId, gamePath }: Props) => {
   }, [timestamp]);
 
   return (
-    <Wrapper>
+    <Wrapper data-testid="game-list">
       {!isLoading ? (
         <GameListContainers>
           {list && <GameList title="Your games" games={list} />}

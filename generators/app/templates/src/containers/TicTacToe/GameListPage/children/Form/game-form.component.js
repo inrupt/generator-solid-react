@@ -196,7 +196,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
   };
 
   return (
-    <GameFormWrapper onSubmit={onSubmit}>
+    <GameFormWrapper onSubmit={onSubmit} data-testid="game-form">
       <h1>Tic Tac Toe</h1>
       <hr />
       <form>
@@ -209,6 +209,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
               type="text"
               value={documentUri}
               onChange={e => setDocumentUri(e.target.value)}
+              data-testid="uri-input"
             />
           </label>
         </div>
@@ -220,11 +221,12 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
               type="text"
               value={opponent}
               onChange={e => setOpponent(e.target.value)}
+              data-testid="webId"
             />
           </label>
         </div>
         <BtnDiv>
-          <button type="submit">Create Game</button>
+          <button type="submit" data-testid="form-submit">Create Game</button>
           <button type="button" onClick={reset}>
             Reset
           </button>
