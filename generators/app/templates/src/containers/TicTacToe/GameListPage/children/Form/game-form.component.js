@@ -30,6 +30,11 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
     setOpponent('');
   };
 
+  /**
+   * Creates the initial game object based on the opponent's webId
+   * @param {String} opponent Opponent's webId
+   * @returns {Object} Game data
+   */
   const initialGame = opponent => ({
     gamestatus: 'Awaiting',
     createddatetime: moment().format(),
@@ -40,6 +45,11 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
     moveorder: ''
   });
 
+  /**
+   * Creates a game with the initial game object and sends a notificaition to the rival
+   * @param {String} documentUri Game document's url
+   * @param {String} opponent Opponent's webId
+   */
   const createGame = async (documentUri: String, opponent: String) => {
     try {
       /**
@@ -103,6 +113,11 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
     }
   };
 
+  /**
+   * Creates a file based on a turtle looking string and a url
+   * @param {String} documentUri Game's document url
+   * @param {Object} body Turtle string for the new file
+   */
   const createACLFile = async (documentUri, body) => {
     try {
       ldflexHelper.createDocumentWithTurtle(documentUri, body);
@@ -111,12 +126,25 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
     }
   };
 
+  /**
+   * Creates a quad
+   * @param {String} subject Subject of the quad
+   * @param {String} predicate Predicate of the quad
+   * @param {String} object Object of the quad
+   */
   const createQuad = (subject, predicate, object) => ({
     subject,
     predicate,
     object
   });
 
+  /**
+   * Creates all the default quads for a basic ACL turtle
+   * @param {Array} modes Array of modes to create for the ACL
+   * @param {String} webId WebId of the Pod the acl will be assigned to
+   * @param {String} subject Name of the subject (ReadWriteControl)
+   * @param {Array<String>} prefixes Array of prefixes
+   */
   const createDefaultQuads = (modes, webId, subject, prefixes) => {
     const { acl, foaf, a } = prefixes;
     const originalPredicates = [
@@ -135,6 +163,11 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
     return quadArray;
   };
 
+  /**
+   * Creates the turtle string for the acl file
+   * @param {String} documentUri Document Url
+   * @param {String} opponent Opponent's webId
+   */
   const aclTurtle = async (documentUri, opponent) => {
     try {
       const aclDocument = `${documentUri}.acl`;
@@ -179,6 +212,10 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
     }
   };
 
+  /**
+   * Creates a new game based on an opponent's webId and a game document url with an acl file
+   * @param {Event} e Submit event
+   */
   const onSubmit = async e => {
     try {
       e.preventDefault();

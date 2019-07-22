@@ -51,7 +51,7 @@ const GameListPage = ({ webId }) => {
   }, [webId, notification.notify]);
 
   return (
-    <Section>
+    <Section data-testid="game-list">
       <Wrapper>
         {webId && (
           <Fragment>

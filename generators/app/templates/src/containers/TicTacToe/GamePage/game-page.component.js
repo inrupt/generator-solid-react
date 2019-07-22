@@ -7,6 +7,7 @@ const GamePage = ({ match, webId }) => {
   const { gameId } = match.params;
   const gameURL = atob(gameId);
 
+  /* Checks if the game url is a valid url or not */
   const isGameUrlValid = useCallback(() => {
     try {
       const url = new URL(gameURL);
