@@ -11,7 +11,11 @@ const game = {
 };
 
 describe('GameItem', () => {
-  const { container } = render(<Router><GameItem {...{ game }} /></Router>);
+  const { container } = render(
+    <Router>
+      <GameItem {...{ game }} />
+    </Router>
+  );
 
   test('renders without crashing', () => {
     expect(container).toBeTruthy();

@@ -4,7 +4,10 @@ import Gamepage from './game-page.component';
 
 const webId = 'https://example.com/#me';
 const match = {
-  params: { gameId: 'aHR0cHM6Ly9leG1hcGxlLmNvbS9wdWJsaWMvZGVtb2Vycm9ycy9nYW1lL3RpY3RhY3RvZS8xNTYzMzk0NzExNDU3LnR0bA=='}
+  params: {
+    gameId:
+      'aHR0cHM6Ly9leG1hcGxlLmNvbS9wdWJsaWMvZGVtb2Vycm9ycy9nYW1lL3RpY3RhY3RvZS8xNTYzMzk0NzExNDU3LnR0bA=='
+  }
 };
 
 describe('GamePage', () => {

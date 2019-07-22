@@ -28,14 +28,13 @@ const setup = async () => {
     expect(sendNotification).toHaveBeenCalledTimes(1);
   });
 
-
   test('should have input file name and input webId', () => {
     const inputFile = getByTestId('uri-input');
     const inputWebid = getByTestId('webId');
     expect(inputFile).toBeTruthy();
     expect(inputWebid).toBeTruthy();
   });
-}
+};
 
 describe('Game Form', () => {
   afterAll(cleanup);
