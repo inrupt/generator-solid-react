@@ -11,7 +11,7 @@ export const Item = styled.li`
 
 export const GameStatus = styled.span`
   background: ${({ theme, status }) =>
-    theme.tictactoe[status] ? theme.tictactoe[status] : '#00a69e'};
+    theme.tictactoe && theme.tictactoe[status] ? theme.tictactoe[status] : '#00a69e'};
   font-size: 10px;
   letter-spacing: 2.4px;
   color: #fff;
