@@ -73,8 +73,8 @@ export const folderExists = async folderPath => {
 
 export const discoverInbox = async document => {
   try {
-    const existDocument = await folderExists(document);
-    if (!existDocument) return false;
+    const documentExists = await folderExists(document);
+    if (!documentExists) return false;
 
     const inboxDocument = await ldflex[document]['ldp:inbox'];
     const inbox = inboxDocument ? await inboxDocument.value : false;
