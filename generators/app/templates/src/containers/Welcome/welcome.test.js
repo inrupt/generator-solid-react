@@ -15,7 +15,7 @@ const props = {
 };
 
 describe.only('Welcome', () => {
-  // afterAll(cleanup);
+  afterAll(cleanup);
   const { container, getByTestId } = render(
     <Router>
       <WelcomeComponent {...{ ...props }} />
