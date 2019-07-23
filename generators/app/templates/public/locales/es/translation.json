@@ -105,6 +105,13 @@
     "defaultError": "Error: Formato incorrecto"
   },
   "game": {
+    "title": "Tic Tac Toe",
+    "createGamePrompt": "Enter an Opponent and a Game id",
+    "createGame": "Create Game",
+    "createGameSuccess": "Game created successfully",
+    "resetGameForm": "Reset",
+    "idLabel": "Game ID",
+    "opponentWebIDLabel": "Opponent WebID",
     "createFolder": "Error no se pudo crear la carpeta principal del juego",
     "dataError": {
       "message": "No se encontró el archivo data.ttl",

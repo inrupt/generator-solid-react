@@ -33,13 +33,13 @@ const AuthNavBar = React.memo((props: Props) => {
     }
   ];
   const { webId } = props;
-  const discoveryInbox = useCallback(async () => {
+  const discoverInbox = useCallback(async () => {
     try {
       let inboxes = [];
       /**
        * Get user's global inbox path from pod.
        */
-      const globalInbox = await ldflexHelper.discoveryInbox(webId);
+      const globalInbox = await ldflexHelper.discoverInbox(webId);
 
       if (globalInbox) {
         inboxes = [
@@ -50,7 +50,7 @@ const AuthNavBar = React.memo((props: Props) => {
       /**
        * Get user's game inbox path from pod.
        */
-      const appInbox = await ldflexHelper.discoveryInbox(
+      const appInbox = await ldflexHelper.discoverInbox(
         buildPathFromWebId(webId, `${process.env.REACT_APP_TICTAC_PATH}settings.ttl`)
       );
 
@@ -83,7 +83,7 @@ const AuthNavBar = React.memo((props: Props) => {
 
   useEffect(() => {
     if (webId) {
-      discoveryInbox();
+      discoverInbox();
     }
   }, [webId]);
   const { history } = props;

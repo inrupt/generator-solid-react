@@ -46,7 +46,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
   });
 
   /**
-   * Creates a game with the initial game object and sends a notificaition to the rival
+   * Creates a game with the initial game object and sends a notification to the rival
    * @param {String} documentUri Game document's url
    * @param {String} opponent Opponent's webId
    */
@@ -67,9 +67,9 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         { path: gameSettings, name: 'Game' }
       ]);
       /**
-       * If opponent has at least one inbox will create a game and send notification
-       * if not will show an error.
-       */
+       * If opponent has at least one inbox, create a game and send a notification
+       * Otherwise, show an error message
+       * */
       if (inboxes.length > 0) {
         const newDocument = await ldflexHelper.createNonExistentDocument(documentUri);
         if (newDocument) {
@@ -100,10 +100,10 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
 
           setDocumentUri(`${Date.now()}.ttl`);
         } else {
-          errorToaster(`${opponent} ${t('game.createFolder')}`, 'Error');
+          errorToaster(`${opponent} ${t('game.createFolder')}`, t('notifications.error'));
         }
       } else {
-        errorToaster(`${opponent} ${t('noInboxOpponent.message')}`, 'Error', {
+        errorToaster(`${opponent} ${t('noInboxOpponent.message')}`, t('notifications.error'), {
           label: t('noInboxOpponent.link.label'),
           href: t('noInboxOpponent.link.href')
         });
@@ -226,7 +226,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
 
       await createGame(documentPath, opponent);
       await aclTurtle(documentPath, opponent);
-      successToaster('Game created successfully', 'Success');
+      successToaster(t('game.createGameSuccess'), t('notifications.success'));
     } catch (e) {
       errorToaster(e.message);
     }
@@ -234,13 +234,13 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
 
   return (
     <GameFormWrapper onSubmit={onSubmit} data-testid="game-form">
-      <h1>Tic Tac Toe</h1>
+      <h1>{t('game.title')}</h1>
       <hr />
       <form>
-        <span>Enter an Opponent and a Game id</span>
+        <span>{t('game.createGamePrompt')}</span>
         <div className="input-wrap">
           <label htmlFor="documentUriInput">
-            Game Id
+            {t('game.idLabel')}
             <input
               id="documentUriInput"
               type="text"
@@ -252,7 +252,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         </div>
         <div className="input-wrap">
           <label htmlFor="opponentWebId">
-            Opponent WebId
+            {t('game.opponentWebIDLabel')}
             <input
               id="opponentWebId"
               type="text"
@@ -264,10 +264,10 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         </div>
         <BtnDiv>
           <button type="submit" data-testid="form-submit">
-            Create Game
+            {t('game.createGame')}
           </button>
           <button type="button" onClick={reset}>
-            Reset
+            {t('game.resetGameForm')}
           </button>
         </BtnDiv>
       </form>

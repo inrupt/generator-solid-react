@@ -1,7 +1,7 @@
 import auth from 'solid-auth-client';
 import ldflex from '@solid/query-ldflex';
 
-export const existDocument = async documentUri =>
+export const documentExists = async documentUri =>
   auth.fetch(documentUri, {
     headers: {
       'Content-Type': 'text/turtle'
@@ -47,7 +47,7 @@ export const createDocumentWithTurtle = async (documentUri, body = '') => {
 
 export const createNonExistentDocument = async (documentUri, body = '') => {
   try {
-    const result = await existDocument(documentUri);
+    const result = await documentExists(documentUri);
 
     return result.status === 404 ? createDocument(documentUri, body) : null;
   } catch (e) {
@@ -57,7 +57,7 @@ export const createNonExistentDocument = async (documentUri, body = '') => {
 
 export const fetchLdflexDocument = async documentUri => {
   try {
-    const result = await existDocument(documentUri);
+    const result = await documentExists(documentUri);
     if (result.status === 404) return null;
     const document = await ldflex[documentUri];
     return document;
@@ -66,14 +66,14 @@ export const fetchLdflexDocument = async documentUri => {
   }
 };
 
-export const existFolder = async folderPath => {
+export const folderExists = async folderPath => {
   const result = await auth.fetch(folderPath);
   return result.status === 403 || result.status === 200;
 };
 
-export const discoveryInbox = async document => {
+export const discoverInbox = async document => {
   try {
-    const existDocument = await existFolder(document);
+    const existDocument = await folderExists(document);
     if (!existDocument) return false;
 
     const inboxDocument = await ldflex[document]['ldp:inbox'];
@@ -86,7 +86,7 @@ export const discoveryInbox = async document => {
 
 export const createContainer = async folderPath => {
   try {
-    const existContainer = await existFolder(folderPath);
+    const existContainer = await folderExists(folderPath);
     const data = `${folderPath}data.ttl`;
     if (existContainer) return folderPath;
 
@@ -96,7 +96,6 @@ export const createContainer = async folderPath => {
         'Content-Type': 'text/turtle'
       }
     });
-    // await createDoc(dummyPath, { method: 'DELETE' });
 
     return folderPath;
   } catch (error) {

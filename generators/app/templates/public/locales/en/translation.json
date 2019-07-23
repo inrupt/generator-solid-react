@@ -1,4 +1,8 @@
 {
+  "notifications": {
+    "success": "Success",
+    "error": "Error"
+  },
   "login": {
     "title": "Hi! Welcome to Solid.",
     "loginTitle": "Log in",
@@ -35,8 +39,9 @@
     },
     "notifications": {
       "global": "Global",
-      "tictactoe": "TicTactoe Game",
-      "fetchingError": "Error fetching notifications from POD"
+      "tictactoe": "TicTacToe Game",
+      "noinbox": "Global inbox not found. Please create one and try again.",
+      "fetchingError": "Error fetching notifications from Pod"
     },
     "tictactoe":"Game"
   },
@@ -104,15 +109,22 @@
     "defaultError": "Error: Field value has wrong format"
   },
   "game": {
+    "title": "Tic Tac Toe",
+    "createGamePrompt": "Enter an Opponent and a Game id",
+    "createGame": "Create Game",
+    "createGameSuccess": "Game created successfully",
+    "resetGameForm": "Reset",
+    "idLabel": "Game ID",
+    "opponentWebIDLabel": "Opponent WebID",
     "dataError": {
-      "message": "You do not have data.ttl file to save opponents games",
+      "message": "Game data could not be saved, data.ttl was not found",
       "link": {
         "label": "Learn More",
         "href": "https://solidsdk.inrupt.net/public/general/en/missing-profile-data.html"
       }
     },
     "createFolder": {
-      "message": "Error game folder fail.",
+      "message": "Error creating game data folder",
       "link": {
         "label": "Learn More",
         "href": "link url"
@@ -120,14 +132,14 @@
     }
   },
   "noInboxOpponent": {
-    "message": "Your opponent does not has inbox in his pod",
+    "message": "Your opponent does not have an inbox in their Pod",
     "link": {
       "label": "Learn More",
       "href": "https://solidsdk.inrupt.net/public/general/en/missing-global-inbox.html"
     }
   },
   "noInboxUser": {
-    "message": "You do not have a inbox, please go to your POD and create one.",
+    "message": "Global inbox not found, please go to your Pod and create one",
     "link": {
       "label": "Learn more",
       "href": "https://solidsdk.inrupt.net/public/general/en/missing-global-inbox.html"

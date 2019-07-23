@@ -114,7 +114,7 @@ const List = ({ webId, gamePath }: Props) => {
      * Check if user pod has data.ttl file where will live
      * opponent games if not show error message
      */
-    const hasData = await ldflexHelper.existFolder(otherGamesUrl);
+    const hasData = await ldflexHelper.folderExists(otherGamesUrl);
 
     if (!hasData)
       errorToaster(t('game.dataError'), 'Error', {
