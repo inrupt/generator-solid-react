@@ -3,6 +3,8 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Item, Info, GameStatus, Actions } from './game-item.style';
 
+// moment.suppressDeprecationWarnings = true;
+
 type Props = { game: Object };
 
 const GameItem = ({ game }: Props) => {
