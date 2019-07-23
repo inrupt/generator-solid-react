@@ -12,6 +12,7 @@ const match = {
 
 describe('GamePage', () => {
   afterEach(cleanup);
+
   const { getByTestId, container } = render(<Gamepage {...{ webId, match }} />);
 
   test('should render Game component', () => {

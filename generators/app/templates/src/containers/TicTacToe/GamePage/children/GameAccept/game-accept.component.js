@@ -48,10 +48,10 @@ const GameAccept = ({ actor, onAccept, onDecline }: Props) => {
           to play?
         </span>
         <div id="modal-actions">
-          <button type="button" onClick={Accept}>
+          <button type="button" onClick={Accept} data-testid="acceptButton">
             Accept
           </button>
-          <button type="button" onClick={Decline}>
+          <button type="button" onClick={Decline} data-testid="declineButton">
             Decline
           </button>
         </div>

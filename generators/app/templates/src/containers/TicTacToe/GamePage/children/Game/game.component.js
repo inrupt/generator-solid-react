@@ -390,7 +390,7 @@ const Game = ({ webId, gameURL }: Props) => {
           {gameData && (
             <Metadata>
               <span>
-                Created: <b>{moment(gameData.createddatetime).format('MMM Do, YYYY')}</b>
+                Created: <b>{moment(gameData.createddatetime, 'MMM Do, YYYY')}</b>
               </span>
               {result && result.win ? (
                 <Fragment>

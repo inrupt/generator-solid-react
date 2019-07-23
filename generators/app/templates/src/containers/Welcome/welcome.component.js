@@ -181,5 +181,5 @@ const WelcomePageContent = props => {
   );
 };
 
-export { WelcomePageContent };
+// export { WelcomePageContent };
 export default withTranslation()(isLoading(WelcomePageContent));
