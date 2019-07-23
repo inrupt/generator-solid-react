@@ -57,6 +57,9 @@ class NavBarProfile extends Component<Props> {
     this.getProfileData();
   }
 
+  /**
+   * Checks everytime the timestamp changes to go and fetch the data again
+   */
   componentDidUpdate(prevProps) {
     const { webId } = this.props;
     if (webId && webId !== prevProps.webId) this.getProfileData();

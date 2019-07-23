@@ -33,6 +33,9 @@ const AuthNavBar = React.memo((props: Props) => {
     }
   ];
   const { webId } = props;
+  /**
+   * Looks for all of the inbox containers in the pod and sets inboxes state
+   */
   const discoverInbox = useCallback(async () => {
     try {
       let inboxes = [];

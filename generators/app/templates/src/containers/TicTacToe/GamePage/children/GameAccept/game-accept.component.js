@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
+import { useTranslation } from 'react-i18next';
 
 const Content = styled.div`
   display: flex;
@@ -23,7 +24,7 @@ type Props = { actor: Object, onAccept: Function, onDecline: Function };
 
 const GameAccept = ({ actor, onAccept, onDecline }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { t } = useTranslation();
   useEffect(() => {
     setIsOpen(true);
   }, []);
@@ -44,8 +45,7 @@ const GameAccept = ({ actor, onAccept, onDecline }: Props) => {
     >
       <Content>
         <span>
-          <b>{actor && actor.name}</b> has invited you to play a game of TicTacToe. Would you like
-          to play?
+          <b>{actor && actor.name}</b> {t('game.inivitationAccept')}
         </span>
         <div id="modal-actions">
           <button type="button" onClick={Accept} data-testid="acceptButton">

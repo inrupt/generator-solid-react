@@ -82,7 +82,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
             await document[predicate].add(setupObj[field.predicate]);
           }
           /**
-           * Find opponent game inbox if doesn't exist get global
+           * Find the opponent's game-specific inbox. If it doesn't exist, get the global inbox instead
            * @to: Opponent inbox path
            */
           const to = helperNotification.getDefaultInbox(inboxes, 'Game', 'Global');

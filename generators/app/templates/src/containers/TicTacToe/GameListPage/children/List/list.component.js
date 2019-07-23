@@ -11,20 +11,23 @@ import { Wrapper, ListWrapper, GameListContainers } from './list.style';
 let oldTimestamp;
 type Props = { webId: String, gamePath: String };
 type GameListProps = { title: String, games: Array };
-const GameList = ({ title, games }: GameListProps) => (
-  <div>
-    <h2>{title}</h2>
-    {games.length > 0 ? (
-      <ListWrapper>
-        {games.map(game => (
-          <GameItem {...{ game }} key={game.url} />
-        ))}
-      </ListWrapper>
-    ) : (
-      <span>No games found</span>
-    )}
-  </div>
-);
+const GameList = ({ title, games }: GameListProps) => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <h2>{title}</h2>
+      {games.length > 0 ? (
+        <ListWrapper>
+          {games.map(game => (
+            <GameItem {...{ game }} key={game.url} />
+          ))}
+        </ListWrapper>
+      ) : (
+        <span>{t('game.nogames')}</span>
+      )}
+    </div>
+  );
+};
 
 const List = ({ webId, gamePath }: Props) => {
   const [list, setList] = useState([]);

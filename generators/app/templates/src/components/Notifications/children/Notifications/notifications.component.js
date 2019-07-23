@@ -29,7 +29,7 @@ const Notifications = ({ webId, inbox }) => {
    * pass date to string to compare time updates
    * @type {*|string}
    */
-  const currenTimestamp = timestamp && timestamp.toString();
+  const currentTimestamp = timestamp && timestamp.toString();
   useOnClickOutside(ref, () => setIsOpen(false));
 
   /**
@@ -59,9 +59,9 @@ const Notifications = ({ webId, inbox }) => {
    * Fetch new notifications when liveUpdate time change
    */
   useEffect(() => {
-    if (currenTimestamp && oldTimestamp !== currenTimestamp) {
+    if (currentTimestamp && oldTimestamp !== currentTimestamp) {
       initNotifications();
-      oldTimestamp = currenTimestamp;
+      oldTimestamp = currentTimestamp;
     }
   }, [timestamp]);
 

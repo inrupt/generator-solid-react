@@ -55,8 +55,7 @@ const Game = ({ webId, gameURL }: Props) => {
         ]);
 
         /**
-         * If receiver doesn't have an inbox will show an error and show users how
-         * to fix it.
+         * If opponent doesn't have an inbox, show an error with a link to documentation
          */
         if (inboxes.length === 0)
           errorToaster(`${player} ${t('noInboxOpponent.message')}`, 'Error', {
@@ -64,7 +63,7 @@ const Game = ({ webId, gameURL }: Props) => {
             href: t('noInboxOpponent.link.href')
           });
         /**
-         * Find opponent game inbox if doesn't exist get global
+         * Find the opponent's game-specific inbox. If it doesn't exist, use the global inbox instead
          * @to: Opponent inbox path
          */
         const to = notification.getDefaultInbox(inboxes, 'Game', 'Global');
@@ -426,7 +425,7 @@ const Game = ({ webId, gameURL }: Props) => {
           <Metadata>
             {
               <div>
-                Playing against:
+                {t('game.playingAgainst')}
                 {rival && (
                   <a href={rival.webId}>
                     <strong>{rival.name}</strong>
@@ -435,21 +434,20 @@ const Game = ({ webId, gameURL }: Props) => {
               </div>
             }
 
-            {!result && !gameData.canPlay && (
-              <span>Not your turn, please wait for your opponent to play </span>
-            )}
+            {!result && !gameData.canPlay && <span>{t('game.notYourTurn')}</span>}
             {result && result.finished && (
               <div>
                 {result.win &&
                   (result.token === gameData.token ? (
-                    <span>You are the winner!!</span>
+                    <span>{t('game.winnerMsg')}</span>
                   ) : (
-                    <span>Better luck next time!!</span>
+                    <span>{t('game.loserMsg')}</span>
                   ))}
-                {!result.win && <span>It's a tie!!</span>}
+                {!result.win && <span>{t('game.tieMsg')}</span>}
               </div>
             )}
             <span>
+              {t('game.status')}
               Game Status: <b>{gameData.gamestatus}</b>
             </span>
           </Metadata>
@@ -466,18 +464,20 @@ const Game = ({ webId, gameURL }: Props) => {
           {gameData && (
             <Metadata>
               <span>
-                Created: <b>{moment(gameData.createddatetime, 'MMM Do, YYYY')}</b>
+                {t('game.created')}
+                <b>{moment(gameData.createddatetime, 'MMM Do, YYYY')}</b>
               </span>
               {result && result.win ? (
                 <Fragment>
                   <span>
-                    Winner: <strong>{result.token}</strong> with{' '}
-                    <b>{result.combination.join('-')}</b>
+                    {t('game.winnerObject')}
+                    <strong>{result.token}</strong> with <b>{result.combination.join('-')}</b>
                   </span>
                 </Fragment>
               ) : (
                 <span>
-                  Your token: <strong>{gameData.token}</strong>
+                  {t('game.token')}
+                  <strong>{gameData.token}</strong>
                 </span>
               )}
             </Metadata>

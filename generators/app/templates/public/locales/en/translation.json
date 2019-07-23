@@ -43,7 +43,7 @@
       "noinbox": "Global inbox not found. Please create one and try again.",
       "fetchingError": "Error fetching notifications from Pod"
     },
-    "tictactoe":"Game"
+    "tictactoe": "Game"
   },
   "footer": {
     "version": "Version"
@@ -116,6 +116,17 @@
     "resetGameForm": "Reset",
     "idLabel": "Game ID",
     "opponentWebIDLabel": "Opponent WebID",
+    "nogames": "No game were found",
+    "inivitationAccept": "has invited you to play a game of TicTacToe. Would you like to play?",
+    "playingAgainst": "Playing Against:",
+    "token": "Your token:",
+    "tieMsg": "It's a tie",
+    "winnerMsg": "You are the winner!!",
+    "loserMsg": "Better luck next time",
+    "winnerObj": "Winner",
+    "notYourTurn": "Not your turn, please wait for your opponent to play",
+    "status": "Game Status:",
+    "created": "Created",
     "dataError": {
       "message": "Game data could not be saved, data.ttl was not found",
       "link": {

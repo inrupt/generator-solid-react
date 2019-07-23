@@ -112,6 +112,17 @@
     "resetGameForm": "Limpiar",
     "idLabel": "ID del Juego",
     "opponentWebIDLabel": "WebID del Oponente",
+    "nogames": "No se han encontrado juegos",
+    "inivitationAccept": "te ha invitado a un juego de Tres en Linea. Quieres jugar?",
+    "playingAgainst": "Jugando contra:",
+    "token": "Tu token:",
+    "tieMsg": "Es un empate",
+    "winnerMsg": "Eres el ganador!!",
+    "loserMsg": "Mejor suerte la próxima",
+    "winnerObj": "Ganador",
+    "notYourTurn": "No es tu turno, por favor espera a que tu rivla juegue",
+    "status": "Estado del juego:",
+    "created": "Creado:",
     "dataError": {
       "message": "Los datos del juego no pudieros ser salvados, data.ttl no fue encontrado",
       "link": {
