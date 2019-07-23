@@ -20,7 +20,8 @@ const renderNodes = reactNodes => {
     }
     if (hasChildren(child)) {
       const inner = renderNodes(getChildren(child));
-      return React.cloneElement(child, { ...child.props, key: i + 1 }, inner);
+      const key = i + 1;
+      return React.cloneElement(child, { ...child.props, key }, inner);
     }
     if (child && typeof child === 'object' && !isElement) {
       return Object.keys(child).reduce((str, childKey) => `${str}${child[childKey]}`, '');
