@@ -39,7 +39,7 @@
       "noinbox": "No se encontró ningún inbox en su POD, debes tener al menos uno para jugar.",
       "fetchingError": "Error en las notificaciones"
     },
-    "tictactoe":"Juego"
+    "tictactoe": "Juego"
   },
   "footer": {
     "version": "Versión"
@@ -105,19 +105,25 @@
     "defaultError": "Error: Formato incorrecto"
   },
   "game": {
-    "title": "Tic Tac Toe",
+    "title": "Tres en Línea",
     "createGamePrompt": "Enter an Opponent and a Game id",
-    "createGame": "Create Game",
-    "createGameSuccess": "Game created successfully",
-    "resetGameForm": "Reset",
-    "idLabel": "Game ID",
-    "opponentWebIDLabel": "Opponent WebID",
-    "createFolder": "Error no se pudo crear la carpeta principal del juego",
+    "createGame": "Crear Juego",
+    "createGameSuccess": "Juego creado satisfactoriamente",
+    "resetGameForm": "Limpiar",
+    "idLabel": "ID del Juego",
+    "opponentWebIDLabel": "WebID del Oponente",
     "dataError": {
-      "message": "No se encontró el archivo data.ttl",
+      "message": "Los datos del juego no pudieros ser salvados, data.ttl no fue encontrado",
       "link": {
-        "label": "Learn More",
-        "href": "https://solidsdk.inrupt.net/public/general/es/missing-profile-data.html"
+        "label": "Saber más",
+        "href": "https://solidsdk.inrupt.net/public/general/en/missing-profile-data.html"
+      }
+    },
+    "createFolder": {
+      "message": "Error al crear el folder del juego",
+      "link": {
+        "label": "Saber más",
+        "href": "url link"
       }
     }
   },
