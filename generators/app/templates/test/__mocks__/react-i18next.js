@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import * as reactI18next from 'react-i18next';
 
 const hasChildren = node => node && (node.children || (node.props && node.props.children));
@@ -47,5 +47,5 @@ module.exports = {
   setDefaults: reactI18next.setDefaults,
   getDefaults: reactI18next.getDefaults,
   setI18n: reactI18next.setI18n,
-  getI18n: reactI18next.getI18n,
+  getI18n: reactI18next.getI18n
 };

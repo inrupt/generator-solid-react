@@ -5,7 +5,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { WelcomeComponent } from './welcome.container';
 
-
 library.add(fas);
 
 const props = {
@@ -19,7 +18,7 @@ describe.only('Welcome', () => {
   // afterAll(cleanup);
   const { container, getByTestId } = render(
     <Router>
-      <WelcomeComponent {...{...props}} />
+      <WelcomeComponent {...{ ...props }} />
     </Router>
   );
 
