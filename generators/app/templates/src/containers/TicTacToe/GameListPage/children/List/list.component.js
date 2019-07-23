@@ -34,14 +34,24 @@ const List = ({ webId, gamePath }: Props) => {
   const updates = useLiveUpdate();
   const { timestamp } = updates;
 
+  /**
+   * Gets the entire predicate named Node based on a field property from the shape
+   * @param {String} field Field to get the predicate for
+   * @returns {String} Predicate for a field name
+   */
   const getPredicate = field => {
     const prefix = tictactoeShape['@context'][field.prefix];
     return `${prefix}${field.predicate}`;
   };
 
+  /**
+   * Get basic info for the opponent player (name and image url)
+   * @param {String} webId WebId of the player to look the Info for
+   * @returns {Object} An object with the basic information of the player
+   */
   const getOpponentInfo = useCallback(async webId => {
     try {
-      const name = await ldflex[webId]['foaf:name'];
+      const name = await ldflex[webId]['vcard:fn'];
       const image = await ldflex[webId]['vcard:hasPhoto'];
       return { name: name.value, image: image.value, webId };
     } catch (e) {
@@ -50,6 +60,10 @@ const List = ({ webId, gamePath }: Props) => {
     }
   });
 
+  /**
+   * Fetches all games from a url
+   * @param {String} url URL for the container to get the games from
+   */
   const getGames = useCallback(
     async url => {
       try {
@@ -89,6 +103,9 @@ const List = ({ webId, gamePath }: Props) => {
     [gamePath]
   );
 
+  /**
+   * Inits the game by fetching own games and games the player has been invited to
+   */
   const init = useCallback(async () => {
     setIsLoading(true);
     const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);

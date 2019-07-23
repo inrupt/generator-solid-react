@@ -55,7 +55,7 @@ const Game = ({ webId, gameURL }: Props) => {
         ]);
 
         /**
-         * If receiver doesn't has inbox will show an error and show users how
+         * If receiver doesn't have an inbox will show an error and show users how
          * to fix it.
          */
         if (inboxes.length === 0)
@@ -81,8 +81,19 @@ const Game = ({ webId, gameURL }: Props) => {
     [gameData, inboxUrl]
   );
 
+  /**
+   * If the player's token is 'X' it will return 'O' and viceversa
+   * @param {String} token Token to get the opposite
+   * @returns {String} Opposite token
+   */
   const getSecondToken = useCallback(token => (token === 'X' ? 'O' : 'X'));
 
+  /**
+   * Generates the moves array for the game. An array of size 9 with all of the played moves
+   * @param {Array<String>} moveorder An array of moves based on moves indexes
+   * @param {String} firstmove Token of the first move of the game
+   * @returns {void}
+   */
   const generateMoves = useCallback((moveorder: Array<String>, firstmove: String) =>
     moveorder.reduce((allSquares, current, i) => {
       const squares = allSquares;
@@ -94,16 +105,31 @@ const Game = ({ webId, gameURL }: Props) => {
     }, new Array(9).fill(null))
   );
 
+  /**
+   * Gets the entire predicate named Node based on a field property from the shape
+   * @param {String} field Field to get the predicate for
+   * @returns {String} Predicate for a field name
+   */
   const getPredicate = useCallback(field => {
     const prefix = tictactoeShape['@context'][field.prefix];
     return `${prefix}${field.predicate}`;
   });
 
+  /**
+   * Checks if it's the user's turn by comparing the gamestatus with the user's token
+   * @param {String} gamestatus Status of the game
+   * @param {String} token Player's token
+   * @returns {Boolean}
+   */
   const canPlay = useCallback(({ gamestatus, token }) => {
     const isStatusValid = gamestatus && gamestatus.includes('Move');
     return isStatusValid ? gamestatus.includes(token) : false;
   });
 
+  /**
+   * Updates the game status in the game document
+   * @param {String} gamestatus New status for the game to be updated to
+   */
   const changeGameStatus = useCallback(
     async gamestatus => {
       try {
@@ -116,6 +142,11 @@ const Game = ({ webId, gameURL }: Props) => {
     [gameDocument]
   );
 
+  /**
+   * Get basic info for a player (name and image url)
+   * @param {String} webId WebId of the player to look the Info for
+   * @returns {Object} An object with the basic information of the player
+   */
   const getPlayerInfo = async webId => {
     try {
       const nameData = await ldflex[webId]['vcard:fn'];
@@ -128,11 +159,18 @@ const Game = ({ webId, gameURL }: Props) => {
     }
   };
 
+  /**
+   * Adds the game document as a link in the opponent's data.ttl file
+   */
   const addGameToList = async () => {
     const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
     await ldflex[`${url}/data.ttl`]['ldp:contains'].add(namedNode(gameURL));
   };
 
+  /**
+   * Accepts the game by changing the status of it to 'Accepted', adding it to the game list and sending a notification to the actor
+   * @param {Function} cb Function to execute once the game has been accepted
+   */
   const onAccept = async cb => {
     try {
       await changeGameStatus('Move X');
@@ -150,7 +188,10 @@ const Game = ({ webId, gameURL }: Props) => {
       errorToaster(e.message, 'Error');
     }
   };
-
+  /**
+   * Declines the game by changing the status of it to 'Declined' and sending a notification to the actor
+   * @param {Function} cb Function to execute once the game has been declined
+   */
   const onDecline = async cb => {
     try {
       await changeGameStatus('Declined');
@@ -167,8 +208,17 @@ const Game = ({ webId, gameURL }: Props) => {
     }
   };
 
+  /**
+   * Gets the rival based on wether or not the player is the owner
+   * @param {Object} gameData Actor, opponent and owner of the game
+   * @returns {Object} Rival data
+   */
   const getRival = ({ actor, opponent, owner }) => (owner ? opponent : actor);
 
+  /**
+   * Gets the raw data from the game's turtle file using ldflex
+   * @returns {Object} An Object with all of the turtle file data
+   */
   const fetchRawData = async () => {
     const game = await ldflexHelper.fetchLdflexDocument(gameURL);
     setGameDocument(game);
@@ -180,7 +230,12 @@ const Game = ({ webId, gameURL }: Props) => {
     return data;
   };
 
-  const checkForWinnerOrTie = moves => {
+  /**
+   *  Checks wether or not there is a winner or a tie (game is over)
+   * @param {Array} moves Array of game's moves
+   * @return {Object} A winner object
+   */
+  const checkForWinnerOrTie = (moves: Array) => {
     if (!moves) return null;
     const isMovesFull = moves.filter(move => move === null).length === 0;
     let gameResult = {};
@@ -200,6 +255,10 @@ const Game = ({ webId, gameURL }: Props) => {
     return gameResult;
   };
 
+  /**
+   * If there's a winner or a tie, the gamestatus gets changed to 'Finished'
+   * @param {Object} data Game data
+   */
   const checkWinnerOrNextPlayer = useCallback(
     async data => {
       const { moves } = data;
@@ -210,6 +269,9 @@ const Game = ({ webId, gameURL }: Props) => {
     [gameData]
   );
 
+  /**
+   * Gets the game for an initial render and sets the basic game data
+   */
   const getInitialGame = useCallback(async () => {
     try {
       const gameDocData = await fetchRawData();
@@ -244,6 +306,10 @@ const Game = ({ webId, gameURL }: Props) => {
     }
   });
 
+  /**
+   * Gets game for any fetch except the initial one
+   * Set the moves, the game status and wether or not is my turn for the game data
+   */
   const getGame = useCallback(async () => {
     try {
       const gameDocData = await fetchRawData();
@@ -277,6 +343,10 @@ const Game = ({ webId, gameURL }: Props) => {
     }
   });
 
+  /**
+   * Generate a new move for the game, checks if the game is done and sends a notification to the rival
+   * @param {String} index Index of the move about to be make
+   */
   const onMove = useCallback(
     async index => {
       try {
@@ -315,6 +385,9 @@ const Game = ({ webId, gameURL }: Props) => {
     [gameData]
   );
 
+  /**
+   * Executes when the game is mounted the first time
+   */
   useEffect(() => {
     try {
       const gamePath = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
@@ -337,6 +410,9 @@ const Game = ({ webId, gameURL }: Props) => {
     }
   }, []);
 
+  /**
+   * Executes everytime the gameUrl changes or when the Live update detects a change
+   */
   useEffect(() => {
     if ((gameURL || timestamp) && !isProcessing && gameData.actor) getGame();
   }, [gameURL, timestamp]);
