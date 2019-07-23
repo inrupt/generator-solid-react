@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
-import { act } from 'react-dom/test-utils';
 import Notifications from './notifications.component';
 
 afterAll(cleanup);

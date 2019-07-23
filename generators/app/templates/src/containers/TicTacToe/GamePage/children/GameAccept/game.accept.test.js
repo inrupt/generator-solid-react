@@ -8,7 +8,11 @@ const props = {
   onDecline: jest.fn()
 };
 
-const WrapperComponent = ({ children }) => <div id="gamepage">{children}</div>;
+type Props = {
+  children: any
+};
+
+const WrapperComponent = ({ children }: Props) => <div id="gamepage">{children}</div>;
 
 describe('TicTacToe Game', () => {
   afterAll(cleanup);
