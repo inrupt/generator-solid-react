@@ -57,7 +57,7 @@ export const Image = ({ webId, defaultProfilePhoto }: Props) => {
       await user.vcard_hasPhoto.set(namedNode(uri));
       successToaster(t('profile.uploadSuccess'), t('profile.successTitle'));
     } catch (error) {
-      errorToaster(error.message, 'Error');
+      errorToaster(error.message, t('profile.errorTitle'));
     }
   };
   const limit = 2100000;

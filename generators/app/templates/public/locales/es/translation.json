@@ -70,6 +70,7 @@
     "successTitle": "Éxito",
     "uploadSuccess": "Imagen de perfil actualizada correctamente",
     "uploadingText": "Subiendo",
+    "errorTitle": "Error",
     "errors": {
       "sizeLimit": "El tamaño del archivo supera el límite permitido ({{limit}})",
       "unsupported": "Formato no soportado",
@@ -80,6 +81,7 @@
     "successCallback": "Pod actualizado satisfactoriamente",
     "successTitle": "Éxito",
     "errorCallback": "Ha ocurrido un error al enviar el formulario",
+    "errorTitle": "Error",
     "saveBtn": "Guardar",
     "resetBtn": "Limpiar",
     "addBtn": "+ Agregar ",

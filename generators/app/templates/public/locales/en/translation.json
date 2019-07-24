@@ -74,6 +74,7 @@
     "successTitle": "Success",
     "uploadSuccess": "Profile Image was updated",
     "uploadingText": "Uploading",
+    "errorTitle": "Error",
     "errors": {
       "sizeLimit": "File size exceeds the allowable limit ({{limit}})",
       "unsupported": "Unsupported media type",
@@ -84,6 +85,7 @@
     "successCallback": "Pod updated successfully",
     "successTitle": "Success",
     "errorCallback": "Error submitting form",
+    "errorTitle": "Error",
     "saveBtn": "Save",
     "resetBtn": "Reset",
     "addBtn": "+ Add new ",
