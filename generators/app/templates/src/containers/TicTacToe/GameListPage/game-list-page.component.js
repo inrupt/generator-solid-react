@@ -6,7 +6,7 @@ import { Form, List } from './children';
 import { Section, Wrapper } from '../tic-tac-toe.style';
 
 const GameListPage = ({ webId }) => {
-  const [opponent, setOpponent] = useState('https://jprod.solid.community/profile/card#me');
+  const [opponent, setOpponent] = useState('');
   const [gamePath, setGamePath] = useState(null);
   const { createNotification, createInbox, notifications, notification } = useNotification(webId);
   const { t } = useTranslation();
