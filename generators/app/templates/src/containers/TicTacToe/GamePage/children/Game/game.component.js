@@ -448,7 +448,7 @@ const Game = ({ webId, gameURL }: Props) => {
             )}
             <span>
               {t('game.status')}
-              Game Status: <b>{gameData.gamestatus}</b>
+              <b>{gameData.gamestatus}</b>
             </span>
           </Metadata>
           {gameData.moves && (

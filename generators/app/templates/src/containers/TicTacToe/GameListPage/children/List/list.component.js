@@ -120,7 +120,7 @@ const List = ({ webId, gamePath }: Props) => {
     const hasData = await ldflexHelper.folderExists(otherGamesUrl);
 
     if (!hasData)
-      errorToaster(t('game.dataError'), 'Error', {
+      errorToaster(t('game.dataError.message'), 'Error', {
         label: t('game.dataError.link.label'),
         href: t('game.dataError.link.href')
       });

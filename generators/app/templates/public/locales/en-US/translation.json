@@ -128,6 +128,7 @@
     "created": "Created",
     "yourGames": "Your Games",
     "otherGames": "Other Games",
+    "errorTitle": "Error",
     "dataError": {
       "message": "Game data could not be saved, data.ttl was not found",
       "link": {
