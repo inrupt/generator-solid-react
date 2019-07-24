@@ -79,13 +79,13 @@ export class WelcomeComponent extends Component<Props> {
    * will just update it, the idea is use image instead of hasPhoto
    * @params{String} uri photo url
    */
-  updatePhoto = async (uri: String, message) => {
+  updatePhoto = async (uri: String, message, title = '') => {
     const { hasImage } = this.state;
     try {
       const { user } = data;
       if (hasImage) await user.vcard_hasPhoto.set(namedNode(uri));
       else await user.vcard_hasPhoto.add(namedNode(uri));
-      successToaster(message);
+      successToaster(message, title);
     } catch (error) {
       errorToaster(error.message, 'Error');
     }
