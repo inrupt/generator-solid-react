@@ -1,7 +1,6 @@
 import React from 'react';
 import { Uploader } from '@inrupt/solid-react-components';
-import isLoading from '@hocs/isLoading';
-import { Trans, withTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   WelcomeWrapper,
   WelcomeCard,
@@ -18,8 +17,9 @@ import { errorToaster } from '@utils';
  * Image component will get theimage context and resolve the value to render.
  * @param props
  */
-const WelcomePageContent = props => {
-  const { webId, image, updatePhoto, name, t } = props;
+export const WelcomePageContent = props => {
+  const { webId, image, updatePhoto, name } = props;
+  const { t } = useTranslation();
   const limit = 2100000;
   return (
     <WelcomeWrapper data-testid="welcome-wrapper">
@@ -180,6 +180,3 @@ const WelcomePageContent = props => {
     </WelcomeWrapper>
   );
 };
-
-export { WelcomePageContent };
-export default withTranslation()(isLoading(WelcomePageContent));

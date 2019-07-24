@@ -1,0 +1,32 @@
+{
+  "@context": {
+    "thing": "https://schema.org/Thing#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "as": "https://www.w3.org/ns/activitystreams#"
+  },
+  "shape": [
+    {
+      "prefix": "rdfs",
+      "predicate": "gamestatus"
+    },
+    {
+      "prefix": "rdfs",
+      "predicate": "createddatetime"
+    },
+    {
+      "prefix": "as",
+      "predicate": "actor"
+    },
+    {
+      "prefix": "schema",
+      "predicate": "opponent"
+    },
+    { "prefix": "rdfs", "predicate": "firstmove" },
+    {
+      "prefix": "rdfs",
+      "predicate": "moveorder"
+    }
+  ]
+}

@@ -1,50 +1,52 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { withAuthorization, LiveUpdate } from '@inrupt/solid-react-components';
+import { withAuthorization } from '@inrupt/solid-react-components';
 import { AuthNavBar, Footer } from '@components';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  min-height: 100%;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  padding-top: 60px;
-`;
-
-const FooterContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  min-height: 100vh;
 `;
 
 const Content = styled.div`
-  padding-bottom: 60px;
-  height: 100%;
+  padding-top: 60px;
+  flex: 1 0 auto;
+  display: flex;
+  overflow-y: auto;
 `;
 
-const PrivateLayout = ({ routes, ...rest }) => (
-  <Route
-    {...rest}
-    component={matchProps => (
-      <Container>
-        {rest.webId && (
-          <LiveUpdate subscribe={rest.webId}>
-            <AuthNavBar {...matchProps} />
-          </LiveUpdate>
+const PrivateLayout = ({ routes, webId, location, history, ...rest }) => (
+  <React.Fragment>
+    <Container>
+      <Route
+        {...rest}
+        component={({ history }) => (
+          <Content className="contentApp">
+            <AuthNavBar {...{ location, webId, history }} />
+            <Switch>
+              {routes.map(route => {
+                const { component: RouteComponent } = route;
+                return (
+                  <Route
+                    key={route.id}
+                    path={route.path}
+                    render={routerProps => <RouteComponent {...routerProps} webId={webId} />}
+                    webId={webId}
+                    exact
+                  />
+                );
+              })}
+              <Redirect to="/404" />
+            </Switch>
+          </Content>
         )}
-        <Content className="contentApp">
-          <Switch>
-            {routes.map(route => (
-              <Route key={route.id} {...route} exact />
-            ))}
-            <Redirect to="/404" />
-          </Switch>
-        </Content>
-        <FooterContainer>
-          <Footer />
-        </FooterContainer>
-      </Container>
-    )}
-  />
+      />
+      <Footer />
+    </Container>
+  </React.Fragment>
 );
 
 export default withAuthorization(PrivateLayout);

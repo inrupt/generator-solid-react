@@ -3,18 +3,22 @@ import { render, cleanup } from 'react-testing-library';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { WelcomePageContent } from './welcome.component';
-
-import '../../i18n';
+import { WelcomeComponent } from './welcome.container';
 
 library.add(fas);
 
+const props = {
+  webId: 'https://exmaple.com/#me',
+  image: 'test.png',
+  updatePhoto: 'updated.png',
+  name: 'example'
+};
+
 describe.only('Welcome', () => {
   afterAll(cleanup);
-
   const { container, getByTestId } = render(
     <Router>
-      <WelcomePageContent providers={[]} t={key => key} />
+      <WelcomeComponent {...{ ...props }} />
     </Router>
   );
 

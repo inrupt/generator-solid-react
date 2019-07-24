@@ -7,6 +7,10 @@ body,
   padding: 0;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   color: #666;
   font-size: 62.5%;

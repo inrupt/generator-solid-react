@@ -13,7 +13,7 @@ const cubeGridScaleDelay = keyframes`
 `;
 
 export const LoaderWrapper = styled.div`
-  position: fixed;
+  position: ${({ absolute }) => (absolute ? 'absolute' : 'fixed')};
   z-index: 9999;
   top: 0;
   left: 0;
