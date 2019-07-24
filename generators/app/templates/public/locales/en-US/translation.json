@@ -123,6 +123,8 @@
     "notYourTurn": "Not your turn, please wait for your opponent to play",
     "status": "Game Status:",
     "created": "Created",
+    "yourGames": "Your Games",
+    "otherGames": "Other Games",
     "dataError": {
       "message": "Game data could not be saved, data.ttl was not found",
       "link": {

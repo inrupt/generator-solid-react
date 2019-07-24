@@ -148,8 +148,8 @@ const List = ({ webId, gamePath }: Props) => {
     <Wrapper data-testid="game-list">
       {!isLoading ? (
         <GameListContainers>
-          {list && <GameList title="Your games" games={list} />}
-          {otherList && <GameList title="Other games" games={otherList} />}
+          {list && <GameList title={t('game.yourGames')} games={list} />}
+          {otherList && <GameList title={t('game.otherGames')} games={otherList} />}
         </GameListContainers>
       ) : (
         <Loader absolute />

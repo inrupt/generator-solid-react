@@ -106,7 +106,7 @@
   },
   "game": {
     "title": "Tres en Línea",
-    "createGamePrompt": "Enter an Opponent and a Game id",
+    "createGamePrompt": "Ingresa un oponente y un ID para el juego",
     "createGame": "Crear Juego",
     "createGameSuccess": "Juego creado satisfactoriamente",
     "resetGameForm": "Limpiar",
@@ -123,6 +123,8 @@
     "notYourTurn": "No es tu turno, por favor espera a que tu rivla juegue",
     "status": "Estado del juego:",
     "created": "Creado:",
+    "yourGames": "Tus juegos",
+    "otherGames": "Otros juegos",
     "dataError": {
       "message": "Los datos del juego no pudieros ser salvados, data.ttl no fue encontrado",
       "link": {
