@@ -7,7 +7,15 @@ import { useOnClickOutside } from '@hooks';
 
 let oldTimestamp;
 
-const Notifications = ({ webId, inbox }) => {
+type Props = {
+  webId: String,
+  inbox: String
+};
+
+/**
+ * Notification wrapper for the Bell Icon and the Notifications Panel
+ */
+const Notifications = ({ webId, inbox }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const ref = useRef();
@@ -46,17 +54,17 @@ const Notifications = ({ webId, inbox }) => {
     }
   };
 
+  /**
+   * If webId and notify instance exist we will init notifications, similar to componentDidMount
+   */
   useEffect(() => {
-    /**
-     * If webId and notify instance exist we will init notifications
-     */
     if (webId && notify) {
       initNotifications();
     }
   }, [inbox, notify]);
 
   /**
-   * Fetch new notifications when liveUpdate time change
+   * Fetch new notifications when liveUpdate's timestamp changes, similar to componentWillUpdate
    */
   useEffect(() => {
     if (currentTimestamp && oldTimestamp !== currentTimestamp) {

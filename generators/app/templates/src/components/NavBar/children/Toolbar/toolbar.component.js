@@ -6,6 +6,11 @@ type Props = {
   customClass: String
 };
 
+/**
+ * Checks if the components needs to rerender or not based on inbox changes
+ * @param {Object} prevProps Previous props object
+ * @param {Object} nextProps Next props object
+ */
 const areEqual = (prevProps, nextProps) => {
   const prevInbox =
     prevProps && prevProps.toolbar.length > 1 && prevProps.toolbar[1].component().props.inbox;

@@ -10,6 +10,9 @@ type Props = {
   deleteNotification: (fileName: string) => void
 };
 
+/**
+ * Notification item to be shown for each notification in the notification list
+ */
 const NotificationItem = ({ notification, markAsRead, children, deleteNotification }: Props) => {
   const { read } = notification;
   const currentRead = read ? JSON.parse(read) : false;

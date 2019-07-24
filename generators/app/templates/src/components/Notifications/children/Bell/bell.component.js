@@ -8,6 +8,9 @@ type Props = {
   active: Boolean
 };
 
+/**
+ * Bell Icon to be seen in the navbar for notifications
+ */
 const Bell = ({ unread, onClick, active }: Props) => (
   <BellIcon className={`bell-icon ${active ? 'active' : ''}`} onClick={onClick} type="button">
     <div className="icon">
