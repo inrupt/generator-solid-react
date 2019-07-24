@@ -32,7 +32,14 @@
     "languages": {
       "en": "English (Inglés)",
       "es": "Español (Español)"
-    }
+    },
+    "notifications": {
+      "global": "Global",
+      "tictactoe": "Gato",
+      "noinbox": "No se encontró ningún inbox en su POD, debes tener al menos uno para jugar.",
+      "fetchingError": "Error en las notificaciones"
+    },
+    "tictactoe": "Juego"
   },
   "footer": {
     "version": "Versión"
@@ -97,5 +104,61 @@
     "minMxNumberExclusive": "Error: Mínimo y máximo debería ser ",
     "minMaxString": "Error: Mínimo y máximo debería ser ",
     "defaultError": "Error: Formato incorrecto"
+  },
+  "game": {
+    "title": "Tres en Línea",
+    "createGamePrompt": "Ingresa un oponente y un ID para el juego",
+    "createGame": "Crear Juego",
+    "createGameSuccess": "Juego creado satisfactoriamente",
+    "resetGameForm": "Limpiar",
+    "idLabel": "ID del Juego",
+    "opponentWebIDLabel": "WebID del Oponente",
+    "nogames": "No se han encontrado juegos",
+    "inivitationAccept": "te ha invitado a un juego de Tres en Linea. Quieres jugar?",
+    "playingAgainst": "Jugando contra:",
+    "token": "Tu token:",
+    "tieMsg": "Es un empate",
+    "winnerMsg": "Eres el ganador!!",
+    "loserMsg": "Mejor suerte la próxima",
+    "winnerObj": "Ganador",
+    "notYourTurn": "No es tu turno, por favor espera a que tu rivla juegue",
+    "status": "Estado del juego:",
+    "created": "Creado:",
+    "yourGames": "Tus juegos",
+    "otherGames": "Otros juegos",
+    "dataError": {
+      "message": "Los datos del juego no pudieros ser salvados, data.ttl no fue encontrado",
+      "link": {
+        "label": "Saber más",
+        "href": "https://solidsdk.inrupt.net/public/general/en/missing-profile-data.html"
+      }
+    },
+    "createFolder": {
+      "message": "Error al crear el folder del juego",
+      "link": {
+        "label": "Saber más",
+        "href": "url link"
+      }
+    }
+  },
+  "noInboxOpponent": {
+    "message": "No se encontró un inbox para su oponente",
+    "link": {
+      "label": "Conozca más",
+      "href": "https://solidsdk.inrupt.net/public/general/es/missing-global-inbox.html"
+    }
+  },
+  "noInboxUser": {
+    "message": "You do not have a inbox, please go to your POD and create one.",
+    "link": {
+      "label": "Conozca más",
+      "href": "https://solidsdk.inrupt.net/public/general/es/missing-global-inbox.html"
+    }
+  },
+  "errorCreateInbox": {
+    "link": {
+      "label": "Conozca más",
+      "href": "https://solidsdk.inrupt.net/public/general/es/app-inbox-cannot-be-created.html"
+    }
   }
 }

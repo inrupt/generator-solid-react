@@ -1,3 +1,3 @@
-import NavBarProfile from './NavbarProfile';
+import NavBarContainer from './NavbarProfile';
 
-export { NavBarProfile };
+export { NavBarContainer };

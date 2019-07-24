@@ -20,7 +20,7 @@ const NavBar = (props: Props) => {
       const navHeight = componentElement.clientHeight;
       const content = document.getElementsByClassName('contentApp');
       if (content.length > 0) {
-        content[0].style['margin-top'] = `${navHeight}px`;
+        content[0].style['padding-top'] = `${navHeight}px`;
       }
     }
   };

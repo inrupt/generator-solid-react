@@ -1,6 +1,8 @@
 import { media } from './styledComponents';
 import { expandedProperty } from './context';
 import { successToaster, errorToaster } from './toaster';
+import * as ldflexHelper from './ldflex-helper';
+import * as notification from './notification';
 
 function* entries(obj) {
   for (const key of Object.keys(obj)) {
@@ -8,4 +10,29 @@ function* entries(obj) {
   }
 }
 
-export { media, expandedProperty, entries, successToaster, errorToaster };
+function buildPathFromWebId(webid, path) {
+  if (!webid) return false;
+  const domain = new URL(typeof webid === 'object' ? webid.webId : webid).origin;
+  return `${domain}/${path}`;
+}
+
+function getUserNameByUrl(webId) {
+  if (!webId || webId === '') return false;
+  const url = new URL(webId);
+  const parts = url.hostname.split('.');
+  if (parts.length > 1) return parts[0];
+
+  return 'unknown';
+}
+
+export {
+  media,
+  expandedProperty,
+  entries,
+  ldflexHelper,
+  successToaster,
+  errorToaster,
+  buildPathFromWebId,
+  getUserNameByUrl,
+  notification
+};
