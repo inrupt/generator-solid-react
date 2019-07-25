@@ -1,4 +1,11 @@
 {
+  "appPermission": {
+    "message": "La aplicacion necesita todos los permisos para funcionar.",
+    "link": {
+      "label": "Learn more",
+      "href": "https://solidsdk.inrupt.net/public/general/es/app-permissions.html"
+    }
+  },
   "login": {
     "title": "Hola! Bienvenido a Solid.",
     "loginTitle": "Iniciar sesión",

@@ -1,4 +1,11 @@
 {
+  "appPermission": {
+    "message": "The application needs to have all the permissions to work.",
+    "link": {
+      "label": "Learn more",
+      "href": "https://solidsdk.inrupt.net/public/general/en/app-permissions.html"
+    }
+  },
   "notifications": {
     "success": "Success",
     "error": "Error"
