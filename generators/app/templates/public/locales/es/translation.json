@@ -1,4 +1,5 @@
 {
+  "errorTitle": "Error",
   "appPermission": {
     "message": "La aplicacion necesita todos los permisos para funcionar.",
     "link": {

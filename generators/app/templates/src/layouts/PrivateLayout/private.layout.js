@@ -31,7 +31,7 @@ const PrivateLayout = ({ routes, webId, location, history, ...rest }) => {
     const permissions = permission.permissions.toString();
 
     if (permissions !== process.env.REACT_APP_PERMISSIONS) {
-      errorToaster(t('appPermission.message'), 'Error', {
+      errorToaster(t('appPermission.message'), t('errorTitle'), {
         label: t('appPermission.link.label'),
         href: t('appPermission.link.href')
       });
