@@ -4,16 +4,18 @@
     "schema": "https://schema.org/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "as": "https://www.w3.org/ns/activitystreams#"
+    "as": "https://www.w3.org/ns/activitystreams#",
+    "terms": "http://purl.org/dc/terms",
+    "game": "http://data.totl.net/game/"
   },
   "shape": [
     {
-      "prefix": "rdfs",
-      "predicate": "gamestatus"
+      "prefix": "game",
+      "predicate": "status"
     },
     {
-      "prefix": "rdfs",
-      "predicate": "createddatetime"
+      "prefix": "terms",
+      "predicate": "created"
     },
     {
       "prefix": "as",
@@ -23,10 +25,12 @@
       "prefix": "schema",
       "predicate": "opponent"
     },
-    { "prefix": "rdfs", "predicate": "firstmove" },
+    { "prefix": "game",
+      "predicate": "initialState"
+    },
     {
-      "prefix": "rdfs",
-      "predicate": "moveorder"
+      "prefix": "game",
+      "predicate": "move"
     }
   ]
 }

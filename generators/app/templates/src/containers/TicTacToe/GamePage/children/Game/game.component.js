@@ -89,12 +89,12 @@ const Game = ({ webId, gameURL }: Props) => {
 
   /**
    * Generates the moves array for the game. An array of size 9 with all of the played moves
-   * @param {Array<String>} moveorder An array of moves based on moves indexes
+   * @param {Array<String>} move An array of moves based on moves indexes
    * @param {String} firstmove Token of the first move of the game
    * @returns {void}
    */
-  const generateMoves = useCallback((moveorder: Array<String>, firstmove: String) =>
-    moveorder.reduce((allSquares, current, i) => {
+  const generateMoves = useCallback((move: Array<String>, firstmove: String) =>
+    move.reduce((allSquares, current, i) => {
       const squares = allSquares;
       let move;
       if (i % 2 === 0) move = firstmove;
@@ -262,8 +262,8 @@ const Game = ({ webId, gameURL }: Props) => {
     async data => {
       const { moves } = data;
       const result = await checkForWinnerOrTie(moves);
-      const gamestatus = result.finished ? 'Finished' : data.gamestatus;
-      await changeGameStatus(gamestatus);
+      const status = result.finished ? 'Finished' : data.status;
+      await changeGameStatus(status);
     },
     [gameData]
   );
@@ -278,11 +278,11 @@ const Game = ({ webId, gameURL }: Props) => {
       const opponent = await getPlayerInfo(gameDocData.opponent);
       const owner = webId === actor.webId;
       const rival = getRival({ actor, opponent, owner });
-      const token = owner ? getSecondToken(gameDocData.firstmove) : gameDocData.firstmove;
-      const moveorder = gameDocData.moveorder ? gameDocData.moveorder.split('-') : [];
-      const moves = generateMoves(moveorder, gameDocData.firstmove);
+      const token = owner ? getSecondToken(gameDocData.initialState) : gameDocData.initialState;
+      const move = gameDocData.move ? gameDocData.move.split('-') : [];
+      const moves = generateMoves(move, gameDocData.initialState);
       const myTurn = canPlay({
-        gamestatus: gameDocData.gamestatus,
+        status: gameDocData.status,
         moves,
         token
       });
@@ -290,7 +290,7 @@ const Game = ({ webId, gameURL }: Props) => {
         ...gameDocData,
         actor,
         opponent,
-        moveorder,
+        move,
         moves,
         owner,
         rival,
@@ -299,7 +299,7 @@ const Game = ({ webId, gameURL }: Props) => {
       };
       setRival(rival);
       setGameData(newData);
-      if (gameDocData.gamestatus === 'Finished') checkForWinnerOrTie(moves);
+      if (gameDocData.status === 'Finished') checkForWinnerOrTie(moves);
     } catch (e) {
       errorToaster(e.message);
     }
@@ -312,20 +312,20 @@ const Game = ({ webId, gameURL }: Props) => {
   const getGame = useCallback(async () => {
     try {
       const gameDocData = await fetchRawData();
-      if (gameDocData.gamestatus === gameData.gamestatus) {
+      if (gameDocData.status === gameData.status) {
         return;
       }
-      const moveorder = gameDocData.moveorder ? gameDocData.moveorder.split('-') : [];
-      const { gamestatus } = gameDocData;
-      const moves = generateMoves(moveorder, gameDocData.firstmove);
+      const move = gameDocData.move ? gameDocData.move.split('-') : [];
+      const { status } = gameDocData;
+      const moves = generateMoves(move, gameDocData.initialState);
       const myTurn = canPlay({
-        gamestatus: gameDocData.gamestatus,
+        status: gameDocData.status,
         moves,
         token: gameData.token
       });
-      const newData = { ...gameData, moveorder, moves, canPlay: myTurn, gamestatus };
+      const newData = { ...gameData, move, moves, canPlay: myTurn, status };
       setGameData(newData);
-      if (gamestatus === 'Finished') checkForWinnerOrTie(moves);
+      if (status === 'Finished') checkForWinnerOrTie(moves);
     } catch (e) {
       errorToaster(e.message, 'Error');
     }
@@ -334,7 +334,7 @@ const Game = ({ webId, gameURL }: Props) => {
   const addMoves = useCallback(async array => {
     try {
       const moves = array.join('-');
-      const predicate = 'http://www.w3.org/2000/01/rdf-schema#moveorder';
+      const predicate = 'http://www.w3.org/2000/01/rdf-schema#move';
       await gameDocument[predicate].delete();
       await gameDocument[predicate].add(moves);
     } catch (e) {
@@ -350,18 +350,18 @@ const Game = ({ webId, gameURL }: Props) => {
     async index => {
       try {
         setIsProcessing(true);
-        const { moves, moveorder, token, rival } = gameData;
+        const { moves, move, token, rival } = gameData;
         if (moves[index] === null) {
           const newMoves = moves;
           newMoves[index] = token;
-          const newOrder = [...moveorder, index];
-          const gamestatus = `Move ${getSecondToken(token)}`;
+          const newOrder = [...move, index];
+          const status = `Move ${getSecondToken(token)}`;
           const newData = {
             ...gameData,
-            moveorder: newOrder,
+            move: newOrder,
             moves: newMoves,
-            gamestatus,
-            canPlay: canPlay({ gamestatus, lastmove: token, token })
+            status,
+            canPlay: canPlay({ status, lastmove: token, token })
           };
           setGameData(newData);
           await addMoves(newOrder);
@@ -415,11 +415,12 @@ const Game = ({ webId, gameURL }: Props) => {
   useEffect(() => {
     if ((gameURL || timestamp) && !isProcessing && gameData.actor) getGame();
   }, [gameURL, timestamp]);
+
   return (
     <GameWrapper data-testid="game">
       {Object.keys(gameData).length > 0 && (
         <Fragment>
-          {!gameData.owner && gameData.gamestatus === 'Awaiting' && (
+          {!gameData.owner && gameData.status === 'Awaiting' && (
             <GameAccept {...{ ...gameData, onAccept, onDecline }} />
           )}
           <Metadata>
@@ -448,7 +449,7 @@ const Game = ({ webId, gameURL }: Props) => {
             )}
             <span>
               {t('game.status')}
-              <b>{gameData.gamestatus}</b>
+              <b>{gameData.status}</b>
             </span>
           </Metadata>
           {gameData.moves && (
@@ -465,7 +466,7 @@ const Game = ({ webId, gameURL }: Props) => {
             <Metadata>
               <span>
                 {t('game.created')}
-                <b>{moment(gameData.createddatetime).format('MMM Do, YYYY')}</b>
+                <b>{moment(gameData.created).format('MMM Do, YYYY')}</b>
               </span>
               {result && result.win ? (
                 <Fragment>

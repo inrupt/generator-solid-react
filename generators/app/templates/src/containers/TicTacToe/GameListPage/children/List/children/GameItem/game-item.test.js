@@ -4,9 +4,9 @@ import { render } from 'react-testing-library';
 import GameItem from './game-item.component';
 
 const game = {
-  gamestatus: 'finished',
+  status: 'finished',
   url: 'https://example.com/#me',
-  createddatetime: '2018-01-20',
+  created: '2018-01-20',
   opponent: 'https://example.com/#me'
 };
 

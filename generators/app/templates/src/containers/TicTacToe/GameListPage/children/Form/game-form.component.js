@@ -36,13 +36,13 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
    * @returns {Object} Game data
    */
   const initialGame = opponent => ({
-    gamestatus: 'Awaiting',
-    createddatetime: moment().format(),
+    status: 'Awaiting',
+    created: moment().format(),
     updateddatetime: moment().format(),
     actor: namedNode(webId),
     opponent: namedNode(opponent),
-    firstmove: 'X',
-    moveorder: ''
+    initialState: 'X',
+    move: ''
   });
 
   /**
