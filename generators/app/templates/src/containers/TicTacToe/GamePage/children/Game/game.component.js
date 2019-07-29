@@ -115,14 +115,14 @@ const Game = ({ webId, gameURL }: Props) => {
   });
 
   /**
-   * Checks if it's the user's turn by comparing the gamestatus with the user's token
-   * @param {String} gamestatus Status of the game
+   * Checks if it's the user's turn by comparing the status with the user's token
+   * @param {String} status Status of the game
    * @param {String} token Player's token
    * @returns {Boolean}
    */
-  const canPlay = useCallback(({ gamestatus, token }) => {
-    const isStatusValid = gamestatus && gamestatus.includes('Move');
-    return isStatusValid ? gamestatus.includes(token) : false;
+  const canPlay = useCallback(({ status, token }) => {
+    const isStatusValid = status && status.includes('Move');
+    return isStatusValid ? status.includes(token) : false;
   });
 
   /**
@@ -132,7 +132,7 @@ const Game = ({ webId, gameURL }: Props) => {
   const changeGameStatus = useCallback(
     async gamestatus => {
       try {
-        const predicate = 'http://www.w3.org/2000/01/rdf-schema#gamestatus';
+        const predicate = 'http://data.totl.net/game/status';
         await gameDocument[predicate].set(gamestatus);
       } catch (e) {
         throw e;
@@ -286,6 +286,7 @@ const Game = ({ webId, gameURL }: Props) => {
         moves,
         token
       });
+
       const newData = {
         ...gameDocData,
         actor,
@@ -334,7 +335,7 @@ const Game = ({ webId, gameURL }: Props) => {
   const addMoves = useCallback(async array => {
     try {
       const moves = array.join('-');
-      const predicate = 'http://www.w3.org/2000/01/rdf-schema#move';
+      const predicate = 'http://data.totl.net/game/move';
       await gameDocument[predicate].delete();
       await gameDocument[predicate].add(moves);
     } catch (e) {
