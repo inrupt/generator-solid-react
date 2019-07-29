@@ -25,12 +25,11 @@ export const Wrapper = styled.div`
 
 `;
 
-export const ListWrapper = styled.ul`
-  overflow-y: auto;
+export const ListWrapper = styled.div`
   max-height: 350px;
+  overflow: initial;
 `;
 
 export const GameListContainers = styled.div`
-  display: flex;
-  justify-content: space-evenly;
+  width: 100%;
 `;
