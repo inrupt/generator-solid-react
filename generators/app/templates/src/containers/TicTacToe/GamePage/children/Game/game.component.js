@@ -202,6 +202,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
         target: window.location.href
       });
       cb();
+      history.push('/tictactoe');
     } catch (e) {
       errorToaster(e.message, 'Error');
     }
@@ -455,8 +456,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
               </div>
             )}
             <span>
-              {t('game.status')}
-              <b>{gameData.gamestatus}</b>
+              {t('game.status')} <b>{gameData.gamestatus}</b>
             </span>
           </Metadata>
           {gameData.moves && (
@@ -472,14 +472,13 @@ const Game = ({ webId, gameURL, history }: Props) => {
           {gameData && (
             <Metadata>
               <span>
-                {t('game.created')}
-                <b>{moment(gameData.createddatetime).format('MMM Do, YYYY')}</b>
+                {t('game.created')} <b>{moment(gameData.createddatetime).format('MMM Do, YYYY')}</b>
               </span>
               {result && result.win ? (
                 <Fragment>
                   <span>
-                    {t('game.winnerObject')}
-                    <strong>{result.token}</strong> with <b>{result.combination.join('-')}</b>
+                    {t('game.winnerObj')} <strong>{result.token}</strong> with{' '}
+                    <b>{result.combination.join('-')}</b>
                   </span>
                 </Fragment>
               ) : (
