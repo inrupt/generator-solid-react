@@ -72,7 +72,19 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
        * */
       if (inboxes.length > 0) {
         const newDocument = await ldflexHelper.createNonExistentDocument(documentUri);
-        if (newDocument) {
+
+        /**
+         * If game already exist show an error message
+         */
+        if (!newDocument) {
+          errorToaster(`${documentUri} ${t('game.alreadyExists')}`, t('notifications.error'));
+          return null;
+        }
+
+        /**
+         * If document was created we will initialize the game, otherwise show an error
+         */
+        if (newDocument.ok) {
           const document = await ldflexHelper.fetchLdflexDocument(documentUri);
           const setupObj = initialGame(opponent);
 
@@ -99,15 +111,19 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
           );
 
           setDocumentUri(`${Date.now()}.ttl`);
-        } else {
-          errorToaster(`${opponent} ${t('game.createFolder')}`, t('notifications.error'));
+
+          return true;
         }
-      } else {
-        errorToaster(`${opponent} ${t('noInboxOpponent.message')}`, t('notifications.error'), {
-          label: t('noInboxOpponent.link.label'),
-          href: t('noInboxOpponent.link.href')
-        });
+        errorToaster(`${opponent} ${t('game.createFolder.message')}`, t('notifications.error'));
+        return null;
       }
+
+      errorToaster(`${opponent} ${t('noInboxOpponent.message')}`, t('notifications.error'), {
+        label: t('noInboxOpponent.link.label'),
+        href: t('noInboxOpponent.link.href')
+      });
+
+      return null;
     } catch (e) {
       throw new Error(e);
     }
@@ -124,14 +140,18 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         webId,
         `${process.env.REACT_APP_TICTAC_PATH}${documentUri}`
       );
-      await createGame(documentPath, opponent);
-      const permissions = [
-        { agents: [opponent], modes: [AccessControlList.MODES.READ, AccessControlList.MODES.WRITE] }
-      ];
-      const ACLFile = new AccessControlList(webId, documentPath);
-      await ACLFile.createACL(permissions);
-      // await aclTurtle(documentPath, opponent);
-      successToaster(t('game.createGameSuccess'), t('notifications.success'));
+      const result = await createGame(documentPath, opponent);
+      if (result) {
+        const permissions = [
+          {
+            agents: [opponent],
+            modes: [AccessControlList.MODES.READ, AccessControlList.MODES.WRITE]
+          }
+        ];
+        const ACLFile = new AccessControlList(webId, documentPath);
+        await ACLFile.createACL(permissions);
+        successToaster(t('game.createGameSuccess'), t('notifications.success'));
+      }
     } catch (e) {
       errorToaster(e.message, t('game.errorTitle'));
     }
