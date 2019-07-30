@@ -20,9 +20,9 @@ const possibleCombinations = [
   [1, 4, 7],
   [2, 5, 8]
 ];
-type Props = { webId: String, gameURL: String };
+type Props = { webId: String, gameURL: String, history: Object };
 
-const Game = ({ webId, gameURL }: Props) => {
+const Game = ({ webId, gameURL, history }: Props) => {
   /** Game Logic */
   const updates = useLiveUpdate();
   const { timestamp } = updates;
@@ -219,14 +219,19 @@ const Game = ({ webId, gameURL }: Props) => {
    * @returns {Object} An Object with all of the turtle file data
    */
   const fetchRawData = async () => {
-    const game = await ldflexHelper.fetchLdflexDocument(gameURL);
-    setGameDocument(game);
-    let data = {};
-    for await (const field of tictactoeShape.shape) {
-      const fieldData = await game[getPredicate(field)];
-      data = { ...data, [field.predicate]: fieldData.value };
+    try {
+      const game = await ldflexHelper.fetchLdflexDocument(gameURL);
+      if (!game) throw new Error('404');
+      setGameDocument(game);
+      let data = {};
+      for await (const field of tictactoeShape.shape) {
+        const fieldData = await game[getPredicate(field)];
+        data = { ...data, [field.predicate]: fieldData.value };
+      }
+      return data;
+    } catch (error) {
+      throw error;
     }
-    return data;
   };
 
   /**
@@ -301,7 +306,8 @@ const Game = ({ webId, gameURL }: Props) => {
       setGameData(newData);
       if (gameDocData.gamestatus === 'Finished') checkForWinnerOrTie(moves);
     } catch (e) {
-      errorToaster(e.message);
+      if (e.message === '404') history.push('404');
+      else errorToaster(e.message, 'Error');
     }
   });
 
@@ -327,7 +333,8 @@ const Game = ({ webId, gameURL }: Props) => {
       setGameData(newData);
       if (gamestatus === 'Finished') checkForWinnerOrTie(moves);
     } catch (e) {
-      errorToaster(e.message, 'Error');
+      if (e.message === '404') history.push('404');
+      else errorToaster(e.message, 'Error');
     }
   }, [gameURL, gameData]);
 

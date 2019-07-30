@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { LiveUpdate } from '@inrupt/solid-react-components';
-import { Redirect } from 'react-router-dom';
-import { ldflexHelper } from '@utils';
 import { Game } from './children';
 import { Section, Wrapper } from '../tic-tac-toe.style';
 
@@ -13,10 +11,7 @@ const GamePage = ({ match, webId, history }) => {
   const isGameUrlValid = async () => {
     try {
       const url = new URL(gameURL);
-      const document = await ldflexHelper.documentExists(gameURL);
-      const isOk = url && document.status !== 404;
-      if (!isOk) history.push('/404');
-      setWasChecked(isOk);
+      setWasChecked(url !== undefined);
     } catch (e) {
       history.push('/404');
     }
@@ -31,7 +26,7 @@ const GamePage = ({ match, webId, history }) => {
       <Wrapper>
         {webId && wasChecked && (
           <LiveUpdate subscribe={gameURL}>
-            <Game {...{ gameURL, webId }} />
+            <Game {...{ gameURL, webId, history }} />
           </LiveUpdate>
         )}
       </Wrapper>
