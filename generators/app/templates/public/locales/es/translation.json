@@ -142,7 +142,8 @@
         "label": "Saber más",
         "href": "url link"
       }
-    }
+    },
+    "alreadyExists": " archivo o carpeta ya existe en su pod."
   },
   "noInboxOpponent": {
     "message": "No se encontró un inbox para su oponente",

@@ -146,7 +146,8 @@
         "label": "Learn More",
         "href": "link url"
       }
-    }
+    },
+    "alreadyExists": "{{nameFile}} file already exists in the Pod. "
   },
   "noInboxOpponent": {
     "message": "Your opponent does not have an inbox in their Pod",
