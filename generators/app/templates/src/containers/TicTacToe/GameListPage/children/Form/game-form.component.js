@@ -82,7 +82,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         }
 
         /**
-         * if document was created we will initial the game if not show an error
+         * If document was created we will initialize the game, otherwise show an error
          */
         if (newDocument.ok) {
           const document = await ldflexHelper.fetchLdflexDocument(documentUri);
@@ -150,7 +150,6 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         ];
         const ACLFile = new AccessControlList(webId, documentPath);
         await ACLFile.createACL(permissions);
-        // await aclTurtle(documentPath, opponent);
         successToaster(t('game.createGameSuccess'), t('notifications.success'));
       }
     } catch (e) {
