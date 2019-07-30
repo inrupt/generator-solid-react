@@ -419,9 +419,10 @@ const Game = ({ webId, gameURL }: Props) => {
     <GameWrapper data-testid="game">
       {Object.keys(gameData).length > 0 && (
         <Fragment>
-          {!gameData.owner && (gameData.gamestatus === 'Awaiting' || gameData.gamestatus === 'Invite Sent') && (
-            <GameAccept {...{ ...gameData, onAccept, onDecline }} />
-          )}
+          {!gameData.owner &&
+            (gameData.gamestatus === 'Awaiting' || gameData.gamestatus === 'Invite Sent') && (
+              <GameAccept {...{ ...gameData, onAccept, onDecline }} />
+            )}
           <Metadata>
             {
               <div>

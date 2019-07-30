@@ -4,14 +4,14 @@ export const Item = styled.div`
   width: 100%;
   display: inline-block !important; // overriding the default card style
   margin: 5px 0 5px 0;
-  padding: 7px 10px 7px 10px !important; // overriding the default card style 
+  padding: 7px 10px 7px 10px !important; // overriding the default card style
 `;
 
 export const GameCard = styled.div`
   display: flex;
   min-height: 72px;
   height: auto;
-`
+`;
 
 export const GameStatus = styled.span`
   margin: 20px auto 0;
@@ -37,14 +37,20 @@ export const Actions = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  
+
   a {
     color: inherit;
   }
-  
+
   svg {
     display: inline-block;
     margin: 10px;
+  }
+
+  & button {
+    border: none;
+    margin: 0;
+    padding: 0;
   }
 `;
 

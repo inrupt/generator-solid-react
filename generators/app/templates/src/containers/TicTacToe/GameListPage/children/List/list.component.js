@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLiveUpdate } from '@inrupt/solid-react-components';
 import { useTranslation } from 'react-i18next';
 import ldflex from '@solid/query-ldflex';
+import { namedNode } from '@rdfjs/data-model';
 import { Loader } from '@util-components';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
 import { ldflexHelper, errorToaster, buildPathFromWebId, getUserNameByUrl } from '@utils';
@@ -10,8 +11,8 @@ import { Wrapper, ListWrapper, GameListContainers } from './list.style';
 
 let oldTimestamp;
 type Props = { webId: String, gamePath: String };
-type GameListProps = { title: String, games: Array };
-const GameList = ({ title, games, webId }: GameListProps) => {
+type GameListProps = { title: String, games: Array, webId: String, deleteGame: Function };
+const GameList = ({ title, games, webId, deleteGame }: GameListProps) => {
   const { t } = useTranslation();
   return (
     <div>
@@ -19,7 +20,7 @@ const GameList = ({ title, games, webId }: GameListProps) => {
       {games.length > 0 ? (
         <ListWrapper className="ids-container__four-column grid">
           {games.map(game => (
-            <GameItem {...{ game }} key={game.url} webId={webId} />
+            <GameItem {...{ game }} key={game.url} webId={webId} deleteGame={deleteGame} />
           ))}
         </ListWrapper>
       ) : (
@@ -46,6 +47,21 @@ const List = ({ webId, gamePath }: Props) => {
     return `${prefix}${field.predicate}`;
   };
 
+  const deleteGameFromContains = async (gameUrl, documentUrl) => {
+    await ldflex[documentUrl]['ldp:contains'].delete(namedNode(gameUrl));
+  };
+
+  const deleteGame = async game => {
+    const { url, deleted, documentUrl } = game;
+    if (deleted) {
+      await deleteGameFromContains(url, documentUrl);
+    } else {
+      await ldflexHelper.deleteFile(url);
+    }
+    const newGames = list.filter(gameItem => gameItem.url !== url);
+    setList(newGames);
+  };
+
   /**
    * Get basic info for the opponent player (name and image url)
    * @param {String} webId WebId of the player to look the Info for
@@ -63,21 +79,6 @@ const List = ({ webId, gamePath }: Props) => {
       return { name: getUserNameByUrl(url), image: 'img/people.svg', webId };
     }
   });
-
-  const setGameStatus = async (gameList) => {
-    console.log('Status', gameList);
-    /* gameList.foreach((game) => {
-      let gameExists = fetch(game.url).status == 200;
-      let opponentExists = fetch(game.opponent.webId) == 200;
-
-      if(!gameExist && opponentExists) {
-        game.status = 'Deleted';
-      } else if(!gameExists && !opponentExists) {
-        game.status = 'Unavailable';
-      }
-    }); */
-    return gameList;
-  };
 
   /**
    * Fetches all games from a url
@@ -102,10 +103,7 @@ const List = ({ webId, gamePath }: Props) => {
         for await (const item of gameList) {
           const game = await ldflexHelper.fetchLdflexDocument(item);
           let gameData = { url: item };
-
-          if (!game) {
-            gameData = { ...gameData, gamestatus: 'Deleted' };
-          } else {
+          if (game) {
             for await (const field of tictactoeShape.shape) {
               let values = [];
               for await (const val of game[getPredicate(field)]) {
@@ -116,12 +114,12 @@ const List = ({ webId, gamePath }: Props) => {
             }
             const opponent = await getPlayerInfo(gameData.opponent);
             const actor = await getPlayerInfo(gameData.actor);
-            gameData = { ...gameData, opponent, actor };
+            gameData = { ...gameData, opponent, actor, deleted: false, documentUrl: url };
+          } else {
+            gameData = { ...gameData, gamestatus: 'Deleted', deleted: true, documentUrl: url };
           }
           games = [...games, gameData];
-
         }
-        games = setGameStatus(games);
         return games;
       } catch (e) {
         errorToaster(e.message, 'Error');
@@ -172,7 +170,14 @@ const List = ({ webId, gamePath }: Props) => {
     <Wrapper data-testid="game-list">
       {!isLoading ? (
         <GameListContainers>
-          {list && <GameList title={t('game.yourGames')} games={list} webId={webId} />}
+          {list && (
+            <GameList
+              title={t('game.yourGames')}
+              games={list}
+              webId={webId}
+              deleteGame={deleteGame}
+            />
+          )}
         </GameListContainers>
       ) : (
         <Loader absolute />

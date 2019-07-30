@@ -16,6 +16,14 @@ const createDoc = async (documentUri, options) => {
   }
 };
 
+export const deleteFile = async url => {
+  try {
+    return await auth.fetch(url, { method: 'DELETE' });
+  } catch (e) {
+    throw e;
+  }
+};
+
 export const createDocument = async (documentUri, body = '') => {
   try {
     const options = {
