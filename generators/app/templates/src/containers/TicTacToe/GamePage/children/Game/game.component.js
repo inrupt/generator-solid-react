@@ -191,7 +191,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
    * Declines the game by changing the status of it to 'Declined' and sending a notification to the actor
    * @param {Function} cb Function to execute once the game has been declined
    */
-  const onDecline = async cb => {
+  const onDecline = async () => {
     try {
       await changeGameStatus('Declined');
       await sendNotification(rival.webId, {
@@ -201,7 +201,6 @@ const Game = ({ webId, gameURL, history }: Props) => {
         object: gameURL,
         target: window.location.href
       });
-      cb();
       history.push('/tictactoe');
     } catch (e) {
       errorToaster(e.message, 'Error');
