@@ -148,7 +148,7 @@
       }
     },
     "myself": "You cannot play against yourself",
-    "alreadyExists": "{{nameFile}} file already exists in the Pod. "
+    "alreadyExists": "file already exists in the Pod. "
   },
   "noInboxOpponent": {
     "message": "Your opponent does not have an inbox in their Pod",
