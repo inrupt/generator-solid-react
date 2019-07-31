@@ -143,6 +143,7 @@
         "href": "url link"
       }
     },
+    "myself": "No puedes jugar contra ti mismo",
     "alreadyExists": " archivo o carpeta ya existe en su pod."
   },
   "noInboxOpponent": {
