@@ -1,9 +1,13 @@
 import React, { useCallback, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { withAuthorization, AppPermission } from '@inrupt/solid-react-components';
+import {
+  withAuthorization,
+  AppPermission,
+  AccessControlList
+} from '@inrupt/solid-react-components';
 import { AuthNavBar, Footer } from '@components';
-import { errorToaster } from '@utils';
+import { errorToaster, checkAppPermissions } from '@utils';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -22,15 +26,22 @@ const Content = styled.div`
 
 const PrivateLayout = ({ routes, webId, location, history, ...rest }) => {
   const { t } = useTranslation();
-  const checkAppPermissions = useCallback(async () => {
-    const permission = await AppPermission.checkPermissions(webId);
+  /**
+   * SDK app will need all the permissions by the user pod so
+   * we check these permissions to work without any issues.
+   */
+  const checkPermissions = useCallback(async () => {
     /**
-     * SDK app will need all the permission by the user pod,
-     * so for this reason we check it for that.
+     * Get permissions from trustedApp.
      */
-    const permissions = permission.permissions.toString();
+    const userApp = await AppPermission.checkPermissions(webId);
+    /**
+     * Get modes permissions from solid-react-components
+     */
+    const permissions = AccessControlList.MODES;
+    const { APPEND, READ, WRITE, CONTROL } = permissions;
 
-    if (permissions !== process.env.REACT_APP_PERMISSIONS) {
+    if (!checkAppPermissions(userApp.permissions, [APPEND, READ, WRITE, CONTROL])) {
       errorToaster(t('appPermission.message'), t('errorTitle'), {
         label: t('appPermission.link.label'),
         href: t('appPermission.link.href')
@@ -39,7 +50,7 @@ const PrivateLayout = ({ routes, webId, location, history, ...rest }) => {
   }, [webId]);
 
   useEffect(() => {
-    if (webId) checkAppPermissions();
+    if (webId) checkPermissions();
   }, [webId]);
 
   return (
