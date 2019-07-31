@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Item = styled.div`
   width: 100%;
   display: inline-block !important; // overriding the default card style
-  margin: 5px 0 5px 0;
   padding: 7px 10px 7px 10px !important; // overriding the default card style
 `;
 
