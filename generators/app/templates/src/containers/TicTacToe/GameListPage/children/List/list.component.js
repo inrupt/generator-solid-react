@@ -47,10 +47,20 @@ const List = ({ webId, gamePath }: Props) => {
     return `${prefix}${field.predicate}`;
   };
 
+  /**
+   * Deletes a game from a contains predicate in a specific url
+   * @param {String} gameUrl Game to delete
+   * @param {String} documentUrl URL of the document with a contains predicate
+   */
   const deleteGameFromContains = async (gameUrl, documentUrl) => {
     await ldflex[documentUrl]['ldp:contains'].delete(namedNode(gameUrl));
   };
 
+  /**
+   * Deletes a game based on it's url. Checks for a deleted flag
+   * to check if it needs to be deleted from a contains predicate
+   * @param {Object} game Game to be deleted
+   */
   const deleteGame = async game => {
     const { url, deleted, documentUrl } = game;
     if (deleted) {
