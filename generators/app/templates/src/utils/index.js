@@ -25,6 +25,12 @@ function getUserNameByUrl(webId) {
   return 'unknown';
 }
 
+function checkAppPermissions(userAppPermissions, appPermissions) {
+  const userAppPermission = userAppPermissions.sort().toString();
+  const appPermission = appPermissions.sort().toString();
+  return userAppPermission === appPermission;
+}
+
 export {
   media,
   expandedProperty,
@@ -34,5 +40,6 @@ export {
   errorToaster,
   buildPathFromWebId,
   getUserNameByUrl,
+  checkAppPermissions,
   notification
 };
