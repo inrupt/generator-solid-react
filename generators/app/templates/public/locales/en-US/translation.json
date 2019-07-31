@@ -1,11 +1,14 @@
 {
-  "errorTitle": "Error",
   "appPermission": {
     "message": "The application permissions are not properly set. Please add additional permissions and try again",
     "link": {
       "label": "Learn more",
       "href": "https://solidsdk.inrupt.net/public/general/en/app-permissions.html"
     }
+  },
+  "notifications": {
+    "success": "Éxito",
+    "error": "Error"
   },
   "login": {
     "title": "Hi! Welcome to Solid.",

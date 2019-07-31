@@ -42,7 +42,7 @@ const PrivateLayout = ({ routes, webId, location, history, ...rest }) => {
     const { APPEND, READ, WRITE, CONTROL } = permissions;
 
     if (!checkAppPermissions(userApp.permissions, [APPEND, READ, WRITE, CONTROL])) {
-      errorToaster(t('appPermission.message'), t('errorTitle'), {
+      errorToaster(t('appPermission.message'), t('notifications.error'), {
         label: t('appPermission.link.label'),
         href: t('appPermission.link.href')
       });

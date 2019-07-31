@@ -1,5 +1,4 @@
 {
-  "errorTitle": "Error",
   "appPermission": {
     "message": "The application permissions are not properly set. Please add additional permissions and try again",
     "link": {
