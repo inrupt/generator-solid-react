@@ -89,12 +89,12 @@ const Game = ({ webId, gameURL, history }: Props) => {
 
   /**
    * Generates the moves array for the game. An array of size 9 with all of the played moves
-   * @param {Array<String>} moveorder An array of moves based on moves indexes
+   * @param {Array<String>} move An array of moves based on moves indexes
    * @param {String} firstmove Token of the first move of the game
    * @returns {void}
    */
-  const generateMoves = useCallback((moveorder: Array<String>, firstmove: String) =>
-    moveorder.reduce((allSquares, current, i) => {
+  const generateMoves = useCallback((move: Array<String>, firstmove: String) =>
+    move.reduce((allSquares, current, i) => {
       const squares = allSquares;
       let move;
       if (i % 2 === 0) move = firstmove;
@@ -115,14 +115,14 @@ const Game = ({ webId, gameURL, history }: Props) => {
   });
 
   /**
-   * Checks if it's the user's turn by comparing the gamestatus with the user's token
-   * @param {String} gamestatus Status of the game
+   * Checks if it's the user's turn by comparing the status with the user's token
+   * @param {String} status Status of the game
    * @param {String} token Player's token
    * @returns {Boolean}
    */
-  const canPlay = useCallback(({ gamestatus, token }) => {
-    const isStatusValid = gamestatus && gamestatus.includes('Move');
-    return isStatusValid ? gamestatus.includes(token) : false;
+  const canPlay = useCallback(({ status, token }) => {
+    const isStatusValid = status && status.includes('Move');
+    return isStatusValid ? status.includes(token) : false;
   });
 
   /**
@@ -132,7 +132,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
   const changeGameStatus = useCallback(
     async gamestatus => {
       try {
-        const predicate = 'http://www.w3.org/2000/01/rdf-schema#gamestatus';
+        const predicate = 'http://data.totl.net/game/status';
         await gameDocument[predicate].set(gamestatus);
       } catch (e) {
         throw e;
@@ -267,8 +267,8 @@ const Game = ({ webId, gameURL, history }: Props) => {
     async data => {
       const { moves } = data;
       const result = await checkForWinnerOrTie(moves);
-      const gamestatus = result.finished ? 'Finished' : data.gamestatus;
-      await changeGameStatus(gamestatus);
+      const status = result.finished ? 'Finished' : data.status;
+      await changeGameStatus(status);
     },
     [gameData]
   );
@@ -283,19 +283,20 @@ const Game = ({ webId, gameURL, history }: Props) => {
       const opponent = await getPlayerInfo(gameDocData.opponent);
       const owner = webId === actor.webId;
       const rival = getRival({ actor, opponent, owner });
-      const token = owner ? getSecondToken(gameDocData.firstmove) : gameDocData.firstmove;
-      const moveorder = gameDocData.moveorder ? gameDocData.moveorder.split('-') : [];
-      const moves = generateMoves(moveorder, gameDocData.firstmove);
+      const token = owner ? getSecondToken(gameDocData.initialState) : gameDocData.initialState;
+      const move = gameDocData.move ? gameDocData.move.split('-') : [];
+      const moves = generateMoves(move, gameDocData.initialState);
       const myTurn = canPlay({
-        gamestatus: gameDocData.gamestatus,
+        status: gameDocData.status,
         moves,
         token
       });
+
       const newData = {
         ...gameDocData,
         actor,
         opponent,
-        moveorder,
+        move,
         moves,
         owner,
         rival,
@@ -304,7 +305,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
       };
       setRival(rival);
       setGameData(newData);
-      if (gameDocData.gamestatus === 'Finished') checkForWinnerOrTie(moves);
+      if (gameDocData.status === 'Finished') checkForWinnerOrTie(moves);
     } catch (e) {
       if (e.message === '404') history.push('404');
       else errorToaster(e.message, 'Error');
@@ -318,20 +319,20 @@ const Game = ({ webId, gameURL, history }: Props) => {
   const getGame = useCallback(async () => {
     try {
       const gameDocData = await fetchRawData();
-      if (gameDocData.gamestatus === gameData.gamestatus) {
+      if (gameDocData.status === gameData.status) {
         return;
       }
-      const moveorder = gameDocData.moveorder ? gameDocData.moveorder.split('-') : [];
-      const { gamestatus } = gameDocData;
-      const moves = generateMoves(moveorder, gameDocData.firstmove);
+      const move = gameDocData.move ? gameDocData.move.split('-') : [];
+      const { status } = gameDocData;
+      const moves = generateMoves(move, gameDocData.initialState);
       const myTurn = canPlay({
-        gamestatus: gameDocData.gamestatus,
+        status: gameDocData.status,
         moves,
         token: gameData.token
       });
-      const newData = { ...gameData, moveorder, moves, canPlay: myTurn, gamestatus };
+      const newData = { ...gameData, move, moves, canPlay: myTurn, status };
       setGameData(newData);
-      if (gamestatus === 'Finished') checkForWinnerOrTie(moves);
+      if (status === 'Finished') checkForWinnerOrTie(moves);
     } catch (e) {
       if (e.message === '404') history.push('404');
       else errorToaster(e.message, 'Error');
@@ -341,7 +342,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
   const addMoves = useCallback(async array => {
     try {
       const moves = array.join('-');
-      const predicate = 'http://www.w3.org/2000/01/rdf-schema#moveorder';
+      const predicate = 'http://data.totl.net/game/move';
       await gameDocument[predicate].delete();
       await gameDocument[predicate].add(moves);
     } catch (e) {
@@ -357,18 +358,18 @@ const Game = ({ webId, gameURL, history }: Props) => {
     async index => {
       try {
         setIsProcessing(true);
-        const { moves, moveorder, token, rival } = gameData;
+        const { moves, move, token, rival } = gameData;
         if (moves[index] === null) {
           const newMoves = moves;
           newMoves[index] = token;
-          const newOrder = [...moveorder, index];
-          const gamestatus = `Move ${getSecondToken(token)}`;
+          const newOrder = [...move, index];
+          const status = `Move ${getSecondToken(token)}`;
           const newData = {
             ...gameData,
-            moveorder: newOrder,
+            move: newOrder,
             moves: newMoves,
-            gamestatus,
-            canPlay: canPlay({ gamestatus, lastmove: token, token })
+            status,
+            canPlay: canPlay({ status, lastmove: token, token })
           };
           setGameData(newData);
           await addMoves(newOrder);
@@ -422,12 +423,13 @@ const Game = ({ webId, gameURL, history }: Props) => {
   useEffect(() => {
     if ((gameURL || timestamp) && !isProcessing && gameData.actor) getGame();
   }, [gameURL, timestamp]);
+
   return (
     <GameWrapper data-testid="game">
       {Object.keys(gameData).length > 0 && (
         <Fragment>
           {!gameData.owner &&
-            (gameData.gamestatus === 'Awaiting' || gameData.gamestatus === 'Invite Sent') && (
+            (gameData.status === 'Awaiting' || gameData.status === 'Invite Sent') && (
               <GameAccept {...{ ...gameData, onAccept, onDecline }} />
             )}
           <Metadata>
@@ -455,7 +457,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
               </div>
             )}
             <span>
-              {t('game.status')} <b>{gameData.gamestatus}</b>
+              {t('game.status')} <b>{gameData.status}</b>
             </span>
           </Metadata>
           {gameData.moves && (
@@ -471,7 +473,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
           {gameData && (
             <Metadata>
               <span>
-                {t('game.created')} <b>{moment(gameData.createddatetime).format('MMM Do, YYYY')}</b>
+                {t('game.created')} <b>{moment(gameData.created).format('MMM Do, YYYY')}</b>
               </span>
               {result && result.win ? (
                 <Fragment>

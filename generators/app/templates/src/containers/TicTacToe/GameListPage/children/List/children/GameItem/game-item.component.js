@@ -15,12 +15,12 @@ import {
 type Props = { game: Object, webId: String, deleteGame: Function };
 
 const GameItem = ({ game, webId, deleteGame }: Props) => {
-  const { gamestatus, url, createddatetime, opponent, actor } = game;
+  const { status, url, created, opponent, actor } = game;
   return (
     <Item className="card item__span-4-columns">
       <GameCard>
         <ProfileDisplayItem player={opponent && opponent.webId !== webId ? opponent : actor} />
-        <GameStatus>{gamestatus}</GameStatus>
+        <GameStatus>{status}</GameStatus>
         <Actions>
           <div>
             <button type="button" onClick={() => deleteGame(game)}>
@@ -32,7 +32,7 @@ const GameItem = ({ game, webId, deleteGame }: Props) => {
               </Link>
             )}
           </div>
-          <span>{moment(createddatetime).fromNow()}</span>
+          <span>{moment(created).fromNow()}</span>
         </Actions>
       </GameCard>
     </Item>
