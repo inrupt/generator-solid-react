@@ -226,7 +226,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
       let data = {};
       for await (const field of tictactoeShape.shape) {
         const fieldData = await game[getPredicate(field)];
-        data = { ...data, [field.predicate]: fieldData.value };
+        data = { ...data, [field.predicate]: fieldData && fieldData.value };
       }
       return data;
     } catch (error) {

@@ -91,7 +91,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
             const prefix = tictactoeShape['@context'][field.prefix];
             const predicate = `${prefix}${field.predicate}`;
             const obj = setupObj[field.predicate];
-            if (obj) await document[predicate].add(obj);
+            if (obj || obj === '') await document[predicate].add(obj);
           }
           /**
            * Find the opponent's game-specific inbox. If it doesn't exist, get the global inbox instead
