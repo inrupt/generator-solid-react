@@ -5,7 +5,7 @@
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "as": "https://www.w3.org/ns/activitystreams#",
-    "terms": "http://purl.org/dc/terms",
+    "terms": "http://purl.org/dc/terms/",
     "game": "http://data.totl.net/game/"
   },
   "shape": [
@@ -25,9 +25,7 @@
       "prefix": "schema",
       "predicate": "opponent"
     },
-    { "prefix": "game",
-      "predicate": "initialState"
-    },
+    { "prefix": "game", "predicate": "initialState" },
     {
       "prefix": "game",
       "predicate": "move"

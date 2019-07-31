@@ -144,12 +144,12 @@ const List = ({ webId, gamePath }: Props) => {
   const init = useCallback(async () => {
     setIsLoading(true);
     const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
-    const otherGamesUrl = `${url}data.ttl`;
+    const inviteGamesUrl = `${url}data.ttl`;
     /**
      * Check if user pod has data.ttl file where will live
      * opponent games if not show error message
      */
-    const hasData = await ldflexHelper.folderExists(otherGamesUrl);
+    const hasData = await ldflexHelper.folderExists(inviteGamesUrl);
 
     if (!hasData)
       errorToaster(t('game.dataError.message'), 'Error', {
@@ -157,10 +157,12 @@ const List = ({ webId, gamePath }: Props) => {
         href: t('game.dataError.link.href')
       });
 
-    let games = await getGames(gamePath);
-    const otherGames = await getGames(otherGamesUrl);
-    games = [...games, ...otherGames];
-    setList(games);
+    const games = await getGames(gamePath);
+    const inviteGames = await getGames(inviteGamesUrl);
+    let allGames = [];
+    if (Array.isArray(games)) allGames = [...allGames, ...games];
+    if (Array.isArray(inviteGames)) allGames = [...allGames, ...inviteGames];
+    setList(allGames);
     setIsLoading(false);
   });
 

@@ -36,9 +36,8 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
    * @returns {Object} Game data
    */
   const initialGame = opponent => ({
-    gamestatus: 'Invite Sent',
+    status: 'Invite Sent',
     created: moment().format(),
-    updateddatetime: moment().format(),
     actor: namedNode(webId),
     opponent: namedNode(opponent),
     initialState: 'X',
@@ -91,7 +90,8 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
           for await (const field of tictactoeShape.shape) {
             const prefix = tictactoeShape['@context'][field.prefix];
             const predicate = `${prefix}${field.predicate}`;
-            await document[predicate].add(setupObj[field.predicate]);
+            const obj = setupObj[field.predicate];
+            if (obj) await document[predicate].add(obj);
           }
           /**
            * Find the opponent's game-specific inbox. If it doesn't exist, get the global inbox instead
