@@ -147,6 +147,7 @@
         "href": "link url"
       }
     },
+    "myself": "You cannot play against yourself",
     "alreadyExists": "file already exists in the Pod. "
   },
   "noInboxOpponent": {
