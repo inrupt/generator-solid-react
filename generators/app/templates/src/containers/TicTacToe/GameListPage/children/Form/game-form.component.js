@@ -140,12 +140,14 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         webId,
         `${process.env.REACT_APP_TICTAC_PATH}${documentUri}`
       );
-      const result = await createGame(documentPath, opponent);
 
       if (webId === opponent) {
         errorToaster(t('game.myself'), t('game.errorTitle'));
         return;
       }
+
+      const result = await createGame(documentPath, opponent);
+
       if (result) {
         const permissions = [
           {
