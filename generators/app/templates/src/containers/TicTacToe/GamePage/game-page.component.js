@@ -1,28 +1,32 @@
-import React, { useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LiveUpdate } from '@inrupt/solid-react-components';
 import { Game } from './children';
 import { Section, Wrapper } from '../tic-tac-toe.style';
 
-const GamePage = ({ match, webId }) => {
+const GamePage = ({ match, webId, history }) => {
   const { gameId } = match.params;
   const gameURL = atob(gameId);
-
+  const [wasChecked, setWasChecked] = useState(false);
   /* Checks if the game url is a valid url or not */
-  const isGameUrlValid = useCallback(() => {
+  const isGameUrlValid = async () => {
     try {
       const url = new URL(gameURL);
-      return url !== undefined;
+      setWasChecked(url !== undefined);
     } catch (e) {
-      return false;
+      history.push('/404');
     }
-  }, [webId]);
+  };
+
+  useEffect(() => {
+    if (webId) isGameUrlValid();
+  }, [webId, match]);
 
   return (
     <Section id="gamepage">
       <Wrapper>
-        {isGameUrlValid() && webId && (
+        {webId && wasChecked && (
           <LiveUpdate subscribe={gameURL}>
-            <Game {...{ gameURL, webId }} />
+            <Game {...{ gameURL, webId, history }} />
           </LiveUpdate>
         )}
       </Wrapper>

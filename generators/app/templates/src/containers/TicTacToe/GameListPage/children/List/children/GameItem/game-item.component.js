@@ -1,27 +1,49 @@
 import React from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { Item, Info, GameStatus, Actions } from './game-item.style';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  Item,
+  ProfileName,
+  GameStatus,
+  Actions,
+  GameCard,
+  ProfileImage,
+  ProfileItems
+} from './game-item.style';
 
-// moment.suppressDeprecationWarnings = true;
+type Props = { game: Object, webId: String, deleteGame: Function };
 
-type Props = { game: Object };
-
-const GameItem = ({ game }: Props) => {
-  const status = game.status && game.status.toLowerCase().replace(' ', '');
-  const { status: gameStatus, url, created, opponent } = game;
+const GameItem = ({ game, webId, deleteGame }: Props) => {
+  const { status, url, created, opponent, actor } = game;
   return (
-    <Item>
-      <Info>
-        {opponent && <a href={opponent.webId}>{opponent.name}</a>}
-        <GameStatus status={status}>{gameStatus}</GameStatus>
-      </Info>
-      <Actions>
-        <Link to={`tictactoe/${btoa(url)}`}>GO</Link>
-        <span>{moment(created).fromNow()}</span>
-      </Actions>
+    <Item className="card item__span-4-columns">
+      <GameCard>
+        <ProfileDisplayItem player={opponent && opponent.webId !== webId ? opponent : actor} />
+        <GameStatus>{status}</GameStatus>
+        <Actions>
+          <div>
+            <button type="button" onClick={() => deleteGame(game)}>
+              <FontAwesomeIcon icon="trash-alt" size="2x" />
+            </button>
+            {!game.deleted && (
+              <Link to={`tictactoe/${btoa(url)}`}>
+                <FontAwesomeIcon icon="play" size="2x" />
+              </Link>
+            )}
+          </div>
+          <span>{moment(created).fromNow()}</span>
+        </Actions>
+      </GameCard>
     </Item>
   );
 };
+
+const ProfileDisplayItem = ({ player }: { player: String }) => (
+  <ProfileItems>
+    {player && <ProfileImage target="_blank" src={player.image} alt="Opponent's profile" />}
+    {player && <ProfileName href={player.webId}>{player.name}</ProfileName>}
+  </ProfileItems>
+);
 
 export default GameItem;

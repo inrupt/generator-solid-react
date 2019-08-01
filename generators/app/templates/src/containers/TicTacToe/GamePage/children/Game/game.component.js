@@ -20,9 +20,9 @@ const possibleCombinations = [
   [1, 4, 7],
   [2, 5, 8]
 ];
-type Props = { webId: String, gameURL: String };
+type Props = { webId: String, gameURL: String, history: Object };
 
-const Game = ({ webId, gameURL }: Props) => {
+const Game = ({ webId, gameURL, history }: Props) => {
   /** Game Logic */
   const updates = useLiveUpdate();
   const { timestamp } = updates;
@@ -191,7 +191,7 @@ const Game = ({ webId, gameURL }: Props) => {
    * Declines the game by changing the status of it to 'Declined' and sending a notification to the actor
    * @param {Function} cb Function to execute once the game has been declined
    */
-  const onDecline = async cb => {
+  const onDecline = async () => {
     try {
       await changeGameStatus('Declined');
       await sendNotification(rival.webId, {
@@ -201,7 +201,7 @@ const Game = ({ webId, gameURL }: Props) => {
         object: gameURL,
         target: window.location.href
       });
-      cb();
+      history.push('/tictactoe');
     } catch (e) {
       errorToaster(e.message, 'Error');
     }
@@ -219,14 +219,19 @@ const Game = ({ webId, gameURL }: Props) => {
    * @returns {Object} An Object with all of the turtle file data
    */
   const fetchRawData = async () => {
-    const game = await ldflexHelper.fetchLdflexDocument(gameURL);
-    setGameDocument(game);
-    let data = {};
-    for await (const field of tictactoeShape.shape) {
-      const fieldData = await game[getPredicate(field)];
-      data = { ...data, [field.predicate]: fieldData.value };
+    try {
+      const game = await ldflexHelper.fetchLdflexDocument(gameURL);
+      if (!game) throw new Error('404');
+      setGameDocument(game);
+      let data = {};
+      for await (const field of tictactoeShape.shape) {
+        const fieldData = await game[getPredicate(field)];
+        data = { ...data, [field.predicate]: fieldData && fieldData.value };
+      }
+      return data;
+    } catch (error) {
+      throw error;
     }
-    return data;
   };
 
   /**
@@ -302,7 +307,8 @@ const Game = ({ webId, gameURL }: Props) => {
       setGameData(newData);
       if (gameDocData.status === 'Finished') checkForWinnerOrTie(moves);
     } catch (e) {
-      errorToaster(e.message);
+      if (e.message === '404') history.push('404');
+      else errorToaster(e.message, 'Error');
     }
   });
 
@@ -328,7 +334,8 @@ const Game = ({ webId, gameURL }: Props) => {
       setGameData(newData);
       if (status === 'Finished') checkForWinnerOrTie(moves);
     } catch (e) {
-      errorToaster(e.message, 'Error');
+      if (e.message === '404') history.push('404');
+      else errorToaster(e.message, 'Error');
     }
   }, [gameURL, gameData]);
 
@@ -421,9 +428,10 @@ const Game = ({ webId, gameURL }: Props) => {
     <GameWrapper data-testid="game">
       {Object.keys(gameData).length > 0 && (
         <Fragment>
-          {!gameData.owner && gameData.status === 'Awaiting' && (
-            <GameAccept {...{ ...gameData, onAccept, onDecline }} />
-          )}
+          {!gameData.owner &&
+            (gameData.status === 'Awaiting' || gameData.status === 'Invite Sent') && (
+              <GameAccept {...{ ...gameData, onAccept, onDecline }} />
+            )}
           <Metadata>
             {
               <div>
@@ -449,8 +457,7 @@ const Game = ({ webId, gameURL }: Props) => {
               </div>
             )}
             <span>
-              {t('game.status')}
-              <b>{gameData.status}</b>
+              {t('game.status')} <b>{gameData.status}</b>
             </span>
           </Metadata>
           {gameData.moves && (
@@ -466,14 +473,13 @@ const Game = ({ webId, gameURL }: Props) => {
           {gameData && (
             <Metadata>
               <span>
-                {t('game.created')}
-                <b>{moment(gameData.created).format('MMM Do, YYYY')}</b>
+                {t('game.created')} <b>{moment(gameData.created).format('MMM Do, YYYY')}</b>
               </span>
               {result && result.win ? (
                 <Fragment>
                   <span>
-                    {t('game.winnerObject')}
-                    <strong>{result.token}</strong> with <b>{result.combination.join('-')}</b>
+                    {t('game.winnerObj')} <strong>{result.token}</strong> with{' '}
+                    <b>{result.combination.join('-')}</b>
                   </span>
                 </Fragment>
               ) : (

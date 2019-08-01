@@ -31,7 +31,7 @@ const GameAccept = ({ actor, onAccept, onDecline }: Props) => {
 
   const Accept = () => onAccept(() => setIsOpen(false));
 
-  const Decline = () => onDecline(() => setIsOpen(false));
+  const Decline = () => onDecline();
 
   const getParent = () => document.querySelector('#gamepage');
 

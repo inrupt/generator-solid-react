@@ -120,7 +120,8 @@
             "@contexts": "./src/contexts/",
             "@hocs": "./src/hocs",
             "@utils": "./src/utils",
-            "@hooks": "./src/hooks"
+            "@hooks": "./src/hooks",
+            "@constants": "./src/constants"
           }
         }
       ]
