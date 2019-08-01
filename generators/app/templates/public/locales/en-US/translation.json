@@ -7,7 +7,7 @@
     }
   },
   "notifications": {
-    "success": "Éxito",
+    "success": "Success",
     "error": "Error"
   },
   "login": {
