@@ -34,3 +34,12 @@ export const ListWrapper = styled.div`
 export const GameListContainers = styled.div`
   width: 100%;
 `;
+
+export const GameListHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  select {
+    min-width: 200px;
+  }
+`;

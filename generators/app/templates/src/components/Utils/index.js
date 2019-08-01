@@ -9,6 +9,7 @@ import ToasterNotification from './ToasterNotification';
 import Input from './Input';
 import LanguageDropdown from './LanguageDropdown';
 import Toaster from './ToasterNotification/toaster.component';
+import Select from './Select';
 
 export {
   GradientBackground,
@@ -21,5 +22,6 @@ export {
   Loader,
   Input,
   LanguageDropdown,
-  Toaster
+  Toaster,
+  Select
 };

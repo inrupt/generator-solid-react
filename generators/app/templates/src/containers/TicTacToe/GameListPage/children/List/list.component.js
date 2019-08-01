@@ -3,23 +3,65 @@ import { useLiveUpdate } from '@inrupt/solid-react-components';
 import { useTranslation } from 'react-i18next';
 import ldflex from '@solid/query-ldflex';
 import { namedNode } from '@rdfjs/data-model';
-import { Loader } from '@util-components';
+import { Loader, Select } from '@util-components';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
 import { ldflexHelper, errorToaster, buildPathFromWebId, getUserNameByUrl } from '@utils';
+import { GameStatusList, GameStatus } from '@constants';
+import { Wrapper, ListWrapper, GameListContainers, GameListHeader } from './list.style';
 import GameItem from './children';
-import { Wrapper, ListWrapper, GameListContainers } from './list.style';
 
 let oldTimestamp;
 type Props = { webId: String, gamePath: String };
 type GameListProps = { title: String, games: Array, webId: String, deleteGame: Function };
+
+/**
+ * Loads, filters, and displays the list of available games for the current user
+ *
+ * @param {String} title - Title of the list to display
+ * @param {Array} games - A list of all of the games available to the user
+ * @param {String} webId - WebID URL of the current user
+ * @param {Function} deleteGame - A reference to the delete game function
+ */
 const GameList = ({ title, games, webId, deleteGame }: GameListProps) => {
   const { t } = useTranslation();
+  const [filteredGames, setFilteredGames] = useState(games);
+  const [selectedFilter, setSelectedFilter] = useState('All');
+
+  /**
+   * Set the visible game list depending on what filter the user has selected
+   * @param event
+   */
+  const filterGameList = event => {
+    const filter = event.target.value;
+    if (filter === GameStatus.ALL) {
+      setFilteredGames(games);
+    } else {
+      const filteredList = games.filter(game => game.status === filter);
+      setFilteredGames(filteredList);
+    }
+    setSelectedFilter(filter);
+  };
+
   return (
     <div>
-      <h2>{title}</h2>
-      {games.length > 0 ? (
+      <GameListHeader>
+        <h2>{title}</h2>
+        <div className="input-wrap">
+          <label htmlFor="selected-filter">
+            {t('game.status')}
+            <Select
+              name="selected-filter"
+              id="selected-filter"
+              options={GameStatusList}
+              defaultValue={selectedFilter}
+              onChange={filterGameList}
+            />
+          </label>
+        </div>
+      </GameListHeader>
+      {filteredGames.length > 0 ? (
         <ListWrapper className="ids-container__four-column grid">
-          {games.map(game => (
+          {filteredGames.map(game => (
             <GameItem {...{ game }} key={game.url} webId={webId} deleteGame={deleteGame} />
           ))}
         </ListWrapper>
