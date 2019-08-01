@@ -20,7 +20,7 @@ const FooterContainer = styled.div`
 const PublicLayout = props => {
   const webId = useWebId();
   const { component: Component, ...rest } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const ComponentWrapper = styled(Component)`
     padding-bottom: 60px;
     height: 100%;
@@ -38,7 +38,7 @@ const PublicLayout = props => {
               {...{ history, location, match }}
               toolbar={[
                 {
-                  component: () => <LanguageDropdown {...{ t, ...props }} />,
+                  component: () => <LanguageDropdown {...{ t, i18n }} />,
                   id: 'language'
                 },
                 {
