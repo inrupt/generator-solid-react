@@ -1,62 +1,58 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import ReactModal from 'react-modal';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
+import { ConfirmationDialog } from '@util-components';
 
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
+const MessageWrapper = styled.div`
+  text-align: center;
+  max-width: 350px;
+  font-size: 1.2rem;
+  & p {
+    padding-bottom: 1em;
+    font-size: 1.2rem;
+    position: relative;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  }
+  & strong {
+    font-weight: 700;
+  }
 
-  & > div#modal-actions {
-    align-self: flex-end;
-    padding: 16px 0 0 0;
-    & button {
-      margin-left: 8px;
-    }
+  & span {
+    font-size: 1.2rem;
   }
 `;
-/**
- * Check if we are running test to avoid issue with React Modal
- */
-if (process.env.NODE_ENV !== 'test') ReactModal.setAppElement('#root');
 
 type Props = { actor: Object, onAccept: Function, onDecline: Function };
 
 const GameAccept = ({ actor, onAccept, onDecline }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
-  useEffect(() => {
-    setIsOpen(true);
-  }, []);
+  const name = actor && actor.name;
 
-  const Accept = () => onAccept(() => setIsOpen(false));
-
-  const Decline = () => onDecline();
-
-  const getParent = () => document.querySelector('#gamepage');
+  const messageComponent = () => (
+    <MessageWrapper>
+      <img src="/img/tic-tac-toc-color.svg" alt="Tic Tac Toe Board" width="200px" height="200px" />
+      <Trans i18nKey="game.invitationTemplate" values={{ name }}>
+        <div>
+          <p>
+            <strong>{name}</strong> has invited you to play a game of Tic Tac Toe.
+          </p>
+          <span>Would you like to Play?</span>
+        </div>
+      </Trans>
+    </MessageWrapper>
+  );
 
   return (
-    <ReactModal
-      isOpen={isOpen}
-      ariaHideApp={false}
-      parentSelector={getParent}
-      overlayClassName="modal-overlay"
-      className="modal-content"
-    >
-      <Content>
-        <span>
-          <b>{actor && actor.name}</b> {t('game.inivitationAccept')}
-        </span>
-        <div id="modal-actions">
-          <button type="button" onClick={Accept} data-testid="acceptButton">
-            Accept
-          </button>
-          <button type="button" onClick={Decline} data-testid="declineButton">
-            Decline
-          </button>
-        </div>
-      </Content>
-    </ReactModal>
+    <ConfirmationDialog
+      onAccept={onAccept}
+      onDecline={onDecline}
+      options={{
+        messageComponent: () => messageComponent(),
+        acceptText: t('game.invitationAcceptText'),
+        declineText: t('game.invitationDeclineText')
+      }}
+      parentSelector="#gamepage"
+    />
   );
 };
 

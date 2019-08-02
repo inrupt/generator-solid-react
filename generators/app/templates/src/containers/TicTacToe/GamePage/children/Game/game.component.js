@@ -170,7 +170,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
    * Accepts the game by changing the status of it to 'Accepted', adding it to the game list and sending a notification to the actor
    * @param {Function} cb Function to execute once the game has been accepted
    */
-  const onAccept = async cb => {
+  const onAccept = async () => {
     try {
       await changeGameStatus('Move X');
       await addGameToList();
@@ -181,7 +181,6 @@ const Game = ({ webId, gameURL, history }: Props) => {
         object: gameURL,
         target: window.location.href
       });
-      cb();
     } catch (e) {
       setIsProcessing(false);
       errorToaster(e.message, 'Error');
