@@ -7,7 +7,8 @@ export const GameStatus = {
   MOVEO: 'Move O',
   MOVEX: 'Move X',
   DELETED: 'Deleted',
-  DECLINED: 'Declined'
+  DECLINED: 'Declined',
+  RESIGNED: 'Resigned'
 };
 
 /**
@@ -19,5 +20,6 @@ export const GameStatusList = [
   GameStatus.MOVEO,
   GameStatus.MOVEX,
   GameStatus.DECLINED,
-  GameStatus.DELETED
+  GameStatus.DELETED,
+  GameStatus.RESIGNED
 ];
