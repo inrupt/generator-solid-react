@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
 import {
   Item,
   ProfileName,
@@ -41,6 +42,7 @@ const ProfileDisplayItem = ({ player }: { player: String }) => (
 const GameActions = ({ game, deleteGame }: { game: Object, deleteGame: Function }) => {
   const [deleteMode, setDeleteMode] = useState(false);
   const { url } = game;
+  const { t } = useTranslation();
   return (
     <div>
       {!deleteMode ? (
@@ -56,7 +58,7 @@ const GameActions = ({ game, deleteGame }: { game: Object, deleteGame: Function 
         </Fragment>
       ) : (
         <DeleteAction>
-          <span> Delete game?</span>
+          <span> {t('game.deleteConfirmation')}</span>
           <div>
             <button type="button" onClick={() => deleteGame(game)}>
               <FontAwesomeIcon icon="check" size="2x" color="rgb(44, 105, 164)" />
