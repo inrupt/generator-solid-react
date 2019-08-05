@@ -65,7 +65,7 @@ const GameListPage = ({ webId }) => {
             />
             {gamePath && (
               <LiveUpdate subscribe={buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH)}>
-                <List {...{ webId, gamePath }} />
+                <List {...{ webId, gamePath, sendNotification }} />
               </LiveUpdate>
             )}
           </Fragment>
