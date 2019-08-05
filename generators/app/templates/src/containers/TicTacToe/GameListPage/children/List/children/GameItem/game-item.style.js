@@ -36,6 +36,7 @@ export const Actions = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  min-width: 120px;
 
   a {
     color: inherit;
@@ -73,4 +74,14 @@ export const ProfileName = styled.a`
 export const ProfileItems = styled.div`
   flex: 1 1 0;
   flex-wrap: nowrap;
+`;
+
+export const DeleteAction = styled.div`
+  display: flex;
+  flex-direction: column;
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 `;

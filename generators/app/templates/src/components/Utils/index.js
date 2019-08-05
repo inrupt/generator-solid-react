@@ -10,10 +10,12 @@ import Input from './Input';
 import LanguageDropdown from './LanguageDropdown';
 import Toaster from './ToasterNotification/toaster.component';
 import Select from './Select';
+import ConfirmationDialog from './ConfirmationDialog';
 
 export {
   GradientBackground,
   CenterContainer,
+  ConfirmationDialog,
   ToasterNotification,
   Panel,
   Dropdown,
