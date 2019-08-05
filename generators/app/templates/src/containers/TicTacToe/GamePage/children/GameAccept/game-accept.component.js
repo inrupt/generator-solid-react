@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
 import { ConfirmationDialog } from '@util-components';
 
 const MessageWrapper = styled.div`
   text-align: center;
-  max-width: 350px;
+  max-width: 400px;
   font-size: 1.2rem;
+  word-wrap: break-word;
+  overflow: hidden;
   & p {
     padding-bottom: 1em;
     font-size: 1.2rem;
@@ -32,12 +34,12 @@ const GameAccept = ({ actor, onAccept, onDecline }: Props) => {
     <MessageWrapper>
       <img src="/img/tic-tac-toe-color.svg" alt="Tic Tac Toe Board" width="200px" height="200px" />
       <Trans i18nKey="game.invitationTemplate" values={{ name }}>
-        <div>
+        <Fragment>
           <p>
             <strong>{name}</strong> has invited you to play a game of Tic Tac Toe.
           </p>
           <span>Would you like to Play?</span>
-        </div>
+        </Fragment>
       </Trans>
     </MessageWrapper>
   );

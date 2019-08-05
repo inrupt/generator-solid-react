@@ -21,6 +21,7 @@ export const Section = styled.section`
   display: flex;
   justify-content: center;
   position: relative;
+  width: 100vw;
 
   & .modal-overlay {
     position: absolute;
@@ -29,6 +30,8 @@ export const Section = styled.section`
     bottom: 0;
     right: 0;
     left: 0;
+    height: 100%;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,9 +40,9 @@ export const Section = styled.section`
   & .modal-content {
     position: relative;
     background: rgb(255, 255, 255);
-    overflow: auto;
+    overflow: hidden;
     outline: none;
-    padding: 20px;
+    padding: 0 20px;
   }
 `;
 
