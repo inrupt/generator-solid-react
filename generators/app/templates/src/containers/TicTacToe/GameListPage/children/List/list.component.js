@@ -104,6 +104,10 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
     await ldflex[documentUrl]['ldp:contains'].delete(namedNode(gameUrl));
   };
 
+  /**
+   * Deletes a game as invitee, sets the game status to Resigned and sends a notification to the owner
+   * @param {Object} game Game to be deleted
+   */
   const resignedGame = async ({ url, documentUrl, status, actor }) => {
     if (status !== GameStatus.FINISHED) {
       const statusPredicate = 'http://data.totl.net/game/status';
