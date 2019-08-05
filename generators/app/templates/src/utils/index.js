@@ -16,15 +16,6 @@ function buildPathFromWebId(webid, path) {
   return `${domain}/${path}`;
 }
 
-function getUserNameByUrl(webId) {
-  if (!webId || webId === '') return false;
-  const url = new URL(webId);
-  const parts = url.hostname.split('.');
-  if (parts.length > 1) return parts[0];
-
-  return 'unknown';
-}
-
 function checkAppPermissions(userAppPermissions, appPermissions) {
   const userAppPermission = userAppPermissions.sort().toString();
   const appPermission = appPermissions.sort().toString();
@@ -39,7 +30,6 @@ export {
   successToaster,
   errorToaster,
   buildPathFromWebId,
-  getUserNameByUrl,
   checkAppPermissions,
   notification
 };

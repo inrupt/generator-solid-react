@@ -9,7 +9,6 @@ import {
   ldflexHelper,
   errorToaster,
   buildPathFromWebId,
-  getUserNameByUrl,
   notification as helperNotification
 } from '@utils';
 import { GameStatusList, GameStatus, KnownInboxes } from '@constants';
@@ -167,14 +166,12 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
   const getPlayerInfo = useCallback(async webId => {
     try {
       const name = await ldflex[webId]['vcard:fn'];
-      const url = new URL(webId);
-      const nameValue = name ? name.value : getUserNameByUrl(url);
+      const nameValue = name && name.value.trim().length > 0 ? name.value : webId.toString();
       const imageUrl = await ldflex[webId]['vcard:hasPhoto'];
       const image = imageUrl ? imageUrl.value : 'img/people.svg';
       return { name: nameValue, image, webId };
     } catch (e) {
-      const url = new URL(webId);
-      return { name: getUserNameByUrl(url), image: 'img/people.svg', webId };
+      return { name: webId, image: 'img/people.svg', webId };
     }
   });
 
