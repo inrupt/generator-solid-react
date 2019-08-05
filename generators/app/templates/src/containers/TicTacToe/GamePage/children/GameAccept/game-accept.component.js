@@ -30,7 +30,7 @@ const GameAccept = ({ actor, onAccept, onDecline }: Props) => {
 
   const messageComponent = () => (
     <MessageWrapper>
-      <img src="/img/tic-tac-toc-color.svg" alt="Tic Tac Toe Board" width="200px" height="200px" />
+      <img src="/img/tic-tac-toe-color.svg" alt="Tic Tac Toe Board" width="200px" height="200px" />
       <Trans i18nKey="game.invitationTemplate" values={{ name }}>
         <div>
           <p>
