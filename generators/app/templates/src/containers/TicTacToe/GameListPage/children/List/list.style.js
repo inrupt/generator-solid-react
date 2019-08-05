@@ -29,6 +29,7 @@ export const ListWrapper = styled.div`
   max-height: 350px;
   overflow: auto;
   padding: 5px;
+  grid-gap: 5px;
 `;
 
 export const GameListContainers = styled.div`
