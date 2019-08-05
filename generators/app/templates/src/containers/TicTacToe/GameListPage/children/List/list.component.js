@@ -5,13 +5,19 @@ import ldflex from '@solid/query-ldflex';
 import { namedNode } from '@rdfjs/data-model';
 import { Loader, Select } from '@util-components';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
-import { ldflexHelper, errorToaster, buildPathFromWebId, getUserNameByUrl } from '@utils';
-import { GameStatusList, GameStatus } from '@constants';
+import {
+  ldflexHelper,
+  errorToaster,
+  buildPathFromWebId,
+  getUserNameByUrl,
+  notification as helperNotification
+} from '@utils';
+import { GameStatusList, GameStatus, KnownInboxes } from '@constants';
 import { Wrapper, ListWrapper, GameListContainers, GameListHeader } from './list.style';
 import GameItem from './children';
 
 let oldTimestamp;
-type Props = { webId: String, gamePath: String };
+type Props = { webId: String, gamePath: String, sendNotification: Function };
 type GameListProps = { title: String, games: Array, webId: String, deleteGame: Function };
 
 /**
@@ -72,7 +78,7 @@ const GameList = ({ title, games, webId, deleteGame }: GameListProps) => {
   );
 };
 
-const List = ({ webId, gamePath }: Props) => {
+const List = ({ webId, gamePath, sendNotification }: Props) => {
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
@@ -99,17 +105,56 @@ const List = ({ webId, gamePath }: Props) => {
   };
 
   /**
+   * Deletes a game as invitee, sets the game status to Resigned and sends a notification to the owner
+   * @param {Object} game Game to be deleted
+   */
+  const resignedGame = async ({ url, documentUrl, status, actor }) => {
+    if (status !== GameStatus.FINISHED) {
+      const statusPredicate = 'http://data.totl.net/game/status';
+      // Change status to resigned
+      await ldflex[url][statusPredicate].replace(status, GameStatus.RESIGNED);
+
+      // Send notification
+      const gameSettings = buildPathFromWebId(
+        actor.webId,
+        `${process.env.REACT_APP_TICTAC_PATH}settings.ttl`
+      );
+
+      const { GLOBAL, GAME } = KnownInboxes;
+
+      const inboxes = await helperNotification.findUserInboxes([
+        { path: actor.webId, name: GLOBAL },
+        { path: gameSettings, name: GAME }
+      ]);
+
+      const to = helperNotification.getDefaultInbox(inboxes, GAME, GLOBAL);
+
+      await sendNotification(
+        {
+          title: 'Tictactoe resignation',
+          summary: 'has resigned a game of TicTacToe',
+          actor: webId,
+          object: url
+        },
+        to.path
+      );
+    }
+    // Delete game from contains
+    await deleteGameFromContains(url, documentUrl);
+  };
+
+  /**
    * Deletes a game based on it's url. Checks for a deleted flag
    * to check if it needs to be deleted from a contains predicate
    * @param {Object} game Game to be deleted
    */
   const deleteGame = async game => {
-    const { url, deleted, documentUrl } = game;
+    const { url, deleted, documentUrl, opponent } = game;
     if (deleted) {
       await deleteGameFromContains(url, documentUrl);
-    } else {
-      await ldflexHelper.deleteFile(url);
-    }
+    } else if (opponent.webId === webId) await resignedGame(game);
+    else await ldflexHelper.deleteFile(url);
+
     const newGames = list.filter(gameItem => gameItem.url !== url);
     setList(newGames);
   };
