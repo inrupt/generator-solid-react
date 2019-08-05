@@ -80,3 +80,9 @@ export const Delete = styled.button`
   margin: 5px 7px;
   color: #ffa600;
 `;
+
+export const Img = styled.img`
+  max-width: 30px;
+  border-radius: 60px;
+  height: 30px;
+`;

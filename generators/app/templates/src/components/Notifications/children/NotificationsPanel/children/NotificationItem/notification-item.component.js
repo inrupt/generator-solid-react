@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Item, Body, Message, Meta, MarkAsRead, Delete } from './notification-item.style';
+import { Item, Body, Message, Meta, MarkAsRead, Delete, Img } from './notification-item.style';
 
 type Props = {
   notification: Object,
@@ -32,11 +32,22 @@ const NotificationItem = ({ notification, markAsRead, children, deleteNotificati
    */
 
   const opCurrentRead = !currentRead;
-
+  const defaultImage = '/img/icon/empty-profile.svg';
+  const actorImage =
+    notification && notification.actor && notification.actor.image
+      ? notification.actor.image
+      : defaultImage;
   return (
     <Item read={currentRead}>
-      <a href={notification.actor}>
-        <img src="/img/icon/empty-profile.svg" alt="Creator" />
+      <a href={notification.actor && notification.actor.webId}>
+        <Img
+          src={actorImage}
+          alt="Creator"
+          onError={e => {
+            e.target.onerror = null;
+            e.target.src = defaultImage;
+          }}
+        />
       </a>
       <Body>
         <Message onClick={redirectTo}>
