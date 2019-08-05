@@ -144,7 +144,7 @@
       "message": "Game data could not be saved, data.ttl was not found",
       "link": {
         "label": "Learn More",
-        "href": "https://solidsdk.inrupt.net/public/general/en/missing-profile-data.html"
+        "href": "https://solidsdk.inrupt.net/public/general/en/data-file-not-found.html"
       }
     },
     "createFolder": {

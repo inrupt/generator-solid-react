@@ -144,7 +144,7 @@
       "message": "Los datos del juego no pudieros ser salvados, data.ttl no fue encontrado",
       "link": {
         "label": "Saber más",
-        "href": "https://solidsdk.inrupt.net/public/general/en/missing-profile-data.html"
+        "href": "https://solidsdk.inrupt.net/public/general/en/data-file-not-found.html"
       }
     },
     "createFolder": {
