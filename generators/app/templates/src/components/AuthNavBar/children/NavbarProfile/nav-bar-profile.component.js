@@ -46,7 +46,7 @@ let beforeContext;
 class NavBarProfile extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { image: null };
+    this.state = { image: '/img/icon/empty-profile.svg' };
   }
 
   state = {
@@ -99,7 +99,8 @@ class NavBarProfile extends Component<Props> {
        * for more information please go to: https://github.com/digitalbazaar/jsonld.js
        */
       const userImage = await user.vcard_hasPhoto;
-      const image = userImage ? userImage.value : '/img/icon/empty-profile.svg';
+      const { image: defaultimage } = this.state;
+      const image = userImage ? userImage.value : defaultimage;
       this.setState({ image });
     } catch (error) {
       errorToaster(error.message, 'Error');
