@@ -12,7 +12,7 @@ import {
   getUserNameByUrl,
   notification as helperNotification
 } from '@utils';
-import { GameStatusList, GameStatus } from '@constants';
+import { GameStatusList, GameStatus, KnownInboxes } from '@constants';
 import { Wrapper, ListWrapper, GameListContainers, GameListHeader } from './list.style';
 import GameItem from './children';
 
@@ -120,12 +120,14 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
         `${process.env.REACT_APP_TICTAC_PATH}settings.ttl`
       );
 
+      const { GLOBAL, GAME } = KnownInboxes;
+
       const inboxes = await helperNotification.findUserInboxes([
-        { path: actor.webId, name: 'Global' },
-        { path: gameSettings, name: 'Game' }
+        { path: actor.webId, name: GLOBAL },
+        { path: gameSettings, name: GAME }
       ]);
 
-      const to = helperNotification.getDefaultInbox(inboxes, 'Game', 'Global');
+      const to = helperNotification.getDefaultInbox(inboxes, GAME, GLOBAL);
 
       await sendNotification(
         {
