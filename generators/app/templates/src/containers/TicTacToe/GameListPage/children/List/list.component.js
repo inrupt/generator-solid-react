@@ -168,7 +168,7 @@ const List = ({ webId, gamePath }: Props) => {
             const actor = await getPlayerInfo(gameData.actor);
             gameData = { ...gameData, opponent, actor, deleted: false, documentUrl: url };
           } else {
-            gameData = { ...gameData, gamestatus: 'Deleted', deleted: true, documentUrl: url };
+            gameData = { ...gameData, status: GameStatus.DELETED, deleted: true, documentUrl: url };
           }
           games = [...games, gameData];
         }
