@@ -122,10 +122,11 @@ const List = ({ webId, gamePath }: Props) => {
   const getPlayerInfo = useCallback(async webId => {
     try {
       const name = await ldflex[webId]['vcard:fn'];
+      const url = new URL(webId);
+      const nameValue = name ? name.value : getUserNameByUrl(url);
       const imageUrl = await ldflex[webId]['vcard:hasPhoto'];
       const image = imageUrl ? imageUrl.value : 'img/people.svg';
-
-      return { name: name.value, image, webId };
+      return { name: nameValue, image, webId };
     } catch (e) {
       const url = new URL(webId);
       return { name: getUserNameByUrl(url), image: 'img/people.svg', webId };
