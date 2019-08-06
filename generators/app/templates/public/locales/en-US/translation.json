@@ -120,7 +120,7 @@
   },
   "game": {
     "title": "Tic Tac Toe",
-    "createGamePrompt": "Enter an Opponent and a Game id",
+    "createGamePrompt": "Enter an Opponent and a Game ID",
     "createGame": "Create Game",
     "createGameSuccess": "Game created successfully",
     "resetGameForm": "Reset",
