@@ -144,6 +144,7 @@
     "yourGames": "Your Games",
     "otherGames": "Other Games",
     "errorTitle": "Error",
+    "opponentMissing": "Cannot create game as no Opponent WebID was entered.",
     "dataError": {
       "message": "Game data could not be saved, data.ttl was not found",
       "link": {

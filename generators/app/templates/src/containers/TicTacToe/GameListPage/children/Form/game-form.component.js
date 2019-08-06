@@ -141,6 +141,11 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         `${process.env.REACT_APP_TICTAC_PATH}${documentUri}`
       );
 
+      if (!opponent || opponent === '') {
+        errorToaster(t('game.opponentMissing'), t('game.errorTitle'));
+        return;
+      }
+
       if (webId === opponent) {
         errorToaster(t('game.myself'), t('game.errorTitle'));
         return;

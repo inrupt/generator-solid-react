@@ -143,6 +143,7 @@
     "yourGames": "Tus juegos",
     "otherGames": "Otros juegos",
     "errorTitle": "Error",
+    "opponentMissing": "No se puede crear el juego porque no se ingresó ningún WebID del oponente.",
     "dataError": {
       "message": "Los datos del juego no pudieros ser salvados, data.ttl no fue encontrado",
       "link": {
