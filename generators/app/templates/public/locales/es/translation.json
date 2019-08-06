@@ -127,7 +127,7 @@
     "idLabel": "ID del Juego",
     "opponentWebIDLabel": "WebID del Oponente",
     "nogames": "No se han encontrado juegos",
-    "invitationTemplate": "<0><0><0>{{name}}</0> te ha invitado a un juego de Tres en Linea.</0><1>Quieres aceptar el juego?</1></0>",
+    "invitationTemplate": "<0><0><0>{{- name}}</0> te ha invitado a un juego de Tres en Linea.</0><1>Quieres aceptar el juego?</1></0>",
     "invitationAcceptText": "Aceptar",
     "invitationDeclineText": "Rechazar",
     "deleteConfirmation": "Eliminar juego?",
