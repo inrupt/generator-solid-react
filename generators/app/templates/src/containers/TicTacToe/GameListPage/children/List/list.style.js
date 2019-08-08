@@ -26,8 +26,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ListWrapper = styled.div`
-  max-height: 350px;
-  overflow: auto;
+  overflow: hidden;
   padding: 5px;
   grid-gap: 5px;
 `;
