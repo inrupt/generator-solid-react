@@ -11,7 +11,7 @@
 ##### Fixed
 * Fixed some missing error translations
 
-## 0.5.1 (June 5, 2019)
+## 0.5.1 (June 5, 2019) 
 
 #### Solid React Application Base
 
