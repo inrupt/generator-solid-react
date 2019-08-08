@@ -19,51 +19,89 @@ export const GameStatus = styled.span`
   flex: 1 1 0;
 `;
 
-export const Info = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  & a {
-    text-decoration: none;
-    color: inherit;
-    font-weight: 700;
-    letter-spacing: 0.4px;
-    font-size: 1.2em;
-  }
-`;
-
 export const Actions = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   min-width: 120px;
+  font-size: 2rem;
+  justify-content: space-around;
+  align-items: center;
 
-  a {
+  & > a {
     color: inherit;
+    height: 50px;
+    width: 50px;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 300ms ease-in;
+    &:hover {
+      background: rgba(130, 131, 139, 0.1);
+    }
   }
 
-  svg {
-    display: inline-block;
-    margin: 10px;
-  }
+  & > div {
+    & > button {
+      &.deleteBtn{
+        font-size: 1.4rem;
+        height: 50px;
+        width: 50px;
+        border: none;
+        padding: 0;
+        position: relative
+        color: rgba(237, 40, 40, 1);
+        transition: all 300ms ease-in;
+        &:hover {
+          background: rgba(237, 40, 40, 0.1);
+        }
+      }
 
-  & button {
-    border: none;
-    margin: 0;
-    padding: 0;
+      &.deleteMode{
+        width: fit-content;
+        padding: .8em 1em;
+        font-size: 1rem;
+        color: #fff;
+        background: rgba(237, 40, 40, 1);
+        outline: none;
+        border: none;
+        transition: background 300ms ease-in;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        & > span {
+          padding-left: 0.8em;
+          font-size: 0.7rem;
+        }
+        &:hover{
+          background: rgba(237, 40, 40, 0.9);
+        }
+      }
+      
+      &:hover{ 
+        outline: none;
+      }
+    }
   }
+}
 `;
 
 export const ProfileImage = styled.img`
-  width: 75px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   display: inline-block;
   vertical-align: middle;
+  background-size: cover;
+  overflow: hidden;
+  visibility: visible;
+  margin: 0 12px;
 `;
 
 export const ProfileName = styled.a`
   display: inline-block;
   vertical-align: middle;
-  padding-left: 10px;
   text-decoration: none;
   color: inherit;
   font-weight: 700;
@@ -74,14 +112,22 @@ export const ProfileName = styled.a`
 export const ProfileItems = styled.div`
   flex: 1 1 0;
   flex-wrap: nowrap;
-`;
-
-export const DeleteAction = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
   & > div {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    & > div {
+      display: flex;
+      align-items: center;
+      & > .createdDate {
+        padding-left: 1.5em;
+        color: #ccc;
+        font-weight: 100;
+        font-size: 0.9rem;
+      }
+    }
   }
 `;
