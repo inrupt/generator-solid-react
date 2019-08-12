@@ -46,7 +46,7 @@ export class WelcomeComponent extends Component<Props> {
      * from the returned user object.
      */
     const user = data[webId];
-    const nameLd = await user.name;
+    const nameLd = await user.vcard_fn;
 
     const name = nameLd ? nameLd.value : '';
 
