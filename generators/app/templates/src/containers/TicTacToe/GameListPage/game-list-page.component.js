@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import { LiveUpdate, useNotification } from '@inrupt/solid-react-components';
 import { useTranslation } from 'react-i18next';
-import { ldflexHelper, buildPathFromWebId, errorToaster } from '@utils';
+import { ldflexHelper, storageHelper, errorToaster } from '@utils';
 import { Form, List } from './children';
 import { Section, Wrapper } from '../tic-tac-toe.style';
 
@@ -24,8 +24,8 @@ const GameListPage = ({ webId }) => {
 
   const init = async () => {
     try {
-      const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
-      const gamePath = await ldflexHelper.createContainer(url);
+      const gameUrl = await storageHelper.getAppStorage(webId);
+      const gamePath = await ldflexHelper.createContainer(gameUrl);
       if (gamePath) {
         await createInbox(`${gamePath}inbox/`, gamePath);
         setGamePath(gamePath);
@@ -64,7 +64,7 @@ const GameListPage = ({ webId }) => {
               }}
             />
             {gamePath && (
-              <LiveUpdate subscribe={buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH)}>
+              <LiveUpdate subscribe={gamePath}>
                 <List {...{ webId, gamePath, sendNotification }} />
               </LiveUpdate>
             )}

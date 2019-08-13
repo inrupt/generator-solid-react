@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLiveUpdate, useNotification } from '@inrupt/solid-react-components';
 import moment from 'moment';
-import { ldflexHelper, errorToaster, buildPathFromWebId, notification } from '@utils';
+import { ldflexHelper, storageHelper, errorToaster, notification } from '@utils';
 import ldflex from '@solid/query-ldflex';
 import { namedNode } from '@rdfjs/data-model';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
@@ -30,10 +30,11 @@ const Game = ({ webId, gameURL, history }: Props) => {
   const [gameData, setGameData] = useState({});
   const [result, setResult] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const inboxUrl = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_INBOX);
   const { createNotification, createInbox } = useNotification(webId);
   const [rival, setRival] = useState(null);
   const { t } = useTranslation();
+
+  let appPath = '';
 
   const sendNotification = useCallback(
     async (player, content) => {
@@ -41,10 +42,8 @@ const Game = ({ webId, gameURL, history }: Props) => {
         /**
          * Get full opponent game path
          */
-        const gameSettings = buildPathFromWebId(
-          player,
-          `${process.env.REACT_APP_TICTAC_PATH}settings.ttl`
-        );
+        appPath = await storageHelper.getAppStorage(webId);
+        const gameSettings = `${appPath}settings.ttl`;
 
         /**
          * Find opponent inboxes from a document link
@@ -77,7 +76,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
         errorToaster(error.message, 'Error');
       }
     },
-    [gameData, inboxUrl]
+    [gameData, appPath]
   );
 
   /**
@@ -162,7 +161,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
    * Adds the game document as a link in the opponent's data.ttl file
    */
   const addGameToList = async () => {
-    const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
+    const url = await storageHelper.getAppStorage(webId);
     await ldflex[`${url}/data.ttl`]['ldp:contains'].add(namedNode(gameURL));
   };
 
@@ -392,15 +391,22 @@ const Game = ({ webId, gameURL, history }: Props) => {
   );
 
   /**
+   * Initialize the app storage location
+   */
+  const initAppStorage = useCallback(async () => {
+    const gamePath = await storageHelper.getAppStorage(webId);
+    if (gameURL) {
+      createInbox(`${gamePath}inbox/`, gamePath);
+      getInitialGame();
+    }
+  }, [webId]);
+
+  /**
    * Executes when the game is mounted the first time
    */
   useEffect(() => {
     try {
-      const gamePath = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
-      if (gameURL) {
-        createInbox(`${gamePath}inbox/`, gamePath);
-        getInitialGame();
-      }
+      initAppStorage();
     } catch (e) {
       /**
        * Check if something fails when we try to create a inbox

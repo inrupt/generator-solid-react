@@ -8,7 +8,7 @@ import {
   ldflexHelper,
   errorToaster,
   successToaster,
-  buildPathFromWebId,
+  storageHelper,
   notification as helperNotification
 } from '@utils';
 import { GameFormWrapper, BtnDiv } from './game-form.styles';
@@ -54,10 +54,8 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
       /**
        * Get full opponent game path
        */
-      const gameSettings = buildPathFromWebId(
-        opponent,
-        `${process.env.REACT_APP_TICTAC_PATH}/settings.ttl`
-      );
+      const appPath = await storageHelper.getAppStorage(opponent);
+      const gameSettings = `${appPath}settings.ttl`;
       /**
        * Find opponent inboxes from a document link
        */
@@ -136,10 +134,8 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
   const onSubmit = async e => {
     try {
       e.preventDefault();
-      const documentPath = buildPathFromWebId(
-        webId,
-        `${process.env.REACT_APP_TICTAC_PATH}${documentUri}`
-      );
+      const appPath = await storageHelper.getAppStorage(webId);
+      const documentPath = `${appPath}${documentUri}`;
 
       if (!opponent || opponent === '') {
         errorToaster(t('game.opponentMissing'), t('game.errorTitle'));
