@@ -3,7 +3,7 @@ import { NavBar, Notification } from '@components';
 import { useTranslation } from 'react-i18next';
 import { NavBarContainer } from './children';
 import { LanguageDropdown } from '@util-components';
-import { buildPathFromWebId, ldflexHelper, errorToaster } from '@utils';
+import { ldflexHelper, errorToaster, storageHelper } from '@utils';
 
 type Props = {
   webId: string
@@ -53,9 +53,8 @@ const AuthNavBar = React.memo((props: Props) => {
       /**
        * Get user's game inbox path from pod.
        */
-      const appInbox = await ldflexHelper.discoverInbox(
-        buildPathFromWebId(webId, `${process.env.REACT_APP_TICTAC_PATH}settings.ttl`)
-      );
+      const appStorage = await storageHelper.getAppStorage(webId);
+      const appInbox = await ldflexHelper.discoverInbox(`${appStorage}settings.ttl`);
 
       /**
        * create an inbox object to send over notification component
