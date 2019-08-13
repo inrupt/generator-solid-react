@@ -42,7 +42,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
         /**
          * Get full opponent game path
          */
-        appPath = await storageHelper.getAppStorage(webId);
+        appPath = await storageHelper.getAppStorage(player);
         const gameSettings = `${appPath}settings.ttl`;
 
         /**
