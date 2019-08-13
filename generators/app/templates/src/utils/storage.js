@@ -31,10 +31,8 @@ export const getAppStorage = async webId => {
 
   // If there is no storage value from the pod, use webId as the backup, and append the application path from env
   if (!podStoragePathValue || podStoragePathValue.trim().length === 0) {
-    podStoragePathValue = buildPathFromWebId(webId, appPath);
-  } else {
-    podStoragePathValue = `${podStoragePathValue}${appPath}`;
+    return buildPathFromWebId(webId, appPath);
   }
 
-  return podStoragePathValue;
+  return `${podStoragePathValue}${appPath}`;
 };
