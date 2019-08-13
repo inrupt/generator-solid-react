@@ -50,7 +50,8 @@ export const Actions = styled.div`
         width: 50px;
         border: none;
         padding: 0;
-        position: relative
+        position: relative;
+        background-color: #fff;
         color: rgba(237, 40, 40, 1);
         transition: all 300ms ease-in;
         &:hover {
