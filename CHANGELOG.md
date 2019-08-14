@@ -1,5 +1,22 @@
 # Solid React Application Generator
 
+## 0.6.0 (August 14, 2019)
+
+#### Solid React Application Base
+
+##### Added
+* New Tic-Tac-Toe Game
+  * Demonstrates key Solid functionality such as:
+      * Discovering where a user wants their application data to be stored
+      * Creating application-specific files and folders
+      * Managing permissions of files and folders
+      * Discovering a global inbox
+      * Sending game invite notifications to a global inbox
+      * Creating and/or discovering an application-specific inbox
+      * Sending application-specific notifications to the application inbox
+      * Granting access to different Pods, to allow opponents to read data from and write data to your Pod
+      * Interoperable notification data structure, so notifications in the global inbox can be read by any compatible application
+
 ## 0.5.2 (June 19, 2019)
 
 #### Solid React Application Base
@@ -11,7 +28,7 @@
 ##### Fixed
 * Fixed some missing error translations
 
-## 0.5.1 (June 5, 2019)
+## 0.5.1 (June 5, 2019)  
 
 #### Solid React Application Base
 

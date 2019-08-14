@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'test';
 process.env.NODE_ENV = 'test';
@@ -12,7 +14,6 @@ process.on('unhandledRejection', err => {
 
 // Ensure environment variables are read.
 require('../config/env');
-
 
 const jest = require('jest');
 const execSync = require('child_process').execSync;
@@ -37,15 +38,10 @@ function isInMercurialRepository() {
 }
 
 // Watch unless on CI, in coverage mode, or explicitly running all test
-if (
-  !process.env.CI &&
-  argv.indexOf('--coverage') === -1 &&
-  argv.indexOf('--watchAll') === -1
-) {
+if (!process.env.CI && argv.indexOf('--coverage') === -1 && argv.indexOf('--watchAll') === -1) {
   // https://github.com/facebook/create-react-app/issues/5210
   const hasSourceControl = isInGitRepository() || isInMercurialRepository();
   argv.push(hasSourceControl ? '--watch' : '--watchAll');
 }
-
 
 jest.run(argv);

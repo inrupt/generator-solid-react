@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 import { media } from '../../../utils';
 
@@ -7,12 +7,11 @@ export const DropdownContainer = styled.div`
   height: auto;
   width: 100%;
   padding: 0 !important;
- 
- 
+
   .icon {
     margin-right: 5px;
     font-size: 1rem;
-    color: #7C4DFF;
+    color: #7c4dff;
     ${media.desktop`display: none; path { display: none }`}
   }
 `;
@@ -29,7 +28,7 @@ export const DropdownMain = styled.button`
 
   &:focus {
     outline: none;
-  } 
+  }
   ${media.desktop`height: 100%;`}
 `;
 

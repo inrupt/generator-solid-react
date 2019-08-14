@@ -1,2 +1,3 @@
-import LanguageDropdown from "./language-dropdown.component";
+import LanguageDropdown from './language-dropdown.component';
+
 export default LanguageDropdown;

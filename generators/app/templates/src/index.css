@@ -7,6 +7,9 @@ body,
   padding: 0;
 }
 
+* {
+  box-sizing: border-box;
+}
 
 body {
   color: #666;
@@ -64,7 +67,7 @@ input[type='text'] {
 .link-button:active,
 .link:hover,
 .link-button:hover {
-   text-decoration: none;
+  text-decoration: none;
 }
 
 * {
@@ -77,7 +80,7 @@ input[type='text'] {
 }
 
 .form-group:first-child {
-   margin-top: 0;
+  margin-top: 0;
 }
 
 .form-group > label {
@@ -112,4 +115,3 @@ form-group .select-role {
 .solid-provider-select .option {
   padding-left: 10px !important;
 }
-

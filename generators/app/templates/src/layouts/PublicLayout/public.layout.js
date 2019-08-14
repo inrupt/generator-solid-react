@@ -1,54 +1,55 @@
-import React from "react";
-import { Route, Link } from "react-router-dom";
-import { withTranslation } from "react-i18next";
-import { NavBar, AuthNavBar, Footer } from "@components";
-import { withWebId } from "@inrupt/solid-react-components";
-import { LanguageDropdown } from "@util-components";
-import styled from "styled-components";
+import React from 'react';
+import { Route, Link } from 'react-router-dom';
+import { useWebId } from '@inrupt/solid-react-components';
+import styled from 'styled-components';
+import { NavBar, AuthNavBar, Footer } from '@components';
+import { LanguageDropdown } from '@util-components';
+import { useTranslation } from 'react-i18next';
 
 const Container = styled.div`
-min-height: 100%;
-position: relative;
+  min-height: 100%;
+  position: relative;
 `;
 
 const FooterContainer = styled.div`
-position:absolute;
-bottom:0;
-width: 100%;
-`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+`;
 
 const PublicLayout = props => {
-  const { component: Component, webId, i18n, ...rest } = props;
+  const webId = useWebId();
+  const { component: Component, ...rest } = props;
+  const { t, i18n } = useTranslation();
   const ComponentWrapper = styled(Component)`
     padding-bottom: 60px;
     height: 100%;
     padding-top: 60px;
   `;
-
   return (
     <Route
       {...rest}
-      component={matchProps => (
+      component={({ history, location, match }) => (
         <Container>
           {webId ? (
-            <AuthNavBar {...matchProps} />
+            <AuthNavBar {...{ history, location, match, webId }} />
           ) : (
             <NavBar
-              {...matchProps}
+              {...{ history, location, match }}
               toolbar={[
                 {
-                  component: () => <LanguageDropdown {...props} />,
-                  id: "language"
+                  component: () => <LanguageDropdown {...{ t, i18n }} />,
+                  id: 'language'
                 },
                 {
                   component: () => <Link to="/login">Login</Link>,
-                  label: "authComponent",
-                  id: "authComponent"
+                  label: 'authComponent',
+                  id: 'authComponent'
                 }
               ]}
             />
           )}
-          <ComponentWrapper {...matchProps} />
+          <ComponentWrapper {...{ history, location, match }} />
           <FooterContainer>
             <Footer />
           </FooterContainer>
@@ -58,4 +59,4 @@ const PublicLayout = props => {
   );
 };
 
-export default withTranslation()(withWebId(PublicLayout));
+export default PublicLayout;

@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import { GradientBackground } from "@util-components";
+import styled from 'styled-components';
+import { GradientBackground } from '@util-components';
 
 export const RegistrationPage = styled(GradientBackground)`
   text-align: center;
   margin-top: 40px;
-  
+
   h1 {
     color: #ffffff;
   }

@@ -1,62 +1,66 @@
-import React, { Component } from "react";
-import { Dropdown } from "@util-components";
-import { withToastManager } from 'react-toast-notifications';
-
+import React, { Component } from 'react';
+import { Dropdown } from '@util-components';
+import { toast } from 'react-toastify';
 
 const languages = {
   en: {
-    id: "en",
-    icon: "us"
+    id: 'en',
+    icon: 'us'
   },
   es: {
-    id: "es",
-    icon: "es"
+    id: 'es',
+    icon: 'es'
   },
-  "en-US": {
-    id: "en-US",
-    icon: "us"
+  'en-US': {
+    id: 'en-US',
+    icon: 'us'
   }
 };
 
-class LanguageDropdown extends Component {
+type Props = {
+  i18n: Object,
+  t: Function
+};
+
+class LanguageDropdown extends Component<Props> {
   constructor() {
     super();
     this.state = { language: this.getLanguage() };
   }
 
-  getLanguage = () => localStorage.getItem("i18nextLng") || "en";
+  getLanguage = () => localStorage.getItem('i18nextLng') || 'en';
 
   onLanguageSelect = nextLanguage => {
-    const { i18n, toastManager } = this.props;
-    toastManager.toasts.forEach(toast=> toastManager.remove(toast.id))
+    const { i18n } = this.props;
+    toast.dismiss();
     i18n.changeLanguage(nextLanguage);
     this.setState({
       language: this.getLanguage()
     });
-
   };
+
   render() {
-    const { t }  = this.props;
+    const { t } = this.props;
     const { language } = this.state;
     const profileOpts = [
       {
-        label: t("navBar.languages.en"),
-        onClick: () => this.onLanguageSelect("en"),
+        label: t('navBar.languages.en'),
+        onClick: () => this.onLanguageSelect('en'),
         icon: 'us',
-        customIcon: true,
+        customIcon: true
       },
       {
-        label: t("navBar.languages.es"),
-        onClick: () => this.onLanguageSelect("es"),
+        label: t('navBar.languages.es'),
+        onClick: () => this.onLanguageSelect('es'),
         icon: 'es',
         customIcon: true
       }
     ];
     return (
-      <Dropdown actions={profileOpts}  hover={true}>
+      <Dropdown actions={profileOpts} hover>
         <div
           className={`flag-icon flag-icon-${
-            language && languages[language] ? languages[language].icon : "us"
+            language && languages[language] ? languages[language].icon : 'us'
           }`}
         />
       </Dropdown>
@@ -64,4 +68,4 @@ class LanguageDropdown extends Component {
   }
 }
 
-export default withToastManager(LanguageDropdown);
+export default LanguageDropdown;

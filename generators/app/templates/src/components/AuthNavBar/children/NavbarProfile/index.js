@@ -1,2 +1,3 @@
-import NavBarProfile from "./nav-bar-profile.component";
-export default NavBarProfile;
+import { NavBarContainer } from './nav-bar-profile.container';
+
+export default NavBarContainer;

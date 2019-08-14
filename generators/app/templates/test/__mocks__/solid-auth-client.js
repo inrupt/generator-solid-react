@@ -1,21 +1,22 @@
 import EventEmitter from 'events';
 import { act } from 'react-testing-library';
 
+const fetchResponse = { ok: true, status: 200 };
+
 class SolidAuthClient extends EventEmitter {
   constructor() {
     super();
     this.session = undefined;
   }
 
-  fetch() {}
+  fetch = () => fetchResponse;
 
-  popupLogin() {}
+  popupLogin = () => {};
 
-  logout() {}
+  logout = () => {};
 
   trackSession(callback) {
-    if (this.session !== undefined)
-      callback(this.session);
+    if (this.session !== undefined) callback(this.session);
     this.on('session', callback);
   }
 

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const BadgeWrapper = styled.div`
   position: absolute;
@@ -15,7 +15,7 @@ export const BadgeWrapper = styled.div`
   background: #1ca9e5;
   color: #ffffff;
   font-size: 9px;
-  font-family: Roboto Slab;
+  font-family: Raleway;
   font-style: normal;
   font-weight: bold;
   line-height: normal;

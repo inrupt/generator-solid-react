@@ -126,7 +126,7 @@ In the event you want more specific errors in a given component, you can call Er
 <ErrorBoundary
   component={(error, info) => <GlobalError error={error} info={info} />} >
   <App />
-</ErrorBoundary>
+</ErrorBoundary> 
   ```
   
 ## Internationalization
@@ -151,9 +151,22 @@ To add a new language:
 
 Once those two steps are complete then the new language should be compatible with the generated application.
 
+## Access Control
+When building new apps, it's crucial to be able to create and manage access to files and containers. Currently your application requests permissions when the user first authenticates, granting permissions to your application. 
+
+However, many applications will also need to create files or containers and grant access to other people. To that end, the SDK includes examples of creating files and granting access to other users.
+
+For more information, please see the solid-react-components.
+
+## Notifications
+A key part of modern web applications is notifications. Alongside the solid-react-components library, the generated application now has built-in real time notifications. It reads from both the global inbox (if there is one) and the application-specific inbox that the app generates using the components library.
+
+Notifications are generated via the TicTacToe game example. Invites are sent to webIDs provided in the game creation form, and whenever a move is taken in the game a notification is sent to the opponent.
+
 ## Deployment
 
 Once your application is ready, you can deploy it to a server of your choice.
 
 It is ***highly recommended*** that you ensure your server is utilizing TLS. If not, you may encounter security-related errors in the browser, particularly in Google Chrome.
+
 
