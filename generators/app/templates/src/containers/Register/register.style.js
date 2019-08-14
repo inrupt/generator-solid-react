@@ -5,7 +5,7 @@ export const RegisterWrapper = styled.section`
   h1 {
     color: #ffffff;
   }
-  
+
   //Todo: figure out why this is necessary
   margin-top: 100px;
 `;

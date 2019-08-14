@@ -6,11 +6,7 @@ import { ProviderLogin } from '@inrupt/solid-react-components';
 import { LoginWrapper, LoginPanel, PanelBody, LoginTitle } from './login.style';
 import { CenterContainer } from '@util-components';
 
-type Props = {
-  className: String
-};
-
-const LoginComponent = ({ className }: Props) => {
+const LoginComponent = () => {
   const { t } = useTranslation();
   return (
     <LoginWrapper data-testid="login-wrapper">
