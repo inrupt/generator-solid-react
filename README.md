@@ -158,6 +158,11 @@ However, many applications will also need to create files or containers and gran
 
 For more information, please see the solid-react-components.
 
+## Notifications
+A key part of modern web applications is notifications. Alongside the solid-react-components library, the generated application now has built-in real time notifications. It reads from both the global inbox (if there is one) and the application-specific inbox that the app generates using the components library.
+
+Notifications are generated via the TicTacToe game example. Invites are sent to webIDs provided in the game creation form, and whenever a move is taken in the game a notification is sent to the opponent.
+
 ## Deployment
 
 Once your application is ready, you can deploy it to a server of your choice.
