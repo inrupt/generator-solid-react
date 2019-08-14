@@ -14,7 +14,7 @@ type Props = {
 const PageNotFound = ({ className }: Props) => {
   const { t } = useTranslation();
   return (
-    <PageNotFoundWrapper className={className}>
+    <PageNotFoundWrapper>
       <PageNotFoundContent>
         <img src="/img/404.svg" alt="404" />
         <h3>{t('notFound.title')}</h3>

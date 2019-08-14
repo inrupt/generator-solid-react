@@ -5,6 +5,7 @@ export const LoginWrapper = styled(GradientBackground)`
   h1 {
     color: #ffffff;
   }
+  margin-top: 60px;
 `;
 
 export const LoginPanel = styled(Panel)``;
