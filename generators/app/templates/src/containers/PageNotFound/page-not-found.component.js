@@ -4,14 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { PageNotFoundWrapper, PageNotFoundContent } from './page-not-found.style';
 
-type Props = {
-  className: String
-};
 /**
  * A React component page that is displayed when there's no valid route. Users can click the button
  * to get back to the home/welcome page.
  */
-const PageNotFound = ({ className }: Props) => {
+const PageNotFound = () => {
   const { t } = useTranslation();
   return (
     <PageNotFoundWrapper>
