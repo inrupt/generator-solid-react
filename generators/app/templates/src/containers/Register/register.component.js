@@ -13,8 +13,7 @@ type Register = {
 
 type Props = {
   providers: Array<Provider>,
-  t: Function,
-  className: String
+  t: Function
 };
 
 type State = {
