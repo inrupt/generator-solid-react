@@ -8,7 +8,7 @@ import tictactoeShape from '@contexts/tictactoe-shape.json';
 import {
   ldflexHelper,
   errorToaster,
-  buildPathFromWebId,
+  storageHelper,
   notification as helperNotification
 } from '@utils';
 import { GameStatusList, GameStatus, KnownInboxes } from '@constants';
@@ -16,6 +16,8 @@ import { Wrapper, ListWrapper, GameListContainers, GameListHeader } from './list
 import GameItem from './children';
 
 let oldTimestamp;
+let appPath;
+
 type Props = { webId: String, gamePath: String, sendNotification: Function };
 type GameListProps = { title: String, games: Array, webId: String, deleteGame: Function };
 
@@ -113,12 +115,12 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
       // Change status to resigned
       await ldflex[url][statusPredicate].replace(status, GameStatus.RESIGNED);
 
-      // Send notification
-      const gameSettings = buildPathFromWebId(
-        actor.webId,
-        `${process.env.REACT_APP_TICTAC_PATH}settings.ttl`
-      );
+      if (!appPath) {
+        appPath = await storageHelper.getAppStorage(actor.webId);
+      }
 
+      // Send notification
+      const gameSettings = `${appPath}settings.ttl`;
       const { GLOBAL, GAME } = KnownInboxes;
 
       const inboxes = await helperNotification.findUserInboxes([
@@ -228,8 +230,9 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
    */
   const init = useCallback(async () => {
     setIsLoading(true);
-    const url = buildPathFromWebId(webId, process.env.REACT_APP_TICTAC_PATH);
-    const inviteGamesUrl = `${url}data.ttl`;
+    appPath = await storageHelper.getAppStorage(webId);
+    const inviteGamesUrl = `${appPath}data.ttl`;
+
     /**
      * Check if user pod has data.ttl file where will live
      * opponent games if not show error message

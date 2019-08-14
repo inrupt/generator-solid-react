@@ -1,76 +1,94 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
+import { useOnClickOutside } from '@hooks';
+import { Labeled } from '@util-components';
 import {
   Item,
   ProfileName,
-  GameStatus,
   Actions,
   GameCard,
   ProfileImage,
-  ProfileItems,
-  DeleteAction
+  ProfileItems
 } from './game-item.style';
 
 type Props = { game: Object, webId: String, deleteGame: Function };
 
 const GameItem = ({ game, webId, deleteGame }: Props) => {
-  const { status, created, opponent, actor } = game;
+  const { status, created, opponent, actor, url } = game;
+  const { t } = useTranslation();
   return (
     <Item className="card item__span-4-columns">
       <GameCard>
-        <ProfileDisplayItem player={opponent && opponent.webId !== webId ? opponent : actor} />
-        <GameStatus>{status}</GameStatus>
+        <ProfileDisplayItem
+          player={opponent && opponent.webId !== webId ? opponent : actor}
+          status={status}
+          created={created}
+        />
         <Actions>
-          <GameActions {...{ game, deleteGame }} />
-          <span>{moment(created).fromNow()}</span>
+          <DeleteGame deleteGame={deleteGame} game={game} />
+          <Labeled
+            to={`tictactoe/${btoa(url)}`}
+            className="playBtn"
+            label={t('game.playLabel')}
+            component={Link}
+          >
+            <FontAwesomeIcon icon="play" color="rgb(130, 131, 139)" />
+          </Labeled>
         </Actions>
       </GameCard>
     </Item>
   );
 };
 
-const ProfileDisplayItem = ({ player }: { player: String }) => (
-  <ProfileItems>
-    {player && <ProfileImage target="_blank" src={player.image} alt="Opponent's profile" />}
-    {player && <ProfileName href={player.webId}>{player.name}</ProfileName>}
-  </ProfileItems>
-);
-
-const GameActions = ({ game, deleteGame }: { game: Object, deleteGame: Function }) => {
+const DeleteGame = ({ game, deleteGame }: { game: Object, deleteGame: Function }) => {
+  const ref = useRef();
   const [deleteMode, setDeleteMode] = useState(false);
-  const { url } = game;
   const { t } = useTranslation();
+  useOnClickOutside(ref, () => setDeleteMode(false));
+
   return (
-    <div>
-      {!deleteMode ? (
-        <Fragment>
-          <button type="button" onClick={() => setDeleteMode(true)}>
-            <FontAwesomeIcon icon="trash-alt" size="2x" color="rgb(239, 89, 80)" />
-          </button>
-          {!game.deleted && (
-            <Link to={`tictactoe/${btoa(url)}`}>
-              <FontAwesomeIcon icon="play" size="2x" color="rgb(44, 105, 164)" />
-            </Link>
-          )}
-        </Fragment>
+    <div ref={ref}>
+      {deleteMode ? (
+        <button type="button" className="deleteMode" onClick={() => deleteGame(game)}>
+          <FontAwesomeIcon icon="trash-alt" color="#ffffff" />
+          <span>{t('game.confirmDelete')}</span>
+        </button>
       ) : (
-        <DeleteAction>
-          <span> {t('game.deleteConfirmation')}</span>
-          <div>
-            <button type="button" onClick={() => deleteGame(game)}>
-              <FontAwesomeIcon icon="check" size="2x" color="rgb(44, 105, 164)" />
-            </button>
-            <button type="button" onClick={() => setDeleteMode(false)}>
-              <FontAwesomeIcon icon="times" size="2x" color="rgb(239, 89, 80)" />
-            </button>
-          </div>
-        </DeleteAction>
+        <Labeled
+          type="button"
+          label={t('game.deleteLabel')}
+          className="deleteBtn"
+          onClick={() => setDeleteMode(true)}
+        >
+          <FontAwesomeIcon icon="trash-alt" color="rgb(237, 40, 40)" />
+        </Labeled>
       )}
     </div>
   );
 };
+
+const ProfileDisplayItem = ({
+  player,
+  status,
+  created
+}: {
+  player: String,
+  status: String,
+  created: String
+}) => (
+  <ProfileItems>
+    {player && <ProfileImage target="_blank" src={player.image} alt="Opponent's profile" />}
+    <div>
+      {player && <ProfileName href={player.webId}>{player.name}</ProfileName>}
+      <div>
+        {status && <span>{status}</span>}
+        {created && <span className="createdDate">{moment(created).fromNow()}</span>}
+      </div>
+    </div>
+  </ProfileItems>
+);
 
 export default GameItem;

@@ -46,10 +46,9 @@ export class WelcomeComponent extends Component<Props> {
      * from the returned user object.
      */
     const user = data[webId];
-    const nameLd = await user.name;
+    const nameLd = await user.vcard_fn;
 
-    const name = nameLd ? nameLd.value : '';
-
+    const name = nameLd && nameLd.value.trim().length > 0 ? nameLd.value : webId.toString();
     const imageLd = await user.vcard_hasPhoto;
 
     let image;

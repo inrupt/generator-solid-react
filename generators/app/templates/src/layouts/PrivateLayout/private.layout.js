@@ -14,6 +14,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow-x: hidden;
   min-height: 100vh;
 `;
 
@@ -22,6 +23,7 @@ const Content = styled.div`
   flex: 1 0 auto;
   display: flex;
   overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const PrivateLayout = ({ routes, webId, location, history, ...rest }) => {

@@ -44,6 +44,7 @@ const NotLoggedInLayout = props => {
             <Footer />
           </FooterContainer>
         </Container>
+          
       )}
     />
   ) : (

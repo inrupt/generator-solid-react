@@ -13,7 +13,7 @@ type Props = {
 const LoginComponent = ({ className }: Props) => {
   const { t } = useTranslation();
   return (
-    <LoginWrapper data-testid="login-wrapper" className={className}>
+    <LoginWrapper data-testid="login-wrapper">
       <CenterContainer>
         <h1 data-testid="title">{t('login.title')}</h1>
         <LoginPanel className="login-panel">
