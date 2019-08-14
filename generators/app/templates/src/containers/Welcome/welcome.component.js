@@ -7,6 +7,7 @@ import {
   WelcomeLogo,
   WelcomeProfile,
   WelcomeDetail,
+  WelcomeName,
   ImageWrapper
 } from './welcome.style';
 import { ImageProfile } from '@components';
@@ -29,7 +30,7 @@ export const WelcomePageContent = props => {
         </WelcomeLogo>
         <WelcomeProfile data-testid="welcome-profile">
           <h3>
-            {t('welcome.welcome')}, <span>{name}</span>
+            {t('welcome.welcome')}, <WelcomeName>{name}</WelcomeName>
           </h3>
           <ImageWrapper>
             <Uploader

@@ -114,3 +114,8 @@ export const WelcomeDetail = styled.div`
     margin: 0 18px;
   }
 `;
+
+export const WelcomeName = styled.span`
+  overflow-wrap: break-word;
+  word-break: break-word;
+`;
