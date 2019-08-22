@@ -75,7 +75,8 @@ module.exports = class extends Generator {
             {
                 type: 'confirm',
                 name: 'appInstalled',
-                message: 'Solid React Generator can install an example application illustrating how to interact with Solid, or a basic application framework. Do you want to install the example application?',
+                message:
+                    'Solid React Generator can install an example application illustrating how to interact with Solid, or a basic application framework. Do you want to install the example application?',
             },
             {
                 type: 'input',
