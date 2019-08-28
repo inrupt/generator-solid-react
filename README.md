@@ -42,10 +42,11 @@ Once the generator is installed, you can create a new application with just a fe
 
 1. In a console window, navigate to the desired parent folder of the new application.
 2. Use the command: ``` yo @inrupt/solid-react ```
-3. You will be prompted to set:
+3. You will be prompted:
    1. An application name. This will also be the name of the new folder in which the new application lives.
-   2. A version number.
-   3. Whether the application is private or public.
+   2. Whether or not to install a sample application, or a simple one-page application skeleton
+   3. A version number.
+   4. Whether the application is private or public.
 4. Navigate into the new folder.
 5. If you would like to start the application, simply run ``` npm run start ``` in the new folder, otherwise you can begin editing and writing your application!
 
