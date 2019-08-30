@@ -74,8 +74,23 @@ export const Result = styled.div`
   }
 `;
 
-export const SelectLabel = styled.label`
+export const ConverterInput = styled.div`
+  min-width: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  label,
+  select,
+  input {
+    display: flex;
+  }
   select {
+    margin: 10px 0;
+  }
+
+  label {
+    min-width: 120px;
     margin-top: 16px;
   }
 `;

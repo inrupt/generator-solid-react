@@ -184,5 +184,22 @@
       "label": "Learn more",
       "href": "https://solidsdk.inrupt.net/public/general/en/app-inbox-cannot-be-created.html"
     }
+  },
+  "formLanguage": {
+    "converter": {
+      "title": "Form Model Converter",
+      "shacl": "SHACL",
+      "shaclExtension": "SHACL + RDF Extension",
+      "shex": "ShEx",
+      "shexLayout": "ShEx Layout",
+      "layout": "Layout",
+      "extension": "Extension",
+      "formModel": "Form Model",
+      "copyToClipboard": "Copy to Clipboard",
+      "convert": "Convert",
+      "input": "Input,",
+      "shaclShape": "SHACL Shape",
+      "shexShape": "ShEx Shape"
+    }
   }
 }

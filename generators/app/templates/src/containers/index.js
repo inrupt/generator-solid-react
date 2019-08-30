@@ -4,7 +4,7 @@ import PageNotFound from './PageNotFound';
 import Welcome from './Welcome';
 import Profile from './Profile';
 import { GamePage, GameList } from './TicTacToe';
-import FormModelConverterComponent from './FormModel';
+import FormModelConverter from './FormModel';
 
 export {
   Login,
@@ -15,5 +15,5 @@ export {
   Profile,
   GamePage,
   GameList,
-  FormModelConverterComponent
+  FormModelConverter
 };
