@@ -1,7 +1,7 @@
 import { GameStatus, GameStatusList } from './game-status.constant';
 import { KnownInboxes } from './known-inboxes.constant';
 import { NavigationItems } from './navigation';
-import { ConverterTypesList, ConverterTypes } from './converter-types.constant';
+import { ConverterTypesList, ConverterTypes, RendererTypesList } from './converter-types.constant';
 
 export {
   GameStatus,
@@ -9,5 +9,6 @@ export {
   KnownInboxes,
   NavigationItems,
   ConverterTypesList,
-  ConverterTypes
+  ConverterTypes,
+  RendererTypesList
 };

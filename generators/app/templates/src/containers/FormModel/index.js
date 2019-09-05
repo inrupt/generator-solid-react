@@ -1,3 +1,4 @@
 import FormModelConverter from './Converter';
+import FormModelRenderer from './Renderer';
 
-export default FormModelConverter;
+export { FormModelConverter, FormModelRenderer };

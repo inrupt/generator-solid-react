@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { successToaster } from '@utils';
 import { Select } from '@util-components';
-import { ConverterTypesList, ConverterTypes } from '@constants';
+import { RendererTypesList, ConverterTypes } from '@constants';
 import { useTranslation } from 'react-i18next';
 import {
   FormModelContainer,
@@ -15,28 +15,39 @@ import {
 } from '../form-model.style';
 
 /**
- * Form Model Converter UI component, containing the styled components for the Form Model Converter
+ * Form Model Renderer UI component, containing the styled components for the Form Model Converter
  * @param props
  */
-const FormModelConverter = () => {
+const FormModelRenderer = () => {
   const { t } = useTranslation();
   const [schemaUrl, setSchemaUrl] = useState('');
   const [layoutUrl, setLayoutUrl] = useState('');
   const [formModel, setFormModel] = useState('');
   const [selectedInput, setSelectedInput] = useState('');
   const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
-  const [shapeText, setShapeText] = useState(t('formLanguage.shaclShape'));
+  const [shapeText, setShapeText] = useState(t('formLanguage.source'));
   const [hasLayoutFile, setHasLayoutFile] = useState('');
-  const optionsList = ConverterTypesList.map(item => t(`formLanguage.${item}`));
+  const [isViewMode, setViewMode] = useState(null);
+
+  const optionsList = RendererTypesList.map(item => t(`formLanguage.${item}`));
 
   /**
-   * Helper function to detect if choice is ShEx or SHACL
+   * Helper function to detect if choice is ShEx
    * @param value
    * @returns {boolean}
    */
   const isShEx = value =>
     value === t(`formLanguage.${ConverterTypes.Shex}`) ||
     value === t(`formLanguage.${ConverterTypes.ShexLayout}`);
+
+  /**
+   * Helper function to detect if choice is SHACL
+   * @param value
+   * @returns {boolean}
+   */
+  const isShacl = value =>
+    value === t(`formLanguage.${ConverterTypes.Shacl}`) ||
+    value === t(`formLanguage.${ConverterTypes.ShaclExtension}`);
 
   /**
    * Helper function to detect if choice has a layout or extension or not
@@ -63,9 +74,22 @@ const FormModelConverter = () => {
 
   /**
    * Submit function for the form, to do the conversion and set up the output
+   * This function is for the view button
    */
-  const onSubmit = useCallback((e: Event) => {
-    console.log('Submitted!', e); // eslint-disable-line no-console
+  const onViewSubmit = useCallback((e: Event) => {
+    e.preventDefault();
+    console.log('Submitted View!', e); // eslint-disable-line no-console
+    setViewMode(true);
+  });
+
+  /**
+   * Submit function for the form, to do the conversion and set up the output
+   * This function is for the edit button
+   */
+  const onEditSubmit = useCallback((e: Event) => {
+    e.preventDefault();
+    console.log('Submitted Edit!', e); // eslint-disable-line no-console
+    setViewMode(false);
   });
 
   /**
@@ -86,20 +110,24 @@ const FormModelConverter = () => {
     if (isShEx(newValue)) {
       setLayoutText(t('formLanguage.layout'));
       setShapeText(t('formLanguage.shexShape'));
-    } else {
+    } else if (isShacl(newValue)) {
       setLayoutText(t('formLanguage.extension'));
       setShapeText(t('formLanguage.shaclShape'));
+    } else {
+      setLayoutText(t('formLanguage.extension'));
+      setShapeText(t('formLanguage.source'));
     }
 
     // Set boolean to disable or enable the layout/extension textbox
     setHasLayoutFile(hasLayout(newValue));
+    setSelectedInput(newValue);
   });
 
   return (
     <FormModelContainer>
       <FormWrapper>
-        <Form onSubmit={onSubmit}>
-          <h3>{t('formLanguage.converter.title')}</h3>
+        <Form onSubmit={onViewSubmit}>
+          <h3>{t('formLanguage.renderer.title')}</h3>
           <ConverterInput>
             <label htmlFor="selected-filter">{t('formLanguage.input')}</label>
             <Select
@@ -113,7 +141,7 @@ const FormModelConverter = () => {
             <label htmlFor="converter-input">{shapeText}</label>
             <Input
               type="text"
-              placeholder="ShExC"
+              placeholder={t('formLanguage.source')}
               name="converter-input"
               id="converter-input"
               onChange={onSchemaChange}
@@ -126,28 +154,35 @@ const FormModelConverter = () => {
               type="text"
               placeholder={layoutText}
               onChange={onLayoutChange}
-              disabled={!hasLayoutFile}
+              disabled={!hasLayoutFile && (!isShEx(selectedInput) && !isShacl(selectedInput))}
               value={layoutUrl}
               name="layout-input"
               id="layout-input"
             />
           </ConverterInput>
           <Button type="submit" disabled={!(schemaUrl !== '')}>
-            {t('formLanguage.converter.convert')}
+            View
+          </Button>
+          <Button type="submit" onClick={onEditSubmit} disabled={!(schemaUrl !== '')}>
+            Edit
           </Button>
         </Form>
-        <Result>
-          <ResultHeader>
-            <h4>{t('formLanguage.formModel')}</h4>
-            <button type="button" onClick={copyToClipboard} disabled={!formModel}>
-              {t('formLanguage.copyToClipboard')}
-            </button>
-          </ResultHeader>
-          <textarea value={formModel} onChange={() => formModel} />
-        </Result>
+        {isViewMode !== null && (
+          <Result>
+            <ResultHeader>
+              <h4>{t('formLanguage.formModel')}</h4>
+              <button type="button" onClick={copyToClipboard} disabled={!formModel}>
+                {t('formLanguage.copyToClipboard')}
+              </button>
+            </ResultHeader>
+            {/* TODO: Create forms and insert here */}
+            {isViewMode === true && <div>View Form</div>}
+            {isViewMode === false && <div>Edit Form</div>}
+          </Result>
+        )}
       </FormWrapper>
     </FormModelContainer>
   );
 };
 
-export default FormModelConverter;
+export default FormModelRenderer;

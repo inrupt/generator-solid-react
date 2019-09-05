@@ -11,7 +11,8 @@ import {
   Profile,
   GameList,
   GamePage,
-  FormModelConverter
+  FormModelConverter,
+  FormModelRenderer
 } from './containers';
 
 const privateRoutes = [
@@ -39,6 +40,11 @@ const privateRoutes = [
     id: 'formmodelconverter',
     path: '/formmodel/converter',
     component: FormModelConverter
+  },
+  {
+    id: 'formmodelrenderer',
+    path: '/formmodel/renderer',
+    component: FormModelRenderer
   }
 ];
 

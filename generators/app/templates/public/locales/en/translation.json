@@ -185,20 +185,25 @@
     }
   },
   "formLanguage": {
+    "shacl": "SHACL",
+    "shaclExtension": "SHACL + RDF Extension",
+    "shex": "ShEx",
+    "shexLayout": "ShEx Layout",
+    "layout": "Layout",
+    "extension": "Extension",
+    "formModel": "Form Model",
+    "copyToClipboard": "Copy to Clipboard",
+    "shaclShape": "SHACL Shape",
+    "shexShape": "ShEx Shape",
+    "input": "Input",
+    "source": "Source",
+
     "converter": {
       "title": "Form Model Converter",
-      "shacl": "SHACL",
-      "shaclExtension": "SHACL + RDF Extension",
-      "shex": "ShEx",
-      "shexLayout": "ShEx Layout",
-      "layout": "Layout",
-      "extension": "Extension",
-      "formModel": "Form Model",
-      "copyToClipboard": "Copy to Clipboard",
-      "convert": "Convert",
-      "input": "Input,",
-      "shaclShape": "SHACL Shape",
-      "shexShape": "ShEx Shape"
+      "convert": "Convert"
+    },
+    "renderer": {
+      "title": "Form Model Renderer"
     }
   }
 }
