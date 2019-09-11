@@ -168,16 +168,22 @@ const FormModelConverter = () => {
               value={layoutUrl}
               name="layout-input"
               id="layout-input"
+              data-testid="layout-text-box"
             />
           </ConverterInput>
-          <Button type="submit" disabled={!(schemaUrl !== '')}>
+          <Button type="submit" data-testid="convert-button" disabled={!(schemaUrl !== '')}>
             {t('formLanguage.converter.convert')}
           </Button>
         </Form>
         <Result>
           <ResultHeader>
             <h4>{t('formLanguage.formModel')}</h4>
-            <button type="button" onClick={copyToClipboard} disabled={!formModel}>
+            <button
+              type="button"
+              onClick={copyToClipboard}
+              data-testid="copy-button"
+              disabled={!formModel}
+            >
               {t('formLanguage.copyToClipboard')}
             </button>
           </ResultHeader>
