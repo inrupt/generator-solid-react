@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import { successToaster } from '@utils';
+import { successToaster, errorToaster } from '@utils';
 import { Select } from '@util-components';
+import { ShexFormModel, FormModel } from 'solid-forms';
 import { ConverterTypesList, ConverterTypes } from '@constants';
 import { useTranslation } from 'react-i18next';
 import {
@@ -23,10 +24,10 @@ const FormModelConverter = () => {
   const [schemaUrl, setSchemaUrl] = useState('');
   const [layoutUrl, setLayoutUrl] = useState('');
   const [formModel, setFormModel] = useState('');
-  const [selectedInput, setSelectedInput] = useState('');
+  const [selectedInput, setSelectedInput] = useState(t('formLanguage.shacl'));
   const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
   const [shapeText, setShapeText] = useState(t('formLanguage.shaclShape'));
-  const [hasLayoutFile, setHasLayoutFile] = useState('');
+  const [hasLayoutFile, setHasLayoutFile] = useState(false);
   const optionsList = ConverterTypesList.map(item => t(`formLanguage.${item}`));
 
   /**
@@ -62,10 +63,46 @@ const FormModelConverter = () => {
   });
 
   /**
+   * Use the form library to convert a shex shape to a form model and
+   * set the response to output to a text area
+   * @returns {Promise<void>}
+   */
+  const convertShex = async () => {
+    // This code may move to another function, to allow for layouts
+    const formModel = new FormModel();
+    const schema = await formModel.parseSchema(schemaUrl);
+    const shexClass = new ShexFormModel(schema);
+    const formModelOutput = shexClass.convert();
+    setFormModel(formModelOutput);
+  };
+
+  /**
    * Submit function for the form, to do the conversion and set up the output
    */
-  const onSubmit = useCallback((e: Event) => {
-    console.log('Submitted!', e); // eslint-disable-line no-console
+  const onSubmit = useCallback(async (e: Event) => {
+    e.preventDefault();
+    try {
+      switch (selectedInput) {
+        case t('formLanguage.shacl'):
+          // Convert Shacl
+          break;
+        case t('formLanguage.shaclExtension'):
+          // Convert Shacl with extension
+          break;
+        case t('formLanguage.shex'):
+          await convertShex();
+          break;
+        case t('formLanguage.shexLayout'):
+          // TODO: Add layout code
+          await convertShex();
+          break;
+        default:
+          errorToaster(t('notifications.unknownError'), t('notifications.error'));
+          break;
+      }
+    } catch (e) {
+      errorToaster(e.message, t('notifications.error'));
+    }
   });
 
   /**
@@ -73,7 +110,7 @@ const FormModelConverter = () => {
    */
   const copyToClipboard = useCallback(() => {
     navigator.clipboard.writeText(formModel);
-    successToaster('Turtle Successfully Copied', 'Success!');
+    successToaster(t('formLanguage.converter.copySuccess'), t('notifications.success'));
   });
 
   /**
@@ -93,6 +130,7 @@ const FormModelConverter = () => {
 
     // Set boolean to disable or enable the layout/extension textbox
     setHasLayoutFile(hasLayout(newValue));
+    setSelectedInput(newValue);
   });
 
   return (

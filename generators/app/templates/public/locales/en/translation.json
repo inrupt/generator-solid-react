@@ -8,7 +8,8 @@
   },
   "notifications": {
     "success": "Success",
-    "error": "Error"
+    "error": "Error",
+    "unknownError": "An unknown error has occurred"
   },
   "login": {
     "title": "Hi! Welcome to Solid.",
@@ -197,6 +198,7 @@
     "shexShape": "ShEx Shape",
     "input": "Input",
     "source": "Source",
+    "copySuccess": "Copied to clipboard",
 
     "converter": {
       "title": "Form Model Converter",
