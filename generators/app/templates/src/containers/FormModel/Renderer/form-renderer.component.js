@@ -24,15 +24,19 @@ const FormModelRenderer = () => {
   const { t } = useTranslation();
   const [schemaUrl, setSchemaUrl] = useState('');
   const [layoutUrl, setLayoutUrl] = useState('');
-  const [formModel, setFormModel] = useState('');
   const [selectedInput, setSelectedInput] = useState('');
   const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
-  const [shapeText, setShapeText] = useState(t(''));
+  const [shapeText, setShapeText] = useState(t('formLanguage.source'));
   const [source, setSource] = useState('');
   const [hasLayoutFile, setHasLayoutFile] = useState('');
   const [isViewMode, setViewMode] = useState(true);
 
-  const optionsList = RendererTypesList.map(item => t(`formLanguage.${item}`));
+  const filteredOptions = RendererTypesList.filter(
+    item =>
+      t(`formLanguage.${item}`) === t('formLanguage.shex') ||
+      t(`formLanguage.${item}`) === t('formLanguage.formModel')
+  );
+  const optionsList = filteredOptions.map(item => t(`formLanguage.${item}`));
 
   /**
    * Helper function to detect if choice is ShEx
@@ -91,6 +95,7 @@ const FormModelRenderer = () => {
    */
   const onEditSubmit = useCallback((e: Event) => {
     e.preventDefault();
+    console.log(schemaUrl, source);
     console.log('Submitted Edit!', e); // eslint-disable-line no-console
     setViewMode(false);
   });
@@ -99,9 +104,12 @@ const FormModelRenderer = () => {
     setViewMode(true);
   });
 
-  const onSourceChange = (e: Event) => {
+  /**
+   * Change event for the source
+   */
+  const onSourceChange = useCallback((e: Event) => {
     setSource(e.target.value);
-  };
+  });
 
   /**
    * Change event for the input list change, setting up the form conditions

@@ -101,6 +101,7 @@ export const ConverterInput = styled.div`
   }
   select {
     margin: 10px 0;
+    min-width: 100px;
   }
 
   label {
