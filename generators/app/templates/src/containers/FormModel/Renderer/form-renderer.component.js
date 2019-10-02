@@ -1,8 +1,10 @@
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FormModel } from '@inrupt/solid-react-components';
 import { successToaster } from '@utils';
 import { Select } from '@util-components';
+
 import { RendererTypesList, ConverterTypes } from '@constants';
-import { useTranslation } from 'react-i18next';
 import {
   FormModelContainer,
   FormWrapper,
@@ -27,7 +29,7 @@ const FormModelRenderer = () => {
   const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
   const [shapeText, setShapeText] = useState(t('formLanguage.source'));
   const [hasLayoutFile, setHasLayoutFile] = useState('');
-  const [isViewMode, setViewMode] = useState(null);
+  const [isViewMode, setViewMode] = useState(true);
 
   const optionsList = RendererTypesList.map(item => t(`formLanguage.${item}`));
 
@@ -100,6 +102,10 @@ const FormModelRenderer = () => {
     successToaster('Turtle Successfully Copied', 'Success!');
   });
 
+  const resetModel = useCallback(() => {
+    setViewMode(true)
+  });
+
   /**
    * Change event for the input list change, setting up the form conditions
    */
@@ -154,7 +160,6 @@ const FormModelRenderer = () => {
               type="text"
               placeholder={layoutText}
               onChange={onLayoutChange}
-              disabled={!hasLayoutFile && (!isShEx(selectedInput) && !isShacl(selectedInput))}
               value={layoutUrl}
               name="layout-input"
               id="layout-input"
@@ -171,14 +176,27 @@ const FormModelRenderer = () => {
           <Result>
             <ResultHeader>
               <h4>{t('formLanguage.formModel')}</h4>
-              <button type="button" onClick={copyToClipboard} disabled={!formModel}>
-                {t('formLanguage.copyToClipboard')}
+              <button type="button" onClick={resetModel}>
+                Reset Model
               </button>
             </ResultHeader>
             {/* TODO: Create forms and insert here */}
             {isViewMode === true && <div>View Form</div>}
             {isViewMode === false && <div>Edit Form</div>}
           </Result>
+        )}
+        {isViewMode  ? null : (
+          <FormModel
+            modelPath={schemaUrl}
+            podPath={layoutUrl}
+            settings={{
+              theme: {
+                inputText: 'sdk-input',
+                inputCheckbox: 'sdk-checkbox'
+              }
+            }}
+            autoSave
+          />
         )}
       </FormWrapper>
     </FormModelContainer>
