@@ -1,8 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormModel } from '@inrupt/solid-react-components';
-import { successToaster } from '@utils';
-import { Select } from '@util-components';
+import { Select, Loader } from '@util-components';
 
 import { RendererTypesList, ConverterTypes } from '@constants';
 import {
@@ -25,6 +24,7 @@ const FormModelRenderer = () => {
   const [schemaUrl, setSchemaUrl] = useState('');
   const [layoutUrl, setLayoutUrl] = useState('');
   const [selectedInput, setSelectedInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
   const [shapeText, setShapeText] = useState(t('formLanguage.source'));
   const [source, setSource] = useState('');
@@ -206,6 +206,8 @@ const FormModelRenderer = () => {
             modelPath={schemaUrl}
             podPath={source}
             viewer={isViewMode}
+            onInit={() => setIsLoading(true)}
+            onLoaded={() => setIsLoading(false)}
             settings={{
               theme: {
                 inputText: 'input-wrap',
@@ -217,6 +219,7 @@ const FormModelRenderer = () => {
             autoSave
           />
         )}
+        { isLoading && <Loader absolute /> }
       </FormWrapper>
     </FormModelContainer>
   );

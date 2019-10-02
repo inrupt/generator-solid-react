@@ -12,6 +12,7 @@ export const FormModelContainer = styled.section`
 `;
 
 export const FormWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   background-repeat: repeat;
@@ -28,7 +29,7 @@ export const FormWrapper = styled.div`
     background-color: #f9f9f9;
     margin: 15px 0;
   }
-  
+
   .input-wrap {
     margin: 0;
   }
