@@ -61,7 +61,6 @@ const FormModelConverter = () => {
   const TERM_LayoutPath = F.namedNode(NS_Layout + 'path');
   const TERM_LayoutRef = F.namedNode(NS_Layout + 'ref');
 
-
   //TODO: This is Eric's code, and requires an update to shex.js with shexpath to work. Leaving for now
   const annotateSchema = (schema, layout) => {
     const newSchema = JSON.parse(JSON.stringify(schema)); // modify copy, not original.
@@ -167,22 +166,22 @@ const FormModelConverter = () => {
     const data = await newResponse.text();
 
     // TODO: Currently this is just validating the shacl. This is where the converter code will be called once it is ready
-    validator.validate(data, "text/turtle", shape, "text/turtle", (e, report) => {
+    validator.validate(data, 'text/turtle', shape, 'text/turtle', (e, report) => {
       if (report.conforms() === false) {
         let message = 'Error in ';
-        report.results().forEach((result) => {
-          result.resultNode['http://www.w3.org/ns/shacl#resultPath'].forEach((m) => {
+        report.results().forEach(result => {
+          result.resultNode['http://www.w3.org/ns/shacl#resultPath'].forEach(m => {
             message += `${m['@id']} `;
           });
 
           message += ' with the following errors: ';
 
-          result.resultNode['http://www.w3.org/ns/shacl#resultMessage'].forEach((n) => {
+          result.resultNode['http://www.w3.org/ns/shacl#resultMessage'].forEach(n => {
             message += `${n['@value']} \n`;
           });
         });
 
-        // Reports out the errors
+        // Reports out the errors∏
         console.log(message);
       }
     });
