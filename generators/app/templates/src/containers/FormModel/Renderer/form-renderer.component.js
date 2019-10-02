@@ -27,7 +27,8 @@ const FormModelRenderer = () => {
   const [formModel, setFormModel] = useState('');
   const [selectedInput, setSelectedInput] = useState('');
   const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
-  const [shapeText, setShapeText] = useState(t('formLanguage.source'));
+  const [shapeText, setShapeText] = useState(t(''));
+  const [source, setSource] = useState('');
   const [hasLayoutFile, setHasLayoutFile] = useState('');
   const [isViewMode, setViewMode] = useState(true);
 
@@ -94,17 +95,13 @@ const FormModelRenderer = () => {
     setViewMode(false);
   });
 
-  /**
-   * Copy the form model directly to the user's computer's clipboard
-   */
-  const copyToClipboard = useCallback(() => {
-    navigator.clipboard.writeText(formModel);
-    successToaster('Turtle Successfully Copied', 'Success!');
-  });
-
   const resetModel = useCallback(() => {
     setViewMode(true);
   });
+
+  const onSourceChange = (e: Event) => {
+    setSource(e.target.value);
+  };
 
   /**
    * Change event for the input list change, setting up the form conditions
@@ -128,7 +125,7 @@ const FormModelRenderer = () => {
     setHasLayoutFile(hasLayout(newValue));
     setSelectedInput(newValue);
   });
-  console.log(isViewMode)
+
   return (
     <FormModelContainer>
       <FormWrapper>
@@ -147,7 +144,7 @@ const FormModelRenderer = () => {
             <label htmlFor="converter-input">{shapeText}</label>
             <Input
               type="text"
-              placeholder={t('formLanguage.source')}
+              placeholder={shapeText}
               name="converter-input"
               id="converter-input"
               onChange={onSchemaChange}
@@ -163,6 +160,17 @@ const FormModelRenderer = () => {
               value={layoutUrl}
               name="layout-input"
               id="layout-input"
+            />
+          </ConverterInput>
+          <ConverterInput>
+            <label htmlFor="converter-input">{t('formLanguage.source')}</label>
+            <Input
+              type="text"
+              placeholder={t('formLanguage.source')}
+              name="converter-input"
+              id="converter-input"
+              onChange={onSourceChange}
+              value={source}
             />
           </ConverterInput>
           <Button type="submit" disabled={!(schemaUrl !== '')}>
@@ -185,16 +193,17 @@ const FormModelRenderer = () => {
             {isViewMode === false && <div>Edit Form</div>}
           </Result>
         )}
-        {schemaUrl && layoutUrl && (
+        {schemaUrl && source && (
           <FormModel
             modelPath={schemaUrl}
-            podPath={layoutUrl}
+            podPath={source}
             viewer={isViewMode}
             settings={{
               theme: {
                 inputText: 'input-wrap',
                 inputCheckbox: 'sdk-checkbox',
-                form: 'inrupt-sdk-form'
+                form: 'inrupt-sdk-form',
+                childGroup: 'inrupt-form-group'
               }
             }}
             autoSave

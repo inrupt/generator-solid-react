@@ -23,8 +23,18 @@ export const FormWrapper = styled.div`
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
   padding: 20px;
 
-  .inrupt-sdk-form {
-    border: none;
+  .inrupt-form-group {
+    border: 1px solid #C0C0C0;
+    background-color: #f9f9f9;
+    margin: 15px 0;
+  }
+  
+  .input-wrap {
+    margin: 0;
+  }
+
+  input {
+    margin-left: 0;
   }
 `;
 export const Form = styled.form`
