@@ -4,6 +4,9 @@ import { Select } from '@util-components';
 import { ShexFormModel, FormModel } from 'solid-forms';
 import { ConverterTypesList, ConverterTypes } from '@constants';
 import { useTranslation } from 'react-i18next';
+import { Util } from '@shexjs/core';
+import SHACLValidator from 'shacl-js';
+import * as N3 from 'n3';
 import {
   FormModelContainer,
   FormWrapper,
@@ -29,6 +32,71 @@ const FormModelConverter = () => {
   const [shapeText, setShapeText] = useState(t('formLanguage.shaclShape'));
   const [hasLayoutFile, setHasLayoutFile] = useState(false);
   const optionsList = ConverterTypesList.map(item => t(`formLanguage.${item}`));
+
+  const Meta = {
+    shexc: {
+      prefixes: {},
+      base: window.location.href
+    },
+    data: {
+      prefixes: {},
+      base: window.location.href
+    },
+    layout: {
+      prefixes: {},
+      base: window.location.href
+    }
+  };
+
+  // Temporary code for Shex Layout testing
+  /* eslint-disable */
+  // This is from Eric's code and is required for AnnotateSchema
+  const F = N3.DataFactory;
+  const NS_Rdf = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
+  const IRI_RdfType = NS_Rdf + 'type';
+  const NS_Layout = 'http://janeirodigital.com/layout#';
+  const TERM_RdfType = F.namedNode(IRI_RdfType);
+  const TERM_LayoutType = F.namedNode(NS_Layout + 'Layout');
+  const TERM_LayoutAnnotation = F.namedNode(NS_Layout + 'annotation');
+  const TERM_LayoutPath = F.namedNode(NS_Layout + 'path');
+  const TERM_LayoutRef = F.namedNode(NS_Layout + 'ref');
+
+
+  //TODO: This is Eric's code, and requires an update to shex.js with shexpath to work. Leaving for now
+  const annotateSchema = (schema, layout) => {
+    const newSchema = JSON.parse(JSON.stringify(schema)); // modify copy, not original.
+    let index = Util.index(newSchema); // update index to point at copy.
+    const shexPath = Util.shexPath(newSchema, Meta.shexc);
+    layout.getQuads(null, TERM_RdfType, TERM_LayoutType).forEach(quad => {
+      const annotated = layout.getQuads(quad.subject, TERM_LayoutAnnotation, null).map(t => {
+        let elt = null;
+        const quads = layout.getQuads(t.object, TERM_LayoutRef, null);
+        if (quads.length) {
+          if (!index) index = Util.index(newSchema);
+          let lookFor = quads[0].object.value;
+          elt = index.shapeExprs[lookFor] || index.tripleExprs[lookFor];
+        } else {
+          const pathStr = layout.getQuads(t.object, TERM_LayoutPath, null)[0].object.value;
+          elt = shexPath.search(pathStr)[0];
+        }
+        const newAnnots = layout
+          .getQuads(t.object, null, null)
+          .filter(t => !t.predicate.equals(TERM_LayoutPath))
+          .map(t => {
+            return {
+              type: 'Annotation',
+              predicate: t.predicate.value,
+              object: RDFJStoJSONLD(t.object)
+            };
+          });
+        elt.annotations = newAnnots; // @@ merge, overriding same predicate values?
+        return elt;
+      });
+    });
+    console.log(newSchema);
+    return newSchema;
+  };
+  /* eslint-enable */
 
   /**
    * Helper function to detect if choice is ShEx or SHACL
@@ -71,9 +139,53 @@ const FormModelConverter = () => {
     // This code may move to another function, to allow for layouts
     const formModel = new FormModel();
     const schema = await formModel.parseSchema(schemaUrl);
-    const shexClass = new ShexFormModel(schema);
+    let shexClass;
+    let newSchema;
+    let layout;
+
+    if (hasLayoutFile) {
+      const response = await fetch(layoutUrl);
+      layout = await response.text();
+      newSchema = annotateSchema(schema, layout);
+      shexClass = new ShexFormModel(newSchema);
+      console.log(newSchema);
+    } else {
+      shexClass = new ShexFormModel(schema);
+    }
     const formModelOutput = shexClass.convert();
     setFormModel(formModelOutput);
+  };
+
+  /**
+   * Convert SHACL
+   */
+  const convertShacl = async () => {
+    const validator = new SHACLValidator();
+    const response = await fetch('https://jmartin.inrupt.net/public/shapes/book-shacl.ttl');
+    const shape = await response.text();
+    const newResponse = await fetch('https://jmartin.inrupt.net/public/books/book.ttl');
+    const data = await newResponse.text();
+
+    // TODO: Currently this is just validating the shacl. This is where the converter code will be called once it is ready
+    validator.validate(data, "text/turtle", shape, "text/turtle", (e, report) => {
+      if (report.conforms() === false) {
+        let message = 'Error in ';
+        report.results().forEach((result) => {
+          result.resultNode['http://www.w3.org/ns/shacl#resultPath'].forEach((m) => {
+            message += `${m['@id']} `;
+          });
+
+          message += ' with the following errors: ';
+
+          result.resultNode['http://www.w3.org/ns/shacl#resultMessage'].forEach((n) => {
+            message += `${n['@value']} \n`;
+          });
+        });
+
+        // Reports out the errors
+        console.log(message);
+      }
+    });
   };
 
   /**
@@ -85,6 +197,7 @@ const FormModelConverter = () => {
       switch (selectedInput) {
         case t('formLanguage.shacl'):
           // Convert Shacl
+          await convertShacl();
           break;
         case t('formLanguage.shaclExtension'):
           // Convert Shacl with extension

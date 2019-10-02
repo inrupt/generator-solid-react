@@ -7,6 +7,7 @@
     "@inrupt/solid-react-components": "^0.4.4",
     "@inrupt/solid-style-guide": "^0.1.34",
     "@rdfjs/data-model": "^1.1.1",
+    "@shexjs/core": "^1.0.0-alpha.4",
     "@solid/query-ldflex": "^2.4.0",
     "@svgr/webpack": "2.4.1",
     "bfj": "6.1.1",
@@ -37,6 +38,7 @@
     "react-scripts": "^3.0.1",
     "react-toastify": "^5.3.0",
     "react-transition-group": "^4.1.1",
+    "shacl-js": "0.0.1",
     "solid-auth-client": "^2.3.0",
     "solid-forms": "0.0.3-test",
     "styled-components": "^4.1.3"
