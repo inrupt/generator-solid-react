@@ -27,11 +27,16 @@ const FormModelConverter = () => {
   const [schemaUrl, setSchemaUrl] = useState('');
   const [layoutUrl, setLayoutUrl] = useState('');
   const [formModel, setFormModel] = useState('');
-  const [selectedInput, setSelectedInput] = useState(t('formLanguage.shacl'));
-  const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
-  const [shapeText, setShapeText] = useState(t('formLanguage.shaclShape'));
+  const [selectedInput, setSelectedInput] = useState(t('formLanguage.shex'));
+  const [layoutText, setLayoutText] = useState(t('formLanguage.shexLayout'));
+  const [shapeText, setShapeText] = useState(t('formLanguage.shexShape'));
   const [hasLayoutFile, setHasLayoutFile] = useState(false);
-  const optionsList = ConverterTypesList.map(item => t(`formLanguage.${item}`));
+
+  // Temporarily filtering out anything except ShEx as that's all that works currently
+  const filteredOptions = ConverterTypesList.filter(
+    item => t(`formLanguage.${item}`) === t('formLanguage.shex')
+  );
+  const optionsList = filteredOptions.map(item => t(`formLanguage.${item}`));
 
   const Meta = {
     shexc: {
@@ -120,6 +125,7 @@ const FormModelConverter = () => {
    */
   const onSchemaChange = useCallback((e: Event) => {
     setSchemaUrl(e.target.value);
+    setFormModel('');
   });
 
   /**
@@ -127,6 +133,7 @@ const FormModelConverter = () => {
    */
   const onLayoutChange = useCallback((e: Event) => {
     setLayoutUrl(e.target.value);
+    setFormModel('');
   });
 
   /**
