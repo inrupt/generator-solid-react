@@ -103,7 +103,7 @@ const FormModelRenderer = () => {
   });
 
   const resetModel = useCallback(() => {
-    setViewMode(true)
+    setViewMode(true);
   });
 
   /**
@@ -128,7 +128,7 @@ const FormModelRenderer = () => {
     setHasLayoutFile(hasLayout(newValue));
     setSelectedInput(newValue);
   });
-
+  console.log(isViewMode)
   return (
     <FormModelContainer>
       <FormWrapper>
@@ -185,14 +185,16 @@ const FormModelRenderer = () => {
             {isViewMode === false && <div>Edit Form</div>}
           </Result>
         )}
-        {isViewMode  ? null : (
+        {schemaUrl && layoutUrl && (
           <FormModel
             modelPath={schemaUrl}
             podPath={layoutUrl}
+            viewer={isViewMode}
             settings={{
               theme: {
-                inputText: 'sdk-input',
-                inputCheckbox: 'sdk-checkbox'
+                inputText: 'input-wrap',
+                inputCheckbox: 'sdk-checkbox',
+                form: 'inrupt-sdk-form'
               }
             }}
             autoSave

@@ -22,6 +22,10 @@ export const FormWrapper = styled.div`
   border-radius: 4px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
   padding: 20px;
+
+  .inrupt-sdk-form {
+    border: none;
+  }
 `;
 export const Form = styled.form`
   box-sizing: border-box;
