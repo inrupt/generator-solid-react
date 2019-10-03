@@ -25,7 +25,7 @@ export const FormWrapper = styled.div`
   padding: 20px;
 
   .inrupt-form-group {
-    border: 1px solid #C0C0C0;
+    border: 1px solid #c0c0c0;
     background-color: #f9f9f9;
     margin: 15px 0;
   }

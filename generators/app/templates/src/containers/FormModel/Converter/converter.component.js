@@ -154,7 +154,7 @@ const FormModelConverter = () => {
       layout = await response.text();
       newSchema = annotateSchema(schema, layout);
       shexClass = new ShexFormModel(newSchema);
-      console.log(newSchema);
+      console.log(newSchema); // eslint-disable-line no-console
     } else {
       shexClass = new ShexFormModel(schema);
     }
@@ -188,8 +188,8 @@ const FormModelConverter = () => {
           });
         });
 
-        // Reports out the errors∏
-        console.log(message);
+        // Reports out the errors
+        console.log(message); // eslint-disable-line no-console
       }
     });
   };

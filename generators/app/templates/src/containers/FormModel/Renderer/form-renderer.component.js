@@ -95,7 +95,7 @@ const FormModelRenderer = () => {
    */
   const onEditSubmit = useCallback((e: Event) => {
     e.preventDefault();
-    console.log(schemaUrl, source);
+    console.log(schemaUrl, source); // eslint-disable-line no-console
     console.log('Submitted Edit!', e); // eslint-disable-line no-console
     setViewMode(false);
   });
@@ -132,6 +132,8 @@ const FormModelRenderer = () => {
     // Set boolean to disable or enable the layout/extension textbox
     setHasLayoutFile(hasLayout(newValue));
     setSelectedInput(newValue);
+    console.log(selectedInput); // eslint-disable-line no-console
+    console.log(hasLayoutFile); // eslint-disable-line no-console
   });
 
   return (
@@ -219,7 +221,7 @@ const FormModelRenderer = () => {
             autoSave
           />
         )}
-        { isLoading && <Loader absolute /> }
+        {isLoading && <Loader absolute />}
       </FormWrapper>
     </FormModelContainer>
   );
