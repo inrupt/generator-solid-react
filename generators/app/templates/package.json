@@ -23,7 +23,7 @@
     "i18next-xhr-backend": "^2.0.1",
     "identity-obj-proxy": "3.0.0",
     "moment": "^2.24.0",
-    "n3": "^1.2.3-test",
+    "n3": "1.2.3-test",
     "normalize.css": "^8.0.1",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",
