@@ -1,5 +1,12 @@
 # Solid React Application Generator
 
+## 0.6.2 (September 11, 2019)
+
+#### Solid React Application Base
+
+##### Updated
+* Updated dependency packages to fix security vulnerabilities
+
 ## 0.6.1 (August 28, 2019)
 
 #### Generator

@@ -10,7 +10,9 @@ import {
   RegistrationSuccess,
   Profile,
   GameList,
-  GamePage
+  GamePage,
+  FormModelConverter,
+  FormModelRenderer
 } from './containers';
 
 const privateRoutes = [
@@ -33,6 +35,16 @@ const privateRoutes = [
     id: 'tictactoegame',
     path: '/tictactoe/:gameId',
     component: GamePage
+  },
+  {
+    id: 'formmodelconverter',
+    path: '/formmodel/converter',
+    component: FormModelConverter
+  },
+  {
+    id: 'formmodelrenderer',
+    path: '/formmodel/renderer',
+    component: FormModelRenderer
   }
 ];
 

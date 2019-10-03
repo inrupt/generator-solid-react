@@ -8,7 +8,8 @@
   },
   "notifications": {
     "success": "Éxito",
-    "error": "Error"
+    "error": "Error",
+    "unknownError": "An unknown error has occurred"
   },
   "login": {
     "title": "Hola! Bienvenido a Solid.",
@@ -182,6 +183,29 @@
     "link": {
       "label": "Conozca más",
       "href": "https://solidsdk.inrupt.net/public/general/es/app-inbox-cannot-be-created.html"
+    }
+  },
+  "formLanguage": {
+    "shacl": "SHACL",
+    "shaclExtension": "SHACL + RDF Extension",
+    "shex": "ShEx",
+    "shexLayout": "ShEx Layout",
+    "layout": "Layout",
+    "extension": "Extension",
+    "formModel": "Form Model",
+    "copyToClipboard": "Copy to Clipboard",
+    "shaclShape": "SHACL Shape",
+    "shexShape": "ShEx Shape",
+    "input": "Input",
+    "source": "Source",
+    "copySuccess": "Copied to clipboard",
+
+    "converter": {
+      "title": "Form Model Converter",
+      "convert": "Convert"
+    },
+    "renderer": {
+      "title": "Form Model Renderer"
     }
   }
 }
