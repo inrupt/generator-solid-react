@@ -12,23 +12,12 @@ Application Generator for [Solid](https://solid.inrupt.com) React applications. 
 * [Styled Components](https://www.styled-components.com)
 
 ## Prerequisites 
-
-### Administrator Privilege
-You will need administrative privilege on your local computer to install the generator and prerequisites. Depending upon your operating system:
-
-* Mac:
-  1. Prefix the command lines to be executed with sudo.
-  2. You will be prompted for the Administrator password. Refer to: https://support.apple.com/en-us/HT202035.
-* Windows:
-  1. Type cmd in the search bar.
-  2. Right click on "Command prompt" and select "Run as Administrator".
-
 ### npm and Yeoman
-To install the generator, you will need both [npm](https://www.npmjs.com) and [Yeoman](https://yeoman.io) if you don't already have them.
-
-* [npm](https://www.npmjs.com) makes it easy for JavaScript developers to share and reuse code, and makes it easy to update the code that you’re sharing. To install, follow the instructions at [npm](https://www.npmjs.com/get-npm).
-* [Yeoman](https://yeoman.io) provides a generator ecosystem to scaffold complete projects. You can install Yeoman using the running the command: ```npm install -g yo```
-
+To install the Generator, you will need [npm](https://www.npmjs.com/get-npm), and [Yeoman](https://yeoman.io) if you don't already have them. 
+* [npm](https://www.npmjs.com/get-npm) makes it easy for JavaScript developers to share and reuse code, and makes it easy to update the code that you’re sharing. We recommend the use of a node version manager (nvm) to manage multiple versions of npm, and will also set up your npm permissions properly. To install using a nvm, follow the instructions [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm#using-a-node-version-manager-to-install-node-js-and-npm).
+* [Yeoman](https://yeoman.io) provides a generator ecosystem to scaffold complete projects. You can install Yeoman by running the command: ```npm install -g yo```
+### Note on npm permissions
+If you receive EACCES permission errors, or other permission-related errors when trying to run `npm install -g`, please refer to [this npm document](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally_) on how to set your permissions correctly.
 ## Installation
 
 To install the generator:
@@ -42,10 +31,11 @@ Once the generator is installed, you can create a new application with just a fe
 
 1. In a console window, navigate to the desired parent folder of the new application.
 2. Use the command: ``` yo @inrupt/solid-react ```
-3. You will be prompted to set:
+3. You will be prompted:
    1. An application name. This will also be the name of the new folder in which the new application lives.
-   2. A version number.
-   3. Whether the application is private or public.
+   2. Whether or not to install a sample application, or a simple one-page application skeleton
+   3. A version number.
+   4. Whether the application is private or public.
 4. Navigate into the new folder.
 5. If you would like to start the application, simply run ``` npm run start ``` in the new folder, otherwise you can begin editing and writing your application!
 

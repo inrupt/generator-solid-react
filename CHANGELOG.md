@@ -14,7 +14,6 @@
 ##### Added
 * New prompt when creating a new application. The new prompt asks if the developer would like to install a full sample application or just a simple one-page application. This provides a way for people familiar with Solid to create new blank applications and get started quicker.
 
-
 ## 0.6.0 (August 14, 2019)
 
 #### Solid React Application Base
