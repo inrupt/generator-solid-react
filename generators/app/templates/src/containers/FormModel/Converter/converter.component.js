@@ -141,7 +141,7 @@ const FormModelConverter = () => {
    * set the response to output to a text area
    * @returns {Promise<void>}
    */
-  const convertShex = async () => {
+  const convertShex = useCallback(async () => {
     // This code may move to another function, to allow for layouts
     const formModel = new FormModel();
     const schema = await formModel.parseSchema(schemaUrl);
@@ -160,7 +160,7 @@ const FormModelConverter = () => {
     }
     const formModelOutput = shexClass.convert();
     setFormModel(formModelOutput);
-  };
+  });
 
   /**
    * Convert SHACL
