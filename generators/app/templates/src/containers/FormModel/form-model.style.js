@@ -12,6 +12,7 @@ export const FormModelContainer = styled.section`
 `;
 
 export const FormWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   background-repeat: repeat;
@@ -22,6 +23,20 @@ export const FormWrapper = styled.div`
   border-radius: 4px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
   padding: 20px;
+
+  .inrupt-form-group {
+    border: 1px solid #C0C0C0;
+    background-color: #f9f9f9;
+    margin: 15px 0;
+  }
+
+  .input-wrap {
+    margin: 0;
+  }
+
+  input {
+    margin-left: 0;
+  }
 `;
 export const Form = styled.form`
   box-sizing: border-box;
