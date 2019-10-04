@@ -24,7 +24,6 @@
     "identity-obj-proxy": "3.0.0",
     "moment": "^2.24.0",
     "n3": "2.0.0-test",
-    "n3-test": "1.0.0-test",
     "normalize.css": "^8.0.1",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",

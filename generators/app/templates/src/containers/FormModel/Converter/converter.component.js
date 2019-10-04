@@ -6,7 +6,7 @@ import { ConverterTypesList, ConverterTypes } from '@constants';
 import { useTranslation } from 'react-i18next';
 import { Util } from '@shexjs/core';
 import SHACLValidator from 'shacl-js';
-import * as N3 from 'n3-test';
+import * as N3 from 'n3';
 import {
   FormModelContainer,
   FormWrapper,
