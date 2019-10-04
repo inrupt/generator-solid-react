@@ -58,20 +58,25 @@ export const ResultHeader = styled.div`
   justify-content: space-between;
   flex: 0 1 auto;
   padding: 8px 0;
+  & > div {
+    display: flex;
+    width: auto;
+    justify-content: space-around;
+    & > button {
+      box-sizing: border-box;
+      font-weight: 700;
+      font-height: 1.5rem;
+      padding: 8px 16px;
+      margin: 0 12px;
+      border: solid 1px #5361fd;
+      text-transform: uppercase;
+      color: #5361fd;
+      align-self: flex-end;
+    }
+  }
   & > h4 {
     margin: 0;
     padding: 8px 0;
-  }
-  & > button {
-    box-sizing: border-box;
-    font-weight: 700;
-    font-height: 1.5rem;
-    padding: 8px 16px;
-    margin: 0;
-    border: solid 1px #5361fd;
-    text-transform: uppercase;
-    color: #5361fd;
-    align-self: flex-end;
   }
 `;
 
