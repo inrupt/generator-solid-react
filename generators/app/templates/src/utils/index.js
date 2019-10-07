@@ -12,9 +12,8 @@ function* entries(obj) {
 }
 
 function checkAppPermissions(userAppPermissions, appPermissions) {
-  const userAppPermission = userAppPermissions.sort().toString();
-  const appPermission = appPermissions.sort().toString();
-  return userAppPermission === appPermission;
+  return appPermissions.every(permission => userAppPermissions.includes(permission))
+
 }
 
 export {
