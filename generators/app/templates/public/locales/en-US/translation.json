@@ -206,7 +206,13 @@
       "convert": "Convert"
     },
     "renderer": {
-      "title": "Form Model Renderer"
+      "title": "Form Model Renderer",
+      "submitBtn": "Generate",
+      "resetBtn": "Reset Model",
+      "viewBtn": "View",
+      "editBtn": "Edit",
+      "viewMode": "View Mode",
+      "editMode": "Edit Mode"
     }
   }
 }

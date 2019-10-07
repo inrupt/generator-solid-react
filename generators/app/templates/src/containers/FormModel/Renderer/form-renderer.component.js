@@ -176,25 +176,27 @@ const FormModelRenderer = () => {
               value={source}
             />
           </ConverterInput>
-          <Button type="submit">Generate</Button>
+          <Button type="submit">{t('formLanguage.renderer.submitBtn')}</Button>
         </Form>
         <Result>
           <ResultHeader>
             <h4>{t('formLanguage.formModel')}</h4>
             <div>
               <Button type="button" onClick={() => setViewMode(true)}>
-                View
+                {t('formLanguage.renderer.viewBtn')}
               </Button>
               <Button type="button" onClick={() => setViewMode(false)}>
-                Edit
+                {t('formLanguage.renderer.editBtn')}
               </Button>
               <button type="button" onClick={resetModel}>
-                Reset Model
+                {t('formLanguage.renderer.resetBtn')}
               </button>
             </div>
           </ResultHeader>
           {/* TODO: Create forms and insert here */}
-          <div>{isViewMode ? 'View Form' : 'Edit Form'}</div>
+          <div>
+            {isViewMode ? t('formLanguage.renderer.viewMode') : t('formLanguage.renderer.editMode')}
+          </div>
         </Result>
         {submitted !== null && (
           <FormModel
