@@ -2,14 +2,14 @@
   "appPermission": {
     "message": "La aplicacion necesita todos los permisos para funcionar.",
     "link": {
-      "label": "Learn more",
+      "label": "Saber más",
       "href": "https://solidsdk.inrupt.net/public/general/es/app-permissions.html"
     }
   },
   "notifications": {
     "success": "Éxito",
     "error": "Error",
-    "unknownError": "An unknown error has occurred"
+    "unknownError": "Ha occurido un error desconocido"
   },
   "login": {
     "title": "Hola! Bienvenido a Solid.",
@@ -173,9 +173,9 @@
     }
   },
   "noInboxUser": {
-    "message": "You do not have a inbox, please go to your POD and create one.",
+    "message": "No tienes un inbox, por favor crea uno en tu Pod.",
     "link": {
-      "label": "Conozca más",
+      "label": "Saber más",
       "href": "https://solidsdk.inrupt.net/public/general/es/missing-global-inbox.html"
     }
   },
@@ -191,21 +191,27 @@
     "shex": "ShEx",
     "shexLayout": "ShEx Layout",
     "layout": "Layout",
-    "extension": "Extension",
+    "extension": "Extensión",
     "formModel": "Form Model",
-    "copyToClipboard": "Copy to Clipboard",
+    "copyToClipboard": "Copiar al portapapeles",
     "shaclShape": "SHACL Shape",
     "shexShape": "ShEx Shape",
-    "input": "Input",
-    "source": "Source",
-    "copySuccess": "Copied to clipboard",
+    "input": "Formato entrada",
+    "source": "Fuente",
+    "copySuccess": "Copiado en el portapapeles",
 
     "converter": {
-      "title": "Form Model Converter",
-      "convert": "Convert"
+      "title": "Convertidor de Form Model",
+      "convert": "Convertir"
     },
     "renderer": {
-      "title": "Form Model Renderer"
+      "title": "Visualizador de Form Model",
+      "submitBtn": "Generar",
+      "resetBtn": "Limpiar Modelo",
+      "viewBtn": "Lectura",
+      "editBtn": "Editar",
+      "viewMode": "Modo Lectura",
+      "editMode": "Modo Edición"
     }
   }
 }

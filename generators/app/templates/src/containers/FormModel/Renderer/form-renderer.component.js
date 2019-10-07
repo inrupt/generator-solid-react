@@ -21,13 +21,14 @@ import {
  */
 const FormModelRenderer = () => {
   const { t } = useTranslation();
-  const [schemaUrl, setSchemaUrl] = useState('');
   const [layoutUrl, setLayoutUrl] = useState('');
   const [selectedInput, setSelectedInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
   const [shapeText, setShapeText] = useState(t('formLanguage.source'));
   const [source, setSource] = useState('');
+  const [schemaUrl, setSchemaUrl] = useState('');
+  const [submitted, setSubmitted] = useState(null);
   const [hasLayoutFile, setHasLayoutFile] = useState('');
   const [isViewMode, setViewMode] = useState(true);
 
@@ -83,25 +84,17 @@ const FormModelRenderer = () => {
    * Submit function for the form, to do the conversion and set up the output
    * This function is for the view button
    */
-  const onViewSubmit = useCallback((e: Event) => {
+  const onSubmit = useCallback((e: Event) => {
     e.preventDefault();
-    console.log('Submitted View!', e); // eslint-disable-line no-console
-    setViewMode(true);
-  });
-
-  /**
-   * Submit function for the form, to do the conversion and set up the output
-   * This function is for the edit button
-   */
-  const onEditSubmit = useCallback((e: Event) => {
-    e.preventDefault();
-    console.log(schemaUrl, source); // eslint-disable-line no-console
-    console.log('Submitted Edit!', e); // eslint-disable-line no-console
-    setViewMode(false);
+    let obj = {};
+    if (schemaUrl !== '') obj = { ...obj, schemaUrl };
+    if (source !== '') obj = { ...obj, source };
+    setSubmitted(obj);
   });
 
   const resetModel = useCallback(() => {
     setViewMode(true);
+    setSubmitted(null);
   });
 
   /**
@@ -139,7 +132,7 @@ const FormModelRenderer = () => {
   return (
     <FormModelContainer>
       <FormWrapper>
-        <Form onSubmit={onViewSubmit}>
+        <Form onSubmit={onSubmit}>
           <h3>{t('formLanguage.renderer.title')}</h3>
           <ConverterInput>
             <label htmlFor="selected-filter">{t('formLanguage.input')}</label>
@@ -183,30 +176,32 @@ const FormModelRenderer = () => {
               value={source}
             />
           </ConverterInput>
-          <Button type="submit" disabled={!(schemaUrl !== '')}>
-            View
-          </Button>
-          <Button type="submit" onClick={onEditSubmit} disabled={!(schemaUrl !== '')}>
-            Edit
-          </Button>
+          <Button type="submit">{t('formLanguage.renderer.submitBtn')}</Button>
         </Form>
-        {isViewMode !== null && (
-          <Result>
-            <ResultHeader>
-              <h4>{t('formLanguage.formModel')}</h4>
+        <Result>
+          <ResultHeader>
+            <h4>{t('formLanguage.formModel')}</h4>
+            <div>
+              <Button type="button" onClick={() => setViewMode(true)}>
+                {t('formLanguage.renderer.viewBtn')}
+              </Button>
+              <Button type="button" onClick={() => setViewMode(false)}>
+                {t('formLanguage.renderer.editBtn')}
+              </Button>
               <button type="button" onClick={resetModel}>
-                Reset Model
+                {t('formLanguage.renderer.resetBtn')}
               </button>
-            </ResultHeader>
-            {/* TODO: Create forms and insert here */}
-            {isViewMode === true && <div>View Form</div>}
-            {isViewMode === false && <div>Edit Form</div>}
-          </Result>
-        )}
-        {schemaUrl && source && (
+            </div>
+          </ResultHeader>
+          {/* TODO: Create forms and insert here */}
+          <div>
+            {isViewMode ? t('formLanguage.renderer.viewMode') : t('formLanguage.renderer.editMode')}
+          </div>
+        </Result>
+        {submitted !== null && (
           <FormModel
-            modelPath={schemaUrl}
-            podPath={source}
+            modelPath={submitted.schemaUrl}
+            podPath={submitted.source}
             viewer={isViewMode}
             onInit={() => setIsLoading(true)}
             onLoaded={() => setIsLoading(false)}
