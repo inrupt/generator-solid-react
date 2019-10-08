@@ -24,7 +24,7 @@
     "btnTxtProvider": "Log In with Provider",
     "errors": {
       "unknown": "Something is wrong, please try again...",
-      "webIdNotValid": "WeibID is not valid",
+      "webIdNotValid": "WebID is not valid",
       "emptyProvider": "Solid Provider is required",
       "emptyWebId": "Valid WebID is required"
     }
@@ -185,6 +185,12 @@
       "href": "https://solidsdk.inrupt.net/public/general/en/app-inbox-cannot-be-created.html"
     }
   },
+  "errorFormRender": {
+    "link": {
+      "label": "Learn more",
+
+    }
+  },
   "formLanguage": {
     "shacl": "SHACL",
     "shaclExtension": "SHACL + RDF Extension",
@@ -211,7 +217,11 @@
       "viewBtn": "View",
       "editBtn": "Edit",
       "viewMode": "View Mode",
-      "editMode": "Edit Mode"
+      "editMode": "Edit Mode",
+      "formSaved": "Form successfully saved",
+      "formNotLoaded": "Form could not be renderer",
+      "fieldDeleted": "Form field successfully deleted",
+      "fieldAdded": "New form field successfully added"
     }
   }
 }
