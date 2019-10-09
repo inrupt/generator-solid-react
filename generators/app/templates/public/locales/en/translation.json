@@ -188,7 +188,7 @@
   "errorFormRender": {
     "link": {
       "label": "Learn more",
-      "href": ""
+      "href": "https://solidsdk.inrupt.net/public/general/en/form-rendering-errors.html"
     }
   },
   "formLanguage": {
@@ -219,7 +219,7 @@
       "viewMode": "View Mode",
       "editMode": "Edit Mode",
       "formSaved": "Form successfully saved",
-      "formNotLoaded": "Form could not be renderer",
+      "formNotLoaded": "Form could not be rendered",
       "fieldDeleted": "Form field successfully deleted",
       "fieldAdded": "New form field successfully added"
     }

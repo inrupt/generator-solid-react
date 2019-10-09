@@ -136,7 +136,7 @@ const FormModelRenderer = () => {
 
   const onError = error => {
     console.log(error); // eslint-disable-line no-console
-    errorToaster(t('formLanguage.renderer.formNotLoaded'),  t('notifications.error'), {
+    errorToaster(t('formLanguage.renderer.formNotLoaded'), t('notifications.error'), {
       label: t('errorFormRender.link.label'),
       href: t('errorFormRender.link.href')
     });

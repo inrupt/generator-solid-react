@@ -187,8 +187,8 @@
   },
   "errorFormRender": {
     "link": {
-      "label": "Learn more",
-      "href": ""
+      "label": "Conozca más",
+      "href": "https://solidsdk.inrupt.net/public/general/es/form-rendering-errors.html"
     }
   },
   "formLanguage": {
