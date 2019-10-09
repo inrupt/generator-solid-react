@@ -218,10 +218,10 @@
       "editBtn": "Editar",
       "viewMode": "Modo Lectura",
       "editMode": "Modo Edición",
-      "formSaved": "Form successfully saved",
-      "formNotLoaded": "Form could not be renderer",
-      "fieldDeleted": "Form field successfully deleted",
-      "fieldAdded": "New form field successfully added"
+      "formSaved": "Formulario guardado correctamente",
+      "formNotLoaded": "No se pudo procesar el formulario",
+      "fieldDeleted": "Campo de formulario eliminado correctamente",
+      "fieldAdded": "Campo de formulario agregado con éxito"
     }
   }
 }
