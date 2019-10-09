@@ -12,8 +12,7 @@ function* entries(obj) {
 }
 
 function checkAppPermissions(userAppPermissions, appPermissions) {
-  return appPermissions.every(permission => userAppPermissions.includes(permission))
-
+  return appPermissions.every(permission => userAppPermissions.includes(permission));
 }
 
 export {
