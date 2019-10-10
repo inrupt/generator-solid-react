@@ -4,6 +4,7 @@ import { FormModel } from '@inrupt/solid-react-components';
 import { Select, Loader } from '@util-components';
 
 import { RendererTypesList, ConverterTypes } from '@constants';
+import { successToaster, errorToaster } from '@utils';
 import {
   FormModelContainer,
   FormWrapper,
@@ -125,9 +126,32 @@ const FormModelRenderer = () => {
     // Set boolean to disable or enable the layout/extension textbox
     setHasLayoutFile(hasLayout(newValue));
     setSelectedInput(newValue);
-    console.log(selectedInput); // eslint-disable-line no-console
-    console.log(hasLayoutFile); // eslint-disable-line no-console
+    console.log(selectedInput, hasLayoutFile); // eslint-disable-line no-console
   });
+
+  const onSaveSuccess = response => {
+    console.log(response); // eslint-disable-line no-console
+    successToaster(t('formLanguage.renderer.formSaved'), t('notifications.success'));
+  };
+
+  const onError = error => {
+    console.log(error); // eslint-disable-line no-console
+    errorToaster(t('formLanguage.renderer.formNotLoaded'), t('notifications.error'), {
+      label: t('errorFormRender.link.label'),
+      href: t('errorFormRender.link.href')
+    });
+    setIsLoading(false);
+  };
+
+  const onDelete = response => {
+    console.log(response); // eslint-disable-line no-console
+    successToaster(t('formLanguage.renderer.fieldDeleted'), t('notifications.success'));
+  };
+
+  const onAddNewField = response => {
+    console.log(response); // eslint-disable-line no-console
+    successToaster(t('formLanguage.renderer.fieldAdded'), t('notifications.success'));
+  };
 
   return (
     <FormModelContainer>
@@ -205,6 +229,10 @@ const FormModelRenderer = () => {
             viewer={isViewMode}
             onInit={() => setIsLoading(true)}
             onLoaded={() => setIsLoading(false)}
+            onSave={response => onSaveSuccess(response)}
+            onError={error => onError(error)}
+            onAddNewField={response => onAddNewField(response)}
+            onDelete={response => onDelete(response)}
             settings={{
               theme: {
                 inputText: 'input-wrap',

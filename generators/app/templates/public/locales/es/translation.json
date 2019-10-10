@@ -185,6 +185,12 @@
       "href": "https://solidsdk.inrupt.net/public/general/es/app-inbox-cannot-be-created.html"
     }
   },
+  "errorFormRender": {
+    "link": {
+      "label": "Conozca más",
+      "href": "https://solidsdk.inrupt.net/public/general/es/form-rendering-errors.html"
+    }
+  },
   "formLanguage": {
     "shacl": "SHACL",
     "shaclExtension": "SHACL + RDF Extension",
@@ -211,7 +217,11 @@
       "viewBtn": "Lectura",
       "editBtn": "Editar",
       "viewMode": "Modo Lectura",
-      "editMode": "Modo Edición"
+      "editMode": "Modo Edición",
+      "formSaved": "Formulario guardado correctamente",
+      "formNotLoaded": "No se pudo procesar el formulario",
+      "fieldDeleted": "Campo de formulario eliminado correctamente",
+      "fieldAdded": "Campo de formulario agregado con éxito"
     }
   }
 }
