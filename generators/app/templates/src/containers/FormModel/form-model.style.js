@@ -47,10 +47,18 @@ export const Form = styled.form`
 
 export const Input = styled.input`
   margin: 10px 0;
+  &:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+    pointer-events: all;
+  }
 `;
 
 export const Button = styled.button`
   margin-top: 20px;
+  &.active {
+    color: #fff;
+  }
 `;
 
 export const ResultHeader = styled.div`
@@ -114,4 +122,10 @@ export const ConverterInput = styled.div`
     min-width: 120px;
     margin-top: 16px;
   }
+`;
+
+export const FormRenderContainer = styled.div`
+  border: 1px solid #dae0e6;
+  min-height: 40px;
+  padding: 5px;
 `;
