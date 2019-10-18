@@ -177,6 +177,7 @@ const FormModelConverter = () => {
       if (report.conforms() === false) {
         let message = 'Error in ';
         report.results().forEach(result => {
+          // TODO: Put this in a function to handle shacl errors
           result.resultNode['http://www.w3.org/ns/shacl#resultPath'].forEach(m => {
             message += `${m['@id']} `;
           });

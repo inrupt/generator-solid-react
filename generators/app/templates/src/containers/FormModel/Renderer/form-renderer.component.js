@@ -8,6 +8,7 @@ import { successToaster, errorToaster } from '@utils';
 import {
   FormModelContainer,
   FormWrapper,
+  FormRenderContainer,
   Form,
   Input,
   Result,
@@ -26,7 +27,7 @@ const FormModelRenderer = () => {
   const [selectedInput, setSelectedInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
-  const [shapeText, setShapeText] = useState(t('formLanguage.source'));
+  const [shapeText, setShapeText] = useState(t('formLanguage.formModel'));
   const [source, setSource] = useState('');
   const [schemaUrl, setSchemaUrl] = useState('');
   const [submitted, setSubmitted] = useState(null);
@@ -120,7 +121,7 @@ const FormModelRenderer = () => {
       setShapeText(t('formLanguage.shaclShape'));
     } else {
       setLayoutText(t('formLanguage.extension'));
-      setShapeText(t('formLanguage.source'));
+      setShapeText(t('formLanguage.formModel'));
     }
 
     // Set boolean to disable or enable the layout/extension textbox
@@ -184,6 +185,7 @@ const FormModelRenderer = () => {
               type="text"
               placeholder={layoutText}
               onChange={onLayoutChange}
+              disabled={!hasLayoutFile}
               value={layoutUrl}
               name="layout-input"
               id="layout-input"
@@ -206,10 +208,18 @@ const FormModelRenderer = () => {
           <ResultHeader>
             <h4>{t('formLanguage.formModel')}</h4>
             <div>
-              <Button type="button" onClick={() => setViewMode(true)}>
+              <Button
+                type="button"
+                className={isViewMode ? 'active' : ''}
+                onClick={() => setViewMode(true)}
+              >
                 {t('formLanguage.renderer.viewBtn')}
               </Button>
-              <Button type="button" onClick={() => setViewMode(false)}>
+              <Button
+                type="button"
+                className={!isViewMode ? 'active' : ''}
+                onClick={() => setViewMode(false)}
+              >
                 {t('formLanguage.renderer.editBtn')}
               </Button>
               <button type="button" onClick={resetModel}>
@@ -217,33 +227,38 @@ const FormModelRenderer = () => {
               </button>
             </div>
           </ResultHeader>
-          {/* TODO: Create forms and insert here */}
-          <div>
-            {isViewMode ? t('formLanguage.renderer.viewMode') : t('formLanguage.renderer.editMode')}
-          </div>
         </Result>
-        {submitted !== null && (
-          <FormModel
-            modelPath={submitted.schemaUrl}
-            podPath={submitted.source}
-            viewer={isViewMode}
-            onInit={() => setIsLoading(true)}
-            onLoaded={() => setIsLoading(false)}
-            onSave={response => onSaveSuccess(response)}
-            onError={error => onError(error)}
-            onAddNewField={response => onAddNewField(response)}
-            onDelete={response => onDelete(response)}
-            settings={{
-              theme: {
-                inputText: 'input-wrap',
-                inputCheckbox: 'sdk-checkbox',
-                form: 'inrupt-sdk-form',
-                childGroup: 'inrupt-form-group'
-              }
-            }}
-            autoSave
-          />
-        )}
+        <FormRenderContainer>
+          {submitted !== null && (
+            <div>
+              <div>
+                {isViewMode
+                  ? t('formLanguage.renderer.viewMode')
+                  : t('formLanguage.renderer.editMode')}
+              </div>
+              <FormModel
+                modelPath={submitted.schemaUrl}
+                podPath={submitted.source}
+                viewer={isViewMode}
+                onInit={() => setIsLoading(true)}
+                onLoaded={() => setIsLoading(false)}
+                onSave={response => onSaveSuccess(response)}
+                onError={error => onError(error)}
+                onAddNewField={response => onAddNewField(response)}
+                onDelete={response => onDelete(response)}
+                settings={{
+                  theme: {
+                    inputText: 'input-wrap',
+                    inputCheckbox: 'sdk-checkbox',
+                    form: 'inrupt-sdk-form',
+                    childGroup: 'inrupt-form-group'
+                  }
+                }}
+                autoSave
+              />
+            </div>
+          )}
+        </FormRenderContainer>
         {isLoading && <Loader absolute />}
       </FormWrapper>
     </FormModelContainer>

@@ -198,7 +198,7 @@
     "shaclShape": "SHACL Shape",
     "shexShape": "ShEx Shape",
     "input": "Input",
-    "source": "Source",
+    "source": "Data Source",
     "copySuccess": "Copied to clipboard",
 
     "converter": {
