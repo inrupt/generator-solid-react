@@ -199,11 +199,10 @@
     "shexShape": "ShEx Shape",
     "input": "Input",
     "source": "Data Source",
-    "copySuccess": "Copied to clipboard",
-
     "converter": {
       "title": "Form Model Converter",
-      "convert": "Convert"
+      "convert": "Convert",
+      "copySuccess": "Copied to clipboard"
     },
     "renderer": {
       "title": "Form Model Renderer",
