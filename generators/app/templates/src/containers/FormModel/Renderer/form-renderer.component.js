@@ -17,6 +17,9 @@ import {
   ConverterInput
 } from '../form-model.style';
 
+
+import '@inrupt/solid-react-components/build/static/css/index.css';
+
 /**
  * Form Model Renderer UI component, containing the styled components for the Form Model Converter
  * @param props
