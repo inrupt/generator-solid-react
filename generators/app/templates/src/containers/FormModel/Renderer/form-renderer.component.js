@@ -17,7 +17,6 @@ import {
   ConverterInput
 } from '../form-model.style';
 
-
 import '@inrupt/solid-react-components/build/static/css/index.css';
 
 /**
@@ -130,16 +129,13 @@ const FormModelRenderer = () => {
     // Set boolean to disable or enable the layout/extension textbox
     setHasLayoutFile(hasLayout(newValue));
     setSelectedInput(newValue);
-    console.log(selectedInput, hasLayoutFile); // eslint-disable-line no-console
   });
 
   const onSaveSuccess = response => {
-    console.log(response); // eslint-disable-line no-console
     successToaster(t('formLanguage.renderer.formSaved'), t('notifications.success'));
   };
 
   const onError = error => {
-    console.log(error); // eslint-disable-line no-console
     errorToaster(t('formLanguage.renderer.formNotLoaded'), t('notifications.error'), {
       label: t('errorFormRender.link.label'),
       href: t('errorFormRender.link.href')
@@ -148,12 +144,10 @@ const FormModelRenderer = () => {
   };
 
   const onDelete = response => {
-    console.log(response); // eslint-disable-line no-console
     successToaster(t('formLanguage.renderer.fieldDeleted'), t('notifications.success'));
   };
 
   const onAddNewField = response => {
-    console.log(response); // eslint-disable-line no-console
     successToaster(t('formLanguage.renderer.fieldAdded'), t('notifications.success'));
   };
 
@@ -240,21 +234,26 @@ const FormModelRenderer = () => {
                   : t('formLanguage.renderer.editMode')}
               </div>
               <FormModel
-                modelPath={submitted.schemaUrl}
-                podPath={submitted.source}
-                viewer={isViewMode}
-                onInit={() => setIsLoading(true)}
-                onLoaded={() => setIsLoading(false)}
-                onSave={response => onSaveSuccess(response)}
-                onError={error => onError(error)}
-                onAddNewField={response => onAddNewField(response)}
-                onDelete={response => onDelete(response)}
-                settings={{
-                  theme: {
-                    inputText: 'input-wrap',
-                    inputCheckbox: 'sdk-checkbox',
-                    form: 'inrupt-sdk-form',
-                    childGroup: 'inrupt-form-group'
+                {...{
+                  modelPath: submitted.schemaUrl,
+                  podPath: submitted.source,
+                  viewer: isViewMode,
+                  onInit: () => setIsLoading(true),
+                  onLoaded: () => setIsLoading(false),
+                  onSuccess: () => {},
+                  onSave: response => onSaveSuccess(response),
+                  onError: error => {
+                    onError(error);
+                  },
+                  onAddNewField: response => onAddNewField(response),
+                  onDelete: response => onDelete(response),
+                  settings: {
+                    theme: {
+                      inputText: 'input-wrap',
+                      inputCheckbox: 'sdk-checkbox',
+                      form: 'inrupt-sdk-form',
+                      childGroup: 'inrupt-form-group'
+                    }
                   }
                 }}
                 autoSave
