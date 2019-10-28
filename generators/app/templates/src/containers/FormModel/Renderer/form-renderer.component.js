@@ -224,7 +224,7 @@ const FormModelRenderer = () => {
           </ResultHeader>
         </Result>
         <FormRenderContainer>
-          { submitted !== null && (
+          {submitted !== null && (
             <div>
               <div>
                 {isViewMode
