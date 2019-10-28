@@ -26,7 +26,6 @@ import '@inrupt/solid-react-components/build/static/css/index.css';
 const FormModelRenderer = () => {
   const { t } = useTranslation();
   const [layoutUrl, setLayoutUrl] = useState('');
-  const [selectedInput, setSelectedInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
   const [shapeText, setShapeText] = useState(t('formLanguage.formModel'));
@@ -128,14 +127,13 @@ const FormModelRenderer = () => {
 
     // Set boolean to disable or enable the layout/extension textbox
     setHasLayoutFile(hasLayout(newValue));
-    setSelectedInput(newValue);
   });
 
-  const onSaveSuccess = response => {
+  const onSaveSuccess = () => {
     successToaster(t('formLanguage.renderer.formSaved'), t('notifications.success'));
   };
 
-  const onError = error => {
+  const onError = () => {
     errorToaster(t('formLanguage.renderer.formNotLoaded'), t('notifications.error'), {
       label: t('errorFormRender.link.label'),
       href: t('errorFormRender.link.href')
@@ -143,11 +141,11 @@ const FormModelRenderer = () => {
     setIsLoading(false);
   };
 
-  const onDelete = response => {
+  const onDelete = () => {
     successToaster(t('formLanguage.renderer.fieldDeleted'), t('notifications.success'));
   };
 
-  const onAddNewField = response => {
+  const onAddNewField = () => {
     successToaster(t('formLanguage.renderer.fieldAdded'), t('notifications.success'));
   };
 
@@ -226,7 +224,7 @@ const FormModelRenderer = () => {
           </ResultHeader>
         </Result>
         <FormRenderContainer>
-          {submitted !== null && (
+          { submitted !== null && (
             <div>
               <div>
                 {isViewMode
