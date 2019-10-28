@@ -100,62 +100,6 @@ export const WebId = styled.div`
   }
 `;
 
-export const ShexForm = styled.div`
-  border: solid #cacaca 1px;
-  background: #f9f9f9;
-  label {
-    clear: both;
-  }
-  & .shexForm {
-    border: none;
-    background: transparent;
-    box-sizing: border-box;
-    padding: 0 12px;
-  }
-
-  & .shexPanel {
-    border: solid #cacaca 1px;
-    background: #ffffff;
-    box-sizing: border-box;
-    padding: 12px;
-    position: relative;
-  }
-
-  & .shexRoot {
-    border: none;
-    background: transparent;
-  }
-
-  & .deleteButton {
-    margin: 0 4px 0 12px;
-    position: relative;
-    float: right;
-    width: 100px;
-    color: #fb4a3e;
-    border-color: #fb4a3e;
-    &:hover {
-      background: rgba(251, 74, 62, 0.8);
-      color: #fff;
-    }
-  }
-
-  & .addButton {
-    width: 210px;
-    color: rgb(145, 194, 250);
-    border-color: rgb(145, 194, 250);
-    background: #fff;
-    padding: 5px 30px;
-    &:hover {
-      background: rgba(145, 194, 250, 0.8);
-      color: #fff;
-    }
-
-    & .inputContainer {
-      padding: 12px;
-    }
-  }
-`;
-
 export const AutoSaveNotification = styled.section`
   margin-bottom: 0px !important;
 `;
