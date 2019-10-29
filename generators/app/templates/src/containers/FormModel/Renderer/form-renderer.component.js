@@ -25,6 +25,7 @@ import '@inrupt/solid-react-components/build/static/css/index.css';
  */
 const FormModelRenderer = () => {
   const { t } = useTranslation();
+  const [selectedInput, setSelectedInput] = useState(t('formLanguage.formModel'));
   const [layoutUrl, setLayoutUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
@@ -92,6 +93,7 @@ const FormModelRenderer = () => {
     let obj = {};
     if (schemaUrl !== '') obj = { ...obj, schemaUrl };
     if (source !== '') obj = { ...obj, source };
+    console.log(obj);
     setSubmitted(obj);
   });
 
@@ -127,6 +129,7 @@ const FormModelRenderer = () => {
 
     // Set boolean to disable or enable the layout/extension textbox
     setHasLayoutFile(hasLayout(newValue));
+    setSelectedInput(newValue);
   });
 
   const onSaveSuccess = () => {
