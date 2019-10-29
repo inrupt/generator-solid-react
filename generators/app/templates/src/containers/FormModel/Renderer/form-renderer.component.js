@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormModel } from '@inrupt/solid-react-components';
@@ -93,7 +94,6 @@ const FormModelRenderer = () => {
     let obj = {};
     if (schemaUrl !== '') obj = { ...obj, schemaUrl };
     if (source !== '') obj = { ...obj, source };
-    console.log(obj);
     setSubmitted(obj);
   });
 
@@ -130,6 +130,7 @@ const FormModelRenderer = () => {
     // Set boolean to disable or enable the layout/extension textbox
     setHasLayoutFile(hasLayout(newValue));
     setSelectedInput(newValue);
+    console.log(selectedInput);
   });
 
   const onSaveSuccess = () => {
