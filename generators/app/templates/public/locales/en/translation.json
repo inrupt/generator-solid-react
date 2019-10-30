@@ -9,7 +9,15 @@
   "notifications": {
     "success": "Success",
     "error": "Error",
-    "unknownError": "An unknown error has occurred"
+    "unknownError": "An unknown error has occurred",
+    "404": "Editing a new document.",
+    "errorLoading": "There was an error loading your file, please try again.",
+    "errorFetchin g": "Error fetching {{url}}.",
+    "accessGranted": "{{friend}} now has read/write access.",
+    "errorGrantingAccess": "There was an error sharing your file, please try again.",
+    "saved": "Your file was saved successfully.",
+    "notEditable": "(not editable)",
+    "notSharable": "(log in and load a doc on your own pod to enable sharing)"
   },
   "login": {
     "title": "Hi! Welcome to Solid.",
@@ -40,6 +48,7 @@
     "welcome": "Welcome",
     "logOut": "Log out",
     "profile": "Profile",
+    "text-editor": "Text Editor",
     "changeLanguage": "Change Language",
     "languages": {
       "en": "English (English)",
@@ -128,6 +137,7 @@
     "idLabel": "Game ID",
     "opponentWebIDLabel": "Opponent WebID",
     "nogames": "No game were found",
+    "invitationAccept": "has invited you to play a game of TicTacToe. Would you like to play?",
     "invitationTemplate": "<0><0><0>{{- name}}</0> has invited you to play a game of TicTacToe.</0><1>Would you like to play?</1></0>",
     "invitationAcceptText": "Accept",
     "invitationDeclineText": "Decline",
@@ -222,6 +232,9 @@
       "formNotLoaded": "Form could not be rendered",
       "fieldDeleted": "Form field successfully deleted",
       "fieldAdded": "New form field successfully added"
+    },
+    "editor": {
+      "explanation": "This simple text editor enables you to create a plaintext file and save it in a Pod. To make this very clear for the demo you provide a URL as an absolute path to the file in the Pod. The Pod can be the one this App has been logged into or another person's Pod. To write, and read, into another person's Pod the owner will have had to provide you with write permission."
     }
   }
 }
