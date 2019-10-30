@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { media } from '../../utils';
+import { media } from '@utils';
 
 export const TextEditorWrapper = styled.section`
   display: flex;
