@@ -238,7 +238,7 @@ const FormModelRenderer = () => {
               <FormModel
                 {...{
                   modelPath: submitted.schemaUrl,
-                  podPath: submitted.source,
+                  podPath: (submitted && submitted.source) || '',
                   viewer: isViewMode,
                   onInit: () => setIsLoading(true),
                   onLoaded: () => setIsLoading(false),
