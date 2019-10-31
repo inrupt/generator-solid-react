@@ -19,6 +19,7 @@ import {
 } from '../form-model.style';
 
 import '@inrupt/solid-react-components/build/static/css/index.css';
+import AutoSaveSpinner from './children/auto-save.component';
 
 /**
  * Form Model Renderer UI component, containing the styled components for the Form Model Converter
@@ -133,10 +134,6 @@ const FormModelRenderer = () => {
     console.log(selectedInput);
   });
 
-  const onSaveSuccess = () => {
-    successToaster(t('formLanguage.renderer.formSaved'), t('notifications.success'));
-  };
-
   const onError = () => {
     errorToaster(t('formLanguage.renderer.formNotLoaded'), t('notifications.error'), {
       label: t('errorFormRender.link.label'),
@@ -243,7 +240,7 @@ const FormModelRenderer = () => {
                   onInit: () => setIsLoading(true),
                   onLoaded: () => setIsLoading(false),
                   onSuccess: () => {},
-                  onSave: response => onSaveSuccess(response),
+                  onSave: () => {},
                   onError: error => {
                     onError(error);
                   },
@@ -255,7 +252,8 @@ const FormModelRenderer = () => {
                       inputCheckbox: 'sdk-checkbox',
                       form: 'inrupt-sdk-form',
                       childGroup: 'inrupt-form-group'
-                    }
+                    },
+                    savingComponent: AutoSaveSpinner
                   }
                 }}
                 autoSave
