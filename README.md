@@ -38,6 +38,7 @@ Once the generator is installed, you can create a new application with just a fe
    4. Whether the application is private or public.
 4. Navigate into the new folder.
 5. If you would like to start the application, simply run ``` npm run start ``` in the new folder, otherwise you can begin editing and writing your application!
+   1. If you would like to run the application in HTTPS mode, you can run the command ```HTTPS=true npm start```, which will launch your app on localhost, using the HTTPS protocol.
 
 Note: We have noticed an error is sometimes thrown when the generator tries to install one of the dependencies of application. If this occurs, try installing [Git](https://git-scm.com/downloads) and then recreating your application.
 
