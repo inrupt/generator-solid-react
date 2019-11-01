@@ -9,7 +9,16 @@
   "notifications": {
     "success": "Success",
     "error": "Error",
-    "unknownError": "An unknown error has occurred"
+    "unknownError": "An unknown error has occurred",
+    "404": "Editing a new document.",
+    "errorLoading": "There was an error loading your file, please try again.",
+    "errorSaving": "There was an error saving your file, please try again.",
+    "errorFetching": "Error fetching document.",
+    "accessGranted": "Co-editor now has read/write access.",
+    "errorGrantingAccess": "There was an error giving access to your file, please try again.",
+    "saved": "Your file was saved successfully.",
+    "notEditable": "(not editable)",
+    "notSharable": "(log in and load a doc on your own pod to give others access)"
   },
   "login": {
     "title": "Hi! Welcome to Solid.",
@@ -24,7 +33,7 @@
     "btnTxtProvider": "Log In with Provider",
     "errors": {
       "unknown": "Something is wrong, please try again...",
-      "webIdNotValid": "WeibID is not valid",
+      "webIdNotValid": "WebID is not valid",
       "emptyProvider": "Solid Provider is required",
       "emptyWebId": "Valid WebID is required"
     }
@@ -40,6 +49,7 @@
     "welcome": "Welcome",
     "logOut": "Log out",
     "profile": "Profile",
+    "text-editor": "Text Editor",
     "changeLanguage": "Change Language",
     "languages": {
       "en": "English (English)",
@@ -186,6 +196,12 @@
       "href": "https://solidsdk.inrupt.net/public/general/en/app-inbox-cannot-be-created.html"
     }
   },
+  "errorFormRender": {
+    "link": {
+      "label": "Learn more",
+      "href": "https://solidsdk.inrupt.net/public/general/en/form-rendering-errors.html"
+    }
+  },
   "formLanguage": {
     "shacl": "SHACL",
     "shaclExtension": "SHACL + RDF Extension",
@@ -211,7 +227,19 @@
       "viewBtn": "View",
       "editBtn": "Edit",
       "viewMode": "View Mode",
-      "editMode": "Edit Mode"
+      "editMode": "Edit Mode",
+      "formSaved": "Form successfully saved",
+      "formNotLoaded": "Form could not be rendered",
+      "fieldDeleted": "Form field successfully deleted",
+      "fieldAdded": "New form field successfully added"
     }
+  },
+  "editor": {
+    "explanation": "This simple text editor enables you to create a plaintext file and save it in a Pod. To make this very clear for the demo you provide a URL as an absolute path to the file in the Pod. The Pod can be the one this App has been logged into or another person's Pod. To write, and read, into another person's Pod the owner will have had to provide you with write permission.",
+    "url": "URL",
+    "friend": "Co-editor's webid",
+    "load": "Load",
+    "save": "Save",
+    "grantAccess": "Grant Access"
   }
 }
