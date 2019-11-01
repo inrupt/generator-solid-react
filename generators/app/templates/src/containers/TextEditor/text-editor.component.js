@@ -4,30 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { TextEditorWrapper, TextEditorContainer, Header, Form, FullGridSize, Button, Label, Input, TextArea, WebId } from './text-editor.style';
 import SolidAuth from 'solid-auth-client';
 import { successToaster, errorToaster } from '@utils';
-import LinkHeader from 'http-link-header';
-import { fetchDocument, createDocument } from 'tripledoc';
+import { fetchDocument } from 'tripledoc';
 import { AccessControlList } from '@inrupt/solid-react-components';
 import { useWebId } from '@solid/react';
 
 const pim = { storage: 'http://www.w3.org/ns/pim/space#storage' };
-
-// copied from https://gitlab.com/vincenttunru/tripledoc/blob/master/src/document.ts#L115-126
-
-function extractAclRef(response, documentRef) {
-  let aclRef;
-  const linkHeader = response.headers.get('Link');
-  if (linkHeader) {
-    const parsedLinks = LinkHeader.parse(linkHeader);
-    const aclLinks = parsedLinks.get('rel', 'acl');
-    if (aclLinks.length === 1) {
-      aclRef = new URL(aclLinks[0].uri, documentRef).href;
-    }
-  }
-  if (!aclRef) {
-    aclRef = documentRef + '.acl';
-  }
-  return aclRef;
-}
 
 function extractWacAllow(response) {
   // WAC-Allow: user="read write append control",public="read"
@@ -68,7 +49,6 @@ function extractWacAllow(response) {
 export const Editor = (props) => {
   const { t } = useTranslation();
   const [url, setUrl] = useState('');
-  const [aclUrl, setAclUrl] = useState('');
   const [friend, setFriend] = useState('https://example-friend.com/profile/card#me');
   const [text, setText] = useState('');
   const [profileDoc, setProfileDoc] = useState();
@@ -88,7 +68,6 @@ export const Editor = (props) => {
       if (storageRoot) {
         const exampleUrl = new URL('/share/some-doc.txt', storageRoot);
         setUrl(exampleUrl.toString());
-        setAclUrl(exampleUrl.toString() + '.acl');
       }
     }
   }, [profileDoc]);
@@ -127,7 +106,6 @@ export const Editor = (props) => {
       const wacAllowModes = extractWacAllow(response);
       setEditable(wacAllowModes.user.write);
       setSharable(wacAllowModes.user.control);
-      setAclUrl(extractAclRef(response, url));
       setLoaded(true);
     }).catch((e) => {
       errorToaster(t('notifications.errorFetching'));
@@ -180,9 +158,9 @@ export const Editor = (props) => {
           <Input type="text" size="200" value={url} onChange={handleUrlChange} />
         </Label>
         <div class="input-wrap">
-          <Button className="ids-link-filled ids-link-filled--primary button" onClick={handleLoad}>{t('editor.load')</Button>
+          <Button className="ids-link-filled ids-link-filled--primary button" onClick={handleLoad}>{t('editor.load')}</Button>
           {editable ?
-            <Button className="ids-link-filled ids-link-filled--secondary button" onClick={handleSave}>t('editor.save')</Button>
+            <Button className="ids-link-filled ids-link-filled--secondary button" onClick={handleSave}>{t('editor.save')}</Button>
           : (loaded ? t('notifications.notEditable') : '')}
         </div>
       </FullGridSize>
@@ -205,12 +183,13 @@ export const Editor = (props) => {
  * to get back to the home/welcome page.
  */
 const TextEditor = () => {
+  const { t } = useTranslation();
   return (
     <TextEditorWrapper>
       <TextEditorContainer>
         <Header>
           <p>
-          t('editor.explanation')
+          {t('editor.explanation')}
           </p>
         </Header>
         <Editor/>
