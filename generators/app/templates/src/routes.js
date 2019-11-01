@@ -12,8 +12,7 @@ import {
   GameList,
   GamePage,
   FormModelConverter,
-  FormModelRenderer,
-  TextEditor
+  FormModelRenderer
 } from './containers';
 
 const privateRoutes = [
@@ -31,11 +30,6 @@ const privateRoutes = [
     id: 'tictactoe',
     path: '/tictactoe',
     component: GameList
-  },
-  {
-    id: 'text-editor',
-    path: '/text-editor',
-    component: TextEditor
   },
   {
     id: 'tictactoegame',
