@@ -12,6 +12,7 @@
     "unknownError": "An unknown error has occurred",
     "404": "Editing a new document.",
     "errorLoading": "There was an error loading your file, please try again.",
+    "errorSaving": "There was an error saving your file, please try again.",
     "errorFetching": "Error fetching {{url}}.",
     "accessGranted": "{{friend}} now has read/write access.",
     "errorGrantingAccess": "There was an error sharing your file, please try again.",
@@ -234,7 +235,12 @@
       "fieldAdded": "New form field successfully added"
     },
     "editor": {
-      "explanation": "This simple text editor enables you to create a plaintext file and save it in a Pod. To make this very clear for the demo you provide a URL as an absolute path to the file in the Pod. The Pod can be the one this App has been logged into or another person's Pod. To write, and read, into another person's Pod the owner will have had to provide you with write permission."
+      "explanation": "This simple text editor enables you to create a plaintext file and save it in a Pod. To make this very clear for the demo you provide a URL as an absolute path to the file in the Pod. The Pod can be the one this App has been logged into or another person's Pod. To write, and read, into another person's Pod the owner will have had to provide you with write permission.",
+      "url": "URL",
+      "friend": "Co-editor's webid",
+      "load": "Load",
+      "save": "Save",
+      "grantAccess": "Grant Access"
     }
   }
 }

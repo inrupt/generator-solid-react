@@ -5,7 +5,6 @@ import { TextEditorWrapper, TextEditorContainer, Header, Form, FullGridSize, But
 import SolidAuth from 'solid-auth-client';
 import { successToaster, errorToaster } from '@utils';
 import LinkHeader from 'http-link-header';
-// import ldflex from '@solid/query-ldflex';
 import { fetchDocument, createDocument } from 'tripledoc';
 import { AccessControlList } from '@inrupt/solid-react-components';
 import { useWebId } from '@solid/react';
@@ -131,7 +130,6 @@ export const Editor = (props) => {
       setAclUrl(extractAclRef(response, url));
       setLoaded(true);
     }).catch((e) => {
-      // console.error(e.message, e);
       errorToaster(t('notifications.errorFetching'));
     });
   } // assuming the logged in user doesn't change without a page refresh
@@ -167,7 +165,7 @@ export const Editor = (props) => {
     if (result.ok) {
       successToaster(t('notifications.saved'));
     } else if(result.ok === false) {
-      errorToaster('There was an error saving your file, please try again.');
+      errorToaster(t('notifications.errorSaving'));
     }
   }
 
@@ -178,13 +176,13 @@ export const Editor = (props) => {
       </FullGridSize>
       <FullGridSize>
         <Label>
-          URL:
+          {t('editor.url')}:
           <Input type="text" size="200" value={url} onChange={handleUrlChange} />
         </Label>
         <div class="input-wrap">
-          <Button className="ids-link-filled ids-link-filled--primary button" onClick={handleLoad}>Load</Button>
+          <Button className="ids-link-filled ids-link-filled--primary button" onClick={handleLoad}>{t('editor.load')</Button>
           {editable ?
-            <Button className="ids-link-filled ids-link-filled--secondary button" onClick={handleSave}>Save</Button>
+            <Button className="ids-link-filled ids-link-filled--secondary button" onClick={handleSave}>t('editor.save')</Button>
           : (loaded ? t('notifications.notEditable') : '')}
         </div>
       </FullGridSize>
@@ -193,10 +191,10 @@ export const Editor = (props) => {
       </FullGridSize>
       {sharable ? <FullGridSize>
         <Label>
-          Share:
+          {t('editor.friend')}:
           <Input type="text" size="200" value={friend} onChange={handleFriendChange} />
         </Label>
-        <Button className="ids-link-stroke ids-link-stroke--primary button" onClick={handleShare}>Grant Access</Button>
+        <Button className="ids-link-stroke ids-link-stroke--primary button" onClick={handleShare}>{t('editor.grantAccess')}</Button>
       </FullGridSize>: t('notifications.notSharable')}
     </Form>
   );
