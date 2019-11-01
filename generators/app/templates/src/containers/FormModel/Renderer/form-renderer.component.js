@@ -39,9 +39,7 @@ const FormModelRenderer = () => {
   const [isViewMode, setViewMode] = useState(true);
 
   const filteredOptions = RendererTypesList.filter(
-    item =>
-      t(`formLanguage.${item}`) === t('formLanguage.shex') ||
-      t(`formLanguage.${item}`) === t('formLanguage.formModel')
+    item => t(`formLanguage.${item}`) === t('formLanguage.formModel')
   );
   const optionsList = filteredOptions.map(item => t(`formLanguage.${item}`));
 
