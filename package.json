@@ -92,6 +92,6 @@
     "pretest": "eslint .",
     "test": "jest"
   },
-  "repository": "https://github.com/Inrupt-inc/generator-solid-react.git",
+  "repository": "https://github.com/inrupt/generator-solid-react.git",
   "license": "MIT"
 }
