@@ -13,12 +13,14 @@ const AutoSaveSpinner = memo(({ inProgress, result, setResult, setSavingProcess 
   useEffect(() => {
     if (result) {
       if (timer) clearTimeout(timer);
-      setTimer(
-        setTimeout(() => {
-          setResult(null);
-          setSavingProcess(false);
-        }, 2000)
-      );
+      if (result.toLowerCase() === 'success') {
+        setTimer(
+          setTimeout(() => {
+            setResult(null);
+            setSavingProcess(false);
+          }, 2000)
+        );
+      }
     }
   }, [result]);
 

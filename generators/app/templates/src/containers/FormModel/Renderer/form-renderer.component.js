@@ -132,12 +132,14 @@ const FormModelRenderer = () => {
     console.log(selectedInput);
   });
 
-  const onError = () => {
-    errorToaster(t('formLanguage.renderer.formNotLoaded'), t('notifications.error'), {
-      label: t('errorFormRender.link.label'),
-      href: t('errorFormRender.link.href')
-    });
-    setIsLoading(false);
+  const onError = e => {
+    if (e.message.toString().indexOf('Validation failed') < 0) {
+      errorToaster(t('formLanguage.renderer.formNotLoaded'), t('notifications.error'), {
+        label: t('errorFormRender.link.label'),
+        href: t('errorFormRender.link.href')
+      });
+      setIsLoading(false);
+    }
   };
 
   const onDelete = () => {
