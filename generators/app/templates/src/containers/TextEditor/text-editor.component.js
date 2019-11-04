@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import SolidAuth from 'solid-auth-client';
 import { successToaster, errorToaster } from '@utils';
-import { fetchDocument } from 'tripledoc';
+import ldflex from '@solid/query-ldflex';
 import { AccessControlList } from '@inrupt/solid-react-components';
 import {
   TextEditorWrapper,
@@ -70,26 +70,16 @@ export const Editor = ({ webId }: Props) => {
   const [url, setUrl] = useState('');
   const [friend, setFriend] = useState('https://example-friend.com/profile/card#me');
   const [text, setText] = useState('');
-  const [profileDoc, setProfileDoc] = useState();
 
   useEffect(() => {
-    async function fetchProfileDoc() {
-      if (webId) {
-        setProfileDoc(await fetchDocument(webId));
-      }
-    }
-    fetchProfileDoc();
-  }, [webId]);
-  useEffect(() => {
-    if (profileDoc && !url) {
-      const sub = profileDoc.getSubject(webId);
-      const storageRoot = sub.getNodeRef(pim.storage);
+    if (webId && !url) {
+      const storageRoot = await ldflex[webId]['pim:storage'];
       if (storageRoot) {
-        const exampleUrl = new URL('/share/some-doc.txt', storageRoot);
-        setUrl(exampleUrl.toString());
+        const exampleUrl = new URL('/share/some-doc.txt', storageRoot.value);
+        setUrl(exampleUrl);
       }
     }
-  }, [profileDoc]);
+  }, [webId]);
 
   const [loaded, setLoaded] = useState(false);
   const [editable, setEditable] = useState(false);
@@ -152,7 +142,7 @@ export const Editor = ({ webId }: Props) => {
 
   async function handleSave(event) {
     event.preventDefault();
-    // Not using TripleDoc or LDFlex here, because this is not an RDF document.
+    // Not using LDFlex here, because this is not an RDF document.
     const result = await SolidAuth.fetch(url, {
       method: 'PUT',
       body: text,
