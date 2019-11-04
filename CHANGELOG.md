@@ -195,8 +195,8 @@
 - Built scaffolded app with create-react-app, ejected to allow change in webpack configurations
 - [LDFlex for Solid](https://github.com/solid/query-ldflex) added as the primary interface for most Linked Data operations
 - Dependencies from [Solid React SDK](https://github.com/inrupt-inc/solid-react-sdk):
-  - [Atomic Style Guide for Solid](https://github.com/Inrupt-inc/inrupt-atomic-styleguide) to provide global styling
-  - [Solid React Components Library](https://github.com/Inrupt-inc/solid-react-components) to provide reusable core functionality
+  - [Atomic Style Guide for Solid](https://github.com/inrupt/inrupt-atomic-styleguide) to provide global styling
+  - [Solid React Components Library](https://github.com/inrupt/solid-react-components) to provide reusable core functionality
 - [Styled Components](https://www.styled-components.com/) added as dependency to handle layout and custom styling
 - Basic and Authenticated Nav Bar
 - Login page

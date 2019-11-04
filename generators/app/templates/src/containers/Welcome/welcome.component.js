@@ -80,7 +80,7 @@ export const WelcomePageContent = props => {
             <h3>
               title
               <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk"
+                href="https://github.com/inrupt/solid-react-sdk"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -92,7 +92,7 @@ export const WelcomePageContent = props => {
             <p>
               text
               <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk"
+                href="https://github.com/inrupt/solid-react-sdk"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -105,7 +105,7 @@ export const WelcomePageContent = props => {
             <ul>
               <li>
                 <a
-                  href="https://github.com/Inrupt-inc/solid-react-components"
+                  href="https://github.com/inrupt/solid-react-components"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -115,7 +115,7 @@ export const WelcomePageContent = props => {
               </li>
               <li>
                 <a
-                  href="https://github.com/Inrupt-inc/generator-solid-react"
+                  href="https://github.com/inrupt/generator-solid-react"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -137,7 +137,7 @@ export const WelcomePageContent = props => {
             <p>
               The SDK is continually evolving. Take a look at the
               <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk/tree/master#release-timeline"
+                href="https://github.com/inrupt/solid-react-sdk/tree/master#release-timeline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
