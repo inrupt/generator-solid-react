@@ -21,7 +21,6 @@ import {
   WebId
 } from './text-editor.style';
 
-const pim = { storage: 'http://www.w3.org/ns/pim/space#storage' };
 type Props = { webId: String };
 
 function extractWacAllow(response) {
@@ -70,8 +69,11 @@ export const Editor = ({ webId }: Props) => {
   const [url, setUrl] = useState('');
   const [friend, setFriend] = useState('https://example-friend.com/profile/card#me');
   const [text, setText] = useState('');
+  const [loaded, setLoaded] = useState(false);
+  const [editable, setEditable] = useState(false);
+  const [sharable, setSharable] = useState(false);
 
-  useEffect(() => {
+  async function setUrlFromStorage() {
     if (webId && !url) {
       const storageRoot = await ldflex[webId]['pim:storage'];
       if (storageRoot) {
@@ -79,11 +81,11 @@ export const Editor = ({ webId }: Props) => {
         setUrl(exampleUrl);
       }
     }
-  }, [webId]);
+  }
 
-  const [loaded, setLoaded] = useState(false);
-  const [editable, setEditable] = useState(false);
-  const [sharable, setSharable] = useState(false);
+  useEffect(() => {
+    setUrlFromStorage();
+  }, [webId]);
 
   function handleUrlChange(event) {
     event.preventDefault();
@@ -193,7 +195,7 @@ export const Editor = ({ webId }: Props) => {
       <FullGridSize>
         <TextArea value={text} onChange={handleTextChange} cols={40} rows={10} />
       </FullGridSize>
-      {sharable ? (
+      {sharable && (
         <FullGridSize>
           <Label>
             {t('editor.friend')}:
@@ -203,9 +205,8 @@ export const Editor = ({ webId }: Props) => {
             {t('editor.grantAccess')}
           </Button>
         </FullGridSize>
-      ) : (
-        t('notifications.notSharable')
       )}
+      {loaded && !sharable && t('notifications.notSharable')}
     </Form>
   );
 };

@@ -19,6 +19,12 @@ export const NavigationItems = [
     icon: '/img/icon/tictactoe.svg',
     label: 'navBar.tictactoe',
     to: '/tictactoe'
+  },
+  {
+    id: 'text-editor',
+    icon: '/img/icon/files.svg',
+    label: 'navBar.text-editor',
+    to: '/text-editor'
   }
 ];
 
