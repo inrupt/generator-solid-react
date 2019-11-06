@@ -12,9 +12,9 @@ const GameListPage = ({ webId }) => {
   const { t } = useTranslation();
 
   const sendNotification = useCallback(
-    async (content, to) => {
+    async (content, to, type, license) => {
       try {
-        await createNotification(content, to);
+        await createNotification(content, to, type, license);
       } catch (error) {
         errorToaster(error.message, 'Error');
       }

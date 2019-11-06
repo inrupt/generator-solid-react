@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useLiveUpdate } from '@inrupt/solid-react-components';
+import { useLiveUpdate, NotificationTypes } from '@inrupt/solid-react-components';
 import { useTranslation } from 'react-i18next';
 import ldflex from '@solid/query-ldflex';
 import { namedNode } from '@rdfjs/data-model';
@@ -112,6 +112,7 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
   const resignedGame = async ({ url, documentUrl, status, actor }) => {
     if (status !== GameStatus.FINISHED) {
       const statusPredicate = 'http://data.totl.net/game/status';
+      const licenseUrl = 'https://creativecommons.org/licenses/by-sa/4.0/';
       // Change status to resigned
       await ldflex[url][statusPredicate].replace(status, GameStatus.RESIGNED);
 
@@ -137,7 +138,9 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
           actor: webId,
           object: url
         },
-        to.path
+        to.path,
+        NotificationTypes.LEAVE,
+        licenseUrl
       );
     }
     // Delete game from contains

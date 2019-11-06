@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { namedNode } from '@rdfjs/data-model';
-import { AccessControlList } from '@inrupt/solid-react-components';
+import { AccessControlList, NotificationTypes } from '@inrupt/solid-react-components';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
 import {
   ldflexHelper,
@@ -56,6 +56,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
        */
       const appPath = await storageHelper.getAppStorage(opponent);
       const gameSettings = `${appPath}settings.ttl`;
+      const licenseUrl = 'https://creativecommons.org/licenses/by-sa/4.0/';
       /**
        * Find opponent inboxes from a document link
        */
@@ -105,7 +106,9 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
               object: documentUri,
               target
             },
-            to.path
+            to.path,
+            NotificationTypes.INVITE,
+            licenseUrl
           );
 
           setDocumentUri(`${Date.now()}.ttl`);
