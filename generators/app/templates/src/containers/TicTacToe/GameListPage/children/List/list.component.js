@@ -201,6 +201,8 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
         }
         let games = [];
         for await (const item of gameList) {
+          // the url at this point the document is being cached by LDFlex, we need to manually clear it
+          ldflex.clearCache(item);
           const game = await ldflexHelper.fetchLdflexDocument(item);
           let gameData = { url: item };
           if (game) {
