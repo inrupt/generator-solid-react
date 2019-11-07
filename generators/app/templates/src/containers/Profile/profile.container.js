@@ -96,7 +96,7 @@ const Profile = ({ webId }: Props) => {
                   },
                   successCallback,
                   errorCallback,
-                  autoSaveMode: false
+                  autoSaveMode: true
                 }}
               />
             </ShexForm>
