@@ -165,12 +165,12 @@ const FormModelRenderer = () => {
             />
           </ConverterInput>
           <ConverterInput>
-            <label htmlFor="converter-input">{shapeText}</label>
+            <label htmlFor="converter-input-shape-text">{shapeText}</label>
             <Input
               type="text"
               placeholder={shapeText}
-              name="converter-input"
-              id="converter-input"
+              name="converter-input-shape-text"
+              id="converter-input-shape-text"
               onChange={onSchemaChange}
               value={schemaUrl}
             />
@@ -188,12 +188,12 @@ const FormModelRenderer = () => {
             />
           </ConverterInput>
           <ConverterInput>
-            <label htmlFor="converter-input">{t('formLanguage.source')}</label>
+            <label htmlFor="converter-input-form-language">{t('formLanguage.source')}</label>
             <Input
               type="text"
               placeholder={t('formLanguage.source')}
-              name="converter-input"
-              id="converter-input"
+              name="converter-input-form-language"
+              id="converter-input-form-language"
               onChange={onSourceChange}
               value={source}
             />
