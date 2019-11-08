@@ -227,11 +227,6 @@ const FormModelRenderer = () => {
         <FormRenderContainer>
           {submitted !== null && (
             <div>
-              <div>
-                {isViewMode
-                  ? t('formLanguage.renderer.viewMode')
-                  : t('formLanguage.renderer.editMode')}
-              </div>
               <FormModel
                 {...{
                   modelPath: submitted.schemaUrl,
