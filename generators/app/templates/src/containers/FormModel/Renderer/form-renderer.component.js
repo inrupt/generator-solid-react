@@ -88,18 +88,14 @@ const FormModelRenderer = () => {
    * Submit function for the form, to do the conversion and set up the output
    * This function is for the view button
    */
-  const onSubmit = useCallback((e: Event) => {
+  async function onSubmit(e: Event) {
     e.preventDefault();
+    await setSubmitted(null);
     let obj = {};
     if (schemaUrl !== '') obj = { ...obj, schemaUrl };
     if (source !== '') obj = { ...obj, source };
     setSubmitted(obj);
-  });
-
-  const resetModel = useCallback(() => {
-    setViewMode(true);
-    setSubmitted(null);
-  });
+  }
 
   /**
    * Change event for the source
@@ -218,9 +214,6 @@ const FormModelRenderer = () => {
               >
                 {t('formLanguage.renderer.editBtn')}
               </Button>
-              <button type="button" onClick={resetModel}>
-                {t('formLanguage.renderer.resetBtn')}
-              </button>
             </div>
           </ResultHeader>
         </Result>
