@@ -54,7 +54,7 @@ const NotificationItem = ({ notification, markAsRead, children, deleteNotificati
           <strong>{actor && actor.name}</strong> {notification.summary}
         </Message>
         <Meta>
-          <span className="moment">{moment(notification.datetime).fromNow()}</span>
+          <span className="moment">{moment(notification.published).fromNow()}</span>
           {children}
         </Meta>
       </Body>
