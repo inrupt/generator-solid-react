@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { successToaster, errorToaster } from '@utils';
 import { Select } from '@util-components';
-import { ShexFormModel, FormModel } from 'solid-forms';
+import { ShexFormModel, FormModel } from '@inrupt/solid-sdk-forms';
 import { ConverterTypesList, ConverterTypes } from '@constants';
 import { useTranslation } from 'react-i18next';
 import { Util } from '@shexjs/core';
