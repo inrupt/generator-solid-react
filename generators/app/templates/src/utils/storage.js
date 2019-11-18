@@ -1,6 +1,6 @@
 import data from '@solid/query-ldflex';
-import { folderExists } from './ldflex-helper';
-import { storageHelper, ldflexHelper } from '@utils';
+import { folderExists, createDoc } from './ldflex-helper';
+import { storageHelper } from '@utils';
 
 const appPath = process.env.REACT_APP_TICTAC_PATH;
 
@@ -44,15 +44,15 @@ export const getAppStorage = async webId => {
  * @param folderPath
  * @returns {Promise<*>}
  */
-export const createInitialFiles = async (webId) => {
+export const createInitialFiles = async webId => {
   const gameUrl = await storageHelper.getAppStorage(webId);
-  //const gamePath = await ldflexHelper.createContainer(gameUrl);
+  // const gamePath = await ldflexHelper.createContainer(gameUrl);
 
   try {
-    const existContainer = await folderExists(folderPath);
-    const data = `${folderPath}data.ttl`;
-    const settings = `${folderPath}settings.ttl`;
-    if (existContainer) return folderPath;
+    const existContainer = await folderExists(gameUrl);
+    const data = `${gameUrl}data.ttl`;
+    // const settings = `${gameUrl}settings.ttl`;
+    if (existContainer) return gameUrl;
 
     await createDoc(data, {
       method: 'PUT',
@@ -61,11 +61,14 @@ export const createInitialFiles = async (webId) => {
       }
     });
 
-    if (gamePath) {
+    /* if (gamePath) {
       await createInbox(`${gamePath}inbox/`, gamePath);
       setGamePath(gamePath);
-    }
+    } */
   } catch (error) {
     throw new Error(error);
   }
 };
+
+export const checkAndInitializeInbox = async () =>  '';
+

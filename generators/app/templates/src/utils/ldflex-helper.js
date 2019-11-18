@@ -8,7 +8,7 @@ export const documentExists = async documentUri =>
     }
   });
 
-const createDoc = async (documentUri, options) => {
+export const createDoc = async (documentUri, options) => {
   try {
     return await auth.fetch(documentUri, options);
   } catch (e) {

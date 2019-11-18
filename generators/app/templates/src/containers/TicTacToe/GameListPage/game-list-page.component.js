@@ -1,15 +1,14 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import { LiveUpdate, useNotification } from '@inrupt/solid-react-components';
 import { useTranslation } from 'react-i18next';
-import { errorToaster } from '@utils';
+import { errorToaster, storageHelper } from '@utils';
 import { Form, List } from './children';
 import { Section, Wrapper } from '../tic-tac-toe.style';
-import { storageHelper } from '../../../utils';
 
 const GameListPage = ({ webId }) => {
   const [opponent, setOpponent] = useState('');
   const [gamePath, setGamePath] = useState(null);
-  const { createNotification, createInbox, notifications, notification } = useNotification(webId);
+  const { createNotification, notifications, notification } = useNotification(webId);
   const { t } = useTranslation();
 
   const sendNotification = useCallback(
@@ -26,6 +25,7 @@ const GameListPage = ({ webId }) => {
   const init = async () => {
     try {
       await storageHelper.createInitialFiles(webId);
+      setGamePath('');
     } catch (e) {
       /**
        * Check if something fails when we try to create a inbox
