@@ -91,22 +91,3 @@ export const discoverInbox = async document => {
     throw error;
   }
 };
-
-export const createContainer = async folderPath => {
-  try {
-    const existContainer = await folderExists(folderPath);
-    const data = `${folderPath}data.ttl`;
-    if (existContainer) return folderPath;
-
-    await createDoc(data, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'text/turtle'
-      }
-    });
-
-    return folderPath;
-  } catch (error) {
-    throw new Error(error);
-  }
-};
