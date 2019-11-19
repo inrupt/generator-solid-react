@@ -237,7 +237,7 @@ const FormModelRenderer = () => {
                   settings: {
                     theme: {
                       inputText: 'input-wrap',
-                      inputCheckbox: 'sdk-checkbox',
+                      inputCheckbox: 'sdk-checkbox checkbox',
                       form: 'inrupt-sdk-form',
                       childGroup: 'inrupt-form-group'
                     },
