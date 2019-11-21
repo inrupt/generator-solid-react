@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { withAuthorization } from '@inrupt/solid-react-components';
 import { AuthNavBar, Footer } from '@components';
-import { checkPermissions } from '@utils';
+import { permissionHelper } from '@utils';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -31,7 +31,7 @@ const PrivateLayout = ({ routes, webId, location, history, ...rest }) => {
     href: t('appPermission.link.href')
   };
   useEffect(() => {
-    if (webId) checkPermissions(webId, errorMessages);
+    if (webId) permissionHelper.checkPermissions(webId, errorMessages);
   }, [webId]);
 
   return (

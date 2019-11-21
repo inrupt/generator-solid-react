@@ -5,6 +5,11 @@ import { errorToaster } from '@utils';
 const checkAppPermissions = (userAppPermissions, appPermissions) =>
   appPermissions.every(permission => userAppPermissions.includes(permission));
 
+// Function to check for a specific permission included in the app
+export const checkSpecificAppPermission = async (webId, permission) => {
+  const userAppPermissions = await AppPermission.checkPermissions(webId);
+  return userAppPermissions.permissions.includes(permission);
+};
 /**
  * SDK app will need all the permissions by the user pod so we check these permissions to work without any issues.
  * Error Message object is to hold the title, message, etc strings, as we can't use i18n libraries in this non-React file
@@ -14,6 +19,7 @@ export const checkPermissions = async (webId, errorMessage) => {
    * Get permissions from trustedApp.
    */
   const userApp = await AppPermission.checkPermissions(webId);
+
   /**
    * Get modes permissions from solid-react-components
    */
@@ -21,7 +27,11 @@ export const checkPermissions = async (webId, errorMessage) => {
   const { APPEND, READ, WRITE, CONTROL } = permissions;
 
   // If we are missing permissions that the app requires, display an error message with a Learn More link
-  if (!checkAppPermissions(userApp.permissions, [APPEND, READ, WRITE, CONTROL])) {
+  if (
+    userApp === null ||
+    userApp.permissions === null ||
+    !checkAppPermissions(userApp.permissions, [APPEND, READ, WRITE, CONTROL])
+  ) {
     errorToaster(errorMessage.message, errorMessage.title, {
       label: errorMessage.label,
       href: errorMessage.href

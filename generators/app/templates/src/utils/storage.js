@@ -1,6 +1,6 @@
 import data from '@solid/query-ldflex';
 import { folderExists, createDoc } from './ldflex-helper';
-import { storageHelper } from '@utils';
+import { storageHelper, errorToaster } from '@utils';
 
 const appPath = process.env.REACT_APP_TICTAC_PATH;
 
@@ -45,11 +45,10 @@ export const getAppStorage = async webId => {
  * @returns {Promise<*>}
  */
 export const createInitialFiles = async webId => {
-  const gameUrl = await storageHelper.getAppStorage(webId);
-  // const gamePath = await ldflexHelper.createContainer(gameUrl);
-
   try {
+    const gameUrl = await storageHelper.getAppStorage(webId);
     const existContainer = await folderExists(gameUrl);
+
     const data = `${gameUrl}data.ttl`;
     // const settings = `${gameUrl}settings.ttl`;
     if (existContainer) return gameUrl;
@@ -61,14 +60,11 @@ export const createInitialFiles = async webId => {
       }
     });
 
-    /* if (gamePath) {
-      await createInbox(`${gamePath}inbox/`, gamePath);
-      setGamePath(gamePath);
-    } */
+    return gameUrl;
+    /*  */
   } catch (error) {
-    throw new Error(error);
+    errorToaster(error.message, 'Error');
   }
 };
 
-export const checkAndInitializeInbox = async () =>  '';
-
+export const checkAndInitializeInbox = async () => '';

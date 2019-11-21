@@ -126,7 +126,8 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
 
       return null;
     } catch (e) {
-      throw new Error(e);
+      console.log('Error');
+      errorToaster(e.message, t('notifications.error'));
     }
   };
 

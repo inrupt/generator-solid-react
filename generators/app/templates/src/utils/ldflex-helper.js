@@ -1,5 +1,6 @@
 import auth from 'solid-auth-client';
 import ldflex from '@solid/query-ldflex';
+import { errorToaster } from '@utils';
 
 export const documentExists = async documentUri =>
   auth.fetch(documentUri, {
@@ -75,8 +76,12 @@ export const fetchLdflexDocument = async documentUri => {
 };
 
 export const folderExists = async folderPath => {
-  const result = await auth.fetch(folderPath);
-  return result.status === 403 || result.status === 200;
+  try {
+    const result = await auth.fetch(folderPath);
+    return result.status === 403 || result.status === 200;
+  } catch (e) {
+    errorToaster(e.message, 'Error');
+  }
 };
 
 export const discoverInbox = async document => {

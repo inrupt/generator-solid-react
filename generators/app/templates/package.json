@@ -9,7 +9,7 @@
     "@inrupt/solid-style-guide": "^0.1.34",
     "@rdfjs/data-model": "^1.1.1",
     "@shexjs/core": "^1.0.0-alpha.4",
-    "@solid/query-ldflex": "^2.6.0",
+    "@solid/query-ldflex": "2.6.0",
     "@svgr/webpack": "2.4.1",
     "bfj": "6.1.1",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
