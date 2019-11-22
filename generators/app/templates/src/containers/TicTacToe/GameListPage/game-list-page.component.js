@@ -3,10 +3,9 @@ import { LiveUpdate, useNotification, AccessControlList } from '@inrupt/solid-re
 import { useTranslation } from 'react-i18next';
 import data from '@solid/query-ldflex';
 import { namedNode } from '@rdfjs/data-model';
-import { errorToaster, storageHelper, permissionHelper } from '@utils';
+import { errorToaster, storageHelper, permissionHelper, ldflexHelper } from '@utils';
 import { Form, List } from './children';
 import { Section, Wrapper } from '../tic-tac-toe.style';
-import { ldflexHelper } from '../../../utils';
 
 const GameListPage = ({ webId }) => {
   const [opponent, setOpponent] = useState('');
