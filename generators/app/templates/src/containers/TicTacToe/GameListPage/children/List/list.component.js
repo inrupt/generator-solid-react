@@ -242,13 +242,18 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
      * Check if user pod has data.ttl file where will live
      * opponent games if not show error message
      */
-    const hasData = await ldflexHelper.folderExists(inviteGamesUrl);
+    const hasData = await ldflexHelper.resourceExists(inviteGamesUrl);
 
-    if (!hasData)
-      errorToaster(t('game.dataError.message'), 'Error', {
-        label: t('game.dataError.link.label'),
-        href: t('game.dataError.link.href')
-      });
+    if (!hasData) {
+      try {
+        await storageHelper.createInitialFiles(webId);
+      } catch (error) {
+        errorToaster(t('game.dataError.message'), 'Error', {
+          label: t('game.dataError.link.label'),
+          href: t('game.dataError.link.href')
+        });
+      }
+    }
 
     const games = await getGames(gamePath);
     const inviteGames = await getGames(inviteGamesUrl);

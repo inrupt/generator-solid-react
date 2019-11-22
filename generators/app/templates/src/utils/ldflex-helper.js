@@ -75,9 +75,9 @@ export const fetchLdflexDocument = async documentUri => {
   }
 };
 
-export const folderExists = async folderPath => {
+export const resourceExists = async resourcePath => {
   try {
-    const result = await auth.fetch(folderPath);
+    const result = await auth.fetch(resourcePath);
     return result.status === 403 || result.status === 200;
   } catch (e) {
     errorToaster(e.message, 'Error');
@@ -86,12 +86,29 @@ export const folderExists = async folderPath => {
 
 export const discoverInbox = async document => {
   try {
-    const documentExists = await folderExists(document);
+    const documentExists = await resourceExists(document);
     if (!documentExists) return false;
 
     const inboxDocument = await ldflex[document]['ldp:inbox'];
     const inbox = inboxDocument ? await inboxDocument.value : false;
     return inbox;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Given a resource link, find an inbox linked from it, if any exist
+ * @param resourcePath
+ * @returns {Promise<string|*>}
+ */
+export const getLinkedInbox = async resourcePath => {
+  try {
+    const inboxLinkedPath = await ldflex[resourcePath].inbox;
+    if (inboxLinkedPath) {
+      return inboxLinkedPath.value;
+    }
+    return '';
   } catch (error) {
     throw error;
   }

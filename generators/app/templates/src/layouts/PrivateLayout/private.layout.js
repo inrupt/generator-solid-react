@@ -27,11 +27,13 @@ const PrivateLayout = ({ routes, webId, location, history, ...rest }) => {
   const errorMessages = {
     message: t('appPermission.message'),
     title: t('notifications.error'),
-    abel: t('appPermission.link.label'),
+    label: t('appPermission.link.label'),
     href: t('appPermission.link.href')
   };
   useEffect(() => {
-    if (webId) permissionHelper.checkPermissions(webId, errorMessages);
+    if (webId) {
+      permissionHelper.checkPermissions(webId, errorMessages);
+    }
   }, [webId]);
 
   return (
