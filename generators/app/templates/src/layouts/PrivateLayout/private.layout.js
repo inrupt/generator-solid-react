@@ -1,13 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {
-  withAuthorization,
-  AppPermission,
-  AccessControlList
-} from '@inrupt/solid-react-components';
+import { withAuthorization } from '@inrupt/solid-react-components';
 import { AuthNavBar, Footer } from '@components';
-import { errorToaster, checkAppPermissions } from '@utils';
+import { permissionHelper } from '@utils';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -28,31 +24,16 @@ const Content = styled.div`
 
 const PrivateLayout = ({ routes, webId, location, history, ...rest }) => {
   const { t } = useTranslation();
-  /**
-   * SDK app will need all the permissions by the user pod so
-   * we check these permissions to work without any issues.
-   */
-  const checkPermissions = useCallback(async () => {
-    /**
-     * Get permissions from trustedApp.
-     */
-    const userApp = await AppPermission.checkPermissions(webId);
-    /**
-     * Get modes permissions from solid-react-components
-     */
-    const permissions = AccessControlList.MODES;
-    const { APPEND, READ, WRITE, CONTROL } = permissions;
-
-    if (!checkAppPermissions(userApp.permissions, [APPEND, READ, WRITE, CONTROL])) {
-      errorToaster(t('appPermission.message'), t('notifications.error'), {
-        label: t('appPermission.link.label'),
-        href: t('appPermission.link.href')
-      });
-    }
-  }, [webId]);
-
+  const errorMessages = {
+    message: t('appPermission.message'),
+    title: t('notifications.error'),
+    label: t('appPermission.link.label'),
+    href: t('appPermission.link.href')
+  };
   useEffect(() => {
-    if (webId) checkPermissions();
+    if (webId) {
+      permissionHelper.checkPermissions(webId, errorMessages);
+    }
   }, [webId]);
 
   return (

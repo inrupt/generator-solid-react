@@ -4,15 +4,12 @@ import { successToaster, errorToaster } from './toaster';
 import * as ldflexHelper from './ldflex-helper';
 import * as notification from './notification';
 import * as storageHelper from './storage';
+import * as permissionHelper from './permissions';
 
 function* entries(obj) {
   for (const key of Object.keys(obj)) {
     yield [key, obj[key]];
   }
-}
-
-function checkAppPermissions(userAppPermissions, appPermissions) {
-  return appPermissions.every(permission => userAppPermissions.includes(permission));
 }
 
 export {
@@ -23,6 +20,6 @@ export {
   storageHelper,
   successToaster,
   errorToaster,
-  checkAppPermissions,
-  notification
+  notification,
+  permissionHelper
 };

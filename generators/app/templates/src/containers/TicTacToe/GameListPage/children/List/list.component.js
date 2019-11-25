@@ -236,24 +236,15 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
   const init = useCallback(async () => {
     setIsLoading(true);
     appPath = await storageHelper.getAppStorage(webId);
+
     const inviteGamesUrl = `${appPath}data.ttl`;
-
-    /**
-     * Check if user pod has data.ttl file where will live
-     * opponent games if not show error message
-     */
-    const hasData = await ldflexHelper.folderExists(inviteGamesUrl);
-
-    if (!hasData)
-      errorToaster(t('game.dataError.message'), 'Error', {
-        label: t('game.dataError.link.label'),
-        href: t('game.dataError.link.href')
-      });
-
     const games = await getGames(gamePath);
     const inviteGames = await getGames(inviteGamesUrl);
+
     let allGames = [];
+
     if (Array.isArray(games)) allGames = [...allGames, ...games];
+
     if (Array.isArray(inviteGames)) allGames = [...allGames, ...inviteGames];
     setList(allGames);
     setIsLoading(false);
