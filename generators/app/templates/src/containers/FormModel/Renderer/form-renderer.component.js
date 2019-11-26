@@ -19,7 +19,7 @@ import {
 } from '../form-model.style';
 
 import '@inrupt/solid-react-components/build/static/css/index.css';
-import AutoSaveSpinner from './children/auto-save.component';
+import { AutoSaveSpinner } from '@components';
 
 /**
  * Form Model Renderer UI component, containing the styled components for the Form Model Converter
