@@ -13,7 +13,7 @@ import {
   WebId
 } from './profile.style';
 import { Image } from './components';
-import AutoSaveSpinner from './children/auto-save.component';
+import { AutoSaveSpinner } from '@components';
 
 const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 
