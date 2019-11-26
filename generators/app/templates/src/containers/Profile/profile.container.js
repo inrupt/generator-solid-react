@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormModel } from '@inrupt/solid-react-components';
 import { successToaster, errorToaster } from '@utils';
 import { Loader } from '@util-components';
@@ -8,7 +9,8 @@ import {
   ProfileContainer,
   ProfileWrapper,
   FormRenderContainer,
-  AutoSaveNotification
+  AutoSaveNotification,
+  WebId
 } from './profile.style';
 import { Image } from './components';
 import AutoSaveSpinner from './children/auto-save.component';
@@ -68,6 +70,12 @@ const Profile = ({ webId }: Props) => {
             </AutoSaveNotification>
 
             <FormRenderContainer>
+              <WebId>
+                <FontAwesomeIcon icon="id-card" />
+                <a href={webId} target="_blank" rel="noopener noreferrer">
+                  {webId}
+                </a>
+              </WebId>
               <FormModel
                 {...{
                   modelPath: 'https://solidsdk.inrupt.net/sdk/userprofile.ttl#formRoot',

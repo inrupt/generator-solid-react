@@ -39,6 +39,24 @@ export const Header = styled.div`
   }
 `;
 
+export const WebId = styled.div`
+  padding: 20px 40px 0px 40px;
+  position: relative;
+  &:after {
+    background-color: #d8d8d8;
+    display: block;
+    content: '';
+    height: 1px;
+    width: 100%;
+    margin: 25px 0 0 0;
+  }
+  a {
+    display: inline-block;
+    word-break: break-all;
+    margin-left: 10px;
+  }
+`;
+
 export const AutoSaveNotification = styled.section`
   margin-bottom: 0px !important;
 `;
