@@ -1,17 +1,17 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ShexFormBuilder } from '@inrupt/solid-react-components';
+import { FormModel } from '@inrupt/solid-react-components';
 import { successToaster, errorToaster } from '@utils';
+import { Loader } from '@util-components';
 import {
   Header,
   ProfileContainer,
   ProfileWrapper,
-  ShexForm,
-  AutoSaveNotification,
-  WebId
+  FormRenderContainer,
+  AutoSaveNotification
 } from './profile.style';
 import { Image } from './components';
+import AutoSaveSpinner from './children/auto-save.component';
 
 const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 
@@ -25,18 +25,25 @@ const defaultProfilePhoto = '/img/icon/empty-profile.svg';
 type Props = { webId: String };
 
 const Profile = ({ webId }: Props) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const successCallback = () => {
-    successToaster(t('profile.successCallback'), t('profile.successTitle'));
+  const onError = e => {
+    if (e.message.toString().indexOf('Validation failed') < 0) {
+      errorToaster(t('formLanguage.renderer.formNotLoaded'), t('notifications.error'), {
+        label: t('errorFormRender.link.label'),
+        href: t('errorFormRender.link.href')
+      });
+      setIsLoading(false);
+    }
   };
 
-  const errorCallback = e => {
-    const code = e.code || e.status;
-    const messageError = code ? `profile.errors.${code}` : 'profile.errors.default';
-    if (code && code !== 200) {
-      errorToaster(t(messageError), 'Error');
-    }
+  const onDelete = () => {
+    successToaster(t('formLanguage.renderer.fieldDeleted'), t('notifications.success'));
+  };
+
+  const onAddNewField = () => {
+    successToaster(t('formLanguage.renderer.fieldAdded'), t('notifications.success'));
   };
 
   return (
@@ -60,48 +67,37 @@ const Profile = ({ webId }: Props) => {
               </div>
             </AutoSaveNotification>
 
-            <ShexForm>
-              <WebId>
-                <FontAwesomeIcon icon="id-card" />
-                <a href={webId} target="_blank" rel="noopener noreferrer">
-                  {webId}
-                </a>
-              </WebId>
-              <ShexFormBuilder
+            <FormRenderContainer>
+              <FormModel
                 {...{
-                  documentUri: webId,
-                  shexUri: 'https://shexshapes.inrupt.net/public/shapes/userprofile.shex',
-                  theme: {
-                    form: 'shexForm',
-                    shexPanel: 'shexPanel',
-                    shexRoot: 'shexRoot',
-                    deleteButton: 'deleteButton ids-button-stroke ids-button-stroke--secondary',
-                    inputContainer: 'inputContainer',
-                    addButtonStyle: 'addButton ids-button-stroke ids-button-stroke--secondary'
+                  modelPath: 'https://solidsdk.inrupt.net/sdk/userprofile.ttl#formRoot',
+                  podPath: webId,
+                  viewer: false,
+                  onInit: () => setIsLoading(true),
+                  onLoaded: () => setIsLoading(false),
+                  onSuccess: () => {},
+                  onSave: () => {},
+                  onError: error => {
+                    onError(error);
                   },
-                  languageTheme: {
-                    language: i18n.language.substring(0, 2),
-                    saveBtn: t('profile.saveBtn'),
-                    resetBtn: t('profile.resetBtn'),
-                    addButtonText: t('profile.addBtn'),
-                    deleteButton: t('profile.deleteBtn'),
-                    dropdownDefaultText: t('profile.dropdownDefaultText'),
-                    warningResolution: t('profile.warningResolution'),
-                    formValidate: {
-                      minMxNumberInclusive: t('profile.minMxNumberInclusive'),
-                      minMxNumberExclusive: t('profile.minMxNumberExclusive'),
-                      minMaxString: t('profile.minMaxString'),
-                      default: t('profile.defaultError')
-                    }
-                  },
-                  successCallback,
-                  errorCallback,
-                  autoSaveMode: true
+                  onAddNewField: response => onAddNewField(response),
+                  onDelete: response => onDelete(response),
+                  settings: {
+                    theme: {
+                      inputText: 'input-wrap',
+                      inputCheckbox: 'sdk-checkbox checkbox',
+                      form: 'inrupt-sdk-form',
+                      childGroup: 'inrupt-form-group'
+                    },
+                    savingComponent: AutoSaveSpinner
+                  }
                 }}
+                autoSave
               />
-            </ShexForm>
+            </FormRenderContainer>
           </Fragment>
         )}
+        {isLoading && <Loader absolute />}
       </ProfileContainer>
     </ProfileWrapper>
   );
