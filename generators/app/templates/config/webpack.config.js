@@ -599,7 +599,13 @@ module.exports = function(webpackEnv) {
     //  no need to ship React since it's shipped with the main app
     externals: {
       'solid-auth-client': ['solid', 'auth'],
-      '@solid/query-ldflex': ['solid', 'data']
+      '@solid/query-ldflex': ['solid', 'data'],
+      // Disable shims for supported browser features
+      'web-streams-polyfill': 'window',
+      // Exclude the following unneeded modules
+      '@comunica/actor-rdf-serialize-jsonld': 'null',
+      'graphql': 'null',
+      'graphql-to-sparql': 'null',
     },
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.
