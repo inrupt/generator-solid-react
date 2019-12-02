@@ -3,6 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormModel } from '@inrupt/solid-react-components';
 import { Select, Loader } from '@util-components';
+import ldflex from '@solid/query-ldflex';
 
 import { RendererTypesList, ConverterTypes } from '@constants';
 import { successToaster, errorToaster } from '@utils';
@@ -23,7 +24,6 @@ import { AutoSaveSpinner } from '@components';
 
 /**
  * Form Model Renderer UI component, containing the styled components for the Form Model Converter
- * @param props
  */
 const FormModelRenderer = () => {
   const { t } = useTranslation();
@@ -85,24 +85,28 @@ const FormModelRenderer = () => {
   });
 
   /**
+   * Change event for the source
+   */
+  const onSourceChange = useCallback((e: Event) => {
+    setSource(e.target.value);
+  });
+
+  /**
    * Submit function for the form, to do the conversion and set up the output
    * This function is for the view button
+   * Clears the ldflex cache before submission
+   * in case something changed in the pod and not on the generator side,
+   * it will attempt to fetch the file again and not the cached one
    */
   async function onSubmit(e: Event) {
     e.preventDefault();
+    ldflex.clearCache();
     await setSubmitted(null);
     let obj = {};
     if (schemaUrl !== '') obj = { ...obj, schemaUrl };
     if (source !== '') obj = { ...obj, source };
     setSubmitted(obj);
   }
-
-  /**
-   * Change event for the source
-   */
-  const onSourceChange = useCallback((e: Event) => {
-    setSource(e.target.value);
-  });
 
   /**
    * Change event for the input list change, setting up the form conditions
