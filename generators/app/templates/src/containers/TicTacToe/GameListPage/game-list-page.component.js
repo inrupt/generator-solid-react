@@ -60,7 +60,7 @@ const GameListPage = ({ webId }) => {
       // If the user has Write and Control permissions, check the inbox settings
       if (hasControlPermissions) {
         // Check if the inbox permissions are set to APPEND for public, and if not fix the issue
-        await permissionHelper.checkOrSetInboxAppendPermissions(inboxPath);
+        await permissionHelper.checkOrSetInboxAppendPermissions(inboxPath, webId);
       }
 
       if (!hasInboxLink) {
