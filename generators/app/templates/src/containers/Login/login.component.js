@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ProviderLogin } from '@inrupt/solid-react-components';
 import { LoginWrapper, LoginPanel, PanelBody, LoginTitle } from './login.style';
 import { CenterContainer } from '@util-components';
+import { Provider } from '@services';
 
 const LoginComponent = () => {
   const { t } = useTranslation();
@@ -47,6 +48,7 @@ const LoginComponent = () => {
                 inputLogin: '',
                 linkButton: ''
               }}
+              providers={Provider.getIdentityProviders()}
             />
           </PanelBody>
         </LoginPanel>
