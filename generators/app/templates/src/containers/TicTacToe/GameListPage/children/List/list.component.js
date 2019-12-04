@@ -102,7 +102,7 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
    * @param {String} documentUrl URL of the document with a contains predicate
    */
   const deleteGameFromContains = async (gameUrl, documentUrl) => {
-    await ldflex[documentUrl]['ldp:contains'].delete(namedNode(gameUrl));
+    await ldflex[documentUrl]['schema:hasPart'].delete(namedNode(gameUrl));
   };
 
   /**
@@ -190,7 +190,7 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
         const document = await ldflexHelper.fetchLdflexDocument(url);
         let gameList = [];
         if (!document) return gameList;
-        for await (const item of document['ldp:contains']) {
+        for await (const item of document['schema:hasPart']) {
           const { value } = item;
           if (
             value.includes('.ttl') &&

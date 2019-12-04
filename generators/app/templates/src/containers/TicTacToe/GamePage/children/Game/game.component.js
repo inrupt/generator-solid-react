@@ -163,7 +163,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
    */
   const addGameToList = async () => {
     const url = await storageHelper.getAppStorage(webId);
-    await ldflex[`${url}data.ttl`]['ldp:contains'].add(namedNode(gameURL));
+    await ldflex[`${url}data.ttl`]['schema:hasPart'].add(namedNode(gameURL));
   };
 
   /**
