@@ -49,6 +49,7 @@
     "welcome": "Welcome",
     "logOut": "Log out",
     "profile": "Profile",
+    "formModel": "Form Model",
     "text-editor": "Text Editor",
     "changeLanguage": "Change Language",
     "languages": {

@@ -47,6 +47,7 @@
   },
   "navBar": {
     "welcome": "Welcome",
+    "formModel": "Form Model",
     "logOut": "Log out",
     "profile": "Profile",
     "text-editor": "Text Editor",

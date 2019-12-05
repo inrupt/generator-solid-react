@@ -35,6 +35,9 @@ export const ProfileOptions = [
     icon: 'cog'
   },
   {
+    label: 'navBar.formModel'
+  },
+  {
     label: 'navBar.logOut',
     onClick: 'logOut',
     icon: 'lock'
