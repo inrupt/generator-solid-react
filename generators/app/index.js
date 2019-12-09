@@ -139,6 +139,10 @@ module.exports = class extends Generator {
                     src: 'src/containers/TicTacToe/**',
                     dest: 'src/containers/TicTacToe',
                 },
+                {
+                    src: 'src/containers/FormModel/**',
+                    dest: 'src/containers/FormModel',
+                },
                 { src: '.env' }
             );
         } else {
