@@ -76,6 +76,12 @@ class NavBarProfile extends Component<Props> {
   // eslint-disable-next-line react/destructuring-assignment
   profileRedirect = () => this.props.history.push('/profile');
 
+  // eslint-disable-next-line react/destructuring-assignment
+  formModelRenderRedirect = () => this.props.history.push('/formModel/renderer');
+
+  // eslint-disable-next-line react/destructuring-assignment
+  formModelConvertRedirect = () => this.props.history.push('/formModel/converter');
+
   onImageLoaded = async () => this.setState({ imageLoaded: true });
 
   logOut = async () => {

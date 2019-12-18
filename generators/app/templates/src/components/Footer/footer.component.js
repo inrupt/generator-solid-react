@@ -29,7 +29,7 @@ const Footer = (props: Props) => {
           <ul>
             <li>
               <a
-                href="https://github.com/Inrupt-inc/solid-react-sdk"
+                href="https://github.com/inrupt/solid-react-sdk"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -39,7 +39,7 @@ const Footer = (props: Props) => {
             </li>
             <li>
               <a
-                href="https://github.com/Inrupt-inc/solid-style-guide"
+                href="https://github.com/inrupt/solid-style-guide"
                 target="_blank"
                 rel="noopener noreferrer"
               >

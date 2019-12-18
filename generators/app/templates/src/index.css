@@ -50,6 +50,23 @@ input[type='text'] {
   padding: 7px 10px;
 }
 
+/**
+Temporary fix to overwrite and display the default style of the checkbox
+to prevent issues with the custom component and react/fontawesome missing icons
+ */
+input[type="checkbox"] {
+  appearance: checkbox !important;
+  -webkit-appearance: checkbox !important;
+  -moz-appearance: checkbox !important;
+  margin: 0 0 0 16px !important
+}
+input[type="checkbox"]::before {
+  content: none !important;
+}
+/**
+Ends temporary react/fontawesome fix
+ */
+
 .link,
 .link-button {
   color: #449df5;

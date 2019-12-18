@@ -2,13 +2,23 @@
   "appPermission": {
     "message": "La aplicacion necesita todos los permisos para funcionar.",
     "link": {
-      "label": "Learn more",
+      "label": "Saber más",
       "href": "https://solidsdk.inrupt.net/public/general/es/app-permissions.html"
     }
   },
   "notifications": {
     "success": "Éxito",
-    "error": "Error"
+    "error": "Error",
+    "unknownError": "Ha occurido un error desconocido",
+    "404": "Editando un documento nuevo.",
+    "errorLoading": "Había un error al cargar tu documento. Por favor, intenta de nuevo.",
+    "errorSaving": "Había un error al guardar tu documento. Por favor, intenta de nuevo.",
+    "errorFetching": "Error recogiendo fichero.",
+    "accessGranted": "Collaborador ahora tiene acceso de leer y escribir.",
+    "errorGrantingAccess": "Había un error al dar acceso a tu documento. Por favor, intenta de nuevo.",
+    "saved": "Tu documento ha sido guardado al pod.",
+    "notEditable": "(no editable)",
+    "notSharable": "(logéate y carga undocumento en tu própio pod para poder dar acceso)"
   },
   "login": {
     "title": "Hola! Bienvenido a Solid.",
@@ -37,8 +47,12 @@
   },
   "navBar": {
     "welcome": "Bienvenida",
+    "formModel": "Form Model",
     "logOut": "Cerrar Sesión",
     "profile": "Perfil",
+    "formModelRender": "Form Model Render",
+    "formModelConvert": "Form Model Convert",
+    "text-editor": "Editor de Textos",
     "changeLanguage": "Cambiar Lenguaje",
     "languages": {
       "en": "English (Inglés)",
@@ -127,6 +141,7 @@
     "idLabel": "ID del Juego",
     "opponentWebIDLabel": "WebID del Oponente",
     "nogames": "No se han encontrado juegos",
+    "invitationAccept": "te ha invitado a jugar una partida de Tres en Linea. Te gustaría jugar?",
     "invitationTemplate": "<0><0><0>{{- name}}</0> te ha invitado a un juego de Tres en Linea.</0><1>Quieres aceptar el juego?</1></0>",
     "invitationAcceptText": "Aceptar",
     "invitationDeclineText": "Rechazar",
@@ -172,9 +187,9 @@
     }
   },
   "noInboxUser": {
-    "message": "You do not have a inbox, please go to your POD and create one.",
+    "message": "No tienes un inbox, por favor crea uno en tu Pod.",
     "link": {
-      "label": "Conozca más",
+      "label": "Saber más",
       "href": "https://solidsdk.inrupt.net/public/general/es/missing-global-inbox.html"
     }
   },
@@ -183,5 +198,51 @@
       "label": "Conozca más",
       "href": "https://solidsdk.inrupt.net/public/general/es/app-inbox-cannot-be-created.html"
     }
+  },
+  "errorFormRender": {
+    "link": {
+      "label": "Conozca más",
+      "href": "https://solidsdk.inrupt.net/public/general/es/form-rendering-errors.html"
+    }
+  },
+  "formLanguage": {
+    "shacl": "SHACL",
+    "shaclExtension": "SHACL + RDF Extension",
+    "shex": "ShEx",
+    "shexLayout": "ShEx Layout",
+    "layout": "Layout",
+    "extension": "Extensión",
+    "formModel": "Form Model",
+    "copyToClipboard": "Copiar al portapapeles",
+    "shaclShape": "SHACL Shape",
+    "shexShape": "ShEx Shape",
+    "input": "Formato entrada",
+    "source": "Fuente",
+    "converter": {
+      "title": "Convertidor de Form Model",
+      "convert": "Convertir",
+      "copySuccess": "Copiado al portapapeles"
+    },
+    "renderer": {
+      "title": "Visualizador de Form Model",
+      "submitBtn": "Generar",
+      "resetBtn": "Limpiar Modelo",
+      "viewBtn": "Lectura",
+      "editBtn": "Editar",
+      "viewMode": "Modo Lectura",
+      "editMode": "Modo Edición",
+      "formSaved": "Formulario guardado correctamente",
+      "formNotLoaded": "No se pudo procesar el formulario",
+      "fieldDeleted": "Campo de formulario eliminado correctamente",
+      "fieldAdded": "Campo de formulario agregado con éxito"
+    }
+  },
+  "editor": {
+    "explanation": "Aqui tiene un simple editor de textos con que puede crear un fichero de texto plano y guardarlo en un Pod. Para mostrarlo claramente en este demo, hay que proveer una URL que directamente identifica el fichero en el Pod. El Pod puede ser el del mismo usuario conectado, o de otra persona. Para poder escribir, y leer, al Pod de otra persona, el proprietario tendrá que dar permiso de escribir, usando el botón de 'Dar Acceso' abajo.",
+    "url": "URL",
+    "friend": "Webid de collaborador",
+    "load": "Cargar",
+    "save": "Guardar",
+    "grantAccess": "Dar Acceso"
   }
 }

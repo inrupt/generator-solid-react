@@ -1,8 +1,8 @@
 {
   "name": "@inrupt/generator-solid-react",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "description": "Solid React Application Generator",
-  "homepage": "https://solid.inrupt.com/docs",
+  "homepage": "https://solidproject.org",
   "contributors": [
     {
       "name": "Justin Bingham",
@@ -14,15 +14,23 @@
     },
     {
       "name": "Pablo Rodriguez",
-      "email": "pablo.rodriguez@janeirodigital.com"
+      "email": ""
     },
     {
       "name": "Jairo Campos",
-      "email": "jairo.campos@janeirodigital.com"
+      "email": ""
     },
     {
       "name": "Arne Hassel",
       "email": "arneh@inrupt.com"
+    },
+    {
+      "name": "Angel Araya",
+      "email": "angel.araya@janeirodigital.com"
+    },
+    {
+      "name": "Eliamar Agüero",
+      "email": "eliamar.aguero@janeirodigital.com"
     }
   ],
   "files": [
@@ -92,6 +100,6 @@
     "pretest": "eslint .",
     "test": "jest"
   },
-  "repository": "https://github.com/Inrupt-inc/generator-solid-react.git",
+  "repository": "https://github.com/inrupt/generator-solid-react.git",
   "license": "MIT"
 }

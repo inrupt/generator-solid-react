@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useLiveUpdate } from '@inrupt/solid-react-components';
+import { useLiveUpdate, NotificationTypes } from '@inrupt/solid-react-components';
 import { useTranslation } from 'react-i18next';
 import ldflex from '@solid/query-ldflex';
 import { namedNode } from '@rdfjs/data-model';
@@ -102,7 +102,7 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
    * @param {String} documentUrl URL of the document with a contains predicate
    */
   const deleteGameFromContains = async (gameUrl, documentUrl) => {
-    await ldflex[documentUrl]['ldp:contains'].delete(namedNode(gameUrl));
+    await ldflex[documentUrl]['schema:hasPart'].delete(namedNode(gameUrl));
   };
 
   /**
@@ -112,6 +112,7 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
   const resignedGame = async ({ url, documentUrl, status, actor }) => {
     if (status !== GameStatus.FINISHED) {
       const statusPredicate = 'http://data.totl.net/game/status';
+      const licenseUrl = 'https://creativecommons.org/licenses/by-sa/4.0/';
       // Change status to resigned
       await ldflex[url][statusPredicate].replace(status, GameStatus.RESIGNED);
 
@@ -137,7 +138,9 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
           actor: webId,
           object: url
         },
-        to.path
+        to.path,
+        NotificationTypes.LEAVE,
+        licenseUrl
       );
     }
     // Delete game from contains
@@ -187,7 +190,7 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
         const document = await ldflexHelper.fetchLdflexDocument(url);
         let gameList = [];
         if (!document) return gameList;
-        for await (const item of document['ldp:contains']) {
+        for await (const item of document['schema:hasPart']) {
           const { value } = item;
           if (
             value.includes('.ttl') &&
@@ -198,6 +201,8 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
         }
         let games = [];
         for await (const item of gameList) {
+          // the url at this point the document is being cached by LDFlex, we need to manually clear it
+          ldflex.clearCache(item);
           const game = await ldflexHelper.fetchLdflexDocument(item);
           let gameData = { url: item };
           if (game) {
@@ -231,24 +236,15 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
   const init = useCallback(async () => {
     setIsLoading(true);
     appPath = await storageHelper.getAppStorage(webId);
+
     const inviteGamesUrl = `${appPath}data.ttl`;
-
-    /**
-     * Check if user pod has data.ttl file where will live
-     * opponent games if not show error message
-     */
-    const hasData = await ldflexHelper.folderExists(inviteGamesUrl);
-
-    if (!hasData)
-      errorToaster(t('game.dataError.message'), 'Error', {
-        label: t('game.dataError.link.label'),
-        href: t('game.dataError.link.href')
-      });
-
     const games = await getGames(gamePath);
     const inviteGames = await getGames(inviteGamesUrl);
+
     let allGames = [];
+
     if (Array.isArray(games)) allGames = [...allGames, ...games];
+
     if (Array.isArray(inviteGames)) allGames = [...allGames, ...inviteGames];
     setList(allGames);
     setIsLoading(false);

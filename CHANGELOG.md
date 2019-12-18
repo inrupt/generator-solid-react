@@ -1,5 +1,37 @@
 # Solid React Application Generator
 
+## 0.7.0 (December 18, 2019)
+
+#### Solid React Application Base
+
+##### Added
+* Text Editor page
+    * New text editor page shows examples of loading files, granting sharing permissions, and saving file changes back to the Pod, as well as creating new files
+* Form Model Converter page
+    * Form Model converter page (found in the top-right profile menu) shows examples of converting a ShEx shape into a Form Model object
+* Form Model Render page
+    * This new page (also found in the top-right profile menu) takes an input of a Form Model IRI and a data source link, and outputs a fully functional (and styled) form
+    * It serves as a living code example of how to integrate the Form Model rendering component into your own application
+
+##### Updated
+* Notifications displayed in the top-right menu are now validated via ShEx against the [core notification shape](https://shexshapes.inrupt.net/public/notifications/core-notification.shex) first. This way if there are nonconformant items in your inbox, the application won't try to render them and potential break the UI
+* Profile page no longer uses deprecated ShExFormBuilder control, and instead replaces it with the new FormModel component
+
+##### Fixed
+* Game files, settings.ttl, and the inbox now autorepair if one or more of them is missing. This is particularly useful if you need to grant extra permissions, or forget to add Control permissions. Not only does it create the correct files and folders, but it also repairs the permissions on the inbox.
+* Removed some dependencies from webpack settings to make the build smaller and simpler
+* Site no longer throws a full page error if no permissions are detected. Previously it was assuming an empty array, but in some cases this can be a null object instead, which caused a code failure
+* Tic Tac Toe external game links are now linked from data.ttl using the `schema:hasPart` predicate, replacing the previous `ldp:contains` link. While this worked fine in Node Solid Server, it went against the spec of how that predicate should work, so we switched it to something more appropriate
+* Fixed an issue where the game status was not updating from invited status in some circumstances
+
+
+## 0.6.2 (September 11, 2019)
+
+#### Solid React Application Base
+
+##### Updated
+* Updated dependency packages to fix security vulnerabilities
+
 ## 0.6.1 (August 28, 2019)
 
 #### Generator
@@ -188,8 +220,8 @@
 - Built scaffolded app with create-react-app, ejected to allow change in webpack configurations
 - [LDFlex for Solid](https://github.com/solid/query-ldflex) added as the primary interface for most Linked Data operations
 - Dependencies from [Solid React SDK](https://github.com/inrupt-inc/solid-react-sdk):
-  - [Atomic Style Guide for Solid](https://github.com/Inrupt-inc/inrupt-atomic-styleguide) to provide global styling
-  - [Solid React Components Library](https://github.com/Inrupt-inc/solid-react-components) to provide reusable core functionality
+  - [Atomic Style Guide for Solid](https://github.com/inrupt/inrupt-atomic-styleguide) to provide global styling
+  - [Solid React Components Library](https://github.com/inrupt/solid-react-components) to provide reusable core functionality
 - [Styled Components](https://www.styled-components.com/) added as dependency to handle layout and custom styling
 - Basic and Authenticated Nav Bar
 - Login page

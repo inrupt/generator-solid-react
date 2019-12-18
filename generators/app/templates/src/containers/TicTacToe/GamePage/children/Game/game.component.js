@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLiveUpdate, useNotification } from '@inrupt/solid-react-components';
+import { useLiveUpdate, useNotification, NotificationTypes } from '@inrupt/solid-react-components';
 import moment from 'moment';
 import { ldflexHelper, storageHelper, errorToaster, notification } from '@utils';
 import ldflex from '@solid/query-ldflex';
@@ -37,13 +37,14 @@ const Game = ({ webId, gameURL, history }: Props) => {
   let appPath = '';
 
   const sendNotification = useCallback(
-    async (player, content) => {
+    async (player, content, type) => {
       try {
         /**
          * Get full opponent game path
          */
         appPath = await storageHelper.getAppStorage(player);
         const gameSettings = `${appPath}settings.ttl`;
+        const license = 'https://creativecommons.org/licenses/by-sa/4.0/';
 
         /**
          * Find opponent inboxes from a document link
@@ -70,7 +71,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
          * Send notification
          */
         if (to) {
-          await createNotification(content, to.path);
+          await createNotification(content, to.path, type, license);
         }
       } catch (error) {
         errorToaster(error.message, 'Error');
@@ -162,7 +163,7 @@ const Game = ({ webId, gameURL, history }: Props) => {
    */
   const addGameToList = async () => {
     const url = await storageHelper.getAppStorage(webId);
-    await ldflex[`${url}/data.ttl`]['ldp:contains'].add(namedNode(gameURL));
+    await ldflex[`${url}data.ttl`]['schema:hasPart'].add(namedNode(gameURL));
   };
 
   /**
@@ -173,13 +174,17 @@ const Game = ({ webId, gameURL, history }: Props) => {
     try {
       await changeGameStatus('Move X');
       await addGameToList();
-      await sendNotification(rival.webId, {
-        title: 'Tictactoe game accepted',
-        summary: 'has accepted your invitation to play a game of TicTacToe.',
-        actor: webId,
-        object: gameURL,
-        target: window.location.href
-      });
+      await sendNotification(
+        rival.webId,
+        {
+          title: 'Tictactoe game accepted',
+          summary: 'has accepted your invitation to play a game of TicTacToe.',
+          actor: webId,
+          object: gameURL,
+          target: window.location.href
+        },
+        NotificationTypes.ACCEPT
+      );
     } catch (e) {
       setIsProcessing(false);
       errorToaster(e.message, 'Error');
@@ -192,13 +197,17 @@ const Game = ({ webId, gameURL, history }: Props) => {
   const onDecline = async () => {
     try {
       await changeGameStatus('Declined');
-      await sendNotification(rival.webId, {
-        title: 'Tictactoe game declined',
-        summary: 'has declined your invitation to play a game of TicTacToe.',
-        actor: webId,
-        object: gameURL,
-        target: window.location.href
-      });
+      await sendNotification(
+        rival.webId,
+        {
+          title: 'Tictactoe game declined',
+          summary: 'has declined your invitation to play a game of TicTacToe.',
+          actor: webId,
+          object: gameURL,
+          target: window.location.href
+        },
+        NotificationTypes.REJECT
+      );
       history.push('/tictactoe');
     } catch (e) {
       errorToaster(e.message, 'Error');
@@ -373,13 +382,17 @@ const Game = ({ webId, gameURL, history }: Props) => {
           await addMoves(newOrder);
           await checkWinnerOrNextPlayer(newData);
 
-          await sendNotification(rival.webId, {
-            title: 'Tictactoe move',
-            summary: 'A move has been made in your Tic-Tac-Toe game.',
-            actor: webId,
-            object: gameURL,
-            target: window.location.href
-          });
+          await sendNotification(
+            rival.webId,
+            {
+              title: 'Tictactoe move',
+              summary: 'A move has been made in your Tic-Tac-Toe game.',
+              actor: webId,
+              object: gameURL,
+              target: window.location.href
+            },
+            NotificationTypes.ANNOUNCE
+          );
           setIsProcessing(false);
         }
       } catch (e) {

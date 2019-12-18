@@ -132,8 +132,16 @@ module.exports = class extends Generator {
                     dest: 'src/containers/Profile',
                 },
                 {
+                    src: 'src/containers/TextEditor/**',
+                    dest: 'src/containers/TextEditor',
+                },
+                {
                     src: 'src/containers/TicTacToe/**',
                     dest: 'src/containers/TicTacToe',
+                },
+                {
+                    src: 'src/containers/FormModel/**',
+                    dest: 'src/containers/FormModel',
                 },
                 { src: '.env' }
             );

@@ -1,20 +1,22 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
-import { LiveUpdate, useNotification } from '@inrupt/solid-react-components';
+import { LiveUpdate, useNotification, AccessControlList } from '@inrupt/solid-react-components';
 import { useTranslation } from 'react-i18next';
-import { ldflexHelper, storageHelper, errorToaster } from '@utils';
+import data from '@solid/query-ldflex';
+import { namedNode } from '@rdfjs/data-model';
+import { errorToaster, storageHelper, permissionHelper, ldflexHelper } from '@utils';
 import { Form, List } from './children';
 import { Section, Wrapper } from '../tic-tac-toe.style';
 
 const GameListPage = ({ webId }) => {
   const [opponent, setOpponent] = useState('');
   const [gamePath, setGamePath] = useState(null);
-  const { createNotification, createInbox, notifications, notification } = useNotification(webId);
+  const { createNotification, notifications, notification, createInbox } = useNotification(webId);
   const { t } = useTranslation();
 
   const sendNotification = useCallback(
-    async (content, to) => {
+    async (content, to, type, license) => {
       try {
-        await createNotification(content, to);
+        await createNotification(content, to, type, license);
       } catch (error) {
         errorToaster(error.message, 'Error');
       }
@@ -22,12 +24,60 @@ const GameListPage = ({ webId }) => {
     [opponent, notifications, notification]
   );
 
+  /**
+   * Helper function to create or repair missing game files, such as the inbox and surrounding settings
+   * @param gamePath
+   * @returns {Promise<void>}
+   */
+  async function initializeOrRepairGameFiles(gamePath) {
+    // Set inbox path relative to the existing app's path in the pod
+    const settingsFilePath = `${gamePath}settings.ttl`;
+    let inboxPath = `${gamePath}inbox/`;
+    let hasInboxLink = false;
+
+    // Check if the settings file contains a link to the inbox. If so, save it as inboxPath
+    const inboxLinkedPath = await ldflexHelper.getLinkedInbox(settingsFilePath);
+    if (inboxLinkedPath) {
+      inboxPath = inboxLinkedPath;
+      hasInboxLink = true;
+    }
+
+    // First, check if we have WRITE permission for the app
+    const hasWritePermission = await permissionHelper.checkSpecificAppPermission(
+      webId,
+      AccessControlList.MODES.WRITE
+    );
+    // If so, try to create the inbox. No point in trying to create it if we don't have permissions
+    if (hasWritePermission) {
+      await createInbox(inboxPath, gamePath);
+
+      // Check for CONTROL permissions to see if we can set permissions or not
+      const hasControlPermissions = await permissionHelper.checkSpecificAppPermission(
+        webId,
+        AccessControlList.MODES.CONTROL
+      );
+
+      // If the user has Write and Control permissions, check the inbox settings
+      if (hasControlPermissions) {
+        // Check if the inbox permissions are set to APPEND for public, and if not fix the issue
+        await permissionHelper.checkOrSetInboxAppendPermissions(inboxPath, webId);
+      }
+
+      if (!hasInboxLink) {
+        await data[settingsFilePath].inbox.set(namedNode(inboxPath));
+      }
+    }
+  }
+
   const init = async () => {
     try {
-      const gameUrl = await storageHelper.getAppStorage(webId);
-      const gamePath = await ldflexHelper.createContainer(gameUrl);
+      const gamePath = await storageHelper.getAppStorage(webId);
+
+      // Fetch the game's path in the pod, based on user's storage settings
+      await storageHelper.createInitialFiles(webId);
+
       if (gamePath) {
-        await createInbox(`${gamePath}inbox/`, gamePath);
+        await initializeOrRepairGameFiles(gamePath);
         setGamePath(gamePath);
       }
     } catch (e) {

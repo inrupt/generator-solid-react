@@ -17,7 +17,7 @@ To install the Generator, you will need [npm](https://www.npmjs.com/get-npm), an
 * [npm](https://www.npmjs.com/get-npm) makes it easy for JavaScript developers to share and reuse code, and makes it easy to update the code that you’re sharing. We recommend the use of a node version manager (nvm) to manage multiple versions of npm, and will also set up your npm permissions properly. To install using a nvm, follow the instructions [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm#using-a-node-version-manager-to-install-node-js-and-npm).
 * [Yeoman](https://yeoman.io) provides a generator ecosystem to scaffold complete projects. You can install Yeoman by running the command: ```npm install -g yo```
 ### Note on npm permissions
-If you receive EACCES permission errors, or other permission-related errors when trying to run `npm install -g`, please refer to [this npm document](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally_) on how to set your permissions correctly.
+If you receive EACCES permission errors, or other permission-related errors when trying to run `npm install -g`, please refer to [this npm document](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally) on how to set your permissions correctly.
 ## Installation
 
 To install the generator:
@@ -38,6 +38,7 @@ Once the generator is installed, you can create a new application with just a fe
    4. Whether the application is private or public.
 4. Navigate into the new folder.
 5. If you would like to start the application, simply run ``` npm run start ``` in the new folder, otherwise you can begin editing and writing your application!
+   1. If you would like to run the application in HTTPS mode, you can run the command ```HTTPS=true npm start```, which will launch your app on localhost, using the HTTPS protocol.
 
 Note: We have noticed an error is sometimes thrown when the generator tries to install one of the dependencies of application. If this occurs, try installing [Git](https://git-scm.com/downloads) and then recreating your application.
 
@@ -152,6 +153,11 @@ For more information, please see the solid-react-components.
 A key part of modern web applications is notifications. Alongside the solid-react-components library, the generated application now has built-in real time notifications. It reads from both the global inbox (if there is one) and the application-specific inbox that the app generates using the components library.
 
 Notifications are generated via the TicTacToe game example. Invites are sent to webIDs provided in the game creation form, and whenever a move is taken in the game a notification is sent to the opponent.
+
+## Forms and Form Models
+Building forms is a fundamental part of many web applications, and on our Profile page we've given an example of how to build dynamic forms in Solid. This uses a concept called a Form Model to render a profile form, and provides code examples of how to use Form Models on your own application.
+
+For more information, please see the solid-react-components.
 
 ## Deployment
 
