@@ -154,6 +154,11 @@ A key part of modern web applications is notifications. Alongside the solid-reac
 
 Notifications are generated via the TicTacToe game example. Invites are sent to webIDs provided in the game creation form, and whenever a move is taken in the game a notification is sent to the opponent.
 
+## Forms and Form Models
+Building forms is a fundamental part of many web applications, and on our Profile page we've given an example of how to build dynamic forms in Solid. This uses a concept called a Form Model to render a profile form, and provides code examples of how to use Form Models on your own application.
+
+For more information, please see the solid-react-components.
+
 ## Deployment
 
 Once your application is ready, you can deploy it to a server of your choice.
