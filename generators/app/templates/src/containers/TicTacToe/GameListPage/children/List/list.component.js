@@ -11,7 +11,8 @@ import {
   storageHelper,
   notification as helperNotification
 } from '@utils';
-import { GameStatusList, GameStatus, KnownInboxes, LDPVocabulary } from '@constants';
+import { GameStatusList, GameStatus, KnownInboxes } from '@constants';
+import { LDP } from '@vocabs';
 import { Wrapper, ListWrapper, GameListContainers, GameListHeader } from './list.style';
 import GameItem from './children';
 
@@ -200,7 +201,7 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
          * If it is not a container, we are using schema:hasPart so we don't confuse it with a container
          * schema:hasPart is used for externally linked games in other people's pods
          */
-        if (typeValue && typeValue === LDPVocabulary.BASICCONTAINER) {
+        if (typeValue === LDP.BASICCONTAINER) {
           gameItemPredicate = 'ldp:contains';
         } else {
           gameItemPredicate = 'schema:hasPart';
