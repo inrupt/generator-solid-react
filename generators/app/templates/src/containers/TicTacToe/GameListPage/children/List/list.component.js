@@ -11,7 +11,7 @@ import {
   storageHelper,
   notification as helperNotification
 } from '@utils';
-import { GameStatusList, GameStatus, KnownInboxes } from '@constants';
+import { GameStatusList, GameStatus, KnownInboxes, LDPVocabulary } from '@constants';
 import { Wrapper, ListWrapper, GameListContainers, GameListHeader } from './list.style';
 import GameItem from './children';
 
@@ -187,10 +187,28 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
   const getGames = useCallback(
     async url => {
       try {
+        let gameItemPredicate;
         const document = await ldflexHelper.fetchLdflexDocument(url);
         let gameList = [];
         if (!document) return gameList;
-        for await (const item of document['schema:hasPart']) {
+
+        const type = await document['rdf:type'];
+        const typeValue = type ? type.value : undefined;
+
+        /**
+         * If the document is a container, then we want to loop over the ldp:contains property of the container
+         * If it is not a container, we are using schema:hasPart so we don't confuse it with a container
+         * schema:hasPart is used for externally linked games in other people's pods
+         */
+        if (typeValue && typeValue === LDPVocabulary.BASICCONTAINER) {
+          gameItemPredicate = 'ldp:contains';
+        } else {
+          gameItemPredicate = 'schema:hasPart';
+        }
+
+        for await (const item of document[gameItemPredicate]) {
+          // TODO: Add SHEX Validation here instead of checking manually for filenames and types
+
           const { value } = item;
           if (
             value.includes('.ttl') &&
