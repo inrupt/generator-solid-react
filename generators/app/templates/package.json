@@ -124,7 +124,8 @@
             "@hocs": "./src/hocs",
             "@utils": "./src/utils",
             "@hooks": "./src/hooks",
-            "@constants": "./src/constants"
+            "@constants": "./src/constants",
+            "@vocabs": "./src/vocabs"
           }
         }
       ]
