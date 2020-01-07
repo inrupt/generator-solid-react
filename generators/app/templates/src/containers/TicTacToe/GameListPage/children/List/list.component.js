@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useLiveUpdate, NotificationTypes } from '@inrupt/solid-react-components';
+import { useLiveUpdate, NotificationTypes, shexUtil } from '@inrupt/solid-react-components';
 import { useTranslation } from 'react-i18next';
 import ldflex from '@solid/query-ldflex';
 import { namedNode } from '@rdfjs/data-model';
@@ -207,17 +207,17 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
           gameItemPredicate = 'schema:hasPart';
         }
 
+        // Collect the items into an array so we can validate the list of IRIs
+        const gameUrls = [];
         for await (const item of document[gameItemPredicate]) {
-          // TODO: Add SHEX Validation here instead of checking manually for filenames and types
-
           const { value } = item;
-          if (
-            value.includes('.ttl') &&
-            !value.includes('data.ttl') &&
-            !value.includes('settings.ttl')
-          )
-            gameList = [...gameList, value];
+          gameUrls.push(value);
         }
+
+        // Run the list of games fetched from the document through the shex validator helper function and store the valid items in gameList
+        const gameShapeUrl = 'https://solidsdk.inrupt.net/sdk/tictactoe.shex';
+        gameList = await shexUtil.validateList(gameUrls, gameShapeUrl);
+
         let games = [];
         for await (const item of gameList) {
           // the url at this point the document is being cached by LDFlex, we need to manually clear it
