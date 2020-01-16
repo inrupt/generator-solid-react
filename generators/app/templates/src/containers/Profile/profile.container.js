@@ -78,11 +78,15 @@ const Profile = ({ webId }: Props) => {
               </WebId>
               <FormModel
                 {...{
-                  modelPath: 'https://solidsdk.inrupt.net/sdk/userprofile.ttl#formRoot',
-                  podPath: webId,
+                  modelSource: 'https://solidsdk.inrupt.net/sdk/userprofile.ttl#formRoot',
+                  dataSource: webId,
                   viewer: false,
-                  onInit: () => setIsLoading(true),
-                  onLoaded: () => setIsLoading(false),
+                  onInit: () => {
+                    setIsLoading(true);
+                  },
+                  onLoaded: () => {
+                    setIsLoading(false);
+                  },
                   onSuccess: () => {},
                   onSave: () => {},
                   onError: error => {
@@ -90,14 +94,15 @@ const Profile = ({ webId }: Props) => {
                   },
                   onAddNewField: response => onAddNewField(response),
                   onDelete: response => onDelete(response),
-                  settings: {
+                  options: {
                     theme: {
                       inputText: 'input-wrap',
                       inputCheckbox: 'sdk-checkbox checkbox',
                       form: 'inrupt-sdk-form',
                       childGroup: 'inrupt-form-group'
                     },
-                    savingComponent: AutoSaveSpinner
+                    savingComponent: AutoSaveSpinner,
+                    autosave: true
                   }
                 }}
                 autoSave

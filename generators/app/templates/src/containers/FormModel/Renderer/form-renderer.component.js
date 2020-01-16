@@ -226,8 +226,8 @@ const FormModelRenderer = () => {
             <div>
               <FormModel
                 {...{
-                  modelPath: submitted.schemaUrl,
-                  podPath: (submitted && submitted.source) || '',
+                  modelSource: submitted.schemaUrl,
+                  dataSource: (submitted && submitted.source) || '',
                   viewer: isViewMode,
                   onInit: () => setIsLoading(true),
                   onLoaded: () => setIsLoading(false),
@@ -238,17 +238,17 @@ const FormModelRenderer = () => {
                   },
                   onAddNewField: response => onAddNewField(response),
                   onDelete: response => onDelete(response),
-                  settings: {
+                  options: {
                     theme: {
                       inputText: 'input-wrap',
                       inputCheckbox: 'sdk-checkbox checkbox',
                       form: 'inrupt-sdk-form',
                       childGroup: 'inrupt-form-group'
                     },
-                    savingComponent: AutoSaveSpinner
+                    savingComponent: AutoSaveSpinner,
+                    autosave: true
                   }
                 }}
-                autoSave
               />
             </div>
           )}

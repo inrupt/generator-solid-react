@@ -64,12 +64,18 @@ export const AutoSaveNotification = styled.section`
 export const FormRenderContainer = styled.div`
   border: 1px solid #dae0e6;
   min-height: 40px;
-  padding: 5px;
+  padding: 20px;
 
   .inrupt-form-group {
     border: 1px solid #c0c0c0;
     background-color: #f9f9f9;
     margin: 15px 0;
+    padding: 20px;
+
+    button {
+      display: block;
+      width: 100%;
+    }
   }
 
   .input-wrap {

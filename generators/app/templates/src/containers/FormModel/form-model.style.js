@@ -24,10 +24,19 @@ export const FormWrapper = styled.div`
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
   padding: 20px;
 
+  .inrupt-sdk-form {
+    margin: 20px;
+  }
+
   .inrupt-form-group {
     border: 1px solid #c0c0c0;
     background-color: #f9f9f9;
     margin: 15px 0;
+
+    button {
+      display: block;
+      width: 100%;
+    }
   }
 
   .input-wrap {
@@ -127,5 +136,5 @@ export const ConverterInput = styled.div`
 export const FormRenderContainer = styled.div`
   border: 1px solid #dae0e6;
   min-height: 40px;
-  padding: 5px;
+  padding: 20px;
 `;
