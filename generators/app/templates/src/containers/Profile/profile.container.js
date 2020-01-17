@@ -87,9 +87,10 @@ const Profile = ({ webId }: Props) => {
                   onLoaded: () => {
                     setIsLoading(false);
                   },
-                  onSuccess: () => {},
-                  onSave: () => {},
+                  onSuccess: () => { console.log('Success') },
+                  onSave: () => { console.log('saved') },
                   onError: error => {
+                    console.log('error', error)
                     onError(error);
                   },
                   onAddNewField: response => onAddNewField(response),
@@ -101,11 +102,11 @@ const Profile = ({ webId }: Props) => {
                       form: 'inrupt-sdk-form',
                       childGroup: 'inrupt-form-group'
                     },
-                    savingComponent: AutoSaveSpinner,
-                    autosave: true
+                    autosave: true,
+                    autosaveIndicator: AutoSaveSpinner
                   }
                 }}
-                autoSave
+                liveUpdate
               />
             </FormRenderContainer>
           </Fragment>

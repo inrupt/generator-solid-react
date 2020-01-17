@@ -71,6 +71,7 @@ export const FormRenderContainer = styled.div`
     background-color: #f9f9f9;
     margin: 15px 0;
     padding: 20px;
+    width: 100%;
 
     button {
       display: block;
