@@ -87,10 +87,9 @@ const Profile = ({ webId }: Props) => {
                   onLoaded: () => {
                     setIsLoading(false);
                   },
-                  onSuccess: () => { console.log('Success') },
-                  onSave: () => { console.log('saved') },
+                  onSuccess: () => {},
+                  onSave: () => {},
                   onError: error => {
-                    console.log('error', error)
                     onError(error);
                   },
                   onAddNewField: response => onAddNewField(response),
