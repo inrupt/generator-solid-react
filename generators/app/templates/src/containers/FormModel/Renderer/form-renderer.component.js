@@ -248,7 +248,7 @@ const FormModelRenderer = () => {
                     },
                     autosaveIndicator: AutoSaveSpinner,
                     autosave: true,
-                    viewer: isViewMode,
+                    viewer: isViewMode
                   }
                 }}
               />
