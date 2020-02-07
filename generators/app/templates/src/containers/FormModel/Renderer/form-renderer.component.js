@@ -133,6 +133,7 @@ const FormModelRenderer = () => {
   });
 
   const onError = e => {
+    console.log(e);
     if (e.message.toString().indexOf('Validation failed') < 0) {
       errorToaster(t('formLanguage.renderer.formNotLoaded'), t('notifications.error'), {
         label: t('errorFormRender.link.label'),
@@ -228,7 +229,6 @@ const FormModelRenderer = () => {
                 {...{
                   modelSource: submitted.schemaUrl,
                   dataSource: (submitted && submitted.source) || '',
-                  viewer: isViewMode,
                   onInit: () => setIsLoading(true),
                   onLoaded: () => setIsLoading(false),
                   onSuccess: () => {},
@@ -243,10 +243,12 @@ const FormModelRenderer = () => {
                       inputText: 'input-wrap',
                       inputCheckbox: 'sdk-checkbox checkbox',
                       form: 'inrupt-sdk-form',
-                      childGroup: 'inrupt-form-group'
+                      childGroup: 'inrupt-form-group',
+                      singleLine: 'input-wrap'
                     },
-                    savingComponent: AutoSaveSpinner,
-                    autosave: true
+                    autosaveIndicator: AutoSaveSpinner,
+                    autosave: true,
+                    viewer: isViewMode,
                   }
                 }}
               />

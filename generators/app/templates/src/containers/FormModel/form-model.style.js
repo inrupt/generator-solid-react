@@ -25,13 +25,18 @@ export const FormWrapper = styled.div`
   padding: 20px;
 
   .inrupt-sdk-form {
-    margin: 20px;
+    margin: 10px;
+
+    h3 {
+      margin: 14px 0px;
+    }
   }
 
   .inrupt-form-group {
     border: 1px solid #c0c0c0;
     background-color: #f9f9f9;
     margin: 15px 0;
+    padding: 6px;
 
     button {
       display: block;
@@ -41,6 +46,11 @@ export const FormWrapper = styled.div`
 
   .input-wrap {
     margin: 0;
+
+    div {
+      width: 100%;
+      margin-bottom: 10px;
+    }
   }
 
   input {

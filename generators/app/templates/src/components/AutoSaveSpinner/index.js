@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AutoSaveSpinnerWrapper } from './auto-save.style';
 
@@ -7,7 +7,7 @@ type Props = {
   running: boolean
 };
 
-const AutoSaveSpinner = memo((props: Props) => {
+export const AutoSaveSpinner = (props: Props) => {
   const { errored, running } = props;
 
   return (
@@ -20,6 +20,4 @@ const AutoSaveSpinner = memo((props: Props) => {
       <div>{errored && <FontAwesomeIcon icon="exclamation-triangle" />}</div>
     </AutoSaveSpinnerWrapper>
   );
-});
-
-export default AutoSaveSpinner;
+};
