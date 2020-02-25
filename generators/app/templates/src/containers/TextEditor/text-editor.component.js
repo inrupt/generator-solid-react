@@ -75,9 +75,9 @@ export const Editor = ({ webId }: Props) => {
 
   async function setUrlFromStorage() {
     if (webId && !url) {
-      const storageRoot = await ldflex[webId]['pim:storage'];
+      const storageRoot = await ldflex[webId].storage;
       if (storageRoot) {
-        const exampleUrl = new URL('/share/some-doc.txt', storageRoot.value);
+        const exampleUrl = new URL(`${storageRoot.value}share/some-doc.txt`);
         setUrl(exampleUrl);
       }
     }
