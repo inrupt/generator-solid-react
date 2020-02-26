@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import SolidAuth from 'solid-auth-client';
 import { successToaster, errorToaster } from '@utils';
 import ldflex from '@solid/query-ldflex';
-import { AccessControlList } from '@inrupt/solid-react-components';
+import { AccessControlList, ACLFactory } from '@inrupt/solid-react-components';
 import {
   TextEditorWrapper,
   TextEditorContainer,
@@ -134,7 +134,7 @@ export const Editor = ({ webId }: Props) => {
           modes: [AccessControlList.MODES.READ, AccessControlList.MODES.WRITE]
         }
       ];
-      const ACLFile = new AccessControlList(webId, url);
+      const ACLFile = await ACLFactory.createNewAcl(webId, url);
       await ACLFile.createACL(permissions);
       successToaster(t('notifications.accessGranted'));
     } catch (e) {
