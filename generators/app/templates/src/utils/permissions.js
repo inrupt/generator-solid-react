@@ -1,4 +1,4 @@
-import { AccessControlList, AppPermission } from '@inrupt/solid-react-components';
+import { AccessControlList, ACLFactory, AppPermission } from '@inrupt/solid-react-components';
 import { errorToaster } from '@utils';
 
 // Check that all permissions we need are set. If any are missing, this returns false
@@ -47,7 +47,7 @@ export const checkPermissions = async (webId, errorMessage) => {
  */
 export const checkOrSetInboxAppendPermissions = async (inboxPath, webId) => {
   // Fetch app permissions for the inbox and see if Append is there
-  const inboxAcls = new AccessControlList(webId, inboxPath);
+  const inboxAcls = await ACLFactory.createNewAcl(webId, inboxPath);
   const permissions = await inboxAcls.getPermissions();
   const inboxPublicPermissions = permissions.filter(perm => perm.agents === null);
 
@@ -65,7 +65,7 @@ export const checkOrSetInboxAppendPermissions = async (inboxPath, webId) => {
           modes: [AccessControlList.MODES.APPEND]
         }
       ];
-      const ACLFile = new AccessControlList(webId, inboxPath);
+      const ACLFile = await ACLFactory.createNewAcl(webId, inboxPath);
       await ACLFile.createACL(permissions);
     } catch (error) {
       // TODO: Better error handling here

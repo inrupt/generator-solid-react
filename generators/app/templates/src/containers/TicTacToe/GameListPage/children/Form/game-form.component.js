@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { namedNode } from '@rdfjs/data-model';
-import { AccessControlList, NotificationTypes } from '@inrupt/solid-react-components';
+import { AccessControlList, ACLFactory, NotificationTypes } from '@inrupt/solid-react-components';
 import tictactoeShape from '@contexts/tictactoe-shape.json';
 import {
   ldflexHelper,
@@ -159,7 +159,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
             modes: [AccessControlList.MODES.READ, AccessControlList.MODES.WRITE]
           }
         ];
-        const ACLFile = new AccessControlList(webId, documentPath);
+        const ACLFile = await ACLFactory.createNewAcl(webId, documentPath);
         await ACLFile.createACL(permissions);
         successToaster(t('game.createGameSuccess'), t('notifications.success'));
       }
