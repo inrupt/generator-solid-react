@@ -147,4 +147,11 @@ export const FormRenderContainer = styled.div`
   border: 1px solid #dae0e6;
   min-height: 40px;
   padding: 20px;
+
+  .inrupt-sdk-form {
+    div > div > div {
+      display: inline-block;
+      width: 95%;
+    }
+  }
 `;

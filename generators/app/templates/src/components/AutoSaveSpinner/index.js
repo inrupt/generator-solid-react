@@ -13,11 +13,11 @@ export const AutoSaveSpinner = (props: Props) => {
   return (
     <AutoSaveSpinnerWrapper>
       {running && (
-        <div>
+        <span>
           <FontAwesomeIcon icon="spinner" spin />
-        </div>
+        </span>
       )}
-      <div>{errored && <FontAwesomeIcon icon="exclamation-triangle" />}</div>
+      <span>{errored && <FontAwesomeIcon icon="exclamation-triangle" />}</span>
     </AutoSaveSpinnerWrapper>
   );
 };
