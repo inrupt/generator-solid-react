@@ -73,6 +73,11 @@ export const FormRenderContainer = styled.div`
     padding: 20px;
     width: 100%;
 
+    div > div > div {
+      display: inline-block;
+      width: 95%;
+    }
+
     button {
       display: block;
       width: 100%;
@@ -81,6 +86,8 @@ export const FormRenderContainer = styled.div`
 
   .input-wrap {
     margin: 0;
+    display: inline-block;
+    width: 95%;
   }
 
   input {
