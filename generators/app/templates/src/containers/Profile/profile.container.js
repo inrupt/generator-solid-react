@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormModel } from '@inrupt/solid-react-components';
-import { successToaster, errorToaster } from '@utils';
+import { successToaster, errorToaster, languageHelper } from '@utils';
 import { Loader } from '@util-components';
 import {
   Header,
@@ -16,6 +16,7 @@ import { Image } from './components';
 import { AutoSaveSpinner } from '@components';
 
 const defaultProfilePhoto = '/img/icon/empty-profile.svg';
+const language = languageHelper.getLanguageCode();
 
 /**
  * We are using ldflex to fetch profile data from a solid pod.
@@ -102,7 +103,8 @@ const Profile = ({ webId }: Props) => {
                       childGroup: 'inrupt-form-group'
                     },
                     autosave: true,
-                    autosaveIndicator: AutoSaveSpinner
+                    autosaveIndicator: AutoSaveSpinner,
+                    language
                   }
                 }}
                 liveUpdate
