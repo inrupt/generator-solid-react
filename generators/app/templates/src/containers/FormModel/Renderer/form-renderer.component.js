@@ -6,7 +6,7 @@ import { Select, Loader } from '@util-components';
 import ldflex from '@solid/query-ldflex';
 
 import { RendererTypesList, ConverterTypes } from '@constants';
-import { successToaster, errorToaster } from '@utils';
+import { successToaster, errorToaster, languageHelper } from '@utils';
 import {
   FormModelContainer,
   FormWrapper,
@@ -42,6 +42,7 @@ const FormModelRenderer = () => {
     item => t(`formLanguage.${item}`) === t('formLanguage.formModel')
   );
   const optionsList = filteredOptions.map(item => t(`formLanguage.${item}`));
+  const language = languageHelper.getLanguageCode();
 
   /**
    * Helper function to detect if choice is ShEx
@@ -129,12 +130,13 @@ const FormModelRenderer = () => {
     // Set boolean to disable or enable the layout/extension textbox
     setHasLayoutFile(hasLayout(newValue));
     setSelectedInput(newValue);
-    console.log(selectedInput);
   });
 
   const onError = e => {
-    console.log(e);
-    if (e.message.toString().indexOf('Validation failed') < 0) {
+    if (
+      e.message.toString().indexOf('Validation failed') < 0 ||
+      e.message.toString().indexOf('Error rendering Form Model') < 0
+    ) {
       errorToaster(t('formLanguage.renderer.formNotLoaded'), t('notifications.error'), {
         label: t('errorFormRender.link.label'),
         href: t('errorFormRender.link.href')
@@ -248,7 +250,8 @@ const FormModelRenderer = () => {
                     },
                     autosaveIndicator: AutoSaveSpinner,
                     autosave: true,
-                    viewer: isViewMode
+                    viewer: isViewMode,
+                    language
                   }
                 }}
               />
