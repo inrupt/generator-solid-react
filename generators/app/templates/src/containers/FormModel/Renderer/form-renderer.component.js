@@ -27,7 +27,6 @@ import { AutoSaveSpinner } from '@components';
  */
 const FormModelRenderer = () => {
   const { t } = useTranslation();
-  const [selectedInput, setSelectedInput] = useState(t('formLanguage.formModel'));
   const [layoutUrl, setLayoutUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
@@ -129,7 +128,6 @@ const FormModelRenderer = () => {
 
     // Set boolean to disable or enable the layout/extension textbox
     setHasLayoutFile(hasLayout(newValue));
-    setSelectedInput(newValue);
   });
 
   const onError = e => {
