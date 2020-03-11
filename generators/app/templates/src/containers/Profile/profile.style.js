@@ -60,37 +60,3 @@ export const WebId = styled.div`
 export const AutoSaveNotification = styled.section`
   margin-bottom: 0px !important;
 `;
-
-export const FormRenderContainer = styled.div`
-  border: 1px solid #dae0e6;
-  min-height: 40px;
-  padding: 20px;
-
-  .inrupt-form-group {
-    border: 1px solid #c0c0c0;
-    background-color: #f9f9f9;
-    margin: 15px 0;
-    padding: 20px;
-    width: 100%;
-
-    div > div > div {
-      display: inline-block;
-      width: 95%;
-    }
-
-    button {
-      display: block;
-      width: 100%;
-    }
-  }
-
-  .input-wrap {
-    margin: 0;
-    display: inline-block;
-    width: 95%;
-  }
-
-  input {
-    margin-left: 0;
-  }
-`;
