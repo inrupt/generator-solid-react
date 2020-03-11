@@ -40,7 +40,7 @@ export const Header = styled.div`
 `;
 
 export const WebId = styled.div`
-  padding: 20px 40px 0px 40px;
+  padding: 30px 40px 0px 40px;
   position: relative;
   &:after {
     background-color: #d8d8d8;
@@ -54,6 +54,8 @@ export const WebId = styled.div`
     display: inline-block;
     word-break: break-all;
     margin-left: 10px;
+    text-decoration: none;
+    color: rgb(102, 102, 102);
   }
 `;
 
