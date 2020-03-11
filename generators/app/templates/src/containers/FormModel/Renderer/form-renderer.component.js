@@ -244,7 +244,11 @@ const FormModelRenderer = () => {
                       inputCheckbox: 'sdk-checkbox checkbox',
                       form: 'inrupt-sdk-form',
                       childGroup: 'inrupt-form-group',
-                      singleLine: 'input-wrap'
+                      singleLine: 'input-wrap',
+                      integerField: 'input-wrap',
+                      decimalInput: 'input-wrap',
+                      floatField: 'input-wrap',
+                      checkboxField: 'input-wrap'
                     },
                     autosaveIndicator: AutoSaveSpinner,
                     autosave: true,
