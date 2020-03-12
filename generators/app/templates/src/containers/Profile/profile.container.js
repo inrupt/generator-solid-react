@@ -8,10 +8,10 @@ import {
   Header,
   ProfileContainer,
   ProfileWrapper,
-  FormRenderContainer,
   AutoSaveNotification,
   WebId
 } from './profile.style';
+import { FormWrapper } from '../FormModel/form-model.style';
 import { Image } from './components';
 import { AutoSaveSpinner } from '@components';
 
@@ -70,13 +70,13 @@ const Profile = ({ webId }: Props) => {
               </div>
             </AutoSaveNotification>
 
-            <FormRenderContainer>
-              <WebId>
-                <FontAwesomeIcon icon="id-card" />
-                <a href={webId} target="_blank" rel="noopener noreferrer">
-                  {webId}
-                </a>
-              </WebId>
+            <WebId>
+              <FontAwesomeIcon icon="id-card" />
+              <a href={webId} target="_blank" rel="noopener noreferrer">
+                {webId}
+              </a>
+            </WebId>
+            <FormWrapper>
               <FormModel
                 {...{
                   modelSource: 'https://solidsdk.inrupt.net/sdk/userprofile.ttl#formRoot',
@@ -109,7 +109,7 @@ const Profile = ({ webId }: Props) => {
                 }}
                 liveUpdate
               />
-            </FormRenderContainer>
+            </FormWrapper>
           </Fragment>
         )}
         {isLoading && <Loader absolute />}
