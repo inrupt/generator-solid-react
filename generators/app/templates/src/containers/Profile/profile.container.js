@@ -100,7 +100,9 @@ const Profile = ({ webId }: Props) => {
                       inputText: 'input-wrap',
                       inputCheckbox: 'sdk-checkbox checkbox',
                       form: 'inrupt-sdk-form',
-                      childGroup: 'inrupt-form-group'
+                      childGroup: 'inrupt-form-group',
+                      groupField: 'group-wrapper',
+                      multipleField: 'multiple-wrapper'
                     },
                     autosave: true,
                     autosaveIndicator: AutoSaveSpinner,
