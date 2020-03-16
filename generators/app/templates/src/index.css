@@ -54,11 +54,14 @@ input[type='number'] {
 /**
 Temporary fix to overwrite and display the default style of the checkbox
 to prevent issues with the custom component and react/fontawesome missing icons
+The important tags are to override style coming from elsewhere
  */
 input[type='checkbox'] {
   appearance: checkbox !important;
   -webkit-appearance: checkbox !important;
   -moz-appearance: checkbox !important;
+  width: auto !important;
+  margin-left: 4px !important;
 }
 input[type='checkbox']::before {
   content: none !important;
