@@ -240,15 +240,16 @@ const FormModelRenderer = () => {
                   onDelete: response => onDelete(response),
                   options: {
                     theme: {
+                      form: 'inrupt-sdk-form',
                       inputText: 'input-wrap',
                       inputCheckbox: 'sdk-checkbox checkbox',
-                      form: 'inrupt-sdk-form',
-                      childGroup: 'inrupt-form-group',
                       singleLine: 'input-wrap',
                       integerField: 'input-wrap',
                       decimalInput: 'input-wrap',
                       floatField: 'input-wrap',
-                      checkboxField: 'input-wrap'
+                      checkboxField: 'input-wrap',
+                      groupField: 'group-wrapper',
+                      multipleField: 'multiple-wrapper'
                     },
                     autosaveIndicator: AutoSaveSpinner,
                     autosave: true,
