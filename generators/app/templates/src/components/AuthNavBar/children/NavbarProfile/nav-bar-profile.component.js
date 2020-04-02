@@ -88,17 +88,17 @@ class NavBarProfile extends Component<Props> {
     try {
       await auth.logout();
 
-      let logoutRedirect = "/login"
+      let logoutRedirect = '/login';
       // It seems that solid-auth-client has an OIDC-compliance issue in the logout.
       // This bevahiour is accepted by the NSS IdP, but not by other OIDC-compliant IdPs.
       // This issue should be fixed in the upstream library, but in the meantime
       // the following is an acceptable **temporary** compatibility fix.
-      const authConfig = JSON.parse(localStorage.getItem('solid-auth-client'))
+      const authConfig = JSON.parse(localStorage.getItem('solid-auth-client'));
       // It happens that post_logout_redirect_uris is not defined by NSS IdP,
       // which enables discriminating when the issue is going to be encountered.
-      if(authConfig.rpConfig.registration.post_logout_redirect_uris) {
+      if (authConfig.rpConfig.registration.post_logout_redirect_uris) {
         // The user MUST be redirected to a page where they confirm they want to logout.
-        logoutRedirect = authConfig.rpConfig.provider.configuration.end_session_endpoint
+        logoutRedirect = authConfig.rpConfig.provider.configuration.end_session_endpoint;
       }
 
       // Remove localStorage
