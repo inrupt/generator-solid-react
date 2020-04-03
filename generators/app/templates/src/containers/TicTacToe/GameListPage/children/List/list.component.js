@@ -214,31 +214,44 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
           gameUrls.push(value);
         }
 
+        if (gameUrls.length === 0) {
+          return gameUrls;
+        }
+
         // Run the list of games fetched from the document through the shex validator helper function and store the valid items in gameList
         const gameShapeUrl = 'https://solidsdk.inrupt.net/sdk/tictactoe.shex';
         gameList = await shexUtil.validateList(gameUrls, gameShapeUrl);
 
         let games = [];
-        for await (const item of gameList) {
-          // the url at this point the document is being cached by LDFlex, we need to manually clear it
-          ldflex.clearCache(item);
-          const game = await ldflexHelper.fetchLdflexDocument(item);
-          let gameData = { url: item };
-          if (game) {
-            for await (const field of tictactoeShape.shape) {
-              let values = [];
-              for await (const val of game[getPredicate(field)]) {
-                values = [...values, val.value];
-              }
-              const value = values.length > 1 ? values : values[0];
-              gameData = { ...gameData, [field.predicate]: value };
-            }
-            const opponent = await getPlayerInfo(gameData.opponent);
-            const actor = await getPlayerInfo(gameData.actor);
-            gameData = { ...gameData, opponent, actor, deleted: false, documentUrl: url };
-          } else {
-            gameData = { ...gameData, status: GameStatus.DELETED, deleted: true, documentUrl: url };
+
+        // Looping over all valid game data
+        for await (const game of gameList) {
+          let gameData = {};
+
+          // Looping over each predicate in the game shape
+          for (const field of tictactoeShape.shape) {
+            const predicate = getPredicate(field);
+
+            // Find the quad that matches this field, and get the value
+            const fieldQuad = game.find(obj => obj.predicate.value === predicate);
+            const fieldValue = fieldQuad.object.value;
+
+            gameData = {
+              ...gameData,
+              url: fieldQuad.subject.value,
+              [field.predicate]: fieldValue,
+              deleted: false,
+              documentUrl: url
+            };
           }
+
+          // Only the IRI of the opponent and player are stored in the shape
+          // This fetches the name and image, and stores it as an object
+          const opponent = await getPlayerInfo(gameData.opponent);
+          const actor = await getPlayerInfo(gameData.actor);
+
+          gameData = { ...gameData, actor, opponent };
+
           games = [...games, gameData];
         }
         return games;

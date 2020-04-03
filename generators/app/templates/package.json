@@ -8,7 +8,7 @@
     "@inrupt/solid-sdk-forms": "0.1.1-dev.5",
     "@inrupt/solid-style-guide": "^0.1.34",
     "@rdfjs/data-model": "^1.1.1",
-    "@shexjs/core": "^1.0.0-alpha.4",
+    "@shexjs/core": "^1.0.0-alpha.9",
     "@solid/query-ldflex": "2.6.0",
     "@svgr/webpack": "2.4.1",
     "bfj": "6.1.1",
