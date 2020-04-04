@@ -53,6 +53,8 @@ We have included integrations with essential libraries, as well as pages, routes
 The generated application also incorporates our [Solid Style Guide by inrupt](https://design.inrupt.com) (source available [here](https://github.com/inrupt/solid-style-guide)), featuring a nice integration with [Styled Components](https://www.styled-components.com).
 
 ## The Solid React Application
+_Note:_ To access all of the functionality within the full Solid React [Generator application](https://generator.inrupt.com), you must grant the Generator Read, Write, Append, and Control permissions. This is required to allow the Generator to create the required Game files within your Pod, set access permissions correctly, and to send Notifications. 
+[Learn More...](https://solidsdk.inrupt.net/public/general/en/app-permissions.html)
 
 Once you've [run the generator](#installation-and-usage) and created your starter application, you'll have a site with some basic functionality and style guide integration. As the SDK is continually evolving, take a look at the [Release Timeline](https://github.com/inrupt/solid-react-sdk/tree/master#release-timeline) for what has been implemented and what is currently planned.
 
@@ -147,7 +149,7 @@ When building new apps, it's crucial to be able to create and manage access to f
 
 However, many applications will also need to create files or containers and grant access to other people. To that end, the SDK includes examples of creating files and granting access to other users.
 
-For more information, please see the solid-react-components.
+For more information, please see the (solid-react-components)[https://github.com/inrupt/solid-react-components].
 
 ## Notifications
 A key part of modern web applications is notifications. Alongside the solid-react-components library, the generated application now has built-in real time notifications. It reads from both the global inbox (if there is one) and the application-specific inbox that the app generates using the components library.
