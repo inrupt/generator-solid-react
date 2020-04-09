@@ -40,6 +40,8 @@ const fileList = [
     { src: 'src/services/**', dest: 'src/services' },
     // UTILS
     { src: 'src/utils/**', dest: 'src/utils' },
+    // VOCABS
+    { src: 'src/vocabs/**', dest: 'src/vocabs' },
     // DEFAULT CONTAINERS
     { src: 'src/containers/Login/**', dest: 'src/containers/Login' },
     {
