@@ -5,6 +5,7 @@ import * as ldflexHelper from './ldflex-helper';
 import * as notification from './notification';
 import * as storageHelper from './storage';
 import * as permissionHelper from './permissions';
+import * as languageHelper from './language';
 
 function* entries(obj) {
   for (const key of Object.keys(obj)) {
@@ -21,5 +22,6 @@ export {
   successToaster,
   errorToaster,
   notification,
-  permissionHelper
+  permissionHelper,
+  languageHelper
 };

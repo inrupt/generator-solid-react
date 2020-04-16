@@ -49,7 +49,7 @@ export const PanelBody = styled.div`
     color: #449df5;
     font-family: Raleway;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.75px;
     line-height: 14px;
     text-align: center;

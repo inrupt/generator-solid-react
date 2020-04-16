@@ -42,7 +42,8 @@ ul li {
   margin: 0;
 }
 
-input[type='text'] {
+input[type='text'],
+input[type='number'] {
   box-sizing: border-box;
   border: 1px solid hsl(0, 0%, 80%);
   border-radius: 4px;
@@ -53,14 +54,16 @@ input[type='text'] {
 /**
 Temporary fix to overwrite and display the default style of the checkbox
 to prevent issues with the custom component and react/fontawesome missing icons
+The important tags are to override style coming from elsewhere
  */
-input[type="checkbox"] {
+input[type='checkbox'] {
   appearance: checkbox !important;
   -webkit-appearance: checkbox !important;
   -moz-appearance: checkbox !important;
-  margin: 0 0 0 16px !important
+  width: auto !important;
+  margin-left: 4px !important;
 }
-input[type="checkbox"]::before {
+input[type='checkbox']::before {
   content: none !important;
 }
 /**

@@ -2,20 +2,21 @@ import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormModel } from '@inrupt/solid-react-components';
-import { successToaster, errorToaster } from '@utils';
+import { successToaster, errorToaster, languageHelper } from '@utils';
 import { Loader } from '@util-components';
 import {
   Header,
   ProfileContainer,
   ProfileWrapper,
-  FormRenderContainer,
   AutoSaveNotification,
   WebId
 } from './profile.style';
+import { FormWrapper } from '../FormModel/form-model.style';
 import { Image } from './components';
 import { AutoSaveSpinner } from '@components';
 
 const defaultProfilePhoto = '/img/icon/empty-profile.svg';
+const language = languageHelper.getLanguageCode();
 
 /**
  * We are using ldflex to fetch profile data from a solid pod.
@@ -69,20 +70,24 @@ const Profile = ({ webId }: Props) => {
               </div>
             </AutoSaveNotification>
 
-            <FormRenderContainer>
-              <WebId>
-                <FontAwesomeIcon icon="id-card" />
-                <a href={webId} target="_blank" rel="noopener noreferrer">
-                  {webId}
-                </a>
-              </WebId>
+            <WebId>
+              <FontAwesomeIcon icon="id-card" />
+              <a href={webId} target="_blank" rel="noopener noreferrer">
+                {webId}
+              </a>
+            </WebId>
+            <FormWrapper>
               <FormModel
                 {...{
-                  modelPath: 'https://solidsdk.inrupt.net/sdk/userprofile.ttl#formRoot',
-                  podPath: webId,
+                  modelSource: 'https://solidsdk.inrupt.net/sdk/userprofile.ttl#formRoot',
+                  dataSource: webId,
                   viewer: false,
-                  onInit: () => setIsLoading(true),
-                  onLoaded: () => setIsLoading(false),
+                  onInit: () => {
+                    setIsLoading(true);
+                  },
+                  onLoaded: () => {
+                    setIsLoading(false);
+                  },
                   onSuccess: () => {},
                   onSave: () => {},
                   onError: error => {
@@ -90,19 +95,23 @@ const Profile = ({ webId }: Props) => {
                   },
                   onAddNewField: response => onAddNewField(response),
                   onDelete: response => onDelete(response),
-                  settings: {
+                  options: {
                     theme: {
                       inputText: 'input-wrap',
                       inputCheckbox: 'sdk-checkbox checkbox',
                       form: 'inrupt-sdk-form',
-                      childGroup: 'inrupt-form-group'
+                      childGroup: 'inrupt-form-group',
+                      groupField: 'group-wrapper',
+                      multipleField: 'multiple-wrapper'
                     },
-                    savingComponent: AutoSaveSpinner
+                    autosave: true,
+                    autosaveIndicator: AutoSaveSpinner,
+                    language
                   }
                 }}
-                autoSave
+                liveUpdate
               />
-            </FormRenderContainer>
+            </FormWrapper>
           </Fragment>
         )}
         {isLoading && <Loader absolute />}

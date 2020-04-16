@@ -16,6 +16,13 @@ export const ProfileContainer = styled.div`
   margin: 0 20px;
   width: 100%;
   flex: 1 0 auto;
+
+  .inrupt-sdk-form {
+    div > div > div {
+      display: inline-block;
+      width: 100%;
+    }
+  }
 `;
 
 export const Header = styled.div`
@@ -40,7 +47,7 @@ export const Header = styled.div`
 `;
 
 export const WebId = styled.div`
-  padding: 20px 40px 0px 40px;
+  padding: 30px 40px 0px 40px;
   position: relative;
   &:after {
     background-color: #d8d8d8;
@@ -54,29 +61,11 @@ export const WebId = styled.div`
     display: inline-block;
     word-break: break-all;
     margin-left: 10px;
+    text-decoration: none;
+    color: rgb(102, 102, 102);
   }
 `;
 
 export const AutoSaveNotification = styled.section`
   margin-bottom: 0px !important;
-`;
-
-export const FormRenderContainer = styled.div`
-  border: 1px solid #dae0e6;
-  min-height: 40px;
-  padding: 5px;
-
-  .inrupt-form-group {
-    border: 1px solid #c0c0c0;
-    background-color: #f9f9f9;
-    margin: 15px 0;
-  }
-
-  .input-wrap {
-    margin: 0;
-  }
-
-  input {
-    margin-left: 0;
-  }
 `;

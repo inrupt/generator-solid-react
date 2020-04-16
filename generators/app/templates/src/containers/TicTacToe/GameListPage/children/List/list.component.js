@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useLiveUpdate, NotificationTypes } from '@inrupt/solid-react-components';
+import { useLiveUpdate, NotificationTypes, shexUtil } from '@inrupt/solid-react-components';
 import { useTranslation } from 'react-i18next';
 import ldflex from '@solid/query-ldflex';
 import { namedNode } from '@rdfjs/data-model';
@@ -12,6 +12,7 @@ import {
   notification as helperNotification
 } from '@utils';
 import { GameStatusList, GameStatus, KnownInboxes } from '@constants';
+import { LDP } from '@vocabs';
 import { Wrapper, ListWrapper, GameListContainers, GameListHeader } from './list.style';
 import GameItem from './children';
 
@@ -187,39 +188,70 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
   const getGames = useCallback(
     async url => {
       try {
+        let gameItemPredicate;
         const document = await ldflexHelper.fetchLdflexDocument(url);
         let gameList = [];
         if (!document) return gameList;
-        for await (const item of document['schema:hasPart']) {
-          const { value } = item;
-          if (
-            value.includes('.ttl') &&
-            !value.includes('data.ttl') &&
-            !value.includes('settings.ttl')
-          )
-            gameList = [...gameList, value];
+
+        const type = await document['rdf:type'];
+        const typeValue = type ? type.value : undefined;
+
+        /**
+         * If the document is a container, then we want to loop over the ldp:contains property of the container
+         * If it is not a container, we are using schema:hasPart so we don't confuse it with a container
+         * schema:hasPart is used for externally linked games in other people's pods
+         */
+        if (typeValue === LDP.BASICCONTAINER) {
+          gameItemPredicate = 'ldp:contains';
+        } else {
+          gameItemPredicate = 'schema:hasPart';
         }
+
+        // Collect the items into an array so we can validate the list of IRIs
+        const gameUrls = [];
+        for await (const item of document[gameItemPredicate]) {
+          const { value } = item;
+          gameUrls.push(value);
+        }
+
+        if (gameUrls.length === 0) {
+          return gameUrls;
+        }
+
+        // Run the list of games fetched from the document through the shex validator helper function and store the valid items in gameList
+        const gameShapeUrl = 'https://solidsdk.inrupt.net/sdk/tictactoe.shex';
+        gameList = await shexUtil.validateList(gameUrls, gameShapeUrl);
+
         let games = [];
-        for await (const item of gameList) {
-          // the url at this point the document is being cached by LDFlex, we need to manually clear it
-          ldflex.clearCache(item);
-          const game = await ldflexHelper.fetchLdflexDocument(item);
-          let gameData = { url: item };
-          if (game) {
-            for await (const field of tictactoeShape.shape) {
-              let values = [];
-              for await (const val of game[getPredicate(field)]) {
-                values = [...values, val.value];
-              }
-              const value = values.length > 1 ? values : values[0];
-              gameData = { ...gameData, [field.predicate]: value };
-            }
-            const opponent = await getPlayerInfo(gameData.opponent);
-            const actor = await getPlayerInfo(gameData.actor);
-            gameData = { ...gameData, opponent, actor, deleted: false, documentUrl: url };
-          } else {
-            gameData = { ...gameData, status: GameStatus.DELETED, deleted: true, documentUrl: url };
+
+        // Looping over all valid game data
+        for await (const game of gameList) {
+          let gameData = {};
+
+          // Looping over each predicate in the game shape
+          for (const field of tictactoeShape.shape) {
+            const predicate = getPredicate(field);
+
+            // Find the quad that matches this field, and get the value
+            const fieldQuad = game.find(obj => obj.predicate.value === predicate);
+            const fieldValue = fieldQuad.object.value;
+
+            gameData = {
+              ...gameData,
+              url: fieldQuad.subject.value,
+              [field.predicate]: fieldValue,
+              deleted: false,
+              documentUrl: url
+            };
           }
+
+          // Only the IRI of the opponent and player are stored in the shape
+          // This fetches the name and image, and stores it as an object
+          const opponent = await getPlayerInfo(gameData.opponent);
+          const actor = await getPlayerInfo(gameData.actor);
+
+          gameData = { ...gameData, actor, opponent };
+
           games = [...games, gameData];
         }
         return games;

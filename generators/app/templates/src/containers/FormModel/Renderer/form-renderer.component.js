@@ -6,7 +6,7 @@ import { Select, Loader } from '@util-components';
 import ldflex from '@solid/query-ldflex';
 
 import { RendererTypesList, ConverterTypes } from '@constants';
-import { successToaster, errorToaster } from '@utils';
+import { successToaster, errorToaster, languageHelper } from '@utils';
 import {
   FormModelContainer,
   FormWrapper,
@@ -27,7 +27,6 @@ import { AutoSaveSpinner } from '@components';
  */
 const FormModelRenderer = () => {
   const { t } = useTranslation();
-  const [selectedInput, setSelectedInput] = useState(t('formLanguage.formModel'));
   const [layoutUrl, setLayoutUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
@@ -42,6 +41,7 @@ const FormModelRenderer = () => {
     item => t(`formLanguage.${item}`) === t('formLanguage.formModel')
   );
   const optionsList = filteredOptions.map(item => t(`formLanguage.${item}`));
+  const language = languageHelper.getLanguageCode();
 
   /**
    * Helper function to detect if choice is ShEx
@@ -128,12 +128,13 @@ const FormModelRenderer = () => {
 
     // Set boolean to disable or enable the layout/extension textbox
     setHasLayoutFile(hasLayout(newValue));
-    setSelectedInput(newValue);
-    console.log(selectedInput);
   });
 
   const onError = e => {
-    if (e.message.toString().indexOf('Validation failed') < 0) {
+    if (
+      e.message.toString().indexOf('Validation failed') < 0 ||
+      e.message.toString().indexOf('Error rendering Form Model') < 0
+    ) {
       errorToaster(t('formLanguage.renderer.formNotLoaded'), t('notifications.error'), {
         label: t('errorFormRender.link.label'),
         href: t('errorFormRender.link.href')
@@ -226,9 +227,8 @@ const FormModelRenderer = () => {
             <div>
               <FormModel
                 {...{
-                  modelPath: submitted.schemaUrl,
-                  podPath: (submitted && submitted.source) || '',
-                  viewer: isViewMode,
+                  modelSource: submitted.schemaUrl,
+                  dataSource: (submitted && submitted.source) || '',
                   onInit: () => setIsLoading(true),
                   onLoaded: () => setIsLoading(false),
                   onSuccess: () => {},
@@ -238,17 +238,25 @@ const FormModelRenderer = () => {
                   },
                   onAddNewField: response => onAddNewField(response),
                   onDelete: response => onDelete(response),
-                  settings: {
+                  options: {
                     theme: {
+                      form: 'inrupt-sdk-form',
                       inputText: 'input-wrap',
                       inputCheckbox: 'sdk-checkbox checkbox',
-                      form: 'inrupt-sdk-form',
-                      childGroup: 'inrupt-form-group'
+                      singleLine: 'input-wrap',
+                      integerField: 'input-wrap',
+                      decimalInput: 'input-wrap',
+                      floatField: 'input-wrap',
+                      checkboxField: 'input-wrap',
+                      groupField: 'group-wrapper',
+                      multipleField: 'multiple-wrapper'
                     },
-                    savingComponent: AutoSaveSpinner
+                    autosaveIndicator: AutoSaveSpinner,
+                    autosave: true,
+                    viewer: isViewMode,
+                    language
                   }
                 }}
-                autoSave
               />
             </div>
           )}

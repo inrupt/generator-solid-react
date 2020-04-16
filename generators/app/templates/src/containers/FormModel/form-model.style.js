@@ -24,14 +24,45 @@ export const FormWrapper = styled.div`
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
   padding: 20px;
 
-  .inrupt-form-group {
+  .inrupt-sdk-form {
+    margin: 10px;
+
+    h3 {
+      margin: 14px 0px;
+    }
+
+    // This is to turn off the border of the form. Since groups have borders, and the outer form is considered a group, we want
+    // to remove the border in this special case of the group being a direct child of the form class
+    & > .group-wrapper {
+      border: none;
+    }
+  }
+
+  .multiple-wrapper {
     border: 1px solid #c0c0c0;
-    background-color: #f9f9f9;
     margin: 15px 0;
+    padding: 12px;
+
+    button {
+      display: block;
+      width: 100%;
+    }
   }
 
   .input-wrap {
     margin: 0;
+
+    div {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+
+  // Add border and padding to group components, for visual separation
+  .group-wrapper {
+    border: 1px solid #c0c0c0;
+    padding: 12px;
+    margin: 12px 0;
   }
 
   input {
@@ -127,5 +158,12 @@ export const ConverterInput = styled.div`
 export const FormRenderContainer = styled.div`
   border: 1px solid #dae0e6;
   min-height: 40px;
-  padding: 5px;
+  padding: 20px;
+
+  .inrupt-sdk-form {
+    div > div > div {
+      display: inline-block;
+      width: 100%;
+    }
+  }
 `;
