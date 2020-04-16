@@ -16,6 +16,13 @@ export const ProfileContainer = styled.div`
   margin: 0 20px;
   width: 100%;
   flex: 1 0 auto;
+
+  .inrupt-sdk-form {
+    div > div > div {
+      display: inline-block;
+      width: 100%;
+    }
+  }
 `;
 
 export const Header = styled.div`

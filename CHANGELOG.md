@@ -1,5 +1,27 @@
 # Solid React Application Generator
 
+## 0.7.1 (April 16, 2020)
+
+#### Solid React Application Base
+
+##### Added
+
+##### Updated
+- Game list now validates that the items it finds are Tic Tac Toe games before displaying them
+- Profile page and Form Model renderer page use the new Form Model component structure
+- Profile page and Form Model renderer page now pass the i18n language key into the forms, for i18n support
+- Profile page and Form Model renderer page now use the same styled components, preventing CSS duplication
+- Multiple and Group styles updated to look cleaner
+- react-router-dom was upgraded to the latest version
+
+
+##### Fixed
+- Fixed a bug in the game list where only games created by the user showed up, not games they were invited to
+- Removed references to n3 and shacl libraries that were no longer used
+- Text Editor example now correctly pulls file storage location from the webId's storage predicate, preventing broken file loading in some circumstances
+- Jest's testMatch will now work cross-platform
+- Logout function was updated to support OIDC-compliant logout
+
 ## 0.7.0 (December 18, 2019)
 
 #### Solid React Application Base
