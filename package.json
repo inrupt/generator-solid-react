@@ -54,7 +54,7 @@
     "lint-staged": "^8.1.0",
     "prettier": "^1.15.2",
     "yeoman-assert": "^3.1.0",
-    "yeoman-test": "^1.7.0"
+    "yeoman-test": "^2.4.1"
   },
   "engines": {
     "npm": ">= 4.0.0"
