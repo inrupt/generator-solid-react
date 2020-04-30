@@ -50,7 +50,7 @@
     "eslint-config-xo": "^0.25.0",
     "eslint-plugin-prettier": "^3.0.0",
     "husky": "^1.2.0",
-    "jest": "^24.8.0",
+    "jest": "^25.5.2",
     "lint-staged": "^8.1.0",
     "prettier": "^1.15.2",
     "yeoman-assert": "^3.1.0",
