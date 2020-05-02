@@ -1,4 +1,4 @@
-# Solid React Application Generator
+# Solid React Application Generator 
 Based on Facebook's <a href="https://github.com/facebookincubator/create-react-app" target="_blank">Create React App</a>.
 
 Application Generator for [Solid](https://solid.inrupt.com) React applications. Part of the [Solid React SDK by inrupt](https://github.com/inrupt/solid-react-sdk).
