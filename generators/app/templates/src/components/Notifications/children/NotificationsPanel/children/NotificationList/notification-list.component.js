@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { INRUPT_NOTIFICATION } from "@inrupt/lit-generated-vocab-inrupt-service";
 import NotificationItem from "../NotificationItem";
 import { List, NoNotifications } from "./notification-list.style";
 
@@ -34,7 +35,8 @@ const NotificationList = ({
       </List>
     ) : (
       <NoNotifications className="empty-list">
-        No notifications to show
+        {/* No notifications to show */}
+        {INRUPT_NOTIFICATION.msgNoNotification.message}
       </NoNotifications>
     )}
   </Fragment>
