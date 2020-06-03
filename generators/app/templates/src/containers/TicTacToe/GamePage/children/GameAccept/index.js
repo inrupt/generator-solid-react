@@ -1,3 +1,3 @@
-import GameAccept from './game-accept.component';
+import GameAccept from "./game-accept.component";
 
 export default GameAccept;

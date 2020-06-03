@@ -1,6 +1,6 @@
-import React from 'react';
-import { LiveUpdate } from '@inrupt/solid-react-components';
-import { Notifications } from './children';
+import React from "react";
+import { LiveUpdate } from "@inrupt/solid-react-components";
+import { Notifications } from "./children";
 
 type Props = {
   webId: string,

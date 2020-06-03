@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import moment from 'moment';
-import { namedNode } from '@rdfjs/data-model';
-import { AccessControlList, ACLFactory, NotificationTypes } from '@inrupt/solid-react-components';
-import tictactoeShape from '@contexts/tictactoe-shape.json';
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import moment from "moment";
+import { namedNode } from "@rdfjs/data-model";
+import { AS } from "@inrupt/lit-generated-vocab-common";
+import { AccessControlList, ACLFactory } from "@inrupt/solid-react-components";
+import tictactoeShape from "@contexts/tictactoe-shape.json";
 import {
   ldflexHelper,
   errorToaster,
   successToaster,
   storageHelper,
   notification as helperNotification
-} from '@utils';
-import { GameFormWrapper, BtnDiv } from './game-form.styles';
+} from "@utils";
+import { GameFormWrapper, BtnDiv } from "./game-form.styles";
 
 type Props = {
   webId: String,
@@ -20,14 +21,19 @@ type Props = {
   setOpponent: () => void
 };
 
-const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => {
+const GameForm = ({
+  webId,
+  sendNotification,
+  opponent,
+  setOpponent
+}: Props) => {
   const uniqueIdentifier = Date.now();
   const [documentUri, setDocumentUri] = useState(`${uniqueIdentifier}.ttl`);
   const { t } = useTranslation();
 
   const reset = () => {
-    setDocumentUri('');
-    setOpponent('');
+    setDocumentUri("");
+    setOpponent("");
   };
 
   /**
@@ -36,12 +42,12 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
    * @returns {Object} Game data
    */
   const initialGame = opponent => ({
-    status: 'Invite Sent',
+    status: "Invite Sent",
     created: moment().format(),
     actor: namedNode(webId),
     opponent: namedNode(opponent),
-    initialState: 'X',
-    move: ''
+    initialState: "X",
+    move: ""
   });
 
   /**
@@ -56,26 +62,31 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
        */
       const appPath = await storageHelper.getAppStorage(opponent);
       const gameSettings = `${appPath}settings.ttl`;
-      const licenseUrl = 'https://creativecommons.org/licenses/by-sa/4.0/';
+      const licenseUrl = "https://creativecommons.org/licenses/by-sa/4.0/";
       /**
        * Find opponent inboxes from a document link
        */
       const inboxes = await helperNotification.findUserInboxes([
-        { path: opponent, name: 'Global' },
-        { path: gameSettings, name: 'Game' }
+        { path: opponent, name: "Global" },
+        { path: gameSettings, name: "Game" }
       ]);
       /**
        * If opponent has at least one inbox, create a game and send a notification
        * Otherwise, show an error message
        * */
       if (inboxes.length > 0) {
-        const newDocument = await ldflexHelper.createNonExistentDocument(documentUri);
+        const newDocument = await ldflexHelper.createNonExistentDocument(
+          documentUri
+        );
 
         /**
          * If game already exist show an error message
          */
         if (!newDocument) {
-          errorToaster(`${documentUri} ${t('game.alreadyExists')}`, t('notifications.error'));
+          errorToaster(
+            `${documentUri} ${t("game.alreadyExists")}`,
+            t("notifications.error")
+          );
           return null;
         }
 
@@ -87,27 +98,31 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
           const setupObj = initialGame(opponent);
 
           for await (const field of tictactoeShape.shape) {
-            const prefix = tictactoeShape['@context'][field.prefix];
+            const prefix = tictactoeShape["@context"][field.prefix];
             const predicate = `${prefix}${field.predicate}`;
             const obj = setupObj[field.predicate];
-            if (obj || obj === '') await document[predicate].add(obj);
+            if (obj || obj === "") await document[predicate].add(obj);
           }
           /**
            * Find the opponent's game-specific inbox. If it doesn't exist, get the global inbox instead
            * @to: Opponent inbox path
            */
-          const to = helperNotification.getDefaultInbox(inboxes, 'Game', 'Global');
+          const to = helperNotification.getDefaultInbox(
+            inboxes,
+            "Game",
+            "Global"
+          );
           const target = `${window.location.href}/${btoa(documentUri)}`;
           await sendNotification(
             {
-              title: 'Tictactoe invitation',
-              summary: 'has invited you to play Tic-Tac-Toe.',
+              title: "Tictactoe invitation",
+              summary: "has invited you to play Tic-Tac-Toe.",
               actor: webId,
               object: documentUri,
               target
             },
             to.path,
-            NotificationTypes.INVITE,
+            AS.Invite.value,
             licenseUrl
           );
 
@@ -115,18 +130,25 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
 
           return true;
         }
-        errorToaster(`${opponent} ${t('game.createFolder.message')}`, t('notifications.error'));
+        errorToaster(
+          `${opponent} ${t("game.createFolder.message")}`,
+          t("notifications.error")
+        );
         return null;
       }
 
-      errorToaster(`${opponent} ${t('noInboxOpponent.message')}`, t('notifications.error'), {
-        label: t('noInboxOpponent.link.label'),
-        href: t('noInboxOpponent.link.href')
-      });
+      errorToaster(
+        `${opponent} ${t("noInboxOpponent.message")}`,
+        t("notifications.error"),
+        {
+          label: t("noInboxOpponent.link.label"),
+          href: t("noInboxOpponent.link.href")
+        }
+      );
 
       return null;
     } catch (e) {
-      errorToaster(e.message, t('notifications.error'));
+      errorToaster(e.message, t("notifications.error"));
     }
   };
 
@@ -140,13 +162,13 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
       const appPath = await storageHelper.getAppStorage(webId);
       const documentPath = `${appPath}${documentUri}`;
 
-      if (!opponent || opponent === '') {
-        errorToaster(t('game.opponentMissing'), t('game.errorTitle'));
+      if (!opponent || opponent === "") {
+        errorToaster(t("game.opponentMissing"), t("game.errorTitle"));
         return;
       }
 
       if (webId === opponent) {
-        errorToaster(t('game.myself'), t('game.errorTitle'));
+        errorToaster(t("game.myself"), t("game.errorTitle"));
         return;
       }
 
@@ -161,22 +183,22 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         ];
         const ACLFile = await ACLFactory.createNewAcl(webId, documentPath);
         await ACLFile.createACL(permissions);
-        successToaster(t('game.createGameSuccess'), t('notifications.success'));
+        successToaster(t("game.createGameSuccess"), t("notifications.success"));
       }
     } catch (e) {
-      errorToaster(e.message, t('game.errorTitle'));
+      errorToaster(e.message, t("game.errorTitle"));
     }
   };
 
   return (
     <GameFormWrapper onSubmit={onSubmit} data-testid="game-form">
-      <h1>{t('game.title')}</h1>
+      <h1>{t("game.title")}</h1>
       <hr />
       <form>
-        <span>{t('game.createGamePrompt')}</span>
+        <span>{t("game.createGamePrompt")}</span>
         <div className="input-wrap">
           <label htmlFor="documentUriInput">
-            {t('game.idLabel')}
+            {t("game.idLabel")}
             <input
               id="documentUriInput"
               type="text"
@@ -188,7 +210,7 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         </div>
         <div className="input-wrap">
           <label htmlFor="opponentWebId">
-            {t('game.opponentWebIDLabel')}
+            {t("game.opponentWebIDLabel")}
             <input
               id="opponentWebId"
               type="text"
@@ -200,10 +222,10 @@ const GameForm = ({ webId, sendNotification, opponent, setOpponent }: Props) => 
         </div>
         <BtnDiv>
           <button type="submit" data-testid="form-submit">
-            {t('game.createGame')}
+            {t("game.createGame")}
           </button>
           <button type="button" onClick={reset}>
-            {t('game.resetGameForm')}
+            {t("game.resetGameForm")}
           </button>
         </BtnDiv>
       </form>

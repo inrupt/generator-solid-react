@@ -1,3 +1,3 @@
-import Labeled from './labeled.component';
+import Labeled from "./labeled.component";
 
 export default Labeled;

@@ -1,3 +1,3 @@
-import NotificationItem from './notification-item.component';
+import NotificationItem from "./notification-item.component";
 
 export default NotificationItem;

@@ -1,3 +1,3 @@
-import { WelcomeComponent } from './welcome.container';
+import { WelcomeComponent } from "./welcome.container";
 
 export default WelcomeComponent;

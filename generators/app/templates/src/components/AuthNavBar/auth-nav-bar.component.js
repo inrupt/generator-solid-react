@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { NavBar, Notification } from '@components';
-import { useTranslation } from 'react-i18next';
-import { NavBarContainer } from './children';
-import { LanguageDropdown } from '@util-components';
-import { ldflexHelper, errorToaster, storageHelper } from '@utils';
-import { NavigationItems } from '@constants';
+import React, { useState, useEffect, useCallback } from "react";
+import { NavBar, Notification } from "@components";
+import { useTranslation } from "react-i18next";
+import { NavBarContainer } from "./children";
+import { LanguageDropdown } from "@util-components";
+import { ldflexHelper, errorToaster, storageHelper } from "@utils";
+import { NavigationItems } from "@constants";
 
 type Props = {
   webId: string
@@ -13,7 +13,10 @@ type Props = {
 const AuthNavBar = React.memo((props: Props) => {
   const [inboxes, setInbox] = useState([]);
   const { t, i18n } = useTranslation();
-  const navigation = NavigationItems.map(item => ({ ...item, label: t(item.label) }));
+  const navigation = NavigationItems.map(item => ({
+    ...item,
+    label: t(item.label)
+  }));
 
   const { webId } = props;
   /**
@@ -30,14 +33,20 @@ const AuthNavBar = React.memo((props: Props) => {
       if (globalInbox) {
         inboxes = [
           ...inboxes,
-          { path: globalInbox, inboxName: t('navBar.notifications.global'), shape: 'default' }
+          {
+            path: globalInbox,
+            inboxName: t("navBar.notifications.global"),
+            shape: "default"
+          }
         ];
       }
       /**
        * Get user's game inbox path from pod.
        */
       const appStorage = await storageHelper.getAppStorage(webId);
-      const appInbox = await ldflexHelper.discoverInbox(`${appStorage}settings.ttl`);
+      const appInbox = await ldflexHelper.discoverInbox(
+        `${appStorage}settings.ttl`
+      );
 
       /**
        * create an inbox object to send over notification component
@@ -45,7 +54,11 @@ const AuthNavBar = React.memo((props: Props) => {
       if (appInbox) {
         inboxes = [
           ...inboxes,
-          { path: appInbox, inboxName: t('navBar.notifications.tictactoe'), shape: 'default' }
+          {
+            path: appInbox,
+            inboxName: t("navBar.notifications.tictactoe"),
+            shape: "default"
+          }
         ];
       }
       /**
@@ -53,16 +66,16 @@ const AuthNavBar = React.memo((props: Props) => {
        * know how fix it.
        */
       if (inboxes.length === 0)
-        errorToaster(t('noInboxUser.message'), 'Error', {
-          label: t('noInboxUser.link.label'),
-          href: t('noInboxUser.link.href')
+        errorToaster(t("noInboxUser.message"), "Error", {
+          label: t("noInboxUser.link.label"),
+          href: t("noInboxUser.link.href")
         });
       setInbox(inboxes);
     } catch (error) {
       /**
        * Show general errors
        */
-      errorToaster(error.message, t('navBar.notifications.fetchingError'));
+      errorToaster(error.message, t("navBar.notifications.fetchingError"));
     }
   }, [webId, inboxes]);
 
@@ -80,15 +93,17 @@ const AuthNavBar = React.memo((props: Props) => {
       toolbar={[
         {
           component: () => <LanguageDropdown {...{ t, i18n }} />,
-          id: 'language'
+          id: "language"
         },
         {
           component: () => <Notification {...{ webId, inbox: inboxes }} />,
-          id: 'notifications'
+          id: "notifications"
         },
         {
-          component: props => <NavBarContainer {...{ t, i18n, webId, history, ...props }} />,
-          id: 'profile'
+          component: props => (
+            <NavBarContainer {...{ t, i18n, webId, history, ...props }} />
+          ),
+          id: "profile"
         }
       ]}
     />

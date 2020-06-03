@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
 
-const Labeled = ({ label, children, component: Component = 'button', ...rest }) => {
+const Labeled = ({
+  label,
+  children,
+  component: Component = "button",
+  ...rest
+}) => {
   const [hover, setHover] = useState(false);
 
   const LComponent = styled(Component)`
@@ -17,9 +22,13 @@ const Labeled = ({ label, children, component: Component = 'button', ...rest }) 
   `;
 
   return (
-    <LComponent {...rest} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+    <LComponent
+      {...rest}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
       {children}
-      <span className="label">{hover && label ? label : ''}</span>
+      <span className="label">{hover && label ? label : ""}</span>
     </LComponent>
   );
 };

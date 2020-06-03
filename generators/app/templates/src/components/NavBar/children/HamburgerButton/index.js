@@ -1,3 +1,3 @@
-import HamburgerButton from './hamburger.component';
+import HamburgerButton from "./hamburger.component";
 
 export default HamburgerButton;

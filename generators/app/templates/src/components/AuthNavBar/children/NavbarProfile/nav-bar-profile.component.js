@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import { UpdateContext } from '@inrupt/solid-react-components';
-import { Dropdown } from '@util-components';
+import React, { Component } from "react";
+import styled from "styled-components";
+import { UpdateContext } from "@inrupt/solid-react-components";
+import { Dropdown } from "@util-components";
 
-import auth from 'solid-auth-client';
-import data from '@solid/query-ldflex';
-import { errorToaster } from '@utils';
-import { ProfileOptions } from '@constants/navigation';
+import auth from "solid-auth-client";
+import data from "@solid/query-ldflex";
+import { errorToaster } from "@utils";
+import { ProfileOptions } from "@constants/navigation";
 
 export const ImageContainer = styled.div`
   width: 42px;
@@ -14,8 +14,8 @@ export const ImageContainer = styled.div`
   border-radius: 50%;
   background-size: cover;
   overflow: hidden;
-  visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
-  display: ${({ show }) => (show ? 'block' : 'none')};
+  visibility: ${({ show }) => (show ? "visible" : "hidden")};
+  display: ${({ show }) => (show ? "block" : "none")};
 `;
 
 export const Img = styled.img`
@@ -47,7 +47,7 @@ let beforeContext;
 class NavBarProfile extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { image: '/img/icon/empty-profile.svg' };
+    this.state = { image: "/img/icon/empty-profile.svg" };
   }
 
   state = {
@@ -74,13 +74,15 @@ class NavBarProfile extends Component<Props> {
   }
 
   // eslint-disable-next-line react/destructuring-assignment
-  profileRedirect = () => this.props.history.push('/profile');
+  profileRedirect = () => this.props.history.push("/profile");
 
-  // eslint-disable-next-line react/destructuring-assignment
-  formModelRenderRedirect = () => this.props.history.push('/formModel/renderer');
+  formModelRenderRedirect = () =>
+    // eslint-disable-next-line react/destructuring-assignment
+    this.props.history.push("/formModel/renderer");
 
-  // eslint-disable-next-line react/destructuring-assignment
-  formModelConvertRedirect = () => this.props.history.push('/formModel/converter');
+  formModelConvertRedirect = () =>
+    // eslint-disable-next-line react/destructuring-assignment
+    this.props.history.push("/formModel/converter");
 
   onImageLoaded = async () => this.setState({ imageLoaded: true });
 
@@ -88,26 +90,27 @@ class NavBarProfile extends Component<Props> {
     try {
       await auth.logout();
 
-      let logoutRedirect = '/login';
+      let logoutRedirect = "/login";
       // It seems that solid-auth-client has an OIDC-compliance issue in the logout.
       // This bevahiour is accepted by the NSS IdP, but not by other OIDC-compliant IdPs.
       // This issue should be fixed in the upstream library, but in the meantime
       // the following is an acceptable **temporary** compatibility fix.
-      const authConfig = JSON.parse(localStorage.getItem('solid-auth-client'));
+      const authConfig = JSON.parse(localStorage.getItem("solid-auth-client"));
       // It happens that post_logout_redirect_uris is not defined by NSS IdP,
       // which enables discriminating when the issue is going to be encountered.
       if (authConfig.rpConfig.registration.post_logout_redirect_uris) {
         // The user MUST be redirected to a page where they confirm they want to logout.
-        logoutRedirect = authConfig.rpConfig.provider.configuration.end_session_endpoint;
+        logoutRedirect =
+          authConfig.rpConfig.provider.configuration.end_session_endpoint;
       }
 
       // Remove localStorage
-      localStorage.removeItem('solid-auth-client');
+      localStorage.removeItem("solid-auth-client");
 
       // Redirect to login page or to logout confirmation
       window.location = logoutRedirect;
     } catch (error) {
-      errorToaster(error.message, 'Error');
+      errorToaster(error.message, "Error");
     }
   };
 
@@ -125,7 +128,7 @@ class NavBarProfile extends Component<Props> {
       const image = userImage ? userImage.value : defaultimage;
       this.setState({ image });
     } catch (error) {
-      errorToaster(error.message, 'Error');
+      errorToaster(error.message, "Error");
     }
   };
 
@@ -147,7 +150,12 @@ class NavBarProfile extends Component<Props> {
         hover
       >
         <ImageContainer show={imageLoaded}>
-          <Img show={imageLoaded} src={image} alt="profile" onLoad={this.onImageLoaded} />
+          <Img
+            show={imageLoaded}
+            src={image}
+            alt="profile"
+            onLoad={this.onImageLoaded}
+          />
         </ImageContainer>
         {!imageLoaded && <LoadingImage show />}
       </Dropdown>

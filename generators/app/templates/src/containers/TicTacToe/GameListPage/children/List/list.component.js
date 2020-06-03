@@ -1,26 +1,37 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useLiveUpdate, NotificationTypes, shexUtil } from '@inrupt/solid-react-components';
-import { useTranslation } from 'react-i18next';
-import ldflex from '@solid/query-ldflex';
-import { namedNode } from '@rdfjs/data-model';
-import { Loader, Select } from '@util-components';
-import tictactoeShape from '@contexts/tictactoe-shape.json';
+import React, { useState, useEffect, useCallback } from "react";
+import { AS } from "@inrupt/lit-generated-vocab-common";
+import { useLiveUpdate, shexUtil } from "@inrupt/solid-react-components";
+import { useTranslation } from "react-i18next";
+import ldflex from "@solid/query-ldflex";
+import { namedNode } from "@rdfjs/data-model";
+import { Loader, Select } from "@util-components";
+import tictactoeShape from "@contexts/tictactoe-shape.json";
 import {
   ldflexHelper,
   errorToaster,
   storageHelper,
   notification as helperNotification
-} from '@utils';
-import { GameStatusList, GameStatus, KnownInboxes } from '@constants';
-import { LDP } from '@vocabs';
-import { Wrapper, ListWrapper, GameListContainers, GameListHeader } from './list.style';
-import GameItem from './children';
+} from "@utils";
+import { GameStatusList, GameStatus, KnownInboxes } from "@constants";
+import { LDP } from "@vocabs";
+import {
+  Wrapper,
+  ListWrapper,
+  GameListContainers,
+  GameListHeader
+} from "./list.style";
+import GameItem from "./children";
 
 let oldTimestamp;
 let appPath;
 
 type Props = { webId: String, gamePath: String, sendNotification: Function };
-type GameListProps = { title: String, games: Array, webId: String, deleteGame: Function };
+type GameListProps = {
+  title: String,
+  games: Array,
+  webId: String,
+  deleteGame: Function
+};
 
 /**
  * Loads, filters, and displays the list of available games for the current user
@@ -33,7 +44,7 @@ type GameListProps = { title: String, games: Array, webId: String, deleteGame: F
 const GameList = ({ title, games, webId, deleteGame }: GameListProps) => {
   const { t } = useTranslation();
   const [filteredGames, setFilteredGames] = useState(games);
-  const [selectedFilter, setSelectedFilter] = useState('All');
+  const [selectedFilter, setSelectedFilter] = useState("All");
 
   /**
    * Set the visible game list depending on what filter the user has selected
@@ -56,7 +67,7 @@ const GameList = ({ title, games, webId, deleteGame }: GameListProps) => {
         <h2>{title}</h2>
         <div className="input-wrap">
           <label htmlFor="selected-filter">
-            {t('game.status')}
+            {t("game.status")}
             <Select
               name="selected-filter"
               id="selected-filter"
@@ -70,11 +81,16 @@ const GameList = ({ title, games, webId, deleteGame }: GameListProps) => {
       {filteredGames.length > 0 ? (
         <ListWrapper className="ids-container__four-column grid">
           {filteredGames.map(game => (
-            <GameItem {...{ game }} key={game.url} webId={webId} deleteGame={deleteGame} />
+            <GameItem
+              {...{ game }}
+              key={game.url}
+              webId={webId}
+              deleteGame={deleteGame}
+            />
           ))}
         </ListWrapper>
       ) : (
-        <span>{t('game.nogames')}</span>
+        <span>{t("game.nogames")}</span>
       )}
     </div>
   );
@@ -93,7 +109,7 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
    * @returns {String} Predicate for a field name
    */
   const getPredicate = field => {
-    const prefix = tictactoeShape['@context'][field.prefix];
+    const prefix = tictactoeShape["@context"][field.prefix];
     return `${prefix}${field.predicate}`;
   };
 
@@ -103,7 +119,7 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
    * @param {String} documentUrl URL of the document with a contains predicate
    */
   const deleteGameFromContains = async (gameUrl, documentUrl) => {
-    await ldflex[documentUrl]['schema:hasPart'].delete(namedNode(gameUrl));
+    await ldflex[documentUrl]["schema:hasPart"].delete(namedNode(gameUrl));
   };
 
   /**
@@ -112,8 +128,8 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
    */
   const resignedGame = async ({ url, documentUrl, status, actor }) => {
     if (status !== GameStatus.FINISHED) {
-      const statusPredicate = 'http://data.totl.net/game/status';
-      const licenseUrl = 'https://creativecommons.org/licenses/by-sa/4.0/';
+      const statusPredicate = "http://data.totl.net/game/status";
+      const licenseUrl = "https://creativecommons.org/licenses/by-sa/4.0/";
       // Change status to resigned
       await ldflex[url][statusPredicate].replace(status, GameStatus.RESIGNED);
 
@@ -134,13 +150,13 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
 
       await sendNotification(
         {
-          title: 'Tictactoe resignation',
-          summary: 'has resigned a game of TicTacToe',
+          title: "Tictactoe resignation",
+          summary: "has resigned a game of TicTacToe",
           actor: webId,
           object: url
         },
         to.path,
-        NotificationTypes.LEAVE,
+        AS.Leave.value,
         licenseUrl
       );
     }
@@ -171,13 +187,14 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
    */
   const getPlayerInfo = useCallback(async webId => {
     try {
-      const name = await ldflex[webId]['vcard:fn'];
-      const nameValue = name && name.value.trim().length > 0 ? name.value : webId.toString();
-      const imageUrl = await ldflex[webId]['vcard:hasPhoto'];
-      const image = imageUrl ? imageUrl.value : 'img/people.svg';
+      const name = await ldflex[webId]["vcard:fn"];
+      const nameValue =
+        name && name.value.trim().length > 0 ? name.value : webId.toString();
+      const imageUrl = await ldflex[webId]["vcard:hasPhoto"];
+      const image = imageUrl ? imageUrl.value : "img/people.svg";
       return { name: nameValue, image, webId };
     } catch (e) {
-      return { name: webId, image: 'img/people.svg', webId };
+      return { name: webId, image: "img/people.svg", webId };
     }
   });
 
@@ -193,7 +210,7 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
         let gameList = [];
         if (!document) return gameList;
 
-        const type = await document['rdf:type'];
+        const type = await document["rdf:type"];
         const typeValue = type ? type.value : undefined;
 
         /**
@@ -202,9 +219,9 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
          * schema:hasPart is used for externally linked games in other people's pods
          */
         if (typeValue === LDP.BASICCONTAINER) {
-          gameItemPredicate = 'ldp:contains';
+          gameItemPredicate = "ldp:contains";
         } else {
-          gameItemPredicate = 'schema:hasPart';
+          gameItemPredicate = "schema:hasPart";
         }
 
         // Collect the items into an array so we can validate the list of IRIs
@@ -219,7 +236,7 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
         }
 
         // Run the list of games fetched from the document through the shex validator helper function and store the valid items in gameList
-        const gameShapeUrl = 'https://solidsdk.inrupt.net/sdk/tictactoe.shex';
+        const gameShapeUrl = "https://solidsdk.inrupt.net/sdk/tictactoe.shex";
         gameList = await shexUtil.validateList(gameUrls, gameShapeUrl);
 
         let games = [];
@@ -233,7 +250,9 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
             const predicate = getPredicate(field);
 
             // Find the quad that matches this field, and get the value
-            const fieldQuad = game.find(obj => obj.predicate.value === predicate);
+            const fieldQuad = game.find(
+              obj => obj.predicate.value === predicate
+            );
             const fieldValue = fieldQuad.object.value;
 
             gameData = {
@@ -256,7 +275,7 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
         }
         return games;
       } catch (e) {
-        errorToaster(e.message, 'Error');
+        errorToaster(e.message, "Error");
       }
     },
     [gamePath]
@@ -300,7 +319,7 @@ const List = ({ webId, gamePath, sendNotification }: Props) => {
         <GameListContainers>
           {list && (
             <GameList
-              title={t('game.yourGames')}
+              title={t("game.yourGames")}
               games={list}
               webId={webId}
               deleteGame={deleteGame}

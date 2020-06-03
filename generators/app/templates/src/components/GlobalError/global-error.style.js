@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { media } from '../../utils';
+import styled from "styled-components";
+import { media } from "../../utils";
 
 export const GlobalErrorWrapper = styled.section`
   display: grid;
@@ -32,7 +32,7 @@ export const ErrorDetail = styled.p`
     font-size: 1.1rem;
     &:after {
       display: block;
-      content: '';
+      content: "";
       height: 1px;
       width: 50%;
       margin: 20px 0 30px;

@@ -1,7 +1,15 @@
-import React, { useCallback } from 'react';
-import moment from 'moment';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Item, Body, Message, Meta, MarkAsRead, Delete, Img } from './notification-item.style';
+import React, { useCallback } from "react";
+import moment from "moment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  Item,
+  Body,
+  Message,
+  Meta,
+  MarkAsRead,
+  Delete,
+  Img
+} from "./notification-item.style";
 
 type Props = {
   notification: Object,
@@ -13,7 +21,12 @@ type Props = {
 /**
  * Notification item to be shown for each notification in the notification list
  */
-const NotificationItem = ({ notification, markAsRead, children, deleteNotification }: Props) => {
+const NotificationItem = ({
+  notification,
+  markAsRead,
+  children,
+  deleteNotification
+}: Props) => {
   const { read } = notification;
   const currentRead = read ? JSON.parse(read) : false;
   const { actor } = notification;
@@ -32,7 +45,7 @@ const NotificationItem = ({ notification, markAsRead, children, deleteNotificati
    */
 
   const opCurrentRead = !currentRead;
-  const defaultImage = '/img/icon/empty-profile.svg';
+  const defaultImage = "/img/icon/empty-profile.svg";
   const actorImage =
     notification && notification.actor && notification.actor.image
       ? notification.actor.image
@@ -54,7 +67,9 @@ const NotificationItem = ({ notification, markAsRead, children, deleteNotificati
           <strong>{actor && actor.name}</strong> {notification.summary}
         </Message>
         <Meta>
-          <span className="moment">{moment(notification.published).fromNow()}</span>
+          <span className="moment">
+            {moment(notification.published).fromNow()}
+          </span>
           {children}
         </Meta>
       </Body>
@@ -62,10 +77,14 @@ const NotificationItem = ({ notification, markAsRead, children, deleteNotificati
         type="button"
         className="delete"
         onClick={() =>
-          markAsRead(notification.path, notification.id, opCurrentRead ? 'true' : 'false')
+          markAsRead(
+            notification.path,
+            notification.id,
+            opCurrentRead ? "true" : "false"
+          )
         }
       >
-        <FontAwesomeIcon icon={currentRead ? 'eye-slash' : 'eye'} />
+        <FontAwesomeIcon icon={currentRead ? "eye-slash" : "eye"} />
       </MarkAsRead>
       <Delete
         type="button"

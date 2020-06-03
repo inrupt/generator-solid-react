@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 /**
  * A styled-component for the 404 Page layout
@@ -6,14 +6,14 @@ import styled from 'styled-components';
 export const PageNotFoundWrapper = styled.section`
   display: flex;
   flex-direction: row-reverse;
-  background-image: url('/img/spaceman.svg');
+  background-image: url("/img/spaceman.svg");
   background-repeat: no-repeat;
   background-position-x: -125px;
   background-position-y: 100px;
   height: 100%;
 
   @media only screen and (max-width: 900px) {
-    background-image: url('/img/spaceman-mobile.svg');
+    background-image: url("/img/spaceman-mobile.svg");
     background-position: left -80px bottom -10px;
     background-size: 70%;
   }

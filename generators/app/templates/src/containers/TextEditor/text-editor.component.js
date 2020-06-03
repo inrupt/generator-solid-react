@@ -2,12 +2,12 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
 
-import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import SolidAuth from 'solid-auth-client';
-import { successToaster, errorToaster } from '@utils';
-import ldflex from '@solid/query-ldflex';
-import { AccessControlList, ACLFactory } from '@inrupt/solid-react-components';
+import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import SolidAuth from "solid-auth-client";
+import { successToaster, errorToaster } from "@utils";
+import ldflex from "@solid/query-ldflex";
+import { AccessControlList, ACLFactory } from "@inrupt/solid-react-components";
 import {
   TextEditorWrapper,
   TextEditorContainer,
@@ -19,7 +19,7 @@ import {
   Input,
   TextArea,
   WebId
-} from './text-editor.style';
+} from "./text-editor.style";
 
 type Props = { webId: String };
 
@@ -39,22 +39,22 @@ function extractWacAllow(response) {
       control: false
     }
   };
-  const wacAllowHeader = response.headers.get('WAC-Allow');
+  const wacAllowHeader = response.headers.get("WAC-Allow");
   if (wacAllowHeader) {
     wacAllowHeader // 'user="read write append control",public="read"'
-      .split(',') // ['user="read write append control"', 'public="read"']
+      .split(",") // ['user="read write append control"', 'public="read"']
       .map(str => str.trim())
       .forEach(statement => {
         // 'user="read write append control"'
-        const parts = statement.split('='); // ['user', '"read write control"']
+        const parts = statement.split("="); // ['user', '"read write control"']
         if (
           parts.length >= 2 &&
-          ['user', 'public'].indexOf(parts[0]) !== -1 &&
+          ["user", "public"].indexOf(parts[0]) !== -1 &&
           parts[1].length > 2
         ) {
-          const modeStr = parts[1].replace(/"/g, ''); // 'read write control' or ''
+          const modeStr = parts[1].replace(/"/g, ""); // 'read write control' or ''
           if (modeStr.length) {
-            modeStr.split(' ').forEach(mode => {
+            modeStr.split(" ").forEach(mode => {
               modes[parts[0]][mode] = true;
             });
           }
@@ -66,9 +66,11 @@ function extractWacAllow(response) {
 
 export const Editor = ({ webId }: Props) => {
   const { t } = useTranslation();
-  const [url, setUrl] = useState('');
-  const [friend, setFriend] = useState('https://example-friend.com/profile/card#me');
-  const [text, setText] = useState('');
+  const [url, setUrl] = useState("");
+  const [friend, setFriend] = useState(
+    "https://example-friend.com/profile/card#me"
+  );
+  const [text, setText] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [editable, setEditable] = useState(false);
   const [sharable, setSharable] = useState(false);
@@ -111,9 +113,9 @@ export const Editor = ({ webId }: Props) => {
         if (response.ok) {
           setText(text);
         } else if (response.status === 404) {
-          successToaster(t('notifications.404'));
+          successToaster(t("notifications.404"));
         } else {
-          errorToaster(t('notifications.errorLoading'));
+          errorToaster(t("notifications.errorLoading"));
         }
         const wacAllowModes = extractWacAllow(response);
         setEditable(wacAllowModes.user.write);
@@ -121,7 +123,7 @@ export const Editor = ({ webId }: Props) => {
         setLoaded(true);
       })
       .catch(() => {
-        errorToaster(t('notifications.errorFetching'));
+        errorToaster(t("notifications.errorFetching"));
       });
   } // assuming the logged in user doesn't change without a page refresh
 
@@ -136,9 +138,9 @@ export const Editor = ({ webId }: Props) => {
       ];
       const ACLFile = await ACLFactory.createNewAcl(webId, url);
       await ACLFile.createACL(permissions);
-      successToaster(t('notifications.accessGranted'));
+      successToaster(t("notifications.accessGranted"));
     } catch (e) {
-      errorToaster(t('notifications.errorGrantingAccess'));
+      errorToaster(t("notifications.errorGrantingAccess"));
     }
   }
 
@@ -146,17 +148,17 @@ export const Editor = ({ webId }: Props) => {
     event.preventDefault();
     // Not using LDFlex here, because this is not an RDF document.
     const result = await SolidAuth.fetch(url, {
-      method: 'PUT',
+      method: "PUT",
       body: text,
       headers: {
-        'Content-Type': 'text/plain'
+        "Content-Type": "text/plain"
       }
     });
 
     if (result.ok) {
-      successToaster(t('notifications.saved'));
+      successToaster(t("notifications.saved"));
     } else if (result.ok === false) {
-      errorToaster(t('notifications.errorSaving'));
+      errorToaster(t("notifications.errorSaving"));
     }
   }
 
@@ -171,42 +173,63 @@ export const Editor = ({ webId }: Props) => {
       </FullGridSize>
       <FullGridSize>
         <Label>
-          {t('editor.url')}:
-          <Input type="text" size="200" value={url} onChange={handleUrlChange} />
+          {t("editor.url")}:
+          <Input
+            type="text"
+            size="200"
+            value={url}
+            onChange={handleUrlChange}
+          />
         </Label>
         <div className="input-wrap">
-          <Button className="ids-link-filled ids-link-filled--primary button" onClick={handleLoad}>
-            {t('editor.load')}
+          <Button
+            className="ids-link-filled ids-link-filled--primary button"
+            onClick={handleLoad}
+          >
+            {t("editor.load")}
           </Button>
           {editable ? (
             <Button
               className="ids-link-filled ids-link-filled--secondary button"
               onClick={handleSave}
             >
-              {t('editor.save')}
+              {t("editor.save")}
             </Button>
           ) : loaded ? (
-            t('notifications.notEditable')
+            t("notifications.notEditable")
           ) : (
-            ''
+            ""
           )}
         </div>
       </FullGridSize>
       <FullGridSize>
-        <TextArea value={text} onChange={handleTextChange} cols={40} rows={10} />
+        <TextArea
+          value={text}
+          onChange={handleTextChange}
+          cols={40}
+          rows={10}
+        />
       </FullGridSize>
       {sharable && (
         <FullGridSize>
           <Label>
-            {t('editor.friend')}:
-            <Input type="text" size="200" value={friend} onChange={handleFriendChange} />
+            {t("editor.friend")}:
+            <Input
+              type="text"
+              size="200"
+              value={friend}
+              onChange={handleFriendChange}
+            />
           </Label>
-          <Button className="ids-link-stroke ids-link-stroke--primary button" onClick={handleShare}>
-            {t('editor.grantAccess')}
+          <Button
+            className="ids-link-stroke ids-link-stroke--primary button"
+            onClick={handleShare}
+          >
+            {t("editor.grantAccess")}
           </Button>
         </FullGridSize>
       )}
-      {loaded && !sharable && t('notifications.notSharable')}
+      {loaded && !sharable && t("notifications.notSharable")}
     </Form>
   );
 };
@@ -222,7 +245,7 @@ const TextEditor = ({ webId }: Props) => {
     <TextEditorWrapper>
       <TextEditorContainer>
         <Header>
-          <p>{t('editor.explanation')}</p>
+          <p>{t("editor.explanation")}</p>
         </Header>
         <Editor webId={webId} />
       </TextEditorContainer>

@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Field } from '..';
+import React from "react";
+import styled from "styled-components";
+import { Field } from "..";
 
 const GameBoard = styled.div`
   display: grid;
@@ -12,20 +12,25 @@ const GameBoard = styled.div`
   flex: 1 1 auto;
 `;
 
-type Props = { squares: Array, onMove: Funtion, canPlay: Boolean, result: Object };
+type Props = {
+  squares: Array,
+  onMove: Funtion,
+  canPlay: Boolean,
+  result: Object
+};
 
 const unique = seed => Date.now() + seed;
 
 const borders = {
-  0: ['bottom', 'right'],
-  1: ['bottom'],
-  2: ['bottom', 'left'],
-  3: ['bottom', 'right'],
-  4: ['bottom'],
-  5: ['left', 'bottom'],
-  6: ['right'],
+  0: ["bottom", "right"],
+  1: ["bottom"],
+  2: ["bottom", "left"],
+  3: ["bottom", "right"],
+  4: ["bottom"],
+  5: ["left", "bottom"],
+  6: ["right"],
   7: [],
-  8: ['left']
+  8: ["left"]
 };
 
 const Board = ({ squares, onMove, canPlay, result }: Props) => (

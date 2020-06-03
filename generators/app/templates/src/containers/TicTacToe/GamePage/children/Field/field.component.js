@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Square = styled.button`
   border-radius: 0;
@@ -9,8 +9,9 @@ const Square = styled.button`
   padding: 0;
   border: none;
   background: #fff;
-  ${({ borders }) => borders && borders.map(border => `border-${border}: solid 4px;`)}
-  color: ${({ winner }) => (winner ? 'green' : '#000')};
+  ${({ borders }) =>
+    borders && borders.map(border => `border-${border}: solid 4px;`)}
+  color: ${({ winner }) => (winner ? "green" : "#000")};
   transition: border 500ms ease-out;
   &:hover {
     border-color: black;
@@ -34,9 +35,15 @@ type Props = {
 };
 
 const Field = ({ value, onMove, canPlay, result, index, borders }: Props) => {
-  const winnerField = result && result.win ? result.combination.includes(index) : false;
+  const winnerField =
+    result && result.win ? result.combination.includes(index) : false;
   return (
-    <Square onClick={onMove} disabled={!canPlay} winner={winnerField} borders={borders}>
+    <Square
+      onClick={onMove}
+      disabled={!canPlay}
+      winner={winnerField}
+      borders={borders}
+    >
       {value}
     </Square>
   );

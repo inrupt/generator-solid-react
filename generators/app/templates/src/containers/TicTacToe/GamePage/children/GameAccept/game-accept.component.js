@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
-import styled from 'styled-components';
-import { Trans, useTranslation } from 'react-i18next';
-import { ConfirmationDialog } from '@util-components';
+import React, { Fragment } from "react";
+import styled from "styled-components";
+import { Trans, useTranslation } from "react-i18next";
+import { ConfirmationDialog } from "@util-components";
 
 const MessageWrapper = styled.div`
   text-align: center;
@@ -32,11 +32,17 @@ const GameAccept = ({ actor, onAccept, onDecline }: Props) => {
 
   const messageComponent = () => (
     <MessageWrapper>
-      <img src="/img/tic-tac-toe-color.svg" alt="Tic Tac Toe Board" width="200px" height="200px" />
+      <img
+        src="/img/tic-tac-toe-color.svg"
+        alt="Tic Tac Toe Board"
+        width="200px"
+        height="200px"
+      />
       <Trans i18nKey="game.invitationTemplate" values={{ name }}>
         <Fragment>
           <p>
-            <strong>{name}</strong> has invited you to play a game of Tic Tac Toe.
+            <strong>{name}</strong> has invited you to play a game of Tic Tac
+            Toe.
           </p>
           <span>Would you like to Play?</span>
         </Fragment>
@@ -50,8 +56,8 @@ const GameAccept = ({ actor, onAccept, onDecline }: Props) => {
       onDecline={onDecline}
       options={{
         messageComponent: () => messageComponent(),
-        acceptText: t('game.invitationAcceptText'),
-        declineText: t('game.invitationDeclineText')
+        acceptText: t("game.invitationAcceptText"),
+        declineText: t("game.invitationDeclineText")
       }}
       parentSelector="#gamepage"
     />

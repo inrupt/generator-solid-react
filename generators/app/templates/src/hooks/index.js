@@ -1,3 +1,3 @@
-import useOnClickOutside from './useOnClickOutside';
+import useOnClickOutside from "./useOnClickOutside";
 
 export { useOnClickOutside };

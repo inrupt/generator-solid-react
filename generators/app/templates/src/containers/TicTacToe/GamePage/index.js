@@ -1,3 +1,3 @@
-import GamePage from './game-page.component';
+import GamePage from "./game-page.component";
 
 export default GamePage;

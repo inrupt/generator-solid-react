@@ -1,9 +1,9 @@
-import React from 'react';
-import { render, cleanup, fireEvent } from 'react-testing-library';
-import GameAccept from './game-accept.component';
+import React from "react";
+import { render, cleanup, fireEvent } from "react-testing-library";
+import GameAccept from "./game-accept.component";
 
 const props = {
-  actor: 'https://example.com/#me',
+  actor: "https://example.com/#me",
   onAccept: jest.fn(),
   onDecline: jest.fn()
 };
@@ -12,9 +12,11 @@ type Props = {
   children: any
 };
 
-const WrapperComponent = ({ children }: Props) => <div id="gamepage">{children}</div>;
+const WrapperComponent = ({ children }: Props) => (
+  <div id="gamepage">{children}</div>
+);
 
-describe('TicTacToe Game', () => {
+describe("TicTacToe Game", () => {
   afterAll(cleanup);
 
   const { container, getByTestId } = render(
@@ -23,13 +25,13 @@ describe('TicTacToe Game', () => {
     </WrapperComponent>
   );
 
-  test('renders without crashing', () => {
+  test("renders without crashing", () => {
     expect(container).toBeTruthy();
   });
 
-  test('accept and decline should be called one time', () => {
-    fireEvent.click(getByTestId('acceptButton'));
-    fireEvent.click(getByTestId('declineButton'));
+  test("accept and decline should be called one time", () => {
+    fireEvent.click(getByTestId("acceptButton"));
+    fireEvent.click(getByTestId("declineButton"));
     expect(props.onAccept).toHaveBeenCalledTimes(1);
     expect(props.onDecline).toHaveBeenCalledTimes(1);
   });

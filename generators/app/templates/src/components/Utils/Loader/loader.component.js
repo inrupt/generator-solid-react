@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { LoaderWrapper, CubeGrid, Cube } from './loader.style';
+import React, { Component } from "react";
+import { LoaderWrapper, CubeGrid, Cube } from "./loader.style";
 
 type Props = {
   delay?: Number,
@@ -22,15 +22,15 @@ class Loader extends Component<Props> {
 
   render() {
     const cubes = [
-      { id: '0', value: 0.2 },
-      { id: '1', value: 0.3 },
-      { id: '2', value: 0.4 },
-      { id: '3', value: 0.1 },
-      { id: '4', value: 0.2 },
-      { id: '5', value: 0.3 },
-      { id: '6', value: 0 },
-      { id: '7', value: 0.1 },
-      { id: '8', value: 0.2 }
+      { id: "0", value: 0.2 },
+      { id: "1", value: 0.3 },
+      { id: "2", value: 0.4 },
+      { id: "3", value: 0.1 },
+      { id: "4", value: 0.2 },
+      { id: "5", value: 0.3 },
+      { id: "6", value: 0 },
+      { id: "7", value: 0.1 },
+      { id: "8", value: 0.2 }
     ];
     const { show } = this.state;
     const { absolute } = this.props;

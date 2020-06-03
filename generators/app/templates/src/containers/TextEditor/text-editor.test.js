@@ -1,9 +1,9 @@
-import React from 'react';
-import { render, cleanup } from 'react-testing-library';
-import { BrowserRouter as Router } from 'react-router-dom';
-import TextEditor from './text-editor.component';
+import React from "react";
+import { render, cleanup } from "react-testing-library";
+import { BrowserRouter as Router } from "react-router-dom";
+import TextEditor from "./text-editor.component";
 
-describe('Text Editor', () => {
+describe("Text Editor", () => {
   afterAll(cleanup);
 
   const { container } = render(
@@ -12,7 +12,7 @@ describe('Text Editor', () => {
     </Router>
   );
 
-  test('App renders without crashing', () => {
+  test("App renders without crashing", () => {
     expect(container).toBeTruthy();
   });
 });

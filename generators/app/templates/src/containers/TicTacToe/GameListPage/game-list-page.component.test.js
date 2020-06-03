@@ -1,23 +1,23 @@
-import React from 'react';
-import { render, waitForElement, cleanup } from 'react-testing-library';
-import GameListPage from './game-list-page.component';
+import React from "react";
+import { render, waitForElement, cleanup } from "react-testing-library";
+import GameListPage from "./game-list-page.component";
 
-const webId = 'https://example.com/#me';
+const webId = "https://example.com/#me";
 
-describe('Register', () => {
+describe("Register", () => {
   const { getByTestId, container } = render(<GameListPage {...{ webId }} />);
 
-  test('should render form and list after create inbox', async () => {
-    expect(getByTestId('game-form')).not.toBe(null);
+  test("should render form and list after create inbox", async () => {
+    expect(getByTestId("game-form")).not.toBe(null);
 
-    await waitForElement(() => getByTestId('game-list'));
+    await waitForElement(() => getByTestId("game-list"));
 
-    expect(getByTestId('game-list')).not.toBe(null);
+    expect(getByTestId("game-list")).not.toBe(null);
 
     afterEach(cleanup);
   });
 
-  test('renders without crashing', () => {
+  test("renders without crashing", () => {
     expect(container).toBeTruthy();
   });
 });

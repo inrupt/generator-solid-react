@@ -1,5 +1,5 @@
-import React from 'react';
-import { CenterContainerWrapper } from './center-container.style';
+import React from "react";
+import { CenterContainerWrapper } from "./center-container.style";
 
 type Props = {
   children: React.Node,

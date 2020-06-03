@@ -1,7 +1,7 @@
-import React from 'react';
-import { NotificationList, Tabs } from './children';
-import { Panel, Title } from './notifications-panel.style';
-import { Loader } from '@util-components';
+import React from "react";
+import { NotificationList, Tabs } from "./children";
+import { Panel, Title } from "./notifications-panel.style";
+import { Loader } from "@util-components";
 
 type Props = {
   notifications: Array,
@@ -28,7 +28,9 @@ const NotificationsPanel = ({
     ) : (
       <React.Fragment>
         <Tabs {...{ list: tabs, click: filterNotification }} />
-        <NotificationList {...{ notifications, markAsRead, deleteNotification }} />
+        <NotificationList
+          {...{ notifications, markAsRead, deleteNotification }}
+        />
       </React.Fragment>
     )}
   </Panel>

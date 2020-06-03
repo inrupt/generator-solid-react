@@ -1,3 +1,3 @@
-import Board from './board.component';
+import Board from "./board.component";
 
 export default Board;

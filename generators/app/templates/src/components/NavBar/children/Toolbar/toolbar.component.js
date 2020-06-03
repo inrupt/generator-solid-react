@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type Props = {
   toolbar: Array<Object>,
@@ -13,9 +13,13 @@ type Props = {
  */
 const areEqual = (prevProps, nextProps) => {
   const prevInbox =
-    prevProps && prevProps.toolbar.length > 1 && prevProps.toolbar[1].component().props.inbox;
+    prevProps &&
+    prevProps.toolbar.length > 1 &&
+    prevProps.toolbar[1].component().props.inbox;
   const nextInbox =
-    nextProps && nextProps.toolbar.length > 1 && nextProps.toolbar[1].component().props.inbox;
+    nextProps &&
+    nextProps.toolbar.length > 1 &&
+    nextProps.toolbar[1].component().props.inbox;
 
   if (prevInbox && prevInbox.length !== nextInbox && nextInbox.length) {
     return false;

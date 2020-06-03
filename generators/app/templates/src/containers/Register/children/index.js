@@ -1,4 +1,4 @@
-import ProviderItem from './ProviderItem';
-import RegistrationSuccess from './RegistrationSuccess';
+import ProviderItem from "./ProviderItem";
+import RegistrationSuccess from "./RegistrationSuccess";
 
 export { ProviderItem, RegistrationSuccess };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   GlobalErrorWrapper,
   ErrorTitle,
@@ -6,7 +6,7 @@ import {
   DetailWrapper,
   ImageWrapper,
   ErrorDetail
-} from './global-error.style';
+} from "./global-error.style";
 
 type Props = {
   info: Object

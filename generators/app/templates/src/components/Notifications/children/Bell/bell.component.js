@@ -1,6 +1,6 @@
-import React from 'react';
-import { Badge } from '@util-components';
-import { BellIcon } from './bell.style';
+import React from "react";
+import { Badge } from "@util-components";
+import { BellIcon } from "./bell.style";
 
 type Props = {
   unread: Boolean,
@@ -12,7 +12,11 @@ type Props = {
  * Bell Icon to be seen in the navbar for notifications
  */
 const Bell = ({ unread, onClick, active }: Props) => (
-  <BellIcon className={`bell-icon ${active ? 'active' : ''}`} onClick={onClick} type="button">
+  <BellIcon
+    className={`bell-icon ${active ? "active" : ""}`}
+    onClick={onClick}
+    type="button"
+  >
     <div className="icon">
       {unread > 0 && <Badge badge={unread} />}
       <img src="/img/icon/notification.svg" alt="notifications" />

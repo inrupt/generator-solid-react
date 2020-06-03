@@ -13,20 +13,20 @@ export default class Provider {
   static getIdentityProviders(): Array<ProviderEntity> {
     return [
       {
-        id: 'inrupt',
-        label: 'Inrupt',
-        image: '/img/inrupt.svg',
-        value: 'https://inrupt.net/auth',
-        registerLink: 'https://inrupt.net/register',
-        description: 'Lorem ipsum dolor sit amet non ipsom dolor'
+        id: "inrupt",
+        label: "Inrupt",
+        image: "/img/inrupt.svg",
+        value: "https://inrupt.net/auth",
+        registerLink: "https://inrupt.net/register",
+        description: "Lorem ipsum dolor sit amet non ipsom dolor"
       },
       {
-        id: 'solid-community',
-        label: 'Solid Community',
-        image: '/img/Solid.png',
-        value: 'https://solid.community',
-        registerLink: 'https://solid.community/register',
-        description: 'Lorem ipsum dolor sit non consectetur'
+        id: "solid-community",
+        label: "Solid Community",
+        image: "/img/Solid.png",
+        value: "https://solid.community",
+        registerLink: "https://solid.community/register",
+        description: "Lorem ipsum dolor sit non consectetur"
       }
     ];
   }
