@@ -3,6 +3,10 @@ Based on Facebook's <a href="https://github.com/facebookincubator/create-react-a
 
 Application Generator for [Solid](https://solid.inrupt.com) React applications. Part of the [Solid React SDK by inrupt](https://github.com/inrupt/solid-react-sdk).
 
+## Deprecation notice
+
+`@inrupt/generator-solid-react` is now deprecated. Check out https://github.com/inrupt/solid-ui-react for a new version of Inrupt's React SDK for Solid.
+
 ## External Dependencies
 
 * [Solid React Components](https://github.com/inrupt/solid-react-components)
