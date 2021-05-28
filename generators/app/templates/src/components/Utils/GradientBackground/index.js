@@ -1,3 +1,3 @@
-import GradientComponent from './gradient-background.component';
+import GradientComponent from "./gradient-background.component";
 
 export default GradientComponent;

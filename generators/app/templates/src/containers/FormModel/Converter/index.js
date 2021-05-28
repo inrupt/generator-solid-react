@@ -1,3 +1,3 @@
-import FormModelConverter from './converter.component';
+import FormModelConverter from "./converter.component";
 
 export default FormModelConverter;

@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const FormModelContainer = styled.section`
   display: flex;
   justify-content: center;
-  background-image: url('/img/concentric-hex-pattern_2x.png');
+  background-image: url("/img/concentric-hex-pattern_2x.png");
   background-repeat: repeat;
   box-sizing: border-box;
   padding: 25px;

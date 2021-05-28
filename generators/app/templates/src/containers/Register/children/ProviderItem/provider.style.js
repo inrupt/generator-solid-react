@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ProviderItemStyle = styled.label`
   cursor: pointer;
@@ -48,7 +48,7 @@ export const Item = styled.li`
   padding: 10px 0;
   margin: 0;
 
-  & input[type='radio'] {
+  & input[type="radio"] {
     display: none;
 
     &:checked {

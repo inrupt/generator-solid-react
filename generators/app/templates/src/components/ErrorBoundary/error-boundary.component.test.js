@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
-import React from 'react';
-import { render, cleanup } from 'react-testing-library';
-import ErrorBoundary from './error-boundary.component';
+import React from "react";
+import { render, cleanup } from "react-testing-library";
+import ErrorBoundary from "./error-boundary.component";
 
-import 'jest-dom/extend-expect';
+import "jest-dom/extend-expect";
 
 const ErrorComponent = () => {
-  throw Error('Error');
+  throw Error("Error");
 };
 
 // This a hack to avoid error console when we run test
@@ -22,8 +22,8 @@ const shallowErrors = codeRun => {
 
 afterAll(cleanup);
 
-describe('ErrorBoundary Component', () => {
-  test('caches error and display messages', () => {
+describe("ErrorBoundary Component", () => {
+  test("caches error and display messages", () => {
     shallowErrors(() => {
       const { container } = render(
         <ErrorBoundary component={() => <h2>Error Message</h2>}>
@@ -31,7 +31,7 @@ describe('ErrorBoundary Component', () => {
         </ErrorBoundary>
       );
 
-      expect(container).toHaveTextContent('Error Message');
+      expect(container).toHaveTextContent("Error Message");
     });
   });
 });

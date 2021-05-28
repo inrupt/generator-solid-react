@@ -1,3 +1,3 @@
-import RegistrationSuccess from './registration-success.component';
+import RegistrationSuccess from "./registration-success.component";
 
 export default RegistrationSuccess;

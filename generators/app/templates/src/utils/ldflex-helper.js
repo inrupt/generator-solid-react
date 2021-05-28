@@ -1,11 +1,11 @@
-import auth from 'solid-auth-client';
-import ldflex from '@solid/query-ldflex';
-import { errorToaster } from '@utils';
+import auth from "solid-auth-client";
+import ldflex from "@solid/query-ldflex";
+import { errorToaster } from "@utils";
 
 export const documentExists = async documentUri =>
   auth.fetch(documentUri, {
     headers: {
-      'Content-Type': 'text/turtle'
+      "Content-Type": "text/turtle"
     }
   });
 
@@ -19,18 +19,18 @@ export const createDoc = async (documentUri, options) => {
 
 export const deleteFile = async url => {
   try {
-    return await auth.fetch(url, { method: 'DELETE' });
+    return await auth.fetch(url, { method: "DELETE" });
   } catch (e) {
     throw e;
   }
 };
 
-export const createDocument = async (documentUri, body = '') => {
+export const createDocument = async (documentUri, body = "") => {
   try {
     const options = {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'text/turtle'
+        "Content-Type": "text/turtle"
       },
       body
     };
@@ -40,12 +40,12 @@ export const createDocument = async (documentUri, body = '') => {
   }
 };
 
-export const createDocumentWithTurtle = async (documentUri, body = '') => {
+export const createDocumentWithTurtle = async (documentUri, body = "") => {
   try {
     return createDoc(documentUri, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'text/turtle'
+        "Content-Type": "text/turtle"
       },
       body
     });
@@ -54,7 +54,7 @@ export const createDocumentWithTurtle = async (documentUri, body = '') => {
   }
 };
 
-export const createNonExistentDocument = async (documentUri, body = '') => {
+export const createNonExistentDocument = async (documentUri, body = "") => {
   try {
     const result = await documentExists(documentUri);
 
@@ -80,7 +80,7 @@ export const resourceExists = async resourcePath => {
     const result = await auth.fetch(resourcePath);
     return result.status === 403 || result.status === 200;
   } catch (e) {
-    errorToaster(e.message, 'Error');
+    errorToaster(e.message, "Error");
   }
 };
 
@@ -89,7 +89,7 @@ export const discoverInbox = async document => {
     const documentExists = await resourceExists(document);
     if (!documentExists) return false;
 
-    const inboxDocument = await ldflex[document]['ldp:inbox'];
+    const inboxDocument = await ldflex[document]["ldp:inbox"];
     const inbox = inboxDocument ? await inboxDocument.value : false;
     return inbox;
   } catch (error) {
@@ -108,7 +108,7 @@ export const getLinkedInbox = async resourcePath => {
     if (inboxLinkedPath) {
       return inboxLinkedPath.value;
     }
-    return '';
+    return "";
   } catch (error) {
     throw error;
   }

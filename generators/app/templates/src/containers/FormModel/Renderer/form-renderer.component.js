@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
-import React, { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { FormModel } from '@inrupt/solid-react-components';
-import { Select, Loader } from '@util-components';
-import ldflex from '@solid/query-ldflex';
+import React, { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { FormModel } from "@inrupt/solid-react-components";
+import { Select, Loader } from "@util-components";
+import ldflex from "@solid/query-ldflex";
 
-import { RendererTypesList, ConverterTypes } from '@constants';
-import { successToaster, errorToaster, languageHelper } from '@utils';
+import { RendererTypesList, ConverterTypes } from "@constants";
+import { successToaster, errorToaster, languageHelper } from "@utils";
 import {
   FormModelContainer,
   FormWrapper,
@@ -17,28 +17,28 @@ import {
   ResultHeader,
   Button,
   ConverterInput
-} from '../form-model.style';
+} from "../form-model.style";
 
-import '@inrupt/solid-react-components/build/static/css/index.css';
-import { AutoSaveSpinner } from '@components';
+import "@inrupt/solid-react-components/build/static/css/index.css";
+import { AutoSaveSpinner } from "@components";
 
 /**
  * Form Model Renderer UI component, containing the styled components for the Form Model Converter
  */
 const FormModelRenderer = () => {
   const { t } = useTranslation();
-  const [layoutUrl, setLayoutUrl] = useState('');
+  const [layoutUrl, setLayoutUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [layoutText, setLayoutText] = useState(t('formLanguage.extension'));
-  const [shapeText, setShapeText] = useState(t('formLanguage.formModel'));
-  const [source, setSource] = useState('');
-  const [schemaUrl, setSchemaUrl] = useState('');
+  const [layoutText, setLayoutText] = useState(t("formLanguage.extension"));
+  const [shapeText, setShapeText] = useState(t("formLanguage.formModel"));
+  const [source, setSource] = useState("");
+  const [schemaUrl, setSchemaUrl] = useState("");
   const [submitted, setSubmitted] = useState(null);
-  const [hasLayoutFile, setHasLayoutFile] = useState('');
+  const [hasLayoutFile, setHasLayoutFile] = useState("");
   const [isViewMode, setViewMode] = useState(true);
 
   const filteredOptions = RendererTypesList.filter(
-    item => t(`formLanguage.${item}`) === t('formLanguage.formModel')
+    item => t(`formLanguage.${item}`) === t("formLanguage.formModel")
   );
   const optionsList = filteredOptions.map(item => t(`formLanguage.${item}`));
   const language = languageHelper.getLanguageCode();
@@ -103,8 +103,8 @@ const FormModelRenderer = () => {
     ldflex.clearCache();
     await setSubmitted(null);
     let obj = {};
-    if (schemaUrl !== '') obj = { ...obj, schemaUrl };
-    if (source !== '') obj = { ...obj, source };
+    if (schemaUrl !== "") obj = { ...obj, schemaUrl };
+    if (source !== "") obj = { ...obj, source };
     setSubmitted(obj);
   }
 
@@ -116,14 +116,14 @@ const FormModelRenderer = () => {
 
     // Set the label for the label or extension field
     if (isShEx(newValue)) {
-      setLayoutText(t('formLanguage.layout'));
-      setShapeText(t('formLanguage.shexShape'));
+      setLayoutText(t("formLanguage.layout"));
+      setShapeText(t("formLanguage.shexShape"));
     } else if (isShacl(newValue)) {
-      setLayoutText(t('formLanguage.extension'));
-      setShapeText(t('formLanguage.shaclShape'));
+      setLayoutText(t("formLanguage.extension"));
+      setShapeText(t("formLanguage.shaclShape"));
     } else {
-      setLayoutText(t('formLanguage.extension'));
-      setShapeText(t('formLanguage.formModel'));
+      setLayoutText(t("formLanguage.extension"));
+      setShapeText(t("formLanguage.formModel"));
     }
 
     // Set boolean to disable or enable the layout/extension textbox
@@ -132,32 +132,42 @@ const FormModelRenderer = () => {
 
   const onError = e => {
     if (
-      e.message.toString().indexOf('Validation failed') < 0 ||
-      e.message.toString().indexOf('Error rendering Form Model') < 0
+      e.message.toString().indexOf("Validation failed") < 0 ||
+      e.message.toString().indexOf("Error rendering Form Model") < 0
     ) {
-      errorToaster(t('formLanguage.renderer.formNotLoaded'), t('notifications.error'), {
-        label: t('errorFormRender.link.label'),
-        href: t('errorFormRender.link.href')
-      });
+      errorToaster(
+        t("formLanguage.renderer.formNotLoaded"),
+        t("notifications.error"),
+        {
+          label: t("errorFormRender.link.label"),
+          href: t("errorFormRender.link.href")
+        }
+      );
       setIsLoading(false);
     }
   };
 
   const onDelete = () => {
-    successToaster(t('formLanguage.renderer.fieldDeleted'), t('notifications.success'));
+    successToaster(
+      t("formLanguage.renderer.fieldDeleted"),
+      t("notifications.success")
+    );
   };
 
   const onAddNewField = () => {
-    successToaster(t('formLanguage.renderer.fieldAdded'), t('notifications.success'));
+    successToaster(
+      t("formLanguage.renderer.fieldAdded"),
+      t("notifications.success")
+    );
   };
 
   return (
     <FormModelContainer>
       <FormWrapper>
         <Form onSubmit={onSubmit}>
-          <h3>{t('formLanguage.renderer.title')}</h3>
+          <h3>{t("formLanguage.renderer.title")}</h3>
           <ConverterInput>
-            <label htmlFor="selected-filter">{t('formLanguage.input')}</label>
+            <label htmlFor="selected-filter">{t("formLanguage.input")}</label>
             <Select
               name="selected-filter"
               id="selected-filter"
@@ -189,35 +199,37 @@ const FormModelRenderer = () => {
             />
           </ConverterInput>
           <ConverterInput>
-            <label htmlFor="converter-input-form-language">{t('formLanguage.source')}</label>
+            <label htmlFor="converter-input-form-language">
+              {t("formLanguage.source")}
+            </label>
             <Input
               type="text"
-              placeholder={t('formLanguage.source')}
+              placeholder={t("formLanguage.source")}
               name="converter-input-form-language"
               id="converter-input-form-language"
               onChange={onSourceChange}
               value={source}
             />
           </ConverterInput>
-          <Button type="submit">{t('formLanguage.renderer.submitBtn')}</Button>
+          <Button type="submit">{t("formLanguage.renderer.submitBtn")}</Button>
         </Form>
         <Result>
           <ResultHeader>
-            <h4>{t('formLanguage.formModel')}</h4>
+            <h4>{t("formLanguage.formModel")}</h4>
             <div>
               <Button
                 type="button"
-                className={isViewMode ? 'active' : ''}
+                className={isViewMode ? "active" : ""}
                 onClick={() => setViewMode(true)}
               >
-                {t('formLanguage.renderer.viewBtn')}
+                {t("formLanguage.renderer.viewBtn")}
               </Button>
               <Button
                 type="button"
-                className={!isViewMode ? 'active' : ''}
+                className={!isViewMode ? "active" : ""}
                 onClick={() => setViewMode(false)}
               >
-                {t('formLanguage.renderer.editBtn')}
+                {t("formLanguage.renderer.editBtn")}
               </Button>
             </div>
           </ResultHeader>
@@ -228,7 +240,7 @@ const FormModelRenderer = () => {
               <FormModel
                 {...{
                   modelSource: submitted.schemaUrl,
-                  dataSource: (submitted && submitted.source) || '',
+                  dataSource: (submitted && submitted.source) || "",
                   onInit: () => setIsLoading(true),
                   onLoaded: () => setIsLoading(false),
                   onSuccess: () => {},
@@ -240,16 +252,16 @@ const FormModelRenderer = () => {
                   onDelete: response => onDelete(response),
                   options: {
                     theme: {
-                      form: 'inrupt-sdk-form',
-                      inputText: 'input-wrap',
-                      inputCheckbox: 'sdk-checkbox checkbox',
-                      singleLine: 'input-wrap',
-                      integerField: 'input-wrap',
-                      decimalInput: 'input-wrap',
-                      floatField: 'input-wrap',
-                      checkboxField: 'input-wrap',
-                      groupField: 'group-wrapper',
-                      multipleField: 'multiple-wrapper'
+                      form: "inrupt-sdk-form",
+                      inputText: "input-wrap",
+                      inputCheckbox: "sdk-checkbox checkbox",
+                      singleLine: "input-wrap",
+                      integerField: "input-wrap",
+                      decimalInput: "input-wrap",
+                      floatField: "input-wrap",
+                      checkboxField: "input-wrap",
+                      groupField: "group-wrapper",
+                      multipleField: "multiple-wrapper"
                     },
                     autosaveIndicator: AutoSaveSpinner,
                     autosave: true,

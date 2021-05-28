@@ -1,3 +1,3 @@
-import Toaster from './toaster.component';
+import Toaster from "./toaster.component";
 
 export default Toaster;

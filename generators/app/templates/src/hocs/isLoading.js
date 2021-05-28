@@ -1,5 +1,5 @@
-import React from 'react';
-import { Loader } from '@util-components';
+import React from "react";
+import { Loader } from "@util-components";
 
 function isLoading(HOComponent) {
   return props => {

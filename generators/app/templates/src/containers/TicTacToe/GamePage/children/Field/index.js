@@ -1,3 +1,3 @@
-import Field from './field.component';
+import Field from "./field.component";
 
 export default Field;

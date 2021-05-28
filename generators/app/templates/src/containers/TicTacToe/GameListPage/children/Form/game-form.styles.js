@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const GameFormWrapper = styled.div`
   padding: 16px;

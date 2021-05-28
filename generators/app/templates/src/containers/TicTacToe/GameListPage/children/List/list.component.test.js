@@ -1,14 +1,14 @@
-import React from 'react';
-import { render } from 'react-testing-library';
-import GameList from './list.component';
+import React from "react";
+import { render } from "react-testing-library";
+import GameList from "./list.component";
 
-const webId = 'https://example.com/#me';
-const gamePath = 'https://example.com/game';
+const webId = "https://example.com/#me";
+const gamePath = "https://example.com/game";
 
-describe('List Game', () => {
+describe("List Game", () => {
   const { container } = render(<GameList {...{ webId, gamePath }} />);
 
-  test('renders without crashing', () => {
+  test("renders without crashing", () => {
     expect(container).toBeTruthy();
   });
 });

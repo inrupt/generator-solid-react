@@ -1,3 +1,3 @@
-import { ImageProfile } from './image-profile.component';
+import { ImageProfile } from "./image-profile.component";
 
 export default ImageProfile;

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { Gradient } from './gradient-background.style';
+import { Gradient } from "./gradient-background.style";
 
 type Props = {
   children: React.Node,

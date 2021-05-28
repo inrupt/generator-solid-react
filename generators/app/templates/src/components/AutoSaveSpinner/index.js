@@ -1,6 +1,6 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { AutoSaveSpinnerWrapper } from './auto-save.style';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AutoSaveSpinnerWrapper } from "./auto-save.style";
 
 type Props = {
   errored: boolean,

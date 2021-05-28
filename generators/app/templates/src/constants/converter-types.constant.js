@@ -1,10 +1,10 @@
 // A list of Converter types mapped to i18n keys
 export const ConverterTypes = {
-  Shacl: 'shacl',
-  ShaclExtension: 'shaclExtension',
-  Shex: 'shex',
-  ShexLayout: 'shexLayout',
-  FormModel: 'formModel'
+  Shacl: "shacl",
+  ShaclExtension: "shaclExtension",
+  Shex: "shex",
+  ShexLayout: "shexLayout",
+  FormModel: "formModel"
 };
 
 export const ConverterTypesList = [

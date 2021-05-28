@@ -1,3 +1,3 @@
-import ConfirmationDialog from './confirmation-dialog.component';
+import ConfirmationDialog from "./confirmation-dialog.component";
 
 export default ConfirmationDialog;

@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
-import { PrivateLayout, PublicLayout, NotLoggedInLayout } from '@layouts';
-import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
+import React, { Fragment } from "react";
+import { PrivateLayout, PublicLayout, NotLoggedInLayout } from "@layouts";
+import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 
 import {
   Login,
@@ -14,42 +14,42 @@ import {
   FormModelConverter,
   FormModelRenderer,
   TextEditor
-} from './containers';
+} from "./containers";
 
 const privateRoutes = [
   {
-    id: 'welcome',
-    path: '/welcome',
+    id: "welcome",
+    path: "/welcome",
     component: Welcome
   },
   {
-    id: 'profile',
-    path: '/profile',
+    id: "profile",
+    path: "/profile",
     component: Profile
   },
   {
-    id: 'tictactoe',
-    path: '/tictactoe',
+    id: "tictactoe",
+    path: "/tictactoe",
     component: GameList
   },
   {
-    id: 'tictactoegame',
-    path: '/tictactoe/:gameId',
+    id: "tictactoegame",
+    path: "/tictactoe/:gameId",
     component: GamePage
   },
   {
-    id: 'text-editor',
-    path: '/text-editor',
+    id: "text-editor",
+    path: "/text-editor",
     component: TextEditor
   },
   {
-    id: 'formmodelconverter',
-    path: '/formmodel/converter',
+    id: "formmodelconverter",
+    path: "/formmodel/converter",
     component: FormModelConverter
   },
   {
-    id: 'formmodelrenderer',
-    path: '/formmodel/renderer',
+    id: "formmodelrenderer",
+    path: "/formmodel/renderer",
     component: FormModelRenderer
   }
 ];
@@ -60,7 +60,11 @@ const Routes = () => (
       <Switch>
         <NotLoggedInLayout component={Login} path="/login" exact />
         <NotLoggedInLayout component={Register} path="/register" exact />
-        <NotLoggedInLayout path="/register/success" component={RegistrationSuccess} exact />
+        <NotLoggedInLayout
+          path="/register/success"
+          component={RegistrationSuccess}
+          exact
+        />
         <PublicLayout path="/404" component={PageNotFound} exact />
         <Redirect from="/" to="/welcome" exact />
         <PrivateLayout path="/" routes={privateRoutes} />

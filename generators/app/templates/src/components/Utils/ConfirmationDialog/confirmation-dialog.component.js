@@ -1,6 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import ReactModal from 'react-modal';
-import { Content, Actions, AcceptBtn, DeclineBtn } from './confirmation-dialog.style';
+import React, { useState, useEffect } from "react";
+import ReactModal from "react-modal";
+import {
+  Content,
+  Actions,
+  AcceptBtn,
+  DeclineBtn
+} from "./confirmation-dialog.style";
 
 type Props = {
   onAccept: Function,
@@ -12,12 +17,22 @@ type Props = {
 /**
  * Check if we are running test to avoid issue with React Modal
  */
-if (process.env.NODE_ENV !== 'test') ReactModal.setAppElement('#root');
+if (process.env.NODE_ENV !== "test") ReactModal.setAppElement("#root");
 
-const ConfirmationDialog = ({ onAccept, onDecline, options, parentSelector }: Props) => {
+const ConfirmationDialog = ({
+  onAccept,
+  onDecline,
+  options,
+  parentSelector
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { message, messageComponent: MessageComponent, acceptText, declineText } = options;
+  const {
+    message,
+    messageComponent: MessageComponent,
+    acceptText,
+    declineText
+  } = options;
 
   const Accept = async () => {
     await onAccept();
@@ -46,11 +61,15 @@ const ConfirmationDialog = ({ onAccept, onDecline, options, parentSelector }: Pr
       <Content>
         <div>{MessageComponent ? <MessageComponent /> : message}</div>
         <Actions>
-          <DeclineBtn type="button" onClick={Decline} data-testid="declineButton">
-            {declineText || 'Decline'}
+          <DeclineBtn
+            type="button"
+            onClick={Decline}
+            data-testid="declineButton"
+          >
+            {declineText || "Decline"}
           </DeclineBtn>
           <AcceptBtn type="button" onClick={Accept} data-testid="acceptButton">
-            {acceptText || 'Accept'}
+            {acceptText || "Accept"}
           </AcceptBtn>
         </Actions>
       </Content>
@@ -59,7 +78,7 @@ const ConfirmationDialog = ({ onAccept, onDecline, options, parentSelector }: Pr
 };
 
 ConfirmationDialog.defaultProps = {
-  parentSelector: '#root'
+  parentSelector: "#root"
 };
 
 export default ConfirmationDialog;

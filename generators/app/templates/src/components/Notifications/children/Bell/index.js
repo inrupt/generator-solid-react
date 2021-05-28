@@ -1,3 +1,3 @@
-import Bell from './bell.component';
+import Bell from "./bell.component";
 
 export default Bell;

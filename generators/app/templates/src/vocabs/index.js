@@ -1,3 +1,3 @@
-import { LDP } from './predicates';
+import { LDP } from "./predicates";
 
 export { LDP };

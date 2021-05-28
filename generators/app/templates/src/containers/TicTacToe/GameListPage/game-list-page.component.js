@@ -1,16 +1,30 @@
-import React, { Fragment, useState, useEffect, useCallback } from 'react';
-import { LiveUpdate, useNotification, AccessControlList } from '@inrupt/solid-react-components';
-import { useTranslation } from 'react-i18next';
-import data from '@solid/query-ldflex';
-import { namedNode } from '@rdfjs/data-model';
-import { errorToaster, storageHelper, permissionHelper, ldflexHelper } from '@utils';
-import { Form, List } from './children';
-import { Section, Wrapper } from '../tic-tac-toe.style';
+import React, { Fragment, useState, useEffect, useCallback } from "react";
+import {
+  LiveUpdate,
+  useNotification,
+  AccessControlList
+} from "@inrupt/solid-react-components";
+import { useTranslation } from "react-i18next";
+import data from "@solid/query-ldflex";
+import { namedNode } from "@rdfjs/data-model";
+import {
+  errorToaster,
+  storageHelper,
+  permissionHelper,
+  ldflexHelper
+} from "@utils";
+import { Form, List } from "./children";
+import { Section, Wrapper } from "../tic-tac-toe.style";
 
 const GameListPage = ({ webId }) => {
-  const [opponent, setOpponent] = useState('');
+  const [opponent, setOpponent] = useState("");
   const [gamePath, setGamePath] = useState(null);
-  const { createNotification, notifications, notification, createInbox } = useNotification(webId);
+  const {
+    createNotification,
+    notifications,
+    notification,
+    createInbox
+  } = useNotification(webId);
   const { t } = useTranslation();
 
   const sendNotification = useCallback(
@@ -18,7 +32,7 @@ const GameListPage = ({ webId }) => {
       try {
         await createNotification(content, to, type, license);
       } catch (error) {
-        errorToaster(error.message, 'Error');
+        errorToaster(error.message, "Error");
       }
     },
     [opponent, notifications, notification]
@@ -60,7 +74,10 @@ const GameListPage = ({ webId }) => {
       // If the user has Write and Control permissions, check the inbox settings
       if (hasControlPermissions) {
         // Check if the inbox permissions are set to APPEND for public, and if not fix the issue
-        await permissionHelper.checkOrSetInboxAppendPermissions(inboxPath, webId);
+        await permissionHelper.checkOrSetInboxAppendPermissions(
+          inboxPath,
+          webId
+        );
       }
 
       if (!hasInboxLink) {
@@ -85,14 +102,14 @@ const GameListPage = ({ webId }) => {
        * Check if something fails when we try to create a inbox
        * and show user a possible solution
        */
-      if (e.name === 'Inbox Error') {
-        return errorToaster(e.message, 'Error', {
-          label: t('errorCreateInbox.link.label'),
-          href: t('errorCreateInbox.link.href')
+      if (e.name === "Inbox Error") {
+        return errorToaster(e.message, "Error", {
+          label: t("errorCreateInbox.link.label"),
+          href: t("errorCreateInbox.link.href")
         });
       }
 
-      errorToaster(e.message, 'Error');
+      errorToaster(e.message, "Error");
     }
   };
 

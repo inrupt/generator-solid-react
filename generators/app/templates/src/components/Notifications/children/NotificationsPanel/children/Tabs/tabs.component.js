@@ -1,5 +1,5 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { TabsContainer, Tab } from './tabs.styles';
+import React, { useCallback, useState, useEffect } from "react";
+import { TabsContainer, Tab } from "./tabs.styles";
 
 type Props = {
   activeName: string,
@@ -23,7 +23,7 @@ export const Tabs = ({ list, click, activeName }: Props) => {
    */
   const filterByName = useCallback(
     async name => {
-      const currentName = active === name ? '' : name;
+      const currentName = active === name ? "" : name;
 
       setActive(currentName);
       await click(currentName);
@@ -46,7 +46,7 @@ export const Tabs = ({ list, click, activeName }: Props) => {
             <button
               onClick={() => filterByName(tab.inboxName)}
               type="button"
-              className={active === tab.inboxName ? 'active' : ''}
+              className={active === tab.inboxName ? "active" : ""}
             >
               {tab.inboxName}
             </button>

@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from "styled-components";
 
 const cubeGridScaleDelay = keyframes`
 	0%,
@@ -13,7 +13,7 @@ const cubeGridScaleDelay = keyframes`
 `;
 
 export const LoaderWrapper = styled.div`
-  position: ${({ absolute }) => (absolute ? 'absolute' : 'fixed')};
+  position: ${({ absolute }) => (absolute ? "absolute" : "fixed")};
   z-index: 9999;
   top: 0;
   left: 0;

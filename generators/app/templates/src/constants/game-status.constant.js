@@ -2,14 +2,14 @@
  * Object mapping of available game statuses to the display label
  */
 export const GameStatus = {
-  ALL: 'All',
-  INVITESENT: 'Invite Sent',
-  MOVEO: 'Move O',
-  MOVEX: 'Move X',
-  DELETED: 'Deleted',
-  DECLINED: 'Declined',
-  RESIGNED: 'Resigned',
-  FINISHED: 'Finished'
+  ALL: "All",
+  INVITESENT: "Invite Sent",
+  MOVEO: "Move O",
+  MOVEX: "Move X",
+  DELETED: "Deleted",
+  DECLINED: "Declined",
+  RESIGNED: "Resigned",
+  FINISHED: "Finished"
 };
 
 /**

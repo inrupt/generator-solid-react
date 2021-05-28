@@ -1,19 +1,19 @@
-import React from 'react';
-import { render, cleanup } from 'react-testing-library';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Navigation from './navigation.component';
+import React from "react";
+import { render, cleanup } from "react-testing-library";
+import { BrowserRouter as Router } from "react-router-dom";
+import Navigation from "./navigation.component";
 
-import 'jest-dom/extend-expect';
+import "jest-dom/extend-expect";
 
 afterAll(cleanup);
 
-describe.only('Navigation', () => {
+describe.only("Navigation", () => {
   const navigation = [
     {
-      id: 'welcome',
-      icon: 'img/icon/apps.svg',
-      label: 'Welcome',
-      to: '/welcome'
+      id: "welcome",
+      icon: "img/icon/apps.svg",
+      label: "Welcome",
+      to: "/welcome"
     }
   ];
 
@@ -23,14 +23,14 @@ describe.only('Navigation', () => {
     </Router>
   );
 
-  test('renders without crashing', () => {
+  test("renders without crashing", () => {
     expect(container).toBeTruthy();
   });
 
-  test('renders one navigation item', () => {
-    const item = getByTestId('item');
+  test("renders one navigation item", () => {
+    const item = getByTestId("item");
 
     expect(item.children.length).toBe(1);
-    expect(item).toHaveTextContent('Welcome');
+    expect(item).toHaveTextContent("Welcome");
   });
 });

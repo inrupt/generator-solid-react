@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
-import NotificationItem from '../NotificationItem';
-import { List, NoNotifications } from './notification-list.style';
+import React, { Fragment } from "react";
+import { INRUPT_NOTIFICATION } from "@inrupt/lit-generated-vocab-inrupt-service";
+import NotificationItem from "../NotificationItem";
+import { List, NoNotifications } from "./notification-list.style";
 
 type Props = {
   notifications: Array,
@@ -15,7 +16,11 @@ type Props = {
  * @returns {*}
  * @constructor
  */
-const NotificationList = ({ notifications, markAsRead, deleteNotification }: Props) => (
+const NotificationList = ({
+  notifications,
+  markAsRead,
+  deleteNotification
+}: Props) => (
   <Fragment>
     {notifications && notifications.length > 0 ? (
       <List>
@@ -29,7 +34,10 @@ const NotificationList = ({ notifications, markAsRead, deleteNotification }: Pro
         ))}
       </List>
     ) : (
-      <NoNotifications className="empty-list">No notifications to show</NoNotifications>
+      <NoNotifications className="empty-list">
+        {/* No notifications to show */}
+        {INRUPT_NOTIFICATION.msgNoNotification.message}
+      </NoNotifications>
     )}
   </Fragment>
 );

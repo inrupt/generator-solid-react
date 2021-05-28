@@ -1,9 +1,9 @@
-import React from 'react';
-import { render, cleanup } from 'react-testing-library';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { RegisterComponent } from './register.component';
+import React from "react";
+import { render, cleanup } from "react-testing-library";
+import { BrowserRouter as Router } from "react-router-dom";
+import { RegisterComponent } from "./register.component";
 
-describe.only('Register', () => {
+describe.only("Register", () => {
   afterAll(cleanup);
 
   const { container, getByTestId } = render(
@@ -12,19 +12,19 @@ describe.only('Register', () => {
     </Router>
   );
 
-  test('renders without crashing', () => {
+  test("renders without crashing", () => {
     expect(container).toBeTruthy();
   });
 
-  test('renders with styled components', () => {
-    expect(getByTestId('register-wrapper')).toBeTruthy();
-    expect(getByTestId('panel-header')).toBeTruthy();
-    expect(document.querySelector('.register-panel')).toBeTruthy();
-    expect(document.querySelector('.panel-body')).toBeTruthy();
-    expect(document.querySelector('.actions')).toBeTruthy();
+  test("renders with styled components", () => {
+    expect(getByTestId("register-wrapper")).toBeTruthy();
+    expect(getByTestId("panel-header")).toBeTruthy();
+    expect(document.querySelector(".register-panel")).toBeTruthy();
+    expect(document.querySelector(".panel-body")).toBeTruthy();
+    expect(document.querySelector(".actions")).toBeTruthy();
   });
 
-  test('renders title properly', () => {
-    expect(getByTestId('title')).toBeTruthy();
+  test("renders title properly", () => {
+    expect(getByTestId("title")).toBeTruthy();
   });
 });
